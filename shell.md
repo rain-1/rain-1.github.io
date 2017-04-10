@@ -1,3 +1,5 @@
+
+
 # { :; }
 
 After the [Shellshock](https://en.wikipedia.org/wiki/Shellshock_(software_bug)) bug happened they fixed the parsing bug in bash that let people hijack webservers by simply including `{ :; }`.
@@ -105,3 +107,5 @@ What do you think? I would be very interested in hearing peoples opinions about 
 # See also
 
 * [execline](https://skarnet.org/software/execline/)
+
+
