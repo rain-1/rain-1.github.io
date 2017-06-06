@@ -56,3 +56,26 @@ func main() {
 Overall golang is a very secure language, the google implementation is solid: [Looking for security trouble spots in Go code](http://0xdabbad00.com/2015/04/12/looking_for_security_trouble_spots_in_go_code/), but ASLR is a very important mitigation to protect against code reuse attacks and we can benefit from it by using the gcc golang implementation.
 
 Thank you and happy hacking!
+
+# Fanart
+
+                C O N T E X T A W A R E
+              / O                   / R
+            /   N                 /   A
+          /     T               /     W
+        /       E             /       A
+      /         X           /         T
+    C O N T E X T A W A R E           X
+    O           A         R           E
+    N           W         A           T
+    T           A         W           N
+    E           R         A           O
+    X           E R A W A T X E T N O C
+    T         /           X         /  
+    A       /             E       /    
+    W     /               T     /      
+    A   /                 N   /        
+    R /                   O /          
+    E R A W A T X E T N O C           
+
+thanks for creating this happy-squirrel!
