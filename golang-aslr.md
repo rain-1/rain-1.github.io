@@ -20,6 +20,8 @@ There is a mailing list discussion about this [here](https://github.com/golang/g
 
 > (Thomas Bushnell, BSG) You're engaging in a common mistake: knowing that it is important to have seat belts on cars, because of the risks that cars are prone to, you're now arguing for seat belts in restaurants (in case a car should crash into the restaurant), seat belts in trains (even though the risk/reward ratio is entirely different), seat belts on bicycles, and so forth.
 
+edit: I have been informed that golang binaries do work well with PaX/Grsec patches and with this they inherit memory protection. (credit: thanks poptart!)
+
 # gccgo to the rescue!
 
 Ian Lance Taylor, author of the GOLD linker also wrote the GCC implementation of golang. **It supports ASLR**: [Go Execution Modes - Ian Lance Taylor](https://docs.google.com/document/d/1nr-TQHw_er6GOQRsF6T43GGhFDelrAP0NqSS_00RgZQ/). So for security relevant programs like web applications I would recommend using it with the `-fPIC -pie' flags.
