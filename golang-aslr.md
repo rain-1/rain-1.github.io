@@ -1,6 +1,6 @@
 # Golang ASLR
 
-**edit: ar1819 kindly pointed out to me that golang does support ASLR now! -buildmode=pie** This works on linux but not openbsd. The recommendation to use gccgo instead is no longer relevant.
+**edit: ar1819 kindly pointed out to me that golang does support ASLR now! -buildmode=pie** Introduced in [1.6](https://golang.org/doc/go1.6) This works on linux but not openbsd. The recommendation to use gccgo instead is no longer relevant.
 
 One of the reasons I like using golang is that I feel capable of writing a secure webapp with it because it provides langsec benefits like [context aware HTML templating](https://golang.org/pkg/html/template/) to stop XSS. If the web application logic itself is secure then the next place to worry about is the level below that: how the compiler and runtime implements the code you wrote. (Another would be any external helper binaries that the web apps calls, e.g. imagemagick tools. This is out of scope of this article).
 
