@@ -1,5 +1,7 @@
 # Golang ASLR
 
+**edit: ar1819 kindly pointed out to me that golang does support ASLR now! -buildmode=pie** The recommendation to use gccgo instead is no longer relevant.
+
 One of the reasons I like using golang is that I feel capable of writing a secure webapp with it because it provides langsec benefits like [context aware HTML templating](https://golang.org/pkg/html/template/) to stop XSS. If the web application logic itself is secure then the next place to worry about is the level below that: how the compiler and runtime implements the code you wrote. (Another would be any external helper binaries that the web apps calls, e.g. imagemagick tools. This is out of scope of this article).
 
 One would like to say "Golang is a memory safe language therefore any code written in it is secure against things like heap and buffer overflows." but mistakes can happen in implementing something as complex as a programming language. For example [chicken scheme](http://www.cvedetails.com/product/26314/Call-cc-Chicken.html?vendor_id=12910) has had some interesting vulnerabilities like this. It is also common to link C libraries to golang. The google golang implementation has only had [one CVE relating to certificate checking](http://www.cvedetails.com/vendor/14185/Golang.html), but a race has been used for [heap corruption](https://blog.stalkr.net/2015/04/golang-data-races-to-break-memory-safety.html).
