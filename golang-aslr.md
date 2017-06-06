@@ -4,7 +4,7 @@ One of the reasons I like using golang is that I feel capable of writing a secur
 
 One would like to say "Golang is a memory safe language therefore any code written in it is secure against things like heap and buffer overflows." but mistakes can happen in implementing something as complex as a programming language. For example [chicken scheme](http://www.cvedetails.com/product/26314/Call-cc-Chicken.html?vendor_id=12910) has had some interesting vulnerabilities like this. It is also common to link C libraries to golang. The google golang implementation has only had [one CVE relating to certificate checking](http://www.cvedetails.com/vendor/14185/Golang.html), but a race has been used for [heap corruption](https://blog.stalkr.net/2015/04/golang-data-races-to-break-memory-safety.html).
 
-In a perfect world your compiled golang code could not be corrupted and exploited, but this is not a perfect world. One of the best protections against shellcode based exploitation is ASLR (address randomization), modern C programs on linux are all compiled with this which increases security significantly by protecting against code reuse attacks. With ASLR an attacker does not know where code is so cannot easily reuse it.
+In a perfect world your compiled golang code could not be corrupted and exploited, but this is not a perfect world. One of the best protections is ASLR (address randomization), modern C programs on linux are all compiled with this which increases security significantly by protecting against code reuse attacks. With ASLR an attacker does not know where code is so cannot easily reuse it.
 
 # A no-go: seat belts at restaraunts.
 
