@@ -6,3 +6,4 @@ This page is for documenting things learned from implementing tarot, a basic sel
 
 * [sequences](scheme-1) - constructing complicated lists efficiently.
 * [accessors](scheme-2) - breaking apart data structures in a simple way.
+* [stacks and queues](scheme-3) - hammer and screwdriver, for programming.
