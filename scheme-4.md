@@ -96,7 +96,7 @@ For the implementation, we first define a few different shapes to classify parts
 
 ## mapply
 
-Finally I'd like to introduce `mapply`, this is a new invention! and I've found it very useful in writing compiler passes. Compiler passes are generally functions take in an AST and recurse on that variable, but they also carry along extra information in function parameters. For language constructs like function application or `begin` that have a whole list of subexpressions `mapply` is the perfect way to do the recursive call!
+Finally I'd like to introduce `mapply`, this is a new invention! and I've found it very useful in writing compiler passes. Compiler passes are generally functions that take in an AST and recurse on that variable, but they also carry along extra information in function parameters. For language constructs like function application or `begin` that have a whole list of subexpressions `mapply` is the perfect way to do the recursive call!
 
 ```scheme
 (defmacro mapply
