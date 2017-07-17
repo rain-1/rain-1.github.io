@@ -8,7 +8,7 @@ In the compiler we only implement the bare minimum and then we add the most impo
 
 ## quasiquote
 
-Quasiquotation is an incredibly versatile tool for building up lists, it comes with an unquote (,) operator that lets you drop back into scheme. It's almost like a basic form of staging. For an example ``(1 ,(+ 1 1) 3)` builds up the list `(1 2 3)`. In terms of parsing ``x` is short for `(quasiquote x)` and `,x` is short for `(unquote x)`.
+Quasiquotation is an incredibly versatile tool for building up lists, it comes with an unquote (,) operator that lets you drop back into scheme. It's almost like a basic form of staging. For an example \`(1 ,(+ 1 1) 3) builds up the list (1 2 3). In terms of parsing \`x is short for (quasiquote x) and ,x is short for (unquote x).
 
 Here's how we add this functionality to our scheme:
 
