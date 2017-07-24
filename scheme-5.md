@@ -44,7 +44,7 @@ stack-grow^@1^@allocate-closure^@0^@7^@clo-set-loc^@0
 
 ## Interpreter
 
-Finally here is the [loader](https://notabug.org/rain1/tarot-viewing/src/master/vm/loader.c) and the VM interpreter loop: [https://notabug.org/rain1/tarot-viewing/src/master/vm/interpreter.c](interpreter.c) `0xC0FFEEEEEEEEEEEE` and `0xDEADBEEFDEADBEEF` are stack canaries.
+Finally here is the [loader](https://notabug.org/rain1/tarot-viewing/src/master/vm/loader.c) and the VM interpreter loop: [interpreter.c](https://notabug.org/rain1/tarot-viewing/src/master/vm/interpreter.c) `0xC0FFEEEEEEEEEEEE` and `0xDEADBEEFDEADBEEF` are stack canaries.
 
 I used a computed goto table instead of a switch/case because this paper says it's much better for the branch predictor: [The Structure and Performance of Efficient Interpreters](https://www.jilp.org/vol5/v5paper12.pdf).
 
