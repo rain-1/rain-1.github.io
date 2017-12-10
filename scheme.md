@@ -9,3 +9,4 @@ This page is for documenting things learned from implementing tarot, a basic sel
 * [stacks and queues](scheme-3) - hammer and screwdriver, for programming.
 * [syntactic extension](scheme-4) - making things easy with macros!
 * [qcode](scheme-5) - some low level details about the compiler target and virtual machine.
+* [eval and macros](scheme-6) - how we implement an efficient eval, and how is it used to implement macros.
