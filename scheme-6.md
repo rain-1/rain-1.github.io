@@ -1,4 +1,6 @@
-# Eval
+# Scheme Programming Lessons from Tarot: 6 - efficient eval for macros
+
+## Eval
 
 I never use `eval` in my scheme programming but it is a crucial part of implementing macros. We have already seen [the macros](scheme-4) that build up the tarot scheme language but this blog explains how macros (and eval) are implemented in tarot.
 
@@ -64,7 +66,7 @@ scm bltn_vm_finish() {
 
 and `vm_exec` is the main interpreter loop that [we already saw](scheme-5#interpreter) inside `interpreter.c.`
 
-# Macros
+## Macros
 
 That shows how the tarot compiler is able to implement an efficient `eval`. Now let's look at how macros are implemented.
 
