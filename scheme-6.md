@@ -8,7 +8,7 @@ Now tarot implements scheme by compiling it to qcode. qcode runs on top of the q
 
 Here's the snippet from `compiler.scm`:
 
-```
+```scheme
 (define (eval exp)
   (let ((p (vm:open)))
      (compile exp #f p '(halt)))
@@ -21,14 +21,14 @@ In previous scheme implementations I didn't have the luxury of a VM to pass code
 
 These are functions that the virtual machine exposes to the underlying scheme. It does this by providing them as builtins. `vm/builtins.c`:
 
-```
+```c
 	glo_define(intern("vm:open"), mk_numb(0), mk_bltn(bltn_vm_open));
 	glo_define(intern("vm:finish"), mk_numb(1), mk_bltn(bltn_vm_finish));
 ```
 
 The `vm:open` builtin creates a pipe, the `compile` command then compiles our code and writes the qcode into the pipe, finally `vm:finish` closes up the pipe and then loads and executes everything that was written into it:
 
-```
+```c
 // VM
 
 scm bltn_vm_open() {
@@ -76,7 +76,7 @@ The main purpose of the desugar pass is to insert the implicit `begin` in `lambd
 
 We have an assoc list (in a mutable box) called `macro-definitions`, for an entry in this assoc table the key is the macro name and the value is the *evaluated* function implementing the expander.
 
-```
+```scheme
 (define macro-definitions
   (box '()))
 
@@ -93,7 +93,7 @@ We have an assoc list (in a mutable box) called `macro-definitions`, for an entr
 
 Therefore to apply a macro when we see one, we simply call the expansion function and desugar the result:
 
-```
+```scheme
 (define (desugar exp shadow)
   (cond ...
 
