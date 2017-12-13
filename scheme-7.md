@@ -74,9 +74,7 @@ typedef enum {
 
 ## Where do pointers point? + gc
 
-All scheme objects based on pointers have a uniform format. They point at a small region in the heap that starts with a header then contains 
-
-Any scheme object that is based on a pointer will point into the heap, to a small region of heap memory that has a header then "raw" data, then "scheme" data. Everything is done in multiples of 64 bit words.
+Any scheme object that is based on a pointer will point into the heap, to a region of heap memory that has a header then "raw" data, then "scheme" data. Everything is done in multiples of 64 bit words.
 
 The header is a single 64 bit word which has 3 fields: the color (white or black) which is used by the garbage collector. the "raw size" (how many 64 bit words of raw data this object has). and the "scm size" how many scheme objects the object contains.
 
