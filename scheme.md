@@ -11,3 +11,12 @@ This page is for documenting things learned from implementing tarot, a basic sel
 * [qcode](scheme-5) - some low level details about the compiler target and virtual machine.
 * [eval and macros](scheme-6) - how we implement an efficient eval, and how is it used to implement macros.
 * [pointer tagging and data representation](scheme-7) - how is data represented and processed in the runtime.
+
+## Compiler Passes
+
+* desugar
+* [hoist](tarot-hoist)
+* denest
+* tmp-alloc
+* flatten
+* assemble
