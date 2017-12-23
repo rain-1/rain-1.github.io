@@ -81,7 +81,8 @@ after hoist we have the following form:
 ```scheme
 (closure0e0d31ff "tests/scm/rosetta-sum35-b.scm" #f 2
 		 (app (var glo +) (var loc 1)
-		      (if (app (var glo boolean-or) (app (var glo zero?) (app (var glo remainder) (var loc 0) (datum 3)))
+		      (if (app (var glo boolean-or)
+		               (app (var glo zero?) (app (var glo remainder) (var loc 0) (datum 3)))
 			       (app (var glo zero?) (app (var glo remainder) (var loc 0) (datum 5))))
 			  (var loc 0)
 			  (datum 0))))
