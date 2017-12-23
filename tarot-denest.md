@@ -101,7 +101,7 @@ and denesting does this to it:
 		   (app (var glo +) (var loc 1) (var tmp tmp2c02fe8c))))
 ```
 
-You can see that the `(+ 1 ..)` part is at the very end because it's the last thing that happens. 
+You can see that the `(+ tot ..)` part is at the very end because it's the last thing that happens. 
 You can also note that some calculations are done before the `IF` condition, in order to make the `IF` condition a simple application. Finally the two branches of a conditional will contain their own `LET` expressions.
 
 ## Summary
