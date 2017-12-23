@@ -15,7 +15,12 @@ A good example of a deeply nested expression is
 which desugars to
 
 ```scheme
-(define "tests/scm/12.scm" l (app cons (datum 1) (app cons (datum 2) (app cons (datum 3) (app cons (datum 4) (app cons (datum 5) (datum ())))))))
+(define "tests/scm/12.scm" l
+  (app cons (datum 1)
+            (app cons (datum 2)
+	              (app cons (datum 3)
+		                (app cons (datum 4)
+				          (app cons (datum 5) (datum ())))))))
 ```
 
 and then (hoisting doesn't change it much) the result of denest is:
