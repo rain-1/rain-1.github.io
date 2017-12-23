@@ -78,7 +78,7 @@ I also wanted to go over and example where `if` is used in an expression context
 
 after hoist we have the following form:
 
-``scheme
+```scheme
 (closure0e0d31ff "tests/scm/rosetta-sum35-b.scm" #f 2
 		 (app (var glo +) (var loc 1)
 		      (if (app (var glo boolean-or) (app (var glo zero?) (app (var glo remainder) (var loc 0) (datum 3)))
