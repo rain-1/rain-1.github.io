@@ -107,5 +107,5 @@ You can also note that some calculations are done before the `IF` condition, in 
 
 ## Summary
 
-In summary the denest pass is about making every function application "simple" by transforming nested code into linear sequenced statements. This is a very general sort of compiler pass that may be useful for any 'expression' based language to target a 'statement' based langauge like C, bytecode or assembly.
+In summary the denest pass is about making every function application "simple" by transforming nested code into linear sequenced statements. In doing this it settles the evaluation order of applications. This is a very general sort of compiler pass that may be useful for any 'expression' based language to target a 'statement' based langauge like C, bytecode or assembly.
 
