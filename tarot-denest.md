@@ -50,9 +50,9 @@ A rough BNF of the output format of denest is as follows:
          | (if <expr> <let> <let>)
 	 | (allocate-closure <size> <label>)
 	 | (set-closure! <var> <index> <simple>)
-
-thu closure stuff is used closure AND for letrec
-
+```
+(the closure stuff is used for both closures and letrec)
+```
 <simple> ::= <variable>
    	   | <atomic-data>
 ```
