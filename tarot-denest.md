@@ -38,7 +38,7 @@ As you can see the innermost function application is executed first. (Note: Inte
 
 ## BNF
 
-So the denest pass turns scheme expressions into a big long `LET` expression where function applications are always "simple". This is similar to ANF/A-normal form from compilers which you can read more about here: [http://matt.might.net/articles/a-normalization/]
+So the denest pass turns scheme expressions into a big long `LET` expression where function applications are always "simple". This is similar to ANF/A-normal form from compilers which you can read more about here: [matt.might.net/articles/a-normalization](https://matt.might.net/articles/a-normalization/)
 
 A rough BNF of the output format of denest is as follows:
 
