@@ -16,7 +16,7 @@ This page is for documenting things learned from implementing tarot, a basic sel
 
 * desugar
 * [hoist](tarot-hoist)
-* denest
+* [denest](tarot-denest)
 * tmp-alloc
 * flatten
 * assemble
