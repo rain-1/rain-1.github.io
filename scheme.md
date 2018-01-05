@@ -18,5 +18,4 @@ This page is for documenting things learned from implementing tarot, a basic sel
 * [hoist](tarot-hoist)
 * [denest](tarot-denest)
 * tmp-alloc
-* [flatten](tarot-flatten)
-* assemble
+* [flatten & assemble](tarot-flatten)
