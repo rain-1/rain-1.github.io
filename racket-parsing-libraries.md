@@ -20,7 +20,7 @@ This information was compiled in Jan 22 2018.
 
 | **NAME** | [combinator-parser](http://docs.racket-lang.org/combinator-parser/index.html) |
 |----------|------|
-| **AUTHORS** | asumu, takikawa |
+| **AUTHORS** | Kathy Gray |
 | **LOC** | 1959 |
 | **NOTE** | Deprecated "We recommend using either parser-tools/yacc or other parsing packages such as parsack or ragg." |
 | **SYNTAX** | combinators |
