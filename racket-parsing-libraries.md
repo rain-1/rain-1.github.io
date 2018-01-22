@@ -4,7 +4,7 @@ This page is aimed at helping answer the question
 
 > **What parser library should I use in racket scheme?**
 
-At the moment *I recommend ragg*.
+At the moment *I recommend megaparsack*.
 
 This information was compiled in Jan 22 2018.
 
