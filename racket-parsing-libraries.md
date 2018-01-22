@@ -8,6 +8,8 @@ At the moment *I recommend megaparsack*.
 
 This information was compiled in Jan 22 2018.
 
+## Packaged
+
 | **NAME** | [parser-tools-lib](http://docs.racket-lang.org/parser-tools/index.html?q=parser-tools) |
 |----------|------|
 | **AUTHORS** | Scott Owens |
@@ -85,6 +87,13 @@ This information was compiled in Jan 22 2018.
 | **SYNTAX** | lisp struct definitions |
 | **DEPS** | none |
 | **EXAMPLES** | http://docs.racket-lang.org/binary-class/index.html#%28part._.Binary_class__.Base_system_%29 |
+
+## Unpackaged
+
+Some parser code which works(?) in racket that is not packaged. May be beta.
+
+* http://tech.labs.oliverwyman.com/blog/2008/07/01/ometa-for-scheme/
+* https://github.com/vkz/ometa-racket
 
 ## End
 
