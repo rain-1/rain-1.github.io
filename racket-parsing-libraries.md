@@ -94,7 +94,7 @@ Some parser code which works(?) in racket that is not packaged. May be beta.
 
 * http://tech.labs.oliverwyman.com/blog/2008/07/01/ometa-for-scheme/
 * https://github.com/vkz/ometa-racket
-* https://github.com/orlandohill/waxeye
+* https://github.com/orlandohill/waxeye (3273 lines of rkt)
 
 ## End
 
