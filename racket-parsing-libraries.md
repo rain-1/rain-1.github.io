@@ -86,15 +86,6 @@ This information was compiled in Jan 22 2018.
 | **DEPS** | none |
 | **EXAMPLES** | http://docs.racket-lang.org/binary-class/index.html#%28part._.Binary_class__.Base_system_%29 |
 
-| **NAME** | [parser-tools-lib](http://docs.racket-lang.org/parser-tools/index.html?q=parser-tools) |
-|----------|------|
-| **AUTHORS** | Scott Owens |
-| **LOC** | 5885 |
-| **NOTE** | this is part of racket |
-| **SYNTAX** | s-exp based yacc or CFG |
-| **DEPS** | none |
-| **EXAMPLES** | https://github.com/racket/parser-tools/tree/master/parser-tools-lib/parser-tools/examples |
-
 ## End
 
 Please feel welcome to edit this page by submitting a pull request.
