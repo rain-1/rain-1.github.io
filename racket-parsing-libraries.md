@@ -97,6 +97,7 @@ Some parser code which works(?) in racket that is not packaged. May be beta.
 * https://github.com/vkz/ometa-racket (4 years old)
 * https://github.com/epsil/gll (2 years old)
 * https://github.com/orlandohill/waxeye (3273 lines of rkt)
+* https://github.com/szabba/peg this code looks good
 
 ## End
 
