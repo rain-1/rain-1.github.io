@@ -98,6 +98,7 @@ Some parser code which works(?) in racket that is not packaged. May be beta.
 * https://github.com/epsil/gll (2 years old)
 * https://github.com/orlandohill/waxeye (3273 lines of rkt)
 * https://github.com/szabba/peg this code looks good
+* http://git.savannah.gnu.org/cgit/guile.git/tree/module/ice-9/peg ice-9 peg in guile scheme.
 
 ## End
 
