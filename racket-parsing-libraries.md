@@ -58,6 +58,14 @@ This information was compiled in Jan 22 2018.
 | **DEPS** | parser-tools-lib |
 | **EXAMPLES** | https://github.com/jbclements/ragg/tree/master/ragg/examples |
 
+| **NAME** | [brag](http://docs.racket-lang.org/brag/) |
+|----------|------|
+| **AUTHORS** | dyoo, matthew butterick |
+| **LOC** | 10288 |
+| **NOTE** | used in the book beautiful racket |
+| **SYNTAX** | s-exp and YAML-like |
+| **DEPS** | br-parser-tools |
+| **EXAMPLES** | https://github.com/mbutterick/brag/tree/master/brag/brag/examples |
 
 | **NAME** | [sparse](http://docs.racket-lang.org/sparse/index.html) |
 |----------|------|
