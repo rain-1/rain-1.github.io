@@ -13,6 +13,8 @@ This page is for documenting things learned from implementing tarot, a basic sel
 * [pointer tagging and data representation](scheme-7) - how is data represented and processed in the runtime.
 * [information for stack traces and profiling](scheme-8) - how we print useful stack traces, and profiling info.
 
+* [bootstrappable release](scheme-9) - tarot is released! and it is bootstrappable from sources.
+
 ## Compiler Passes
 
 * desugar
