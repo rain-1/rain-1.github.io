@@ -26,11 +26,11 @@ git clone https://github.com/rain-1/tarot-tests.git
 then run the scripts:
 
 ```
-sh tarot-scripts/0-build-binaries.sh
-sh tarot-scripts/1-bootstrap-tinyscheme.sh
-sh tarot-scripts/2-selfhost.sh
-sh tarot-scripts/3-check-differences.sh
-sh tarot-scripts/run-tests.sh
+bash tarot-scripts/0-build-binaries.sh
+bash tarot-scripts/1-bootstrap-tinyscheme.sh
+bash tarot-scripts/2-selfhost.sh
+bash tarot-scripts/3-check-differences.sh
+bash tarot-scripts/run-tests.sh
 ```
 
 I hope it all works smoothly, if there are any issues tell me.
