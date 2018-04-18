@@ -33,4 +33,6 @@ bash tarot-scripts/3-check-differences.sh
 bash tarot-scripts/run-tests.sh
 ```
 
+You need [tests](https://github.com/rain-1/tests) to run the tests!
+
 I hope it all works smoothly, if there are any issues tell me.
