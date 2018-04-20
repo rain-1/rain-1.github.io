@@ -1,6 +1,6 @@
 # The Denest Pass
 
-`parse` => `desugar` => [hoist.scm](https://notabug.org/rain1/tarrochi/src/master/compiler/passes/hoist.scm) => [denest.scm](https://notabug.org/rain1/tarrochi/src/master/compiler/passes/denest.scm) => `tmp-alloc` => `flatten` => `assemble`
+`parse` => `desugar` => [hoist.scm](https://github.com/rain-1/tarot-compiler/blob/master/passes/hoist.scm) => [denest.scm](https://github.com/rain-1/tarot-compiler/blob/master/passes/denest.scm) => `tmp-alloc` => `flatten` => `assemble`
 
 The next step of compiliation is denesting. Scheme allows expressions like function application and even `IF` to be nested freely, meaning you can write `(+ 1 (if ...))` but in lower level languages like C if is a statement not an expression. That's why this compilation pass pulls every nested expression apart into a linear sequence of binding statements.
 
