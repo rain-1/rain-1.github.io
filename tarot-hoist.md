@@ -1,6 +1,6 @@
 # The Hoist Pass
 
-`parse` => `desugar` => [hoist.scm](https://notabug.org/rain1/tarrochi/src/master/compiler/passes/hoist.scm) => `denest` => `tmp-alloc` => `flatten` => `assemble`
+`parse` => `desugar` => [hoist.scm](https://github.com/rain-1/tarot-compiler/blob/master/passes/hoist.scm) => `denest` => `tmp-alloc` => `flatten` => `assemble`
 
 Compiling is translating code from one language to another, in our case we are going from a high level language with first class/higher order functions/lambda to a low level bytecode language which doesn't have them. So we need to somehow remove all the lambdas by translating them into something lower level. Doing this essentially "implements" lambda by expressing it in terms of something else. In this note I explain the hoist pass which does this and some other things.
 
