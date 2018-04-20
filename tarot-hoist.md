@@ -76,4 +76,4 @@ Each entry describes a first order procedure
 
 You can see how the two lambdas in the definition of `kons` have been turned into two top level closure definitions taking 2 and then 1 parameter. The first part just builds the inner closure, the second part performs the function application by picking the variables out based on whether they come as parameters or from the environment.
 
-Hopefully this explains enough to make it clear what the goal of this pass is, and makes reading the source code for it easy: [hoist.scm](https://notabug.org/rain1/tarrochi/src/master/compiler/passes/hoist.scm).
+Hopefully this explains enough to make it clear what the goal of this pass is, and makes reading the source code for it easy: [hoist.scm](https://github.com/rain-1/tarot-compiler/blob/master/passes/hoist.scm).
