@@ -1,6 +1,6 @@
 # The Flatten and Assemble Passes
 
-`parse` => `desugar` => `hoist` => `denest` => `tmp-alloc` => [hoist.scm](https://notabug.org/rain1/tarrochi/src/master/compiler/passes/flatten.scm) => [assembler.scm](https://notabug.org/rain1/tarrochi/src/master/compiler/passes/assembler.scm)
+`parse` => `desugar` => `hoist` => `denest` => `tmp-alloc` => [flatten.scm](https://github.com/rain-1/tarot-compiler/blob/master/passes/flatte.scm) => [assembler.scm](https://github.com/rain-1/tarot-compiler/blob/master/passes/assembler.scm)
 
 The flatten pass turns hoisted denested code into qcode/bytecode instruction language.
 
