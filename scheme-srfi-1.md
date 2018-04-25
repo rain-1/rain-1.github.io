@@ -47,8 +47,9 @@ sash>
 
 # chez scheme
 does not have it
-https://srfi.schemers.org/srfi-1/mail-archive/msg00018.html
-https://github.com/arcfide/chez-srfi/tree/master/%253a1 has packaged the reference implementation
+
+* https://srfi.schemers.org/srfi-1/mail-archive/msg00018.html
+* https://github.com/arcfide/chez-srfi/tree/master/%253a1 has packaged the reference implementation
 
 # larceny
 ```
