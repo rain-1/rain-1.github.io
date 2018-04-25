@@ -39,7 +39,7 @@ scheme@(guile-user)>
 
 # sagittarius
 ```
-sash> debbie@debian:~/schemes/sagittarius-0.9.1/build/out$ LD_LIBRARY_PATH=./usr/local/lib/sagittarius/0.9.1/x86_64-pc-linux/ ./usr/local/bin/sagittarius -L ./usr/local/share/sagittarius/0.9.1/lib/ -L ./usr/locae/sagittarius/0.9.1/sitelib/
+$ LD_LIBRARY_PATH=./usr/local/lib/sagittarius/0.9.1/x86_64-pc-linux/ ./usr/local/bin/sagittarius -L ./usr/local/share/sagittarius/0.9.1/lib/ -L ./usr/locae/sagittarius/0.9.1/sitelib/
 sash> (import (srfi :1 lists))
 #<unspecified>
 sash>
