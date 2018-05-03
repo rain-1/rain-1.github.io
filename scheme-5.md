@@ -8,7 +8,7 @@ For the virtual machine to execute compiled scheme it needs to implement a runti
 
 I wanted to be able to easily refer to constant data in compiled code so instead of using a bytecode format, what about making it a sequence of 64 bit words? This makes the interpreter loop really simple: just fetch a qword, execute it and its execution might fetch more qwords as immediate. There is no "decoding" of complicated byte sequences. The previous scheme compiler I wrote used a horrible bytecode system that required lots of decoding, unescaping.. it was nasty. This new one is so much cleaner, I'm really happy with it.
 
-From [qcode.h](https://notabug.org/rain1/tarot-viewing/src/master/vm/qcodes.h) you can see there is only 30 different instructions but we encode them using a whole 64 bit word, capable of expressing 18446744073709551616 different instructions. A lot of waste! I was worried that such waste would be a disaster for speed and make it very very slow - luckily it doesn't!
+From [qcode.h](https://github.com/rain-1/tarot-vm/blob/master/qcodes.h) you can see there is only 30 different instructions but we encode them using a whole 64 bit word, capable of expressing 18446744073709551616 different instructions. A lot of waste! I was worried that such waste would be a disaster for speed and make it very very slow - luckily it doesn't!
 
 ## bf test
 
@@ -44,7 +44,7 @@ stack-grow^@1^@allocate-closure^@0^@7^@clo-set-loc^@0
 
 ## Interpreter
 
-Finally here is the [loader](https://notabug.org/rain1/tarot-viewing/src/master/vm/loader.c) and the VM interpreter loop: [interpreter.c](https://notabug.org/rain1/tarot-viewing/src/master/vm/interpreter.c) `0xC0FFEEEEEEEEEEEE` and `0xDEADBEEFDEADBEEF` are stack canaries.
+Finally here is the [loader](https://github.com/rain-1/tarot-vm/blob/master/loader.c) and the VM interpreter loop: [interpreter.c](https://github.com/rain-1/tarot-vm/blob/master/interpreter.c) `0xC0FFEEEEEEEEEEEE` and `0xDEADBEEFDEADBEEF` are stack canaries.
 
 I used a computed goto table instead of a switch/case because this paper says it's much better for the branch predictor: [The Structure and Performance of Efficient Interpreters](https://www.jilp.org/vol5/v5paper12.pdf).
 
