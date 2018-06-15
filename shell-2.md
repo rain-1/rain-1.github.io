@@ -39,5 +39,4 @@ Some shells have added array data types [rc](http://doc.cat-v.org/plan_9/4th_edi
 
 # Summary
 
-I believe we make all of our lives easier by improving the tools we use. Shell has a couple big problems that can actually be solved. There have been experiments to solve the quotation issues [execline](https://skarnet.org/software/execline/) [s](https://github.com/rain-1/s). And I am proposing the idea of a very basic dynamic type system to solve the 'in-band signalling' issues with command line args.
-
+I believe we make all of our lives easier by improving the tools we use. Shell has a couple big problems that can actually be solved. There have been experiments to solve the quotation issues [execline](https://skarnet.org/software/execline/) and [s](https://github.com/rain-1/s). And I am proposing the idea of a very basic dynamic type system to solve the 'in-band signalling' issues with command line args.
