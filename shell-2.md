@@ -30,8 +30,8 @@ You can read about that [here](https://www.mariocampos.io/blog/more-unix-tools-h
 
 We also have incredibly good documentation about working around the difficulties of coping with paths and spaces and stuff in shell:
 
-* https://www.dwheeler.com/essays/fixing-unix-linux-filenames.html
-* https://mywiki.wooledge.org/BashFAQ
+* [https://www.dwheeler.com/essays/fixing-unix-linux-filenames.html](https://www.dwheeler.com/essays/fixing-unix-linux-filenames.html)
+* [https://mywiki.wooledge.org/BashFAQ](https://mywiki.wooledge.org/BashFAQ)
 
 Now these are excellent resources that I value, but I believe that it is incidental complexity. And a better designed shell would result in much less documentation and edge cases to worry about.
 
