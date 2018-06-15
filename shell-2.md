@@ -4,7 +4,13 @@ The shell (bash or whatever) is an excellent tool that saves people a huge amoun
 
 The two biggest weaknesses in shell, in my opinion, are the quoting and escaping mess and secondly that all the objects are strings. I've talked about the quotation stuff before so I wont cover that here. My idea for improving it would be to make separate (dynamic) data types for strings, paths and command lines flags.
 
-This could be implemented in a simple (but ugly) way by encoding each object into strings with a tag saying what type they are: "sfoo" for a string, "fhelp" for a flag, "p/dev/random" for a path. Maybe there's a more aesthetic way to do this, open to suggestions.
+This could be implemented in a simple (but ugly) way by encoding each object into strings with a tag saying what type they are:
+
+* `"sfoo"` for a string
+* `"fhelp"` for a flag
+* `"p/dev/random"` for a path
+
+Maybe there's a more aesthetic way to do this, open to suggestions.
 
 This change can't be done just by writing a new shell though. Every UNIX tool that we have (ls, cat, grep, jq, ...) would need to conform to this protocol. It would probably steamroll over 'dd' (which has an ideosyncratic argument style).
 
