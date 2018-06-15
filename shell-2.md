@@ -1,4 +1,4 @@
-# What UNIX shell should have been
+# What UNIX shell could have been
 
 The shell (bash or whatever) is an excellent tool that saves people a huge amount of work. Being able to easily script complex jobs together is one of the best things. It does have some weaknesses though that I feel could be improved though.
 
