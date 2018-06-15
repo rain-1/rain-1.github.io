@@ -12,7 +12,7 @@ This could be implemented in a simple (but ugly) way by encoding each object int
 
 Maybe there's a more aesthetic way to do this, open to suggestions.
 
-This change can't be done just by writing a new shell though. Every UNIX tool that we have (ls, cat, grep, jq, ...) would need to conform to this protocol. It would probably steamroll over 'dd' (which has an ideosyncratic argument style).
+This change can't be done just by writing a new shell though. Every UNIX tool that we have (`ls`, `cat`, `grep`, `jq`, ...) would need to conform to this protocol. It would probably steamroll over 'dd' (which has an ideosyncratic argument style).
 
 # Advantages and Drawbacks
 
