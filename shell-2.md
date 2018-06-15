@@ -2,7 +2,7 @@
 
 The shell (bash or whatever) is an excellent tool that saves people a huge amount of work. Being able to easily script complex jobs together is one of the best things. It does have some weaknesses though that I feel could be improved though.
 
-The two biggest weaknesses in shell, in my opinion, are the quoting and escaping mess and secondly that all the objects are strings. I've talked about the quotation stuff before so I wont cover that here. My idea for improving it would be to make separate (dynamic) data types for strings, paths and command lines flags.
+The two biggest weaknesses in shell, in my opinion, are the quoting and escaping mess and secondly that all the objects are strings. I've talked about the quotation stuff [before](https://github.com/rain-1/s) so I wont cover that here. My idea for improving it would be to make separate (dynamic) data types for strings, paths and command lines flags.
 
 This could be implemented in a simple (but ugly) way by encoding each object into strings with a tag saying what type they are:
 
