@@ -42,12 +42,9 @@ As base64 uses such a small alphabet of plaintext characters any data that has b
 
 ## string escaping in programming languages
 
-list of programming languages to research.
-https://en.wikipedia.org/wiki/Escape_sequences_in_C
-http://www.codecodex.com/wiki/Escape_sequences_and_escape_characters
+The primary place escaped text happens is in string literals. Double quotes are used to contain and delimit the text.
 
-https://en.wikipedia.org/wiki/String_literal
-wiki gets this totally wrong. It's not `"[^"]*"`.
+The syntax of a string literal, in regex is at a very basic level something like: `/"([^"]|\"|\\)*"/`. [wiki](https://en.wikipedia.org/wiki/String_literal) gets this. It's not `"[^"]*"`.
 
 * [Rust](https://doc.rust-lang.org/1.7.0/reference.html#string-literals) basic. newlines allowed. Newlines + whitespace ahead stripped if preceeded by `\`. `x` `u` and `nrt`. It also has raw string literals. A bit like lua's long ones.
 * [Go](https://golang.org/ref/spec#String_literals)
@@ -59,6 +56,7 @@ wiki gets this totally wrong. It's not `"[^"]*"`.
 * [Lua](https://www.lua.org/manual/5.3/manual.html#3.1) - `\z` is special. `\xXX`, where XX is a sequence of exactly two hexadecimal digits `\u{XXX}` is for unicode. brackets mandatory. The long literal strings `[==[` `]==]` are a unique approach.
 * [Javascript](http://www.ecma-international.org/ecma-262/9.0/index.html#sec-literals-string-literals) - Probably the simplest string language: x for hex, u for unicoed. special escape chars '"\bfnrtv. Also supports \0.
 
+Another overview here: [codecodex - escape sequences](http://www.codecodex.com/wiki/Escape_sequences_and_escape_characters).
 
 ## regex escaping
 
