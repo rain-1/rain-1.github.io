@@ -9,7 +9,7 @@ The rest of this document is a review of some of the ways escaping comes up in c
 
 ## url/uri encoding
 
-Data inside web addresses must avoid the `/` separator and several other characters, as documunted in the [URI RFC][rfc uri]. To allow these chars to still be passed to a web application we use percent encoding with hex digits: `%XX`.
+Data inside web addresses must avoid the `/` separator and several other characters, as documunted in the URI RFC. To allow these chars to still be passed to a web application we use percent encoding with hex digits: `%XX`.
 
 The choice of `%` as the escape char is good. Since it's not using the more common `\` URLs can usually be put into a string literal without another layer of escaping.
 
