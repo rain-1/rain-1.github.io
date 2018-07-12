@@ -84,8 +84,6 @@ Note:  Lines beginning with periods must be prepended with an extra
      The client should strip extra periods at the beginning of the line.
 ```
 
-## References
-
 [wikipedia metacharacter]: https://en.wikipedia.org/wiki/Metacharacter
 [wikipedia percent-encoding]: https://en.wikipedia.org/wiki/Percent-encoding
 [wikipedia escape-character]: https://en.wikipedia.org/wiki/Escape_character
@@ -95,7 +93,6 @@ Note:  Lines beginning with periods must be prepended with an extra
 [wikipedia in-band signalling]: https://en.wikipedia.org/wiki/In-band_signaling
 [rfc 2396]: https://tools.ietf.org/html/rfc2396
 [rfc 3986]: https://tools.ietf.org/html/rfc3986
-[html character references]: https://www.w3.org/TR/html5
-syntax.html#character-references
+[html character references]: https://www.w3.org/TR/html5/syntax.html#character-references
 [html data parser]: https://www.w3.org/TR/html5/syntax.html#data-state
 [gopher]: https://tools.ietf.org/html/rfc1436
