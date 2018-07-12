@@ -2,7 +2,7 @@
 
 The fundamental idea of escaping is to provide an injective (and hence invertible) function from arbitrary strings to strings with some pattern not occurring. This could mean that a set of reserved characters do not occur in the output, or that a certain character does not occur alone.
 
-Escaping is an alternative to the "netstring" approach of putting the length before the data.
+The [netstring](https://cr.yp.to/proto/netstrings.txt) approach of putting the length before the data is an alternative to escaping. NUL delimited text is another alternative to escaping in cases where text cannot contain `\0` (like C strings).
 
 The rest of this document is a review of some of the ways escaping comes up in computing.
 
@@ -30,10 +30,11 @@ According to the [rules for parsing data inside HTML tags][html data parser] one
 A lot of websites have been exploited from user data ending up unescaped in part of an SQL query. If a web application forgets to escape something user controlled that ends up they can use things like [delimiter collision][wikipedia delimiter collision] to perform their own SQL queries and take over the site.
 
 
-## Command line arguments
+## Command line arguments and shell scripting
 
 Command line arguments starting with - are usually understood as flags. The magic `--` flag enables one to pass further arguments which are interpreted literally instead of checked to see if they are flags.
 
+On the ext4 filesystem, file names/paths can contain any byte except 0. In shell scripting it is often useful to use `find -print0` to get NUL delimited list of filenames to loop over, although usually people use newline or as a delimited which is not 100% but works almost all the time.
 
 ## base64 encoding
 
