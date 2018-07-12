@@ -4,6 +4,8 @@ The fundamental idea of escaping is to provide an injective (and hence invertibl
 
 The [netstring](https://cr.yp.to/proto/netstrings.txt) approach of putting the length before the data is an alternative to escaping. NUL delimited text is another alternative to escaping in cases where text cannot contain `\0` (like C strings).
 
+The ability to easily escape data we want to print out and unescape data we are taking in as input is important if we want easy and correct "plumbing" between programs. It seems to be overlooked a lot. One of the things that's amazing to lisp beginners coming from other languages is how easy it is to print out and read back data.
+
 The rest of this document is a review of some of the ways escaping comes up in computing.
 
 
