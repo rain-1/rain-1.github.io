@@ -86,16 +86,16 @@ Note:  Lines beginning with periods must be prepended with an extra
 
 ## References
 
-* [wikipedia metacharacter]: https://en.wikipedia.org/wiki/Metacharacter
-* [wikipedia percent-encoding]: https://en.wikipedia.org/wiki/Percent-encoding
-* [wikipedia escape-character]: https://en.wikipedia.org/wiki/Escape_character
-* [wikipedia toothpick syndrome]: https://en.wikipedia.org/wiki/Leaning_toothpick_syndrome
-* [wikipedia delimiter collision]: https://en.wikipedia.org/wiki/String_literal#Delimiter_collision
-* [wikipedia delimiter collision 2]: https://en.wikipedia.org/wiki/Delimiter#Delimiter_collision
-* [wikipedia in-band signalling]: https://en.wikipedia.org/wiki/In-band_signaling
-* [rfc 2396]: https://tools.ietf.org/html/rfc2396
-* [rfc 3986]: https://tools.ietf.org/html/rfc3986
-* [html character references]: https://www.w3.org/TR/html5
+[wikipedia metacharacter]: https://en.wikipedia.org/wiki/Metacharacter
+[wikipedia percent-encoding]: https://en.wikipedia.org/wiki/Percent-encoding
+[wikipedia escape-character]: https://en.wikipedia.org/wiki/Escape_character
+[wikipedia toothpick syndrome]: https://en.wikipedia.org/wiki/Leaning_toothpick_syndrome
+[wikipedia delimiter collision]: https://en.wikipedia.org/wiki/String_literal#Delimiter_collision
+[wikipedia delimiter collision 2]: https://en.wikipedia.org/wiki/Delimiter#Delimiter_collision
+[wikipedia in-band signalling]: https://en.wikipedia.org/wiki/In-band_signaling
+[rfc 2396]: https://tools.ietf.org/html/rfc2396
+[rfc 3986]: https://tools.ietf.org/html/rfc3986
+[html character references]: https://www.w3.org/TR/html5
 syntax.html#character-references
-* [html data parser]: https://www.w3.org/TR/html5/syntax.html#data-state
-* [gopher]: https://tools.ietf.org/html/rfc1436
+[html data parser]: https://www.w3.org/TR/html5/syntax.html#data-state
+[gopher]: https://tools.ietf.org/html/rfc1436
