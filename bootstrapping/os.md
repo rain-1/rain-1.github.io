@@ -8,13 +8,35 @@
 
 a-Linux is a linux distribution implemented entirely in assembly, except for the linux kernel itself. It has a reasonably complete set of the standard userspace programs. This could be a good minimal platform to build things on, to ensure you are not making any implicit assumptions about C or libc. 42k lines of asm. GPL2.
 
+## asmc
+
+* https://gitlab.com/giomasce/asmc
+
+![asmc](asmc.png)
+
+Built up from assembly, a series of programming languages are used to create a bootable kernel that runs an interpreter or compiler in order to build proceeding stages. Very promising! 9 asm, 11k g, 3k c. GPL3.
+
+## KolibriOS
+
+TODO
+
 ## LFS
 
 ![lfs](lfs.png)
 
 This is actually a book that explains how to build a detatched gcc compiler toolchain and then use it to build a complete linux distribution entirely from scratch. This process will be very important if one wishes to go from a non-linux OS that can run GCC to a linux OS. millions of lines of code. Primarily GPL.
 
-## sortix
+## MikeOS
+
+TODO
+
+## Oberon OS
+
+![oberon](oberon.png)
+
+TODO.
+
+## Sortix
 
 * https://sortix.org/
 
