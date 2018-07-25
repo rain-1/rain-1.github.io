@@ -18,7 +18,9 @@ Built up from assembly, a series of programming languages are used to create a b
 
 ## KolibriOS
 
-TODO
+* https://kolibrios.org/en/
+
+![kolibrios](kolibrios.png)
 
 ## LFS
 
@@ -28,7 +30,9 @@ This is actually a book that explains how to build a detatched gcc compiler tool
 
 ## MikeOS
 
-TODO
+* http://mikeos.sourceforge.net/
+
+![mikeos](mikeos.png)
 
 ## Oberon OS
 
