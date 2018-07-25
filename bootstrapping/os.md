@@ -34,3 +34,9 @@ ToaruOS is very complete with graphics, networking, package manager. It can run 
 ![xv6](xv6.png)
 
 This is a very basic UNIX OS implemented in C. It was developed for the purpose of teaching. The code is clear and it doesn't have rough edges. 8k lines of code. MIT License.
+
+## LFS
+
+![lfs](lfs.png)
+
+This is actually a book that explains how to build a detatched gcc compiler toolchain and then use it to build a complete linux distribution entirely from scratch. This process will be very important if one wishes to go from a non-linux OS that can run GCC to a linux OS. millions of lines of code. Primarily GPL.
