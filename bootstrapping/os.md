@@ -2,7 +2,7 @@
 
 ## a-Linux
 
-* [http://asm.sourceforge.net/asmutils.html]
+* (http://asm.sourceforge.net/asmutils.html)
 
 ![a-Linux](a-linux.png)
 
@@ -10,7 +10,7 @@ a-Linux is a linux distribution implemented entirely in assembly, except for the
 
 ## asmc
 
-* [https://gitlab.com/giomasce/asmc]
+* (https://gitlab.com/giomasce/asmc)
 
 ![asmc](asmc.png)
 
@@ -18,7 +18,7 @@ Built up from assembly, a series of programming languages are used to create a b
 
 ## KolibriOS
 
-* [https://kolibrios.org/en/]
+* (https://kolibrios.org/en/)
 
 ![kolibrios](kolibrios.png)
 
@@ -30,7 +30,7 @@ This is actually a book that explains how to build a detatched gcc compiler tool
 
 ## MikeOS
 
-* [http://mikeos.sourceforge.net/]
+* (http://mikeos.sourceforge.net/)
 
 ![mikeos](mikeos.png)
 
@@ -42,7 +42,7 @@ TODO.
 
 ## Sortix
 
-* [https://sortix.org/]
+* (https://sortix.org/)
 
 ![sortix](sortix.png)
 
@@ -50,9 +50,9 @@ Sortix is a complete implementation of a POSIX OS from scratch in C (kernel in C
 
 ## ToaruOS
 
-* [https://gitlab.com/toaruos/toaru-nih]
-* [https://toaruos.org/]
-* [https://gitlab.com/toaruos/misaka]
+* (https://gitlab.com/toaruos/toaru-nih)
+* (https://toaruos.org/)
+* (https://gitlab.com/toaruos/misaka)
 
 ![toaruos](toaruos.png)
 
@@ -60,8 +60,8 @@ ToaruOS is very complete with graphics, networking, package manager. It can run 
 
 ## Xv6
 
-* [https://pdos.csail.mit.edu/6.828/2017/xv6.html]
-* [https://github.com/mit-pdos/xv6-public]
+* (https://pdos.csail.mit.edu/6.828/2017/xv6.html)
+* (https://github.com/mit-pdos/xv6-public)
 
 ![xv6](xv6.png)
 
