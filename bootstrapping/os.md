@@ -15,3 +15,14 @@ a-Linux is a linux distribution implemented entirely in assembly, except for the
 ![sortix](sortix.png)
 
 Sortix is a complete implementation of a POSIX OS from scratch in C (kernel in C++). GCC can be used on it. 169k lines of code. ISC License.
+
+## ToaruOS
+
+* https://gitlab.com/toaruos/toaru-nih
+* https://toaruos.org/
+* https://gitlab.com/toaruos/misaka
+
+![toaruos](toaruos.png)
+
+It is very complete with graphics, networking, package manager. It can run python. 55k lines of code. University of Illinois/NCSA Open Source License.
+
