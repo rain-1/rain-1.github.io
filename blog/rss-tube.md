@@ -4,7 +4,7 @@ How to subscribe to youtube channels using RSS! without an account. The idea cam
 
 To subscribe to a channel you add a RSS link to an RSS feed reader. Then you will see a thumbnail and description of each new video when they are posted. You can click it to open in your browser.
 
-I recommend https://quiterss.org/ `pacman -S quiterss` on arch linux. because it displays the preview well. And you paste a youtube link into the follow script, then add that XML link to the program.
+I recommend https://quiterss.org/ `pacman -S quiterss` on arch linux. because it displays the preview well. And you paste a youtube link into the following script, then add that XML link to the program.
 
 ![rsstube](rsstube.png)
 
