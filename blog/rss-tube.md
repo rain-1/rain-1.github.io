@@ -6,7 +6,7 @@ To subscribe to a channel you add a RSS link to an RSS feed reader. Then you wil
 
 I recommend https://quiterss.org/ `pacman -S quiterss` on arch linux. because it displays the preview well. And you paste a youtube link into the follow script, then add that XML link to the program.
 
-![ytrss](ytrss.png)
+![rsstube](rsstube.png)
 
 ## yt2rss Script
 
