@@ -16,7 +16,7 @@ a-Linux is a linux distribution implemented entirely in assembly, except for the
 
 Built up from assembly, a series of programming languages are used to create a bootable kernel that runs an interpreter or compiler in order to build proceeding stages. Very promising! 9 asm, 11k g, 3k c. GPL3.
 
-## KolibriOS
+## MenuetOS/KolibriOS
 
 * [https://kolibrios.org/en/](https://kolibrios.org/en/)
 
@@ -33,6 +33,8 @@ This is actually a book that explains how to build a detatched gcc compiler tool
 * [http://mikeos.sourceforge.net/](http://mikeos.sourceforge.net/)
 
 ![mikeos](mikeos.png)
+
+A ground up OS written entirely in assembly. includes an addon 'c library' implemented in asm, allowing one to write in C! 16 lines of asm. BSD like license, don't use the term MikeOS for forks.
 
 ## Oberon OS
 
