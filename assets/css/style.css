@@ -3,4 +3,8 @@
 
 @import "{{ site.theme }}";
 
-img { box-shadow: 3px 9px 20px 5px black; }
+img {
+   box-shadow: 3px 9px 20px 5px black;
+};
+
+
