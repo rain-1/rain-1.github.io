@@ -69,3 +69,12 @@ ToaruOS is very complete with graphics, networking, package manager. It can run 
 
 This is a very basic UNIX OS implemented in C. It was developed for the purpose of teaching. The code is clear and it doesn't have rough edges. 8k lines of code. MIT License.
 
+## Xinu
+
+* [https://xinu.cs.purdue.edu/](https://xinu.cs.purdue.edu/)
+
+![xinu](xinu.png)
+
+> XINU stands for Xinu Is Not Unix -- although it shares concepts and even names with Unix, the internal design differs completely. Xinu is a small, elegant operating system that supports dynamic process creation, dynamic memory allocation, network communication, local and remote file systems, a shell, and device-independent I/O functions. The small size makes Xinu suitable for embedded environments.
+
+22k lines of C. Unlicensed(?).
