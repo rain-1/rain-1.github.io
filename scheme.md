@@ -22,3 +22,7 @@ This page is for documenting things learned from implementing tarot, a basic sel
 * [denest](tarot-denest)
 * tmp-alloc
 * [flatten & assemble](tarot-flatten)
+
+## Blogging
+
+* [scheme-continuations](scheme-continuations) my opinion about first class continuations.
