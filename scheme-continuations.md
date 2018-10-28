@@ -33,3 +33,7 @@ A new alternative approach to supporting all these different kinds of language f
 ## Conclusion
 
 Overall I would say that we took a wrong turn long ago with `call/cc` (and even `shift`/`reset`): There is a good reason nobody is using these continuation operators - they aren't useful and they don't work together correctly. The motivations for multi-prompt continuations haven't really been disseminated widely despite the core of languages like racket and guile being based on them. So programming languages like python and nodejs which have been gradually adding features like yield haven't been able to benefit from the theory and unified platform that these features can all be placed upon. As for the control operators themselves: Do we really need them exposed to the programmer at all? I really only believe that their uses are to implement more human-understandable control operators - and I kind of find it hard to believe that there are any left that we don't already know about.
+
+## See also
+
+* [wingolog - on generators](https://wingolog.org/archives/2013/02/25/on-generators) - In particular "Guile's failure to standardize a generator interface is an instance of a class of Scheme-related problems, in which generality is treated as more important than utility"
