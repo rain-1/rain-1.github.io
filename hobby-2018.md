@@ -27,13 +27,13 @@ I implemented a process supervisor. It's a unix tool that launches various proce
 
 This may be one of the most useful pieces of software I wrote. It's just a simple script to automatically run tests. Recommended.
 
-* https://github.com/rain-1/tests
+* [https://github.com/rain-1/tests](https://github.com/rain-1/tests)
 
 ## bao
 
 I find the vala GUI program 'baobab' very useful, I started on a very very stripped down CLI version in golang. It is not complete but it lists the sizes of things. A breadth first version of 'find' could be good too.
 
-* https://github.com/rain-1/bao
+* [https://github.com/rain-1/bao](https://github.com/rain-1/bao)
 
 
 
@@ -50,7 +50,7 @@ I want to give a big thanks to petrolifero who collaborated with me on this a lo
 
 ## Continuations study group
 
-I did a literature review on delimited continuations. https://github.com/rain-1/continuations-study-group/wiki/Reading-List
+I did a literature review on delimited continuations. [https://github.com/rain-1/continuations-study-group/wiki/Reading-List](https://github.com/rain-1/continuations-study-group/wiki/Reading-List)
 
 My conclusions from reading a lot about continuations is:
 * You really need multiple-prompts if you want to implement composable language constructs using them.
@@ -64,14 +64,14 @@ I had a novel idea for the macro system which I'm quite keen on. Basically every
 
 I intend to continue developing this.
 
-* https://github.com/rain-1/scheme_interpreter
+* [https://github.com/rain-1/scheme_interpreter](https://github.com/rain-1/scheme_interpreter)
 
 ## tarot
 
 This is my self hosting and bootstrappable scheme compiler that runs on top of a VM implemented in C. The source code is very short and it's very efficient. I'm proud of this because it's one of the projects I've worked the hardest on.
 
-* https://rain-1.github.io/scheme
-* https://rain-1.github.io/scheme-9
+* [https://rain-1.github.io/scheme](https://rain-1.github.io/scheme)
+* [https://rain-1.github.io/scheme-9](https://rain-1.github.io/scheme-9)
 
 
 # Interesting projects
@@ -80,7 +80,7 @@ This is my self hosting and bootstrappable scheme compiler that runs on top of a
 
 Incredible work.
 
-* https://github.com/ras52/bootstrap
+* [https://github.com/ras52/bootstrap](https://github.com/ras52/bootstrap)
 
 ## Interim OS
 
@@ -94,7 +94,7 @@ A very cool forth based operating system. also includes a mini lisp interpreter.
 
 A nice forth implementation that I like.
 
-* https://github.com/wolfgangj/okami
+* [https://github.com/wolfgangj/okami](https://github.com/wolfgangj/okami)
 
 ## commit-sudoku
 
@@ -110,23 +110,23 @@ linux and non-linux OSs built entirely with rust. There are a great deal of proj
 
 The blog posts I've written:
 
-* https://rain-1.github.io/racket-parsing-libraries
-* https://rain-1.github.io/scheme-continuations
-* https://rain-1.github.io/scheme-srfi-1 The struggling and sad state of scheme standardization.
-* https://rain-1.github.io/shell about s.
-* https://rain-1.github.io/shell-2 about the missed opportunity of using structured text instead of plaintext in UNIX.
-* https://rain-1.github.io/escaping A study on escaping.
-* https://gist.github.com/rain-1/a253e47b939fc0769524d8716541c96e canonical s-exps.
-* https://gist.github.com/rain-1/e6293ec0113c193ecc23d5529461d322 tab separated values.
-* https://gist.github.com/rain-1/a8d1bb04ad01ebe6a4ac68fa33f7961c a very valuable regular expression operation that most libraries don't seem to implement.
-* https://rain-1.github.io/in-browser-localhostdiscovery POC demonstrating a surprising (to me) amount of information that arbitrary web pages can learn about your internal network.
-* https://rain-1.github.io/bootstrapping/os - Made a list of minimal/hobby operating systems that people have made. WIP.
+* [https://rain-1.github.io/racket-parsing-libraries](https://rain-1.github.io/racket-parsing-libraries)
+* [https://rain-1.github.io/scheme-continuations](https://rain-1.github.io/scheme-continuations)
+* [https://rain-1.github.io/scheme-srfi-1](https://rain-1.github.io/scheme-srfi-1) The struggling and sad state of scheme standardization.
+* [https://rain-1.github.io/shell](https://rain-1.github.io/shell) about s.
+* [https://rain-1.github.io/shell-2](https://rain-1.github.io/shell-2) about the missed opportunity of using structured text instead of plaintext in UNIX.
+* [https://rain-1.github.io/escaping](https://rain-1.github.io/escaping) A study on escaping.
+* [https://gist.github.com/rain-1/a253e47b939fc0769524d8716541c96e](https://gist.github.com/rain-1/a253e47b939fc0769524d8716541c96e) canonical s-exps.
+* [https://gist.github.com/rain-1/e6293ec0113c193ecc23d5529461d322](https://gist.github.com/rain-1/e6293ec0113c193ecc23d5529461d322) tab separated values.
+* [https://gist.github.com/rain-1/a8d1bb04ad01ebe6a4ac68fa33f7961c](https://gist.github.com/rain-1/a8d1bb04ad01ebe6a4ac68fa33f7961c) a very valuable regular expression operation that most libraries don't seem to implement.
+* [https://rain-1.github.io/in-browser-localhostdiscovery](https://rain-1.github.io/in-browser-localhostdiscovery) POC demonstrating a surprising (to me) amount of information that arbitrary web pages can learn about your internal network.
+* [https://rain-1.github.io/bootstrapping/os](https://rain-1.github.io/bootstrapping/os) - Made a list of minimal/hobby operating systems that people have made. WIP.
 
 I spent a lot of time thinking about problems with UNIX/POSIX/linux. I think I made a lot of progress on understanding the directions we need to go to improve things but it's very difficult to get other people on board.
 
 
 # Wikiing
 
-* https://bootstrapping.miraheze.org/wiki/Main_Page I maintained this wiki a lot.
-* https://softwarecrisis.miraheze.org/wiki/Special:AllPages I added a tiny amount of things to this one.
-* http://rosettacode.org/wiki/Rosetta_Code I can't log in here, so I didn't really do much here.
+* [https://bootstrapping.miraheze.org/wiki/Main_Page](https://bootstrapping.miraheze.org/wiki/Main_Page) I maintained this wiki a lot.
+* [https://softwarecrisis.miraheze.org/wiki/Special:AllPages](https://softwarecrisis.miraheze.org/wiki/Special:AllPages) I added a tiny amount of things to this one.
+* [http://rosettacode.org/wiki/Rosetta_Code](http://rosettacode.org/wiki/Rosetta_Code) I can't log in here, so I didn't really do much here.
