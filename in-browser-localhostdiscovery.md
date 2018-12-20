@@ -8,3 +8,40 @@ A related thing a webpage in your browser might do is connect to localhost and c
 
 **Conclusion** Just loading up an arbitrary web link that someone (suspicious) gives you is a LOT more dangerous than I previously realized. It's possible to scan locally and even open connections and control local services.
 
+-------------
+
+copy of the code from the pastebin, in case the pastebin disappears.
+
+```
+// in testing it took:
+// * 5ms to error on a host that is not up
+// * 3055ms to error on a host that is up
+//
+// if your network has different timing characteristics you may need to modify this value.
+
+var cutoff = (5 + 3055)/2.0;
+
+function img_load_time(link) {
+	var startTime = new Date().getTime();
+	var img = new Image();
+  img.onerror = function() {
+  	var loadtime = new Date().getTime() - startTime;
+    var result = (loadtime < cutoff) ? "UP" : "DOWN";
+  	var node = document.createElement("li");
+		var textnode = document.createTextNode(link + " " + result);
+		node.appendChild(textnode);
+    document.getElementById("hosts").appendChild(node);
+    next();
+  }
+  img.src = link;
+}
+
+var i = 0;
+function next() {
+  if(i > 20) return;
+	img_load_time("https://192.168.1."+i+"/");
+  i++;
+}
+
+next();
+```
