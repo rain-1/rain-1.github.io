@@ -2,9 +2,7 @@
 
 `sftp` is a better tool than `scp` for copying files between machines. It doesn't (mis)interpret filenames and has a more secure design overall. For example it has a built in chroot system.
 
-I think most people use `scp` because of the name, it seems like the obvious tool to do a host-to-host version of `cp`.
-
-Disadvantages of sftp: "SCP is usually much faster than SFTP at transferring files, especially on high latency networks". From [https://superuser.com/questions/134901/whats-the-difference-between-scp-and-sftp]
+Disadvantages of sftp: "SCP is usually much faster than SFTP at transferring files, especially on high latency networks". From [https://superuser.com/questions/134901/whats-the-difference-between-scp-and-sftp]. I timed a copy across my local network of a 104MB file - sftp: 37 seconds. scp: 34 seconds.
 
 A discussion about scp vs sftp from curl dev. [https://ec.haxx.se/usingcurl-scpsftp.html]
 
