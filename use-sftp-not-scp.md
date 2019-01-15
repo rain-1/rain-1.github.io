@@ -12,7 +12,7 @@ A discussion about scp vs sftp from curl dev. [https://ec.haxx.se/usingcurl-scps
 
 It interprets the filename as a shell command *on the remote host* before trying to copy that file. e.g. ``scp pi:'`touch wow`' .`` creates a file on the 'pi' computer.
 
-Some people have called this a "feature" rather than a bug and discussed how you can do things like `scp pi:/db/backup-$(date +%s)`. I don't really bug this, do you know anybody that makes use of this feature on purpose?
+Some people have called this a "feature" rather than a bug and discussed how you can do things like `scp pi:/db/backup-$(date +%s)`. I don't really buy this, do you know anybody that makes use of this feature on purpose?
 
 So you have to do a bit of awkward/difficult shell sorcery with `"` and `'` to copy filenames with spaces or sigils. It can be complex when there are 4 different possible levels of quoting and interpretation in a single command (local shell processing, command line options processing, parsing of inputs, remote shell processing).
 
