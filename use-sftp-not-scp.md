@@ -1,6 +1,6 @@
 # Recommendation: sftp for copying files between machines.
 
-`sftp` is a better tool than `scp` for copying files between machines. It doesn't (mis)interpreter filenames and has a more secure design overall. For example it has a built in chroot system.
+`sftp` is a better tool than `scp` for copying files between machines. It doesn't (mis)interpret filenames and has a more secure design overall. For example it has a built in chroot system.
 
 I think most people use `scp` because of the name, it seems like the obvious tool to do a host-to-host version of `cp`.
 
