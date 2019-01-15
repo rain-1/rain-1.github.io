@@ -28,10 +28,7 @@ rsync might have some nice theory to the transfer algorithm: [https://rsync.samb
 
 ```
 echo put 'sheep.txt' | sftp pi
-```
-
-```
-echo put 'sheep.txt' here\\'s-sheep.txt | sftp pi
+echo put 'sheep.txt' here\\\'s-sheep.txt | sftp pi
 echo put 'sheep.txt' "'heres sheep.txt'" | sftp pi
 ```
 
