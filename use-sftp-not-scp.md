@@ -107,3 +107,11 @@ version                            Show SFTP version
 !                                  Escape to local shell
 ?                                  Synonym for help
 ```
+
+### Alternatively
+
+```
+tar cf - . | ssh host 'cd path && tar xf -'
+```
+
+cheers Taylor.
