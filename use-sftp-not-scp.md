@@ -16,7 +16,7 @@ Some people have called this a "feature" rather than a bug and discussed how you
 
 So you have to do a bit of awkward/difficult shell sorcery with `"` and `'` to copy filenames with spaces or sigils. It can be complex when there are 4 different possible levels of quoting and interpretation in a single command (local shell processing, command line options processing, parsing of inputs, remote shell processing).
 
-Also there was some interesting research finding even more nasty bugs with scp: [https://blog.f-secure.com/weak-scp-security-vulnerabilities/]. It's such an old protocol that it's really outdated in the way it's designed. They are sort of forced to keep the unpleasant features in because changing anything would break millions of scripts.
+Also there was some interesting research finding even more nasty bugs with scp: [https://blog.f-secure.com/weak-scp-security-vulnerabilities/]. (Security note: This is very minor in terms of security, it can only be exploited if you ssh into a malicious host. For that to happen you would have to accept a bad fingerprint. On the other hand it illustrates the bad design of scp). It's such an old protocol that it's really outdated in the way it's designed. They are sort of forced to keep the unpleasant features in because changing anything would break millions of scripts.
 
 ## What about rsync
 
