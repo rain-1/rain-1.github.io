@@ -71,6 +71,10 @@ echo put -r site-backup/ | sftp pi
 
 Note: does not follow symbolic links
 
+### Tab completion of remote filenames?
+
+Yes! You can get tab completion. Just make sure to use pubkey auth not password auth.
+
 ### what commands does sftp let me use?
 
 ```
