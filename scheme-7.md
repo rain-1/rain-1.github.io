@@ -22,7 +22,7 @@ Here is a diagram showing the particular tagging scheme used. We have more than 
 
 ```
 +----------+-------------------------+
-| ATOM FLS | 0 0 ... 0 0 1 0 0 0 0 0 |
+| ATOM FLS | 0 0 ... 0 0 0 0 0 0 0 0 |
 | ATOM TRU | 0 0 ... 0 0 1 0 0 0 0 0 |
 | ATOM NUL | 0 0 ... 0 0 1 1 0 0 0 0 |
 | ATOM SYM | # # ... # # 0 0 1 0 0 0 |
