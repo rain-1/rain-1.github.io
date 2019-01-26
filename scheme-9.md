@@ -36,3 +36,10 @@ bash tarot-scripts/run-tests.sh
 You need [tests](https://github.com/rain-1/tests) to run the tests!
 
 I hope it all works smoothly, if there are any issues tell me.
+
+
+**UPDATE** Jan 2019.
+
+tinyscheme suddenly stopped working. Some kind of GC error.
+
+So I implemented a new tiny scheme interpreter <https://github.com/rain-1/single_cream> and bootstrapped tarot off that!
