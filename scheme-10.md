@@ -50,4 +50,5 @@ I've written a FAQ explaining much more details about the [IMPLEMENTATION](https
 
 ## More
 
-Read more here if you're interested in programming language development: https://rain-1.github.io/scheme
+Read more here if you're interested in programming language development: [https://rain-1.github.io/scheme
+](https://rain-1.github.io/scheme)
