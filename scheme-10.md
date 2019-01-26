@@ -6,7 +6,7 @@ I built it to support the [tarot](/scheme-9) scheme compiler. tarot is self host
 
 I was using tinyscheme for this but for reason, one day, tinyscheme gave GC errors instead of bootstrapping my compiler. I decided to implement my own scheme interpreter because I found tinyscheme's source code difficult and complex and I found that all the other small c based scheme interpreters were fundamentally lacking (for example, not implementing proper tail calls).
 
-In total the program is a single file with 1600 lines of C code and 700 lines of C code that extend it from a primitive scheme interpreter to a more complete system with extra standard library functions and language constructs. I did my best to make the C code simple and easy to read.
+In total the program is [a single file with 1600 lines of C code](https://github.com/rain-1/single_cream/blob/master/src/sch3.c) and [700 lines of scheme code](https://github.com/rain-1/single_cream/tree/master/src) that extend it from a primitive scheme interpreter to a more complete system with extra standard library functions and language constructs. I did my best to make the C code simple and easy to read.
 
 ## Implementing a AST based interpreter for scheme in C
 
