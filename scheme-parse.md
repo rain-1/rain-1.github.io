@@ -66,7 +66,7 @@ which we can start to express as a state transition system. The sexp state has 3
 
 So we can try coding this up, which I did here:
 
-https://gist.github.com/rain-1/615cec52cf9ce92c07d3f76e74da162c#file-grammar-1-rkt
+[https://gist.github.com/rain-1/615cec52cf9ce92c07d3f76e74da162c#file-grammar-1-rkt](https://gist.github.com/rain-1/615cec52cf9ce92c07d3f76e74da162c#file-grammar-1-rkt)
 
 by implementing it the form of the machine starts to become clear: we have a input stream of tokens which we peek at and read from. And we have a work stack that contains parse states as well as expected tokens. One thing I notice is that this is essentially the same as recursive descent but the stack is explicitly handled instead of an implicit thing that happens by recursive function calls.
 
@@ -161,15 +161,15 @@ now we apply a rewrite inside sexps1
 
 So implementing this, with macros, I got a working parser that handles quoted expressions, nested lists, dotted lists. Seems pretty good!
 
-https://gist.github.com/rain-1/615cec52cf9ce92c07d3f76e74da162c#file-grammar-2-rkt
+[https://gist.github.com/rain-1/615cec52cf9ce92c07d3f76e74da162c#file-grammar-2-rkt](https://gist.github.com/rain-1/615cec52cf9ce92c07d3f76e74da162c#file-grammar-2-rkt)
 
 # In C
 
-I am not entirely happy with the clarity of the code I wrote to read lisp in my single_cream scheme interpreter: https://github.com/rain-1/single_cream/blob/master/src/sch3.c#L308
+I am not entirely happy with the clarity of the code I wrote to read lisp in my single_cream scheme interpreter: [https://github.com/rain-1/single_cream/blob/master/src/sch3.c#L308](https://github.com/rain-1/single_cream/blob/master/src/sch3.c#L308)
 
 It works well but it's kind of ugly. So I wanted to see how this approach would look in C, I came up with this:
 
-https://gist.github.com/rain-1/615cec52cf9ce92c07d3f76e74da162c#file-grammar-3-c
+[https://gist.github.com/rain-1/615cec52cf9ce92c07d3f76e74da162c#file-grammar-3-c](https://gist.github.com/rain-1/615cec52cf9ce92c07d3f76e74da162c#file-grammar-3-c)
 
 ```c
 		case PARSE_SEXP:
