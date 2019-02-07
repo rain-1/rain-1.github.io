@@ -4,7 +4,7 @@ I have made the [racket PEG](https://docs.racket-lang.org/peg/index.html) parser
 
 The standard parsing techniques have processed the grammar to build some kind of state transition table which parses text one token at a time, in linear time, without backtracking. This is a very nice property to have. I had a look at some existing code that implements lalr parser generators and it was quite long and complex, I also checked some papers that explain how the process works but I couldn't understand them.
 
-lalr-1.png
+![lalr](lalr-1.png)
 
 So this document is my notes on trying parsing using grammar normalization instead of recursive descent (which I usually use for reading s-exps) or a peg like backtracking system.
 
