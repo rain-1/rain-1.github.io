@@ -48,7 +48,7 @@ Finally here is the [loader](https://github.com/rain-1/tarot-vm/blob/master/load
 
 I used a computed goto table instead of a switch/case because this paper says it's much better for the branch predictor: [The Structure and Performance of Efficient Interpreters](https://www.jilp.org/vol5/v5paper12.pdf).
 
-**edit** update feb 2019. This paper [https://hal.inria.fr/hal-01100647/document](Branch Prediction and the Performance of Interpreters - Don’t Trust Folklore) suggests that the computed goto trick is not a big optimization anymore. So a basic switch/case might be just fine.
+**edit** update feb 2019. This paper [Branch Prediction and the Performance of Interpreters - Don’t Trust Folklore](https://hal.inria.fr/hal-01100647/document) suggests that the computed goto trick is not a big optimization anymore. So a basic switch/case might be just fine.
 
 > accuracy of indirect branch prediction is no longer critical for interpreters. We further compare the characteristics of these interpreters and analyze why the indirect branch is less important than before
 
