@@ -42,7 +42,7 @@ Another property of HTML that doesn't help at all is that user input requires 2 
 
 ## Drupalgeddon 2, 3, ... (2018, 2019)
 
-Since then there have been new "Drupalgeddons", for example [research.checkpoint.com - Uncovering Drupalgeddon 2 (CVE-2018-7600)](https://research.checkpoint.com/uncovering-drupalgeddon-2/) and the newest one (in chinese) [Drupal SA-CORE-2019-003](https://paper.seebug.org/821/).
+Since then there have been new "Drupalgeddons", for example [research.checkpoint.com - Uncovering Drupalgeddon 2 (CVE-2018-7600)](https://research.checkpoint.com/uncovering-drupalgeddon-2/) and the newest one (in chinese) [Drupal SA-CORE-2019-003](https://paper.seebug.org/821/), another writeup [https://www.ambionics.io/blog/drupal8-rce](https://www.ambionics.io/blog/drupal8-rce).
 
 It was a `unserialize` exploit. The PHP `unserialize` function is a bit like a powered up version of `JSON.parse`, it takes in some text and produces an object - but unlike with JSON (which is just arrays and hashtables) the PHP object could have any (user selected) class. The trick then, is to create an object of a class that has some method in it you're interested reusing maliciously. This method needs to be one which will be invoked - some common choices are the destructors and to_string functions.
 
