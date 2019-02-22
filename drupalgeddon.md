@@ -24,7 +24,7 @@ was all it took to fix one of the most serious drupal security vulnerabilities o
 
 This was an SQL code injection attack
 
-[drupal-sql-injection.png]
+![drupal](drupalgeddon.png)
 
 (image taken from [blog.sucuri.net](https://blog.sucuri.net/2014/10/highly-critical-sql-injection-on-drupal.html).)
 
