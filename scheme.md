@@ -28,3 +28,7 @@ This page is for documenting things learned from implementing tarot, a basic sel
 * [scheme-continuations](scheme-continuations) my opinion about first class continuations.
 * [scheme-parse](scheme-parse) some work on parsing s-expressions.
 * [scheme-10](scheme-10) single_cream interpreter
+* [closure-conversion.rkt](https://gist.github.com/rain-1/36c4851b7c29cf8e42f23ba6eec37be6) closure conversion distilled.
+* [serialize.rkt](https://gist.github.com/rain-1/dc738599829ed40b55f170b574628bd0) extending the above to support serializable closures
+
+
