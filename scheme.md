@@ -26,3 +26,5 @@ This page is for documenting things learned from implementing tarot, a basic sel
 ## Blogging
 
 * [scheme-continuations](scheme-continuations) my opinion about first class continuations.
+* [scheme-parse](scheme-parse) some work on parsing s-expressions.
+* [scheme-10](scheme-10) single_cream interpreter
