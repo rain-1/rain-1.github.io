@@ -103,9 +103,3 @@ The benefit of this extreme minimalism is that the implementation can be done wi
 # End
 
 What do you think? I would be very interested in hearing peoples opinions about *s* and the more general idea of stripping programs down to their essential parts. Feel free to comment or make 'issues' on the repo if you have any criticism, suggestions or just want to discuss.
-
-# See also
-
-* [execline](https://skarnet.org/software/execline/)
-
-
