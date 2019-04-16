@@ -16,7 +16,7 @@ You can read more about the internal works of this system [here](scheme). If the
 To give it a go you can get all the sources:
 
 ```
-git clone https://github.com/rain-1/tinyscheme.git
+git clone https://github.com/rain-1/single_cream.git
 git clone https://github.com/rain-1/tarot-vm.git
 git clone https://github.com/rain-1/tarot-compiler.git
 git clone https://github.com/rain-1/tarot-scripts.git
@@ -27,7 +27,7 @@ then run the scripts:
 
 ```
 bash tarot-scripts/0-build-binaries.sh
-bash tarot-scripts/1-bootstrap-tinyscheme.sh
+bash tarot-scripts/1-bootstrap-singlecream.sh
 bash tarot-scripts/2-selfhost.sh
 bash tarot-scripts/3-check-differences.sh
 bash tarot-scripts/run-tests.sh
