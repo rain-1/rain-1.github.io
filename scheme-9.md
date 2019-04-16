@@ -43,3 +43,36 @@ I hope it all works smoothly, if there are any issues tell me.
 tinyscheme suddenly stopped working. Some kind of GC error.
 
 So I implemented a new tiny scheme interpreter <https://github.com/rain-1/single_cream> and bootstrapped tarot off that!
+
+**UPDATE** April 2019.
+
+Further work making the single_cream based bootstrap smoother.
+
+## Infosheet
+
+```
+tarot is a scheme compiler
+it is written in scheme (1917 lines)
+it runs on top of a virtual machine
+the virtual machine is written in C (2036 lines)
+it can compile itself
+it takes 14 seconds to self host
+
+single_cream is a scheme interpreter
+it is written in C (1705 lines)
+it has supporting code and a standard library in scheme (691 lines)
+it can run tarot
+it takes 1 min 40 seconds to bootstrap tarot
+
+$ wc -l tarot/src/*c
+ 1705 src/sch3.c
+$ wc -l tarot/src/*scm
+  221 src/init.scm
+  358 src/preprocessor.scm
+  112 src/std.scm
+  691 total
+$ linecount tarot-compiler/ '*.scm'
+1917
+$ linecount tarot-vm '*.c'
+2036
+```
