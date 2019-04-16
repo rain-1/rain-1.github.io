@@ -63,6 +63,7 @@ it is written in C (1705 lines)
 it has supporting code and a standard library in scheme (691 lines)
 it can run tarot
 it takes 1 min 40 seconds to bootstrap tarot
+it can run on top of linux or asmc, https://gitlab.com/giomasce/asmc
 
 $ wc -l tarot/src/*c
  1705 src/sch3.c
