@@ -6,7 +6,7 @@ I have attempted to tame some of the complexity by creating my own stripped down
 
 ## s
 
-* [https://github.com/rain-1/s](rain-1/s)
+* [rain-1/s](https://github.com/rain-1/s)
 
 I made the `s` lightweight shell because I don't like the complex nature of the syntax of the bash shell. I found that basic tasks like passing in a variable or filename to a command line tool are fraught with danger. When you write a bash script it may seem to work but can actually have al sorts of edge cases related to filenames with whitespace in them, things starting with a dash that gets misinterpreted as a command line flag. There are too many issues. The early design of shell is plagued with all sorts of screw-ups about escaping and quotation, today we understand these things well and could design cleaner languages. There is a clear trend in modern script languages that we want to move away from string-splatting. David wheeler has some great content on it, so does the bash wiki:
 
@@ -35,8 +35,8 @@ In the end making `s` was a valuable experiment, but it pointed out to me that t
 
 ## makes
 
-* [https://github.com/rain-1/makes](rain-1/makes)
-* [https://github.com/rain-1/makes/tree/master/previous-version](rain-1/makes/tree/master/previous-version)
+* [rain-1/makes](https://github.com/rain-1/makes)
+* [makes/tree/master/previous-version](https://github.com/rain-1/rain-1/makes/tree/master/previous-version)
 
 I've been critical of the whole autoreconf, automake, m4, ./configure, make toolkit for a long time. It solves a real problem, software needs configuration before being built. And to build software (written in C, C++ and many other languages) we need something that does dependency resolution, incremental builds and bunched parallelism. Make does this, but I hate using make - it can be stressful.
 
@@ -66,7 +66,7 @@ I don't know what to do about the autotools situation yet though. Any ideas? One
 
 ## tests
 
-* [https://github.com/rain-1/tests](rain-1/tests)
+* [rain-1/tests](https://github.com/rain-1/tests)
 
 `tests` is an extremely simple script - 80 lines of code - that enables you to automatically test a command line tool using a folder full of inputs and expected outputs (or expected errors).
 
@@ -86,7 +86,7 @@ I recommend using this!
 
 ## linenoise-mob
 
-* [https://github.com/rain-1/linenoise-mob](rain-1/linenoise-mob)
+* [rain-1/linenoise-mob](https://github.com/rain-1/linenoise-mob)
 
 I used linenoise in my shell. It's a nice minimal tool for line editing in terminals. It lets you not use GNU readline. Unfortunately the author was very busy with a lot of other stuff, so a great deal of pull requests and github issues added up. I merged all of the "good" (judged by me) pull requests (about 200 of them!) into a forked repo. It was a lot of work.. I also included the UTF-8 patch. I hope this is a valuable contribution, others will need to join in maintaining it - and some people have!
 
@@ -98,11 +98,11 @@ I stole the -mob branch idea from tinycc which is very succesful.
 
 ## tarot and single_cream
 
-* [https://github.com/rain-1/tarot-compiler](rain-1/tarot-compiler)
-* [https://github.com/rain-1/tarot-vm](rain-1/tarot-vm)
-* [https://github.com/rain-1/single_cream](rain-1/single_cream)
+* [rain-1/tarot-compiler](https://github.com/rain-1/tarot-compiler)
+* [rain-1/tarot-vm](https://github.com/rain-1/tarot-vm)
+* [rain-1/single_cream](https://github.com/rain-1/single_cream)
 * [https://rain-1.github.io/scheme](https://rain-1.github.io/scheme)
-* [https://gist.github.com/rain-1/36c4851b7c29cf8e42f23ba6eec37be6](https://gist.github.com/rain-1/36c4851b7c29cf8e42f23ba6eec37be6)
+* [closure conversion gist](https://gist.github.com/rain-1/36c4851b7c29cf8e42f23ba6eec37be6)
 
 I'm a fan of the scheme language and I wanted to build my own scheme from scratch, and I really wanted to do a self-hosted version that could compile itself. This was a lot harder than I imagined. I worked on it for several years before I achieved the results I wanted. The final result is good though. The source code is extremely short and simple. It builds itself very quickly (14 seconds). Most compilers are too complex to understand and take a long time to build themselves.
 
@@ -123,7 +123,7 @@ I recommend using single_cream but I don't really recommend using tarot, studyin
 
 ## gopher
 
-* [https://github.com/rain-1/gopher](rain-1/gopher)
+* [rain-1/gopher](https://github.com/rain-1/gopher)
 
 ![gopher](gopher.png)
 
