@@ -23,6 +23,8 @@
     section { margin:46px 0; } h2 { margin:0 0 12px; font:700 1.55rem/1.2 Georgia,serif; }
     .explain { max-width:860px; margin:0; color:#3f4b55; }
     .key { display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:16px; color:var(--muted); font-size:.9rem; }
+    .process { max-width:860px; margin:16px 0; padding-left:1.4rem; color:#3f4b55; } .process li { margin:8px 0; }
+    .video { max-width:780px; aspect-ratio:16/9; overflow:hidden; border:1px solid var(--line); border-radius:8px; background:#111; } .video iframe { width:100%; height:100%; border:0; }
     .status { display:inline-block; white-space:nowrap; border-radius:999px; padding:3px 8px; font-size:.76rem; font-weight:700; letter-spacing:.01em; }
     .verified { color:var(--green); background:var(--green-bg); } .incomplete { color:var(--amber); background:var(--amber-bg); } .untouched { color:var(--gray); background:var(--gray-bg); }
     .table-wrap { border:1px solid var(--line); border-radius:8px; overflow:auto; background:var(--paper); }
@@ -37,11 +39,9 @@
   <main>
     <header>
       <h1>Cleo Bench</h1>
-      <p class="lede">A mathematical benchmark built from 39 famously difficult questions answered by Cleo on Math Stack Exchange. It asks whether a model can derive—not merely state—the closed form.</p>
+      <p class="lede">A mathematical benchmark built from 39 famously difficult questions answered by Cleo on Math Stack Exchange. It asks whether a model can derive the closed form.</p>
       <div class="actions">
         <a class="button primary" href="data/cleo_dataset.jsonl" download>Download dataset</a>
-        <a class="button" href="README.md">Method and reproduction</a>
-        <a class="button" href="results/results.json">Machine-readable results</a>
       </div>
     </header>
 
@@ -52,8 +52,24 @@
     </div>
 
     <section>
-      <h2>What “verified” means</h2>
-      <p class="explain">Fable first works closed-book from the question alone. Its proposed closed form is numerically checked against Cleo’s answer and the original problem; an independent Opus grader then audits the derivation and recomputes the values at high precision. A verified proof has both the right value and a complete or mostly complete derivation. One proof is also machine-checked in Lean.</p>
+      <h2>How the benchmark was made</h2>
+      <p class="explain">We scraped Math Stack Exchange for Cleo’s questions and answers, then ran a three-stage process. This took about five Claude Max sessions.</p>
+      <ol class="process">
+        <li><strong>Numerical verification.</strong> We checked Cleo’s answers against high-precision numerical evaluations of the original questions, establishing the benchmark’s ground-truth answers.</li>
+        <li><strong>Derivation.</strong> Fable ran at maximum effort, with numerical tools and hours of working time, to derive solutions from each problem.</li>
+        <li><strong>Independent review.</strong> Opus checked each proposed solution numerically and logically.</li>
+      </ol>
+      <p class="explain">One proof has been formalized in Lean. Further autoformalization in Lean remains future work.</p>
+    </section>
+
+    <section>
+      <h2>Context: the Cleo story</h2>
+      <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/dAoDz_YiDeM" title="Context on Cleo" loading="lazy" allowfullscreen></iframe></div>
+    </section>
+
+    <section>
+      <h2>Levels of verification</h2>
+      <p class="explain">Fable first works closed-book from the question alone. Its proposed closed form is numerically checked against Cleo’s answer and the original problem; an independent Opus grader then audits the derivation and recomputes the values at high precision. A verified proof has both the right value and a complete or mostly complete derivation.</p>
       <div class="key"><span><span class="status verified">proof verified</span> correct value and audited derivation</span><span><span class="status incomplete">proof incomplete</span> useful attempt, not counted as solved</span><span><span class="status untouched">not attempted</span> benchmark item awaiting a run</span></div>
     </section>
 
