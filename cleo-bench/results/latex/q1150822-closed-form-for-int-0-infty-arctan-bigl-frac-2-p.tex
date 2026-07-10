@@ -1,0 +1,200 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 13\\[1ex]\large Closed form for $\int_0^\infty\arctan\Bigl(\frac{2\pi}{x-\ln\,x+\ln(\frac\pi2)}\Bigr)\frac{dx}{x+1}$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/1150822}{question 1150822}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in closed form
+$$I=\int_0^\infty\arctan\!\left(\frac{2\pi}{\,x-\ln x+\ln\frac{\pi}{2}\,}\right)\frac{dx}{x+1},
+\qquad I\approx 3.38058252844534697939535922162769\ldots$$
+(The arctangent is the principal branch. Since $x-\ln x\ge 1$ on $(0,\infty)$, the argument of $\arctan$ is positive everywhere, so the integrand takes values in $(0,\pi/2)$.)
+
+\section*{Result}
+
+$$\boxed{\;I=\pi\,\ln\!\frac{\pi^{2}+\bigl(1-\ln\frac{\pi}{2}\bigr)^{2}}{1+\frac{\pi^{2}}{4}}
+=\pi\,\ln\!\frac{4\pi^{2}+4\ln^{2}\!\frac{2e}{\pi}}{4+\pi^{2}}\;}$$
+
+Numerically $I = 3.3805825284453469793953592216276992165696856825906055108192183\ldots$, matching the posted value; my closed form agrees with direct high-precision quadrature to \textbf{130 significant digits}.
+
+\section*{Derivation}
+
+Throughout put
+$$\phi_a(x)=x-\ln x+a\ (x>0),\qquad a_0=\ln\frac{\pi}{2}\approx 0.4516 .$$
+Since $\min_{x>0}(x-\ln x)=1$ (attained at $x=1$), we have $\phi_a(x)\ge 1+a>0$ for every $a\ge a_0$.
+
+\subsection*{Step 1. A parameter family and differentiation under the integral}
+
+Define, for $a\ge a_0$,
+$$I(a)=\int_0^\infty \arctan\!\frac{2\pi}{\phi_a(x)}\;\frac{dx}{x+1},\qquad\text{so } I=I(a_0).$$
+
+\textbf{Convergence and the limit $a\to\infty$.} Using $0<\arctan y\le \min(\tfrac\pi2 ,y)$ for $y>0$ and $\phi_a\ge\phi_{a_0}$,
+$$0<\arctan\!\frac{2\pi}{\phi_a(x)}\cdot\frac1{x+1}\le \frac{1}{x+1}\min\!\Bigl(\frac\pi2,\frac{2\pi}{\phi_{a_0}(x)}\Bigr)=:g(x).$$
+$g$ is integrable on $(0,\infty)$: near $0$ it behaves like $\dfrac{2\pi}{-\ln x}$ (bounded), and as $x\to\infty$ like $2\pi/x^{2}$. Hence each $I(a)$ is finite, and since $\arctan\frac{2\pi}{\phi_a(x)}\to0$ pointwise as $a\to\infty$, dominated convergence gives
+\begin{equation*}
+\lim_{a\to\infty}I(a)=0. \tag{1.1}
+\end{equation*}
+
+\textbf{Differentiation in $a$.} For fixed $x$, $\dfrac{\partial}{\partial a}\arctan\dfrac{2\pi}{\phi_a(x)}=-\dfrac{2\pi}{\phi_a(x)^2+4\pi^2}$, and for all $a\ge a_0$
+$$\Bigl|\partial_a\arctan\tfrac{2\pi}{\phi_a(x)}\Bigr|\frac{1}{x+1}\le \frac{2\pi}{(x+1)\bigl(\phi_{a_0}(x)^2+4\pi^2\bigr)},$$
+which is integrable in $x$ (bounded near $0$, $\sim 2\pi/x^{3}$ at $\infty$) and independent of $a$. By the standard dominated-convergence criterion, $I$ is $C^1$ on $[a_0,\infty)$ with
+\begin{equation*}
+I'(a)=-2\pi\,T(a),\qquad
+T(a):=\int_0^\infty\frac{dx}{(x+1)\bigl[(x-\ln x+a)^2+4\pi^2\bigr]}\;(>0). \tag{1.2}
+\end{equation*}
+By the fundamental theorem of calculus and (1.1) (the improper $a$-integral exists by monotone convergence, $T>0$):
+\begin{equation*}
+I=I(a_0)=2\pi\int_{a_0}^{\infty}T(a)\,da. \tag{1.3}
+\end{equation*}
+
+\subsection*{Step 2. Closed form for $T(a)$ by a keyhole contour}
+
+Fix $a\ge a_0$. Let $\log_*$ be the branch of the logarithm on $\Omega:=\mathbb{C}\setminus[0,\infty)$ with $\arg z\in(0,2\pi)$, and set
+$$\Psi(z)=z-\log_* z+a,\qquad z\in\Omega .$$
+$\Psi$ is holomorphic on $\Omega$ and extends continuously to each side of the cut: for $x>0$,
+\begin{equation*}
+\Psi(x+i0)=\phi_a(x)\ \ (\text{real}),\qquad \Psi(x-i0)=\phi_a(x)-2\pi i . \tag{2.1}
+\end{equation*}
+Since $\Im\dfrac{1}{u-2\pi i}=\dfrac{2\pi}{u^{2}+4\pi^{2}}$ for real $u$, (2.1) gives the key jump identity
+\begin{equation*}
+\Im\left[\frac{1}{\Psi(x+i0)}-\frac{1}{\Psi(x-i0)}\right]=-\frac{2\pi}{\phi_a(x)^2+4\pi^2}. \tag{2.2}
+\end{equation*}
+
+\begin{lemma}[zeros of $\Psi$]
+For every $a>-1$ the function $\Psi$ has exactly one zero $\zeta(a)$ in $\Omega$; it is simple and equals
+\begin{multline*}
+\zeta(a)=\frac{v}{\sin v}\,e^{iv},\qquad\text{where } v=v(a)\in(0,\pi)\\
+\text{is the unique solution of } m(v):=\frac{v}{\sin v}\,e^{-v\cot v}=e^{a}.
+\end{multline*}
+Moreover $\Im\zeta(a)=v(a)$ and $\Re\zeta(a)=v\cot v$. In particular, since $m(\pi/2)=\frac{\pi/2}{1}e^{0}=\frac\pi2=e^{a_0}$,
+\begin{equation*}
+\zeta(a_0)=\tfrac{i\pi}{2}. \tag{2.3}
+\end{equation*}
+\end{lemma}
+
+\begin{proof}
+Suppose $\Psi(\zeta)=0$, $\zeta\in\Omega$. Splitting into real and imaginary parts ($\log_*\zeta=\ln|\zeta|+i\arg_*\zeta$, $\arg_*\zeta\in(0,2\pi)$):
+\begin{equation*}
+\ln|\zeta|=\Re\zeta+a,\qquad \arg_*\zeta=\Im\zeta. \tag{2.4}
+\end{equation*}
+If $\Im\zeta\le0$: for $\zeta$ on the negative real axis $\arg_*\zeta=\pi\neq0=\Im\zeta$; for $\Im\zeta<0$ we have $\arg_*\zeta\in(\pi,2\pi)$ while $\Im\zeta<0$ — in fact $\Im\Psi(\zeta)=\Im\zeta-\arg_*\zeta<-\pi$ throughout the open lower half-plane. So necessarily $\Im\zeta>0$, whence $\arg_*\zeta=\operatorname{Arg}\zeta\in(0,\pi)$ and $v:=\Im\zeta=\operatorname{Arg}\zeta\in(0,\pi)$. Writing $\zeta=re^{iv}$, the identity $\Im\zeta=r\sin v=v$ forces $r=\frac{v}{\sin v}$, so $\zeta=\frac{v}{\sin v}e^{iv}$ and $\Re\zeta=v\cot v$. The modulus equation in (2.4) becomes $\ln\frac{v}{\sin v}=v\cot v+a$, i.e. $m(v)=e^{a}$. Conversely, if $m(v)=e^a$ with $v\in(0,\pi)$ and $\zeta=\frac{v}{\sin v}e^{iv}$, then $\log_*\zeta=\ln\frac{v}{\sin v}+iv$ and
+$$\Psi(\zeta)=v\cot v+iv-\ln\tfrac{v}{\sin v}-iv+a=a-\ln m(v)=0 .$$
+Uniqueness: on $(0,\pi)$,
+$$\frac{d}{dv}\ln m(v)=\frac1v-2\cot v+v\csc^2v
+= v+\frac{(1-v\cot v)^2}{v}>0,$$
+(using $v\csc^2v=v+v\cot^2 v$ and completing the square), so $m$ is strictly increasing, with $m(0^+)=e^{-1}$ and $m(\pi^-)=+\infty$; thus $m:(0,\pi)\to(1/e,\infty)$ is a bijection and $e^{a}>1/e$ has a unique preimage. Simplicity: $\Psi'(\zeta)=1-\frac1\zeta\neq0$ because $\zeta\notin\mathbb{R}$.
+\end{proof}
+
+(Equivalently $\zeta e^{-\zeta}=m(v)=e^{a}$, i.e. $\zeta(a)=-W_{-1}(-e^{a})$ in Lambert-$W$ notation; (2.3) is the classical $W(-\pi/2)=i\pi/2$. The Lambert-$W$ language is not needed below.)
+
+\textbf{Keyhole integration.} Consider $G(z)=\dfrac{1}{(z+1)\Psi(z)}$, meromorphic on $\Omega$ with simple poles only at $z=-1$ and $z=\zeta(a)$ (note $\Psi(-1)=-1-i\pi+a\ne0$ and $-1\neq\zeta(a)$). Take the standard keyhole contour $\Gamma_{\epsilon,R,\eta}$: the segment just above the cut at height $+\eta$ traversed rightward from $|z|=\epsilon$ to $|z|=R$, the circle $|z|=R$ counterclockwise, the segment at height $-\eta$ leftward, and the circle $|z|=\epsilon$ clockwise ($0<\eta\ll\epsilon<\tfrac12<2<R$). $\Omega$ is simply connected and $\Gamma$ is the positively oriented boundary of the enclosed region, which contains both poles ($\epsilon<1<R$ for $z=-1$; and $|\zeta(a)|=\frac{v}{\sin v}\ge1$, $|\zeta(a)|<R$ for $R$ large). The residue theorem gives
+$$\oint_{\Gamma}G(z)\,dz=2\pi i\left[\operatorname*{Res}_{z=-1}G+\operatorname*{Res}_{z=\zeta}G\right],$$
+$$\operatorname*{Res}_{z=-1}G=\frac{1}{\Psi(-1)}=\frac{1}{a-1-i\pi}\quad(\log_*(-1)=i\pi),\qquad
+\operatorname*{Res}_{z=\zeta}G=\frac{1}{(\zeta+1)\Psi'(\zeta)}=\frac{\zeta}{\zeta^{2}-1},$$
+using $\Psi'(\zeta)=\frac{\zeta-1}{\zeta}$.
+
+\textit{Arcs vanish.} On $|z|=R$: $|\log_* z|\le\ln R+2\pi$, so $|\Psi(z)|\ge R-\ln R-2\pi-a\ge R/2$ for large $R$, $|z+1|\ge R-1$; the contribution is $O(1/R)\to0$. On $|z|=\epsilon$: $|\Psi(z)|\ge\ln\frac1\epsilon-\epsilon-a\to\infty$ and $|z+1|\ge1-\epsilon$; the contribution is $O\!\bigl(\epsilon/\ln\frac1\epsilon\bigr)\to0$.
+
+\textit{Edges converge to boundary values.} On the upper edge $z=x+i\eta$: $\Re\Psi(z)=x-\ln|z|+a\ge x-\ln(x+\eta)+a\ge 1+a-\eta>0$, and also $\Re \Psi(z) \ge x-\ln(x+1)+a$, which grows linearly; on the lower edge, $\Im\Psi(z)=\Im z-\arg_* z<-\pi$, and again $|\Psi|\ge|{\Re\Psi}|$ gives linear growth for large $x$. Also $|z+1|\ge x+1$ on both edges. Hence the edge integrands are dominated, uniformly in $\eta$, by the integrable function $\bigl[(x+1)\max\{c_0,\,x-\ln(x+1)+a\}\bigr]^{-1}$ with $c_0=\min\{1+a-\epsilon,\pi\}>0$, and they converge pointwise to the boundary values (2.1) as $\eta\to0^+$. Dominated convergence, then $\epsilon\to0^+$, $R\to\infty$ (the limiting integrals converge absolutely: the integrands are bounded near $x=0$ and $O(x^{-2})$ at infinity) yield
+$$\int_0^\infty\left[\frac{1}{\Psi(x+i0)}-\frac{1}{\Psi(x-i0)}\right]\frac{dx}{x+1}
+=2\pi i\left[\frac{1}{a-1-i\pi}+\frac{\zeta(a)}{\zeta(a)^{2}-1}\right].$$
+Taking imaginary parts and using (2.2):
+$$-2\pi\,T(a)=2\pi\,\Re\!\left[\frac{1}{a-1-i\pi}+\frac{\zeta(a)}{\zeta(a)^{2}-1}\right],$$
+that is,
+\begin{equation*}
+T(a)=\frac{1-a}{(1-a)^{2}+\pi^{2}}-\Re\,\frac{\zeta(a)}{\zeta(a)^{2}-1}. \tag{2.5}
+\end{equation*}
+(Verified numerically to 30+ digits at $a=a_0,1,3,10$; see below.)
+
+\subsection*{Step 3. Integrating over $a$: an exact antiderivative}
+
+Since $\Psi'(\zeta(a))\neq0$, the implicit function theorem shows $\zeta(a)$ is $C^1$ on $[a_0,\infty)$, and differentiating $\zeta-\log\zeta+a=0$ (principal log; recall $\Im\zeta\in(0,\pi)$) gives
+$$\zeta'(a)=\frac{-1}{1-\frac{1}{\zeta}}=\frac{\zeta}{1-\zeta}.$$
+Consequently, since $1+\zeta(a)\ne 0$,
+$$\frac{d}{da}\ln\bigl|1+\zeta(a)\bigr|=\Re\frac{\zeta'(a)}{1+\zeta(a)}
+=\Re\frac{\zeta}{(1-\zeta)(1+\zeta)}=-\Re\frac{\zeta}{\zeta^{2}-1},$$
+while $\dfrac{d}{da}\ln|a-1-i\pi|=\dfrac{a-1}{(a-1)^{2}+\pi^{2}}$. Comparing with (2.5): the function
+$$B(a):=\ln\frac{\bigl|1+\zeta(a)\bigr|}{\bigl|a-1-i\pi\bigr|}
+=\frac12\ln\frac{\bigl(1+\Re\zeta(a)\bigr)^{2}+\bigl(\Im\zeta(a)\bigr)^{2}}{(a-1)^{2}+\pi^{2}}$$
+is an exact antiderivative: $B'(a)=T(a)$ on $[a_0,\infty)$. Hence by (1.3)
+\begin{equation*}
+I=2\pi\Bigl[\lim_{A\to\infty}B(A)-B(a_0)\Bigr]. \tag{3.1}
+\end{equation*}
+
+\textbf{The limit at infinity is $0$.} Let $v=v(A)\uparrow\pi$ as $A\to\infty$ and write $\delta=\pi-v$, $s=-v\cot v=v\cot\delta>0$, $\ell=\ln\frac{v}{\sin v}>0$ (both positive for $v\in(\pi/2,\pi)$), so that $A=\ln m(v)=\ell+s$, $\Re\zeta=-s$, $\Im\zeta=v\in(\pi/2,\pi)$. For $\delta\le\pi/4$:
+$$s=v\cot\delta\le \frac{\pi}{\tan\delta}\le\frac{\pi}{\delta}\ \Rightarrow\ \delta\ge\frac{\pi}{s}\ge\frac{\pi}{A},
+\qquad
+\ell\le\ln\frac{\pi}{\sin\delta}\le\ln\frac{\pi}{(2/\pi)\delta}\le\ln\frac{\pi A}{2}=O(\ln A),$$
+using $\sin\delta\ge\frac{2}{\pi}\delta$ on $(0,\pi/2]$. Therefore $1+\Re\zeta=1-s=1-A+\ell$ and
+$$B(A)=\frac12\ln\frac{(A-1-\ell)^{2}+v^{2}}{(A-1)^{2}+\pi^{2}}
+=\frac12\ln\left[\Bigl(1-\frac{\ell}{A-1}\Bigr)^{2}\cdot\frac{1+\frac{v^{2}}{(A-1-\ell)^{2}}}{1+\frac{\pi^{2}}{(A-1)^{2}}}\right]\xrightarrow[A\to\infty]{}0,$$
+because $\ell/A=O(\ln A/A)\to0$ and $v\le\pi$. (Numerically $B(10^{9})\approx-2.07\times10^{-8}\approx-\ln(10^{9})/10^{9}$, matching this asymptotic.)
+
+\textbf{The value at $a_0$.} By (2.3), $\zeta(a_0)=i\pi/2$, so
+$$B(a_0)=\ln\frac{\bigl|1+\frac{i\pi}{2}\bigr|}{\bigl|\ln\frac\pi2-1-i\pi\bigr|}
+=\frac12\ln\frac{1+\frac{\pi^{2}}{4}}{\bigl(1-\ln\frac\pi2\bigr)^{2}+\pi^{2}} .$$
+
+Plugging into (3.1):
+$$I=-2\pi B(a_0)=\pi\ln\frac{\bigl(1-\ln\frac{\pi}{2}\bigr)^{2}+\pi^{2}}{1+\frac{\pi^{2}}{4}} .$$
+Since $1-\ln\frac{\pi}{2}=\ln\frac{2e}{\pi}$, this can also be written
+$$I=\pi\ln\frac{\pi^{2}+\ln^{2}\frac{2e}{\pi}}{1+\frac{\pi^{2}}{4}}
+=\pi\ln\frac{4\pi^{2}+4\ln^{2}\frac{2e}{\pi}}{4+\pi^{2}} . \qquad\blacksquare$$
+
+\begin{remark}
+The problem's constants are precisely tuned: the shift $\ln\frac\pi2$ makes the relevant zero of $z-\log_*z+a$ land exactly at $z=i\pi/2$ (the classical identity $\bigl(\tfrac{i\pi}{2}\bigr)e^{i\pi/2}=-\tfrac{\pi}{2}$, i.e. $W(-\pi/2)=i\pi/2$), and the numerator $2\pi$ is exactly the branch jump of the logarithm across the cut.
+\end{remark}
+
+\section*{Numerical verification}
+
+All computations with mpmath (\texttt{verify.py} in the scratch directory), at 100--130 decimal digits.
+
+\begin{enumerate}
+\item \textbf{Direct evaluation.} Substituting $x=e^{t}$ (integrand then decays exponentially in both directions) and, independently, direct tanh--sinh quadrature in $x$ with split points, both give at 100 dps:
+\[\resizebox{\linewidth}{!}{$I=3.3805825284453469793953592216276992165696856825906055108192183062787494273960883\ldots$}\]
+The two methods agree to all 100 digits, and reproduce the 61 digits quoted in the problem (residual $6.3\times10^{-63}$ = their truncation).
+\item \textbf{Closed form.} $\pi\ln\dfrac{\pi^{2}+(1-\ln\frac\pi2)^{2}}{1+\pi^{2}/4}$ evaluated at 130 dps agrees with the 130-dps quadrature to relative error $1.3\times10^{-131}$: \textbf{130 significant digits matched}.
+\item \textbf{Intermediate identities checked numerically.}
+\begin{itemize}
+\item $\zeta(a_0)=i\pi/2$ to full precision; $\Psi_a(\zeta(a))=0$ and $\arg\zeta=\Im\zeta$ for $a=a_0,1,3,10$.
+\item Uniqueness of the zero: winding-number integral of $\Psi_a'/\Psi_a$ around the rectangle $[-60,60]\times[0.01,\,2\pi-0.01]$ equals $1.000\ldots$ for $a=a_0$ and $a=6$.
+\item Residue formula (2.5) for $T(a)$: direct quadrature vs. formula agree to $\sim5\times10^{-53}$ at $a=a_0,1,3,10$.
+\item Antiderivative: finite-difference derivative of $B(a)$ matches $T(a)$ to 25 digits at $a=1,5$.
+\item Boundary term: $B(10^{3}),B(10^{6}),B(10^{9})\approx-6.9\times10^{-3},-1.38\times10^{-5},-2.07\times10^{-8}\to0$, consistent with $B(A)\sim-\ln A/A$.
+\item Reassembly: $2\pi\int_{a_0}^{\infty}T(a)\,da$ (using (2.5)) reproduces $I$ to 60 digits.
+\end{itemize}
+\end{enumerate}
+
+\section*{Notes}
+
+\begin{itemize}
+\item The derivation is complete and self-contained: differentiation under the integral and the limits $a\to\infty$ are justified by explicit dominated-convergence bounds; the keyhole argument uses uniform lower bounds on $|\Psi|$ near both sides of the cut ($\Re\Psi\ge1+a-\epsilon$ above, $|\Im\Psi|>\pi$ below) plus linear growth at infinity, so the edge limits are legitimate; the zero-counting lemma is proved (not assumed) via the strict monotonicity of $m(v)=\frac{v}{\sin v}e^{-v\cot v}$; the boundary term at $a=\infty$ is controlled by explicit elementary inequalities.
+\item The only branch conventions used: $\log_*$ with $\arg\in(0,2\pi)$ on $\mathbb{C}\setminus[0,\infty)$ (so $\log_*(-1)=i\pi$, $\log_*(x-i0)=\ln x+2\pi i$), and the principal $\arctan$. No step relies on recalled literature values; the Lambert-$W$ identification $\zeta(a)=-W_{-1}(-e^{a})$ is mentioned only as a remark and cross-checked numerically.
+\item I am not aware of any gaps. Confidence: very high (rigorous derivation + 130-digit numerical agreement).
+\end{itemize}
+
+\end{document}

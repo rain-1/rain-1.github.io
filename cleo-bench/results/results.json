@@ -1,0 +1,1272 @@
+{
+ "results": [
+  {
+   "it": {
+    "n": 1,
+    "slug": "q562694-integral-int-1-1-frac1x-sqrt-frac-1-x-1-x-ln-lef",
+    "title": "Integral $\\int_{-1}^1\\frac1x\\sqrt{\\frac{1+x}{1-x}}\\ln\\left(\\frac{2\\,x^2+2\\,x+1}{2\\,x^2-2\\,x+1}\\right) \\mathrm dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q562694-integral-int-1-1-frac1x-sqrt-frac-1-x-1-x-ln-lef.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q562694-integral-int-1-1-frac1x-sqrt-frac-1-x-1-x-ln-lef.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q562694-integral-int-1-1-frac1x-sqrt-frac-1-x-1-x-ln-lef.md"
+   },
+   "truth": {
+    "closed_form_latex": "I = 4\\pi\\,\\operatorname{arccot}\\sqrt{\\phi}",
+    "mpmath_expr": "4*mp.pi*mp.acot(mp.sqrt(mp.phi))",
+    "value": "8.372211626601275661625747121098412638082",
+    "direct_value": "8.372211626601275661625747117846305809921",
+    "digits_verified": 27,
+    "notes": "Main quantity: I = int_{-1}^{1} (1/x) sqrt((1+x)/(1-x)) ln((2x^2+2x+1)/(2x^2-2x+1)) dx. Cleo's answer: I = 4*pi*arccot(sqrt(phi)) with phi = (1+sqrt5)/2 the golden ratio (mp.phi). The integrand has a removable singularity at x=0 (limit 4) and an integrable 1/sqrt(1-x) singularity at x=1; direct mp.quad over [-1,0,1] at dps=50 matched the closed form to ~27 significant digits (abs diff 3.3e-27), matching the OP's quoted numeric 8.3722116266012756616257471... No doubt about the ground truth. The OP also asked about variants with only the numerator or only the denominator under the log; Cleo did not address those, and they are not part of the ground-truth value. Convention: arccot here is the principal branch acot(x)=atan(1/x). Script: /tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/truth/q562694-integral-int-1-1-frac1x-sqrt-frac-1-x-1-x-ln-lef/verify.py"
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "4\\pi\\,\\operatorname{arccot}\\sqrt{\\frac{1+\\sqrt{5}}{2}}\\;=\\;4\\pi\\arcsin\\frac{\\sqrt{5}-1}{2}\\;=\\;2\\pi\\arccos\\!\\left(\\sqrt{5}-2\\right)",
+    "mpmath_expr": "4*mp.pi*mp.acot(mp.sqrt((1+mp.sqrt(5))/2))",
+    "closed_form_value": "8.3722116266012756616257471210984126380817280538822",
+    "integral_value": "8.3722116266012756616257471210984126380817280538822",
+    "digits_matched": 67,
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q562694-integral-int-1-1-frac1x-sqrt-frac-1-x-1-x-ln-lef.md",
+    "summary": "Derived I = 4*pi*arccot(sqrt(phi)) with phi the golden ratio, via a real Feynman-parameter identity ln((2x^2+2x+1)/(2x^2-2x+1)) = int_0^1 4x(1-2x^2t^2)/(1+4x^4t^4) dt, Tonelli-Fubini, parity reduction, and the decomposition (1-2s)/(1+4s^2) = Re[(1+i)/(1-2is)], reducing the inner integral to pi/(2*sqrt(1-2it^2)) by two lemmas proved from scratch. The outer t-integral is evaluated by the explicit antiderivative -i*Log(i(1+i)t + sqrt(1-2it^2)) with the path proved to stay in the right half-plane, giving I = 4*pi*Arg(sqrt(1-2i)+i-1), and sqrt(1-2i) = sqrt(phi) - i/sqrt(phi) yields Arg = arccot(sqrt(phi)) exactly. Every nontrivial step (Fubini bound, branch control, lemmas) is justified in the solution file, and each intermediate identity was checked numerically/symbolically. Direct raw quadrature matches to 67 significant digits and an exactly transformed quadrature (parity + x=sin(theta)) matches to at least 130 digits; the posted 28-digit value is reproduced. Bonus: numerator-only and denominator-only variants equal pi*ln((phi+sqrt(phi))/2) +/- 2*pi*arccot(sqrt(phi)), verified to ~30 digits. Confidence is very high; no identified gaps."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "8.37221162660127566162574712110",
+    "solver_value": "8.37221162660127566162574712110",
+    "derivation_quality": "complete",
+    "notes": "Truth (4*pi*acot(sqrt(phi))) and solver (4*pi*acot(sqrt((1+sqrt5)/2))) expressions are numerically identical at 50 dps (diff exactly 0), and both match my independent quadrature: raw integral to ~27 digits and an exactly transformed (parity + x=sin theta) quadrature to full 50-digit precision, so no doubt about the ground truth. The solver's write-up is a full, rigorous derivation: I hand-checked the Feynman-parameter identity (numerator algebra 4x(1-2x^2t^2), P+P- = 1+4x^4t^4), the Re[(1+i)/(1-2is)] decomposition, and the final algebra sqrt(1-2i)=sqrt(phi)-i/sqrt(phi) with Arg q(1)=arccot(sqrt(phi)); all correct, with Fubini bounds and branch control explicitly justified. The closed form is literally Cleo's answer, so verdict is correct rather than merely equivalent."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "solve": "wf_007e7cf5-6e3",
+    "grade": "wf_007e7cf5-6e3"
+   },
+   "solution_md": "results/solutions/q562694-integral-int-1-1-frac1x-sqrt-frac-1-x-1-x-ln-lef.md"
+  },
+  {
+   "it": {
+    "n": 2,
+    "slug": "q712798-crazy-int-0-infty-3f-2-left-begin-array-c-tfrac5",
+    "title": "Crazy $\\int_0^\\infty{_3F_2}\\left(\\begin{array}c\\tfrac58,\\tfrac58,\\tfrac98\\\\\\tfrac12,\\tfrac{13}8\\end{array}\\middle|\\ {-x}\\right)^2\\frac{dx}{\\sqrt x}$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q712798-crazy-int-0-infty-3f-2-left-begin-array-c-tfrac5.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q712798-crazy-int-0-infty-3f-2-left-begin-array-c-tfrac5.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q712798-crazy-int-0-infty-3f-2-left-begin-array-c-tfrac5.md"
+   },
+   "truth": {
+    "closed_form_latex": "I=\\frac{50\\,\\pi^{3/2}}{3\\,\\Gamma^2\\!\\left(\\frac14\\right)}\\left(\\ln\\left(3+\\sqrt{8}\\right)-\\sqrt{2}\\right)",
+    "mpmath_expr": "50*mp.pi**(mp.mpf(3)/2)/(3*mp.gamma(mp.mpf(1)/4)**2) * (mp.log(3+mp.sqrt(8)) - mp.sqrt(2))",
+    "value": "2.460685302449425108981967679044937181350",
+    "direct_value": "2.460685302449425108981733915013",
+    "digits_verified": 22,
+    "notes": "Main quantity: I = int_0^inf [3F2(5/8,5/8,9/8; 1/2,13/8; -x)]^2 dx/sqrt(x). Cleo's answer has a single part (the closed form above); no other integrals in the question. Direct verification: mpmath quad at dps=40 over [0,1,10,100,1000,10000,inf] using mp.hyp3f2 (mpmath analytically continues 3F2 for large negative argument; integrand decays like x^{-7/4} log^2 x so the tail converges). Direct value agrees with the closed form to ~22 significant digits (difference 2.3e-22, quadrature error estimate 1e-42 is optimistic relative to hyp3f2 evaluation accuracy at dps=40). Ground truth confirmed; no doubt. Note ln(3+sqrt(8)) = 2 ln(1+sqrt(2))."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\frac{25\\,\\Gamma\\!\\left(\\tfrac34\\right)^{2}}{3\\sqrt{\\pi}}\\left(2\\ln\\!\\left(1+\\sqrt{2}\\right)-\\sqrt{2}\\right)\\;=\\;\\frac{50\\,\\pi^{3/2}}{3\\,\\Gamma\\!\\left(\\tfrac14\\right)^{2}}\\left(2\\ln\\!\\left(1+\\sqrt{2}\\right)-\\sqrt{2}\\right)",
+    "mpmath_expr": "25*mp.gamma(mp.mpf(3)/4)**2/(3*mp.sqrt(mp.pi))*(2*mp.log(1+mp.sqrt(2))-mp.sqrt(2))",
+    "closed_form_value": "2.460685302449425108981967679044937181349580663151474781",
+    "integral_value": "2.460685302449425108981967679044937181349580663151474781",
+    "digits_matched": 60,
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q712798-crazy-int-0-infty-3f-2-left-begin-array-c-tfrac5.md",
+    "summary": "The parameters (5/8,5/8,9/8;1/2,13/8) are (a,a,a+1/2;1/2,a+1) with a=5/8, so the 3F2 equals 2a*int_0^1 v^{2a-1} Re(1+iv sqrt(x))^{-2a} dv via a quadratic 2F1 identity and an Euler integral. Squaring and applying Fubini reduces I to int_0^infty Re(1+iuy)^{-5/4} Re(1+ivy)^{-5/4} dy, evaluated exactly by two justified contour deformations: the ++ term is purely imaginary, and the mixed term's real part is a Beta integral after completing the square, leaving the elementary double integral of sqrt(uv)/(u+v)^{3/2} over the unit square. Result: I = 25*Gamma(3/4)^2/(3 sqrt(pi)) * (2 ln(1+sqrt2) - sqrt2). Direct 60-dps quadrature of the squared hypergeometric agrees with the closed form to ~60 significant digits (relative difference 1.3e-61), and an independent Mellin-Parseval Gamma-integral agrees to 6e-61. Every interchange, branch choice, and contour shift is justified in the solution file; confidence is very high with no known gaps."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "2.46068530244942510898196767904",
+    "solver_value": "2.46068530244942510898196767904",
+    "derivation_quality": "complete",
+    "notes": "Recomputed both mpmath expressions at dps=50: they agree to full precision (difference 1.6e-50). The solver's form 50*pi^(3/2)/(3*Gamma(1/4)^2)*(2*ln(1+sqrt2)-sqrt2) is literally identical to the ground truth 50*pi^(3/2)/(3*Gamma(1/4)^2)*(ln(3+sqrt8)-sqrt2), since ln(3+sqrt8)=2ln(1+sqrt2). The write-up is a complete, self-contained derivation: quadratic 2F1 identity (Step 1), Euler integral shift (Step 2), justified Fubini with explicit majorant (Step 3), two carefully-justified contour deformations giving Re(J+)=0 and the Beta-integral form of Re(J-) (Step 4), and an elementary double integral reduced to arcsinh (Steps 5-6), all with branch/analytic-continuation care. Spot-checks of the assembly constants and Beta evaluation are consistent. No doubt about the ground truth."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "solve": "wf_007e7cf5-6e3",
+    "grade": "wf_f8778cfa-582"
+   },
+   "solution_md": "results/solutions/q712798-crazy-int-0-infty-3f-2-left-begin-array-c-tfrac5.md"
+  },
+  {
+   "it": {
+    "n": 3,
+    "slug": "q908108-how-to-find-large-int-0-1-frac-ln-3-1-x-ln-x-x-m",
+    "title": "How to find ${\\large\\int}_0^1\\frac{\\ln^3(1+x)\\ln x}x\\mathrm dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q908108-how-to-find-large-int-0-1-frac-ln-3-1-x-ln-x-x-m.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q908108-how-to-find-large-int-0-1-frac-ln-3-1-x-ln-x-x-m.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q908108-how-to-find-large-int-0-1-frac-ln-3-1-x-ln-x-x-m.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\frac{\\pi^2}{3}\\ln^3 2-\\frac{2}{5}\\ln^5 2+\\frac{\\pi^2}{2}\\zeta(3)+\\frac{99}{16}\\zeta(5)-\\frac{21}{4}\\zeta(3)\\ln^2 2-12\\operatorname{Li}_4\\!\\left(\\tfrac12\\right)\\ln 2-12\\operatorname{Li}_5\\!\\left(\\tfrac12\\right)",
+    "mpmath_expr": "mp.pi**2/3*mp.log(2)**3 - mp.mpf(2)/5*mp.log(2)**5 + mp.pi**2/2*mp.zeta(3) + mp.mpf(99)/16*mp.zeta(5) - mp.mpf(21)/4*mp.zeta(3)*mp.log(2)**2 - 12*mp.polylog(4, mp.mpf(1)/2)*mp.log(2) - 12*mp.polylog(5, mp.mpf(1)/2)",
+    "value": "-0.05760941065877899523479148890918537945886",
+    "direct_value": "-0.05760941065877899523479148890918537945886",
+    "digits_verified": 40,
+    "notes": "Main quantity: I = int_0^1 ln^3(1+x) ln(x) / x dx. Cleo's answer gives a single closed form for this (the other integrals (2)-(4) in the question are examples the asker already knew, not asked for). Direct numerical integration with mpmath's mp.quad (tanh-sinh handles the mild logarithmic singularity at x=0; ln^3(1+x)/x -> 0 there so the integrand ~ x^2 ln x near 0) agrees with the closed form to all 40 reported digits (checked to ~59 digits at dps=60, |diff| ~ 1.7e-60). No doubt about the ground truth. Conventions: Li_n(1/2) = mp.polylog(n, 1/2); zeta = Riemann zeta."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\int_0^1\\frac{\\ln^3(1+x)\\ln x}{x}\\,dx=\\frac{99}{16}\\zeta(5)+\\frac{\\pi^{2}}{2}\\zeta(3)-\\frac{21}{4}\\zeta(3)\\ln^{2}2+\\frac{\\pi^{2}}{3}\\ln^{3}2-\\frac{2}{5}\\ln^{5}2-12\\ln 2\\,\\operatorname{Li}_4\\!\\left(\\tfrac12\\right)-12\\operatorname{Li}_5\\!\\left(\\tfrac12\\right)",
+    "mpmath_expr": "99*mp.zeta(5)/16 + mp.pi**2*mp.zeta(3)/2 - 21*mp.zeta(3)*mp.log(2)**2/4 + mp.pi**2*mp.log(2)**3/3 - 2*mp.log(2)**5/5 - 12*mp.log(2)*mp.polylog(4, mp.mpf(1)/2) - 12*mp.polylog(5, mp.mpf(1)/2)",
+    "closed_form_value": "-0.0576094106587789952347914889091853794588600022236483071329623962670128085772",
+    "integral_value": "-0.0576094106587789952347914889091853794588600022236483071329623962670128085772",
+    "digits_matched": 118,
+    "solution_file": "/home/riv/Code/cleo-bench/results/solutions/q908108-how-to-find-large-int-0-1-frac-ln-3-1-x-ln-x-x-m.md",
+    "summary": "Solved with a complete self-contained derivation. Two transformations of the companion integral K = int_0^1 ln^2(x)ln^2(1+x)/(1+x)dx \u2014 the Mobius map v=1/(1+x) and the Landen map t=u/(1+u) applied to M = int_0^{1/2} ln^2(t)ln^2(1-t)/t dt \u2014 give two linear equations in (I,K,M) whose difference eliminates K and M, because the Landen expansion reproduces I itself as one of its terms. The remaining inputs are proved from scratch: Euler's sum H_n/n^4 = 3z5 - z2z3 (partial-fraction/Tornheim systems), the alternating sum (-1)^(n-1)H_n/n^4 = 59/32 z5 - z2z3/2 (a full-rank 13x11 linear system from signed stuffles, signed Nielsen partial-fraction relations, and parity doubling, all convergence steps justified), and the Li_2(1/2), Li_3(1/2) ladders; Li_4(1/2), Li_5(1/2) enter only through elementary termwise integrations. Verification: quadrature vs closed form agree to 118 significant digits; an independent nested-series evaluation agrees to 63 digits; every intermediate identity was checked symbolically over Q and numerically to >=55 digits, and an independent computer solve of the full weight-5 level-2 alternating-MZV algebra reproduces the same closed form. No caveats beyond standard real-analysis justifications, which are given explicitly."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "-0.0576094106587789952347914889092",
+    "solver_value": "-0.0576094106587789952347914889092",
+    "derivation_quality": "complete",
+    "notes": "The solver's mpmath expression is term-for-term identical to the ground-truth expression; both recomputed at dps=50 give -0.05760941065877899523479148890918537945886, and direct quadrature of int_0^1 ln^3(1+x)ln(x)/x dx agrees to ~50 digits. The write-up is a genuine, self-contained derivation: IBP reduces I to K, a Mobius map plus a Landen substitution t=u/(1+u) on M produces a second linear relation in which I itself reappears (X1=I), and subtracting eliminates K and M. Pivotal inputs were spot-checked numerically: the alternating Euler sum A=59/32 zeta(5)-1/2 zeta(2)zeta(3), J=zeta(3)/4, Li_3(1/2), the X_2 expansion (16), and I=-3/2 K all match. Ground truth is solid; verdict correct with a complete derivation."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "grade": "wf_c5b8f222-105",
+    "solve": "wf_c5b8f222-105"
+   },
+   "solution_md": "results/solutions/q908108-how-to-find-large-int-0-1-frac-ln-3-1-x-ln-x-x-m.md"
+  },
+  {
+   "it": {
+    "n": 4,
+    "slug": "q1142705-evaluate-int-0-pi-2-frac-x-2-log-2-sin-x-sin-2x",
+    "title": "Evaluate $\\int_0^{\\pi/2}\\frac{x^2\\log^2{(\\sin{x})}}{\\sin^2x}dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q1142705-evaluate-int-0-pi-2-frac-x-2-log-2-sin-x-sin-2x.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q1142705-evaluate-int-0-pi-2-frac-x-2-log-2-sin-x-sin-2x.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1142705-evaluate-int-0-pi-2-frac-x-2-log-2-sin-x-sin-2x.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\frac{\\pi}{3}\\ln^{3}2-\\pi\\ln^{2}2+2\\pi\\ln 2+\\frac{\\pi^{3}}{6}\\left(\\ln 2-1\\right)+\\frac{\\pi}{8}\\zeta(3)",
+    "mpmath_expr": "mp.pi/3*mp.log(2)**3 - mp.pi*mp.log(2)**2 + 2*mp.pi*mp.log(2) + mp.pi**3/6*(mp.log(2)-1) + mp.pi/8*mp.zeta(3)",
+    "value": "2.080846527143262462668490902860045494062",
+    "direct_value": "2.080846527143262462668490902860045494062",
+    "digits_verified": 40,
+    "notes": "Main quantity: I = \u222b_0^{\u03c0/2} x^2 log^2(sin x)/sin^2 x dx. Cleo's answer has a single expression (no other parts). Verified with mp.dps=50 by direct mp.quad over [0, \u03c0/4, \u03c0/2] (integrand ~ log^2 x near 0, integrable; no transform needed); closed form and direct value differ by ~5e-51, agreeing to at least 40 significant digits. No doubt about the ground truth. The problem statement also cites the known first-power log integral \u222b x^2 log(sin x)/sin^2 x dx = \u03c0 ln2 \u2212 (\u03c0/2)ln^2 2 \u2212 \u03c0^3/12, which is only a hint, not part of the asked answer."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\frac{\\pi\\,\\zeta(3)}{8}+\\frac{\\pi^{3}\\ln 2}{6}+\\frac{\\pi\\ln^{3}2}{3}+2\\pi\\ln 2-\\pi\\ln^{2}2-\\frac{\\pi^{3}}{6}",
+    "mpmath_expr": "mp.pi*mp.zeta(3)/8 + mp.pi**3*mp.log(2)/6 + mp.pi*mp.log(2)**3/3 + 2*mp.pi*mp.log(2) - mp.pi*mp.log(2)**2 - mp.pi**3/6",
+    "closed_form_value": "2.08084652714326246266849090286004549406212100731588547858680778590265996293",
+    "integral_value": "2.08084652714326246266849090286004549406212100731588547858680778590265996293",
+    "digits_matched": 90,
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1142705-evaluate-int-0-pi-2-frac-x-2-log-2-sin-x-sin-2x.md",
+    "summary": "Integration by parts with v = -cot x reduces I to 2K + 2J - 2M, where K = int x cot x log^2(sin x), J is the hinted single-log integral (re-derived, matching the poser's note), and M = int x^2 log(sin x). The key piece K comes from the identity s*F(s) = pi/2 - W(s) with F(s) = int_0^{pi/2} x cot x sin^s x dx and W(s) the Wallis/Beta integral, expanded to third order at s = 0 using psi, psi', psi'' at 1 and 1/2; M follows from the Fourier series of log(2 sin x) with an L^2 justification of termwise integration, giving M = 3*pi*zeta(3)/16 - pi^3*ln2/24. All limit interchanges, boundary terms, and branch choices are justified in the solution file. The closed form agrees with direct high-precision quadrature to 90 significant digits (tanh-sinh at dps = 90, diff 4.9e-91) and to full 60-digit precision by an independent Gauss-Legendre computation with an analytic treatment of the log^2 endpoint singularity; every intermediate identity was also verified numerically. Confidence is very high; no gaps remain."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "2.08084652714326246266849090286",
+    "solver_value": "2.08084652714326246266849090286",
+    "derivation_quality": "mostly_complete",
+    "notes": "Recomputed both mpmath expressions at dps=50: identical to all 50 digits (diff ~5e-51) and matching independent mp.quad of the integral; ground truth is beyond doubt. Solver's form is the same expression with pi^3/6*(ln2-1) distributed, so verdict is correct. The full write-up file is absent, so derivation was graded from the structured summary, which fully specifies the route (IBP to I=2K+2J-2M; K via s*F(s)=pi/2-W(s) with third-order Wallis expansion; M and J closed forms); I independently verified every pivotal step numerically to ~40 digits and the assembly reproduces the answer exactly, with only routine expansion arithmetic unshown, hence mostly_complete rather than complete."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "solve": "wf_007e7cf5-6e3",
+    "grade": "wf_835c2285-3e8"
+   },
+   "solution_md": "results/solutions/q1142705-evaluate-int-0-pi-2-frac-x-2-log-2-sin-x-sin-2x.md"
+  },
+  {
+   "it": {
+    "n": 5,
+    "slug": "q1595389-integral-large-int-0-pi-2-arctan-2-left-frac-sin",
+    "title": "Integral ${\\large\\int}_0^{\\pi/2}\\arctan^2\\!\\left(\\frac{\\sin x}{\\sqrt3+\\cos x}\\right)dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q1595389-integral-large-int-0-pi-2-arctan-2-left-frac-sin.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q1595389-integral-large-int-0-pi-2-arctan-2-left-frac-sin.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1595389-integral-large-int-0-pi-2-arctan-2-left-frac-sin.md"
+   },
+   "truth": {
+    "closed_form_latex": "I=\\frac{\\pi}{20}\\ln^2 3+\\frac{\\pi}{4}\\operatorname{Li}_2\\!\\left(\\tfrac13\\right)-\\frac15\\operatorname{Ti}_3\\!\\left(\\sqrt3\\right),\\qquad \\operatorname{Ti}_3\\!\\left(\\sqrt3\\right)=\\Im\\!\\left[\\operatorname{Li}_3\\!\\left(i\\sqrt3\\right)\\right]",
+    "mpmath_expr": "mp.pi/20*mp.log(3)**2 + mp.pi/4*mp.polylog(2, mp.mpf(1)/3) - mp.im(mp.polylog(3, mp.mpc(0,1)*mp.sqrt(3)))/5",
+    "value": "0.1563713913757117012308376032666315220204",
+    "direct_value": "0.1563713913757117012308376032666315220204",
+    "digits_verified": 40,
+    "notes": "Main quantity: I = \u222b_0^{\u03c0/2} arctan\u00b2(sin x / (\u221a3 + cos x)) dx. Cleo's closed form is \u03c0/20\u00b7ln\u00b23 + \u03c0/4\u00b7Li\u2082(1/3) \u2212 (1/5)\u00b7Ti\u2083(\u221a3), where Ti\u2083 is the generalized inverse tangent integral, expressed as Im[Li\u2083(i\u221a3)]. Direct numerical integration (mp.quad on [0, \u03c0/2], smooth integrand) agrees with the closed form to ~60 digits (diff ~4e-62), and matches the asker's quoted numeric value 0.156371391375711701230837603266631522020409597791... Cleo also gives two equivalent forms of Ti\u2083(\u221a3): (\u221a3/8)\u00b7\u03a6(\u22123,3,1/2) (Lerch transcendent) and (5\u221a3/4)\u00b7\u2084F\u2083(1/2,1/2,1/2,1/2; 3/2,3/2,3/2; 3/4) \u2212 5\u03c0\u00b3/432 \u2212 (\u03c0/16)ln\u00b23; I verified the \u2084F\u2083 form numerically equals Im[Li\u2083(i\u221a3)] to 30 digits. No doubt about the ground truth."
+   },
+   "solve": {
+    "closed_form_latex": "I=\\operatorname{Im}\\operatorname{Li}_3\\!\\left(\\frac{i}{\\sqrt{3}}\\right)-\\operatorname{Im}\\operatorname{Li}_3\\!\\left(\\frac{3+i\\sqrt{3}}{6}\\right)+\\frac{\\pi}{4}\\operatorname{Li}_2\\!\\left(\\frac{1}{3}\\right)-\\frac{11\\pi^{3}}{648}+\\frac{\\pi\\ln^{2}3}{24}\\;\\left[=\\frac{\\pi}{4}\\operatorname{Li}_2\\!\\left(\\frac13\\right)+\\frac15\\operatorname{Ti}_3\\!\\left(\\frac{1}{\\sqrt3}\\right)-\\frac{\\pi^{3}}{80}+\\frac{3\\pi\\ln^{2}3}{80}\\ \\text{via a 300-digit-verified ladder}\\right]",
+    "closed_form_value": "0.15637139137571170123083760326663152202040959779133939842807852631660402409651551958154754445742522",
+    "digits_matched": 300,
+    "integral_value": "0.15637139137571170123083760326663152202040959779133939842807852631660402409651551958154754445742522",
+    "mpmath_expr": "mp.im(mp.polylog(3, mp.mpc(0,1)/mp.sqrt(3))) - mp.im(mp.polylog(3, (3+mp.sqrt(3)*mp.mpc(0,1))/6)) + mp.pi*mp.polylog(2, mp.mpf(1)/3)/4 - 11*mp.pi**3/648 + mp.pi*mp.log(3)**2/24",
+    "solution_file": "/home/riv/Code/cleo-bench/results/solutions/q1595389-integral-large-int-0-pi-2-arctan-2-left-frac-sin.md",
+    "status": "solved",
+    "summary": "Writing arctan(sin x/(sqrt3+cos x)) = Im ln(1+e^{ix}/sqrt3), I reduced I = (1/2)\u222b|L|^2 - (1/2)Re\u222bL^2 over the quarter arc to explicit polylogarithmic primitives (a Nielsen-type two-log integral handled by a Moebius substitution with verified cut-free paths), then collapsed everything with proved one-variable dilogarithm identities (reflection, Landen, inversion, duplication, Clausen values, Ti2(tan \u03b8) formula) and Kummer's three-term trilogarithm identity at z=i/sqrt3 (proved by differentiation plus the identity principle). The fully proved closed form is I = ImLi3(i/sqrt3) - ImLi3((3+i sqrt3)/6) + (pi/4)Li2(1/3) - 11pi^3/648 + pi ln^2(3)/24, verified against direct 310-digit quadrature (agreement > 300 digits); the exact coefficient collapse was double-checked in exact arithmetic with sympy. A trilogarithm ladder relation, verified to 300 digits but not proved (single-variable functional equations provably cannot reach it), converts this to the equivalent minimal form I = (pi/4)Li2(1/3) + (1/5)ImLi3(i/sqrt3) - pi^3/80 + (3/80)pi ln^2 3; the reported primary form does not depend on that unproved step. Confidence in the reported closed form and its derivation is very high; the only caveat (affecting the alternative compact form, not the main result) is documented in the solution file."
+   },
+   "grade": {
+    "verdict": "equivalent_but_different_form",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "0.156371391375711701230837603267",
+    "solver_value": "0.156371391375711701230837603267",
+    "derivation_quality": "complete",
+    "notes": "I recomputed both mpmath expressions at dps=50 and independently ran mp.quad on the integrand; ground truth, solver form, and direct quadrature all agree (differences ~1e-51), matching to well beyond 30 digits. The solver's PRIMARY reported/proved form is a two-trilogarithm expression Im Li3(i/sqrt3) - Im Li3((3+i sqrt3)/6) + (pi/4)Li2(1/3) - 11pi^3/648 + pi ln^2 3/24, structurally different from Cleo's single-Ti3(sqrt3) form but numerically identical (hence equivalent_but_different_form). The write-up is a complete, rigorous derivation of that primary form: contour reduction of I=(1/2)int|L|^2-(1/2)Re int L^2, explicit polylog primitives with branch/path control, classical dilog lemmas, and Kummer's three-term identity (6.2, which I verified numerically). The only unproved step (the ladder star converting to the compact single-Ti3 minimal form) is explicitly flagged and does NOT affect the reported primary answer; I confirmed star holds numerically to full precision. No doubt about the ground truth."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "grade": "wf_c5b8f222-105",
+    "solve": "wf_c5b8f222-105"
+   },
+   "solution_md": "results/solutions/q1595389-integral-large-int-0-pi-2-arctan-2-left-frac-sin.md"
+  },
+  {
+   "it": {
+    "n": 6,
+    "slug": "q1588996-yet-another-log-sin-integral-int-limits-0-pi-3-l",
+    "title": "Yet another log-sin integral $\\int\\limits_0^{\\pi/3}\\log(1+\\sin x)\\log(1-\\sin x)\\,dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q1588996-yet-another-log-sin-integral-int-limits-0-pi-3-l.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q1588996-yet-another-log-sin-integral-int-limits-0-pi-3-l.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1588996-yet-another-log-sin-integral-int-limits-0-pi-3-l.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\int_0^{\\pi/3}\\ln(1+\\sin x)\\ln(1-\\sin x)\\,dx=\\frac{29\\pi^3}{216}+\\frac{5\\pi}{6}\\ln^2\\!\\left(2+\\sqrt{3}\\right)+\\frac{\\pi}{3}\\ln^2 2+\\frac{\\pi^2}{3\\sqrt{3}}\\ln 2+\\frac{8G}{3}\\ln\\!\\left(2+\\sqrt{3}\\right)-4\\,\\operatorname{Ti}_3\\!\\left(2+\\sqrt{3}\\right)-\\frac{\\psi^{(1)}\\!\\left(\\tfrac13\\right)}{2\\sqrt{3}}\\ln 2",
+    "mpmath_expr": "29*mp.pi**3/216 + 5*mp.pi/6*mp.log(2+mp.sqrt(3))**2 + mp.pi/3*mp.log(2)**2 + mp.pi**2/(3*mp.sqrt(3))*mp.log(2) + 8*mp.catalan/3*mp.log(2+mp.sqrt(3)) - 4*mp.polylog(3, mp.mpc(0,1)*(2+mp.sqrt(3))).imag - mp.zeta(2, mp.mpf(1)/3)/(2*mp.sqrt(3))*mp.log(2)",
+    "value": "-0.4114242552282410537103283722220855175392",
+    "direct_value": "-0.4114242552282410537103283722220855175392",
+    "digits_verified": 40,
+    "notes": "Main quantity: the definite integral I = int_0^{pi/3} log(1+sin x) log(1-sin x) dx (the only quantity asked). Cleo's answer is a single closed form with no other parts. Conventions: Ti_3(z) = Im Li_3(iz), implemented as mp.polylog(3, 1j*(2+sqrt(3))).imag (argument iz lies on the imaginary axis, off the polylog branch cut, so mpmath's continuation is unambiguous); trigamma psi^(1)(1/3) implemented as Hurwitz zeta mp.zeta(2, 1/3); G = mp.catalan. Direct verification: mp.quad (tanh-sinh) of the integrand on [0, pi/3] at dps=60 agrees with the closed form to ~60 digits (difference ~1e-60); no singularity on the closed interval since sin(pi/3)<1. Ground truth confirmed with no doubt. Numerical value also matches the ~-0.41142425522824105371 quoted in the problem statement."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "-\\frac{25\\pi^3}{216}+\\frac{\\pi}{3}\\log^2 2-\\log 2\\,\\operatorname{Cl}_2\\!\\left(\\frac{\\pi}{3}\\right)-\\frac{\\pi}{6}\\log^2\\!\\left(2+\\sqrt{3}\\right)+\\frac{8G}{3}\\log\\!\\left(2+\\sqrt{3}\\right)+4\\,\\operatorname{Ti}_3\\!\\left(2-\\sqrt{3}\\right)",
+    "mpmath_expr": "-25*mp.pi**3/216 + mp.pi*mp.log(2)**2/3 - mp.log(2)*mp.clsin(2, mp.pi/3) - mp.pi*mp.log(2+mp.sqrt(3))**2/6 + 8*mp.catalan*mp.log(2+mp.sqrt(3))/3 + 4*mp.im(mp.polylog(3, mp.mpc(0,1)*(2-mp.sqrt(3))))",
+    "closed_form_value": "-0.411424255228241053710328372222085517539223496031392",
+    "integral_value": "-0.411424255228241053710328372222085517539223496031392",
+    "digits_matched": 109,
+    "solution_file": "/home/riv/Code/cleo-bench/results/solutions/q1588996-yet-another-log-sin-integral-int-limits-0-pi-3-l.md",
+    "summary": "The identity ab = ((a+b)^2-(a-b)^2)/4 splits the integral as I = int_0^{pi/3} log^2 cos x dx - 2 int_1^{2+sqrt3} log^2 w/(1+w^2) dw. The log-cosine part is evaluated by integrating log^2(1-z)/z along the unit circle with an explicit trilogarithm antiderivative (giving int_0^{pi/3} log^2(2cos) = pi^3/108 and int_0^{pi/3} log(2cos) = Cl_2(pi/3)/2, using Li_2, Li_3 at e^{i pi/3} proved via multiplication formulas and Bernoulli-Fourier sums); the log-tangent part reduces to Ti_2(2+sqrt3) = 2G/3 + 5 pi/12 log(2+sqrt3) (re-derived via a Clausen/character-sum argument) and Ti_3(2\u00b1sqrt3) related by the inversion Ti_3(x)+Ti_3(1/x) = pi/4 log^2 x + pi^3/16. Every branch choice and interchange is justified in the solution file, and each intermediate identity plus the final formula was verified numerically: direct quadrature and the closed form agree to 109 significant digits at 110-digit precision. A PSLQ search (up to 220 digits) found no further reduction of Ti_3(2-sqrt3) over a natural 20-element weight-3 basis, so the answer is presumably in minimal form. Confidence is very high; no gaps identified."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "-0.411424255228241053710328372222",
+    "solver_value": "-0.411424255228241053710328372222",
+    "derivation_quality": "complete",
+    "notes": "I recomputed both mpmath expressions at dps=50; ground truth and solver both give -0.41142425522824105371... agreeing with each other and with direct tanh-sinh quadrature to ~50 digits (diff ~2e-50). The forms are essentially identical: the solver even provides the intermediate form (Eq 17-18) that matches the ground truth term-for-term once one uses the verified identity -log2*Cl_2(pi/3) = pi^2/(3sqrt3)log2 - psi^(1)(1/3)/(2sqrt3)log2 (confirmed numerically to 20 digits), and the boxed answer just applies the explicit Ti_3 inversion to swap Ti_3(2+sqrt3) for Ti_3(2-sqrt3). The write-up is a genuine, self-contained derivation (algebraic split I=A-2B, contour/antiderivative evaluation of the log-cosine part, Clausen/character sums for Ti_2, inversion formulas for Ti_3); spot-checks of the split, Eq (1.9) = pi^3/108, and Eq (2.4) Ti_2(2-sqrt3) all held to 20 digits. Ground truth itself is solid, no doubt."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "grade": "wf_c5b8f222-105",
+    "solve": "wf_c5b8f222-105"
+   },
+   "solution_md": "results/solutions/q1588996-yet-another-log-sin-integral-int-limits-0-pi-3-l.md"
+  },
+  {
+   "it": {
+    "n": 7,
+    "slug": "q418134-calculating-int-pi-2-pi-frac-x-sin-x-5-4-cos-x-m",
+    "title": "Calculating $\\int_{\\pi/2}^{\\pi}\\frac{x\\sin{x}}{5-4\\cos{x}}\\,\\mathrm dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q418134-calculating-int-pi-2-pi-frac-x-sin-x-5-4-cos-x-m.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q418134-calculating-int-pi-2-pi-frac-x-sin-x-5-4-cos-x-m.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q418134-calculating-int-pi-2-pi-frac-x-sin-x-5-4-cos-x-m.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\pi\\left(\\frac{\\ln 3}{2}-\\frac{\\ln 2}{4}-\\frac{\\ln 5}{8}\\right)-\\frac{1}{2}\\operatorname{Ti}_2\\!\\left(\\frac{1}{2}\\right)",
+    "mpmath_expr": "mp.pi*(mp.log(3)/2 - mp.log(2)/4 - mp.log(5)/8) - mp.im(mp.polylog(2, mp.mpc(0, '0.5')))/2",
+    "value": "0.3056636556244567842879511119999482029040",
+    "direct_value": "0.3056636556244567842879511119999482029040",
+    "digits_verified": 40,
+    "notes": "Main quantity: the definite integral I = int_{pi/2}^{pi} x*sin(x)/(5-4*cos(x)) dx. Cleo gives I = pi*(ln3/2 - ln2/4 - ln5/8) - (1/2)*Ti_2(1/2), where Ti_2 is the inverse tangent integral; she also restates the same value with Im chi_2(i/2) in place of Ti_2(1/2) (identical, not a separate part). Convention: Ti_2(z) = Im Li_2(i z) for real z, implemented as mp.im(mp.polylog(2, i/2)). Verification: closed form evaluated at dps=50/60 matches direct mp.quad integration (smooth integrand, denominator >= 1 on the interval) to better than 50 digits (difference ~2.7e-51). No doubt about ground truth. Scratch script: /tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/truth/q418134-calculating-int-pi-2-pi-frac-x-sin-x-5-4-cos-x-m/check.py"
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\int_{\\pi/2}^{\\pi}\\frac{x\\sin x}{5-4\\cos x}\\,dx=\\frac{\\pi}{8}\\ln\\frac{81}{20}-\\frac{1}{2}\\,\\operatorname{Ti}_2\\!\\left(\\frac{1}{2}\\right)=\\frac{\\pi}{8}\\ln\\frac{81}{20}-\\frac{1}{2}\\,\\Im\\,\\operatorname{Li}_2\\!\\left(\\frac{i}{2}\\right)",
+    "mpmath_expr": "mp.pi/8*mp.log(mp.mpf(81)/20) - mp.im(mp.polylog(2, mp.mpc(0, mp.mpf(1)/2)))/2",
+    "closed_form_value": "0.30566365562445678428795111199994820290395346929706",
+    "integral_value": "0.30566365562445678428795111199994820290395346929706",
+    "digits_matched": 250,
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q418134-calculating-int-pi-2-pi-frac-x-sin-x-5-4-cos-x-m.md",
+    "summary": "Integrate by parts using sin x/(5-4cos x) = (1/4) d/dx ln(5-4cos x), reducing I to boundary terms minus (1/4)\u222b_{\u03c0/2}^{\u03c0} ln(5-4cos x) dx. Factor 5-4cos x = 4|1 - e^{ix}/2|^2 and integrate the uniformly convergent series ln|1 - e^{ix}/2| = -\u03a3 cos(nx)/(n 2^n) term by term (Weierstrass M-test; an independent antiderivative argument via Im Li\u2082(e^{ix}/2) confirms it), giving \u222b_{\u03c0/2}^{\u03c0} ln(5-4cos x) dx = \u03c0 ln 2 + 2 Ti\u2082(1/2). Assembling yields I = (\u03c0/8)ln(81/20) - (1/2)Ti\u2082(1/2), where Ti\u2082 is the inverse tangent integral (= Im Li\u2082(i/2)); an independent Fourier-sine-kernel route reproduces the same value. Numerics: direct mp.quad at 250 dps agrees with the closed form to ~250 significant digits, and all sub-identities check at 60+ digits. Caveat (form, not correctness): Ti\u2082(1/2) has no known reduction to \u03c0, logs and Catalan's constant \u2014 a 250-digit PSLQ search found no relation and exposed the 60-digit candidate as spurious \u2014 so this is the accepted closed form."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "0.305663655624456784287951111999",
+    "solver_value": "0.305663655624456784287951111999",
+    "derivation_quality": "mostly_complete",
+    "notes": "Recomputed both mpmath expressions at 50 dps: truth, solver, and direct mp.quad of the integral all give 0.30566365562445678428795111199994820290..., agreeing to full precision (residual ~2.7e-51). Solver's pi/8*ln(81/20) is algebraically identical to Cleo's pi(ln3/2 - ln2/4 - ln5/8), and both share the -(1/2)Ti2(1/2) term, so this is the same form. The solver's full write-up file at the stated path does not exist; only the structured summary is available, but it states a correct derivation chain (IBP, factorization 5-4cos x = 4|1-e^{ix}/2|^2, term-by-term log-series integration) whose pivotal lemma int_{pi/2}^{pi} ln(5-4cos x) dx = pi ln 2 + 2 Ti2(1/2) and IBP assembly I verified independently at 50 dps; rated mostly_complete due to the compressed presentation. No doubt about the ground truth."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "solve": "wf_007e7cf5-6e3",
+    "grade": "wf_835c2285-3e8"
+   },
+   "solution_md": "results/solutions/q418134-calculating-int-pi-2-pi-frac-x-sin-x-5-4-cos-x-m.md"
+  },
+  {
+   "it": {
+    "n": 8,
+    "slug": "q1279165-integrals-of-the-form-large-int-0-infty-operator",
+    "title": "Integrals of the form ${\\large\\int}_0^\\infty\\operatorname{arccot}(x)\\cdot\\operatorname{arccot}(a\\,x)\\cdot\\operatorname{arccot}(b\\,x)\\ dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q1279165-integrals-of-the-form-large-int-0-infty-operator.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q1279165-integrals-of-the-form-large-int-0-infty-operator.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1279165-integrals-of-the-form-large-int-0-infty-operator.md"
+   },
+   "truth": {
+    "closed_form_latex": "I(2,1)=\\frac{\\pi^2}{3}\\ln 2-\\frac{\\pi^2}{6}\\ln 3+2\\ln^2 2\\,\\ln 3-3\\ln 2\\,\\ln^2 3+\\frac{29}{24}\\ln^3 3+\\frac{73}{16}\\zeta(3)-2\\ln 2\\,\\operatorname{Li}_2\\!\\left(\\tfrac13\\right)-\\frac{13}{4}\\operatorname{Li}_3\\!\\left(\\tfrac13\\right)-4\\operatorname{Li}_3\\!\\left(\\tfrac23\\right)",
+    "mpmath_expr": "mp.pi**2/3*mp.log(2) - mp.pi**2/6*mp.log(3) + 2*mp.log(2)**2*mp.log(3) - 3*mp.log(2)*mp.log(3)**2 + mp.mpf(29)/24*mp.log(3)**3 + mp.mpf(73)/16*mp.zeta(3) - 2*mp.log(2)*mp.polylog(2, mp.mpf(1)/3) - mp.mpf(13)/4*mp.polylog(3, mp.mpf(1)/3) - 4*mp.polylog(3, mp.mpf(2)/3)",
+    "value": "1.512086054444279192609567270122071215051",
+    "direct_value": "1.512086054444279192609567270122071215051",
+    "digits_verified": 45,
+    "notes": "Main quantity: I(2,1) = Integral_0^infty arccot(x)^2 * arccot(2x) dx, the first specific case the question asks for (\"at least, for I(2,1) or I(3,1)\"). Cleo's answer gives three results; I took I(2,1) as primary. Direct verification via mp.quad at dps=50 (split at x=1) matches the closed form to ~50 digits (abs diff ~1.3e-50). I also verified Cleo's second result I(3,1) = 13pi^2/12 ln2 - 4pi^2/9 ln3 - (1/3)ln2 ln^2 3 + (7/18)ln^3 3 - (13/8)zeta(3) + ln3 Li_2(1/3) + (4/3)Li_3(1/3) - (2/3)Li_3(2/3) = 1.250963867409523009160423684410674900800..., which matches direct integration to 45 shown digits. Cleo's answer also contains an I(phi,1) closed form (phi = golden ratio) which I did not verify. arccot convention: arccot(x) = arctan(1/x) for x>0 (standard, both integrands positive-decaying). No doubt about the ground truth."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "I(2,1)=\\frac{21}{4}\\zeta(3)+\\frac{17}{2}\\operatorname{Li}_3\\!\\left(-\\tfrac12\\right)-\\frac34\\operatorname{Li}_3\\!\\left(\\tfrac13\\right)+\\frac34\\operatorname{Li}_3\\!\\left(-\\tfrac13\\right)-\\frac14\\operatorname{Li}_3\\!\\left(-\\tfrac18\\right)-2\\ln 2\\,\\operatorname{Li}_2\\!\\left(\\tfrac13\\right)+\\pi^2\\left(\\frac{3\\ln 3}{8}-\\frac{7\\ln 2}{12}\\right)+2\\ln^2 2\\,\\ln 3-\\ln 2\\,\\ln^2 3-\\frac{7}{24}\\ln^3 2",
+    "mpmath_expr": "21*mp.zeta(3)/4 + 17*mp.polylog(3,mp.mpf(-1)/2)/2 - 3*mp.polylog(3,mp.mpf(1)/3)/4 + 3*mp.polylog(3,mp.mpf(-1)/3)/4 - mp.polylog(3,mp.mpf(-1)/8)/4 - 2*mp.log(2)*mp.polylog(2,mp.mpf(1)/3) + mp.pi**2*(3*mp.log(3)/8 - 7*mp.log(2)/12) + 2*mp.log(2)**2*mp.log(3) - mp.log(2)*mp.log(3)**2 - 7*mp.log(2)**3/24",
+    "closed_form_value": "1.512086054444279192609567270122071215051060651187506931662593594041998044060620041",
+    "integral_value": "1.512086054444279192609567270122071215051060651187506931662593594041998044060620041",
+    "digits_matched": 100,
+    "solution_file": "/home/riv/Code/cleo-bench/results/solutions/q1279165-integrals-of-the-form-large-int-0-infty-operator.md",
+    "summary": "Derived from scratch a general closed form for I(a,1)=\u222b\u2080^\u221e arccot\u00b2x\u00b7arccot(ax)dx via the key lemma \u222b\u2080^\u221e x\u00b7arccot\u00b2x/(x\u00b2+\u03b3\u00b2)dx = (\u03c0\u00b2/4)ln((1+\u03b3)/\u03b3) \u2212 (7/8)\u03b6(3) + \u03c7\u2083((\u03b3\u22121)/(\u03b3+1)), proved by differentiation under the integral, a Landen identity for \u03c7\u2082, and explicit weight-3 antiderivatives (all machine-verified by symbolic differentiation). Integrating this lemma gives a complete closed form for I(a,1) for all a>0 (main branch a\u22651 plus companion for a<1), which reproduces the known I(1,1)=3\u03c0\u00b2ln2/4\u221221\u03b6(3)/8 exactly and specializes via classical dilog/trilog identities to explicit values: the reported I(2,1) and also I(3,1) = \u2212(7/4)\u03b6(3)+(3/2)Li\u2083(1/3)+(1/4)Li\u2083(\u22121/3)+(2/3)Li\u2083(\u22121/2)+ln3\u00b7Li\u2082(1/3)+\u03c0\u00b2(35ln2/36\u22123ln3/8)\u2212ln\u00b32/9+5ln\u00b33/24. Direct 100-dps quadrature of the integral agrees with the closed forms to ~100 significant digits (|diff|<6\u00b710\u207b\u00b9\u2070\u00b9) for a=2 and a=3, and to 60\u201380 digits at many other a including a<1. Confidence is very high; the only caveat is that minimality of the polylog constant basis (Li\u2083(\u22121/2), Li\u2083(\u00b11/3), Li\u2083(\u22121/8), Li\u2082(1/3)) is not claimed \u2014 only correctness."
+   },
+   "grade": {
+    "verdict": "equivalent_but_different_form",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "1.51208605444427919260956727012",
+    "solver_value": "1.51208605444427919260956727012",
+    "derivation_quality": "complete",
+    "notes": "I recomputed both mpmath expressions at dps=50: they agree with each other and with direct quadrature of \u222b\u2080^\u221e arccot\u00b2x\u00b7arccot(2x)dx to ~50 digits (|diff|~5e-51). The solver answers the correct quantity I(2,1). The write-up is a genuine from-scratch derivation: parameter differentiation reducing to N(\u03b3), a Key Lemma (which I numerically verified to 40 digits at \u03b3=0.5,1,2.3), integration via explicit weight-3 antiderivatives, and the general boxed formula (I verified it against direct quadrature at a=2 to 40 digits). Form differs from ground truth (uses Li\u2083(\u22121/2), Li\u2083(\u00b11/3), Li\u2083(\u22121/8) vs Cleo's Li\u2083(1/3), Li\u2083(2/3)), hence equivalent-but-different-form; both share \u22122ln2\u00b7Li\u2082(1/3). No doubt about the ground truth."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "grade": "wf_c5b8f222-105",
+    "solve": "wf_c5b8f222-105"
+   },
+   "solution_md": "results/solutions/q1279165-integrals-of-the-form-large-int-0-infty-operator.md"
+  },
+  {
+   "it": {
+    "n": 9,
+    "slug": "q905653-how-to-find-large-int-1-infty-frac-1-x-ln-x-x-le",
+    "title": "How to find ${\\large\\int}_1^\\infty\\frac{1-x+\\ln x}{x \\left(1+x^2\\right) \\ln^2 x} \\mathrm dx$?",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q905653-how-to-find-large-int-1-infty-frac-1-x-ln-x-x-le.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q905653-how-to-find-large-int-1-infty-frac-1-x-ln-x-x-le.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q905653-how-to-find-large-int-1-infty-frac-1-x-ln-x-x-le.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\frac{\\ln 2}{6}+\\frac{\\ln\\pi}{2}-6\\ln A+\\frac{2G}{\\pi}",
+    "mpmath_expr": "mp.log(2)/6 + mp.log(mp.pi)/2 - 6*mp.log(mp.glaisher) + 2*mp.catalan/mp.pi",
+    "value": "-0.2215155811230437096988300192670019016865",
+    "direct_value": "-0.2215155811230437096988300192670019016865",
+    "digits_verified": 40,
+    "notes": "Main quantity: I = int_1^inf (1 - x + ln x)/(x(1+x^2) ln^2 x) dx. Cleo's answer has a single part: I = ln2/6 + ln(pi)/2 - 6 ln A + 2G/pi, with A the Glaisher-Kinkelin constant (mp.glaisher) and G Catalan's constant (mp.catalan). Direct verification: substituted x = e^u giving int_0^inf (1 - e^u + u)/((1+e^{2u}) u^2) du (removable singularity at u=0, value -1/4, handled via Taylor series for |u|<1e-10) and integrated with mp.quad at dps=50 over [0,1,5,20,60,inf]. Closed form and direct value agree to ~43 significant digits (difference ~2e-44); 40 reported. No doubt about the ground truth. Scratch script: /tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/truth/q905653-how-to-find-large-int-1-infty-frac-1-x-ln-x-x-le/verify.py"
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\int_1^\\infty\\frac{1-x+\\ln x}{x\\left(1+x^2\\right)\\ln^2 x}\\,dx=\\frac{2G}{\\pi}+\\frac{\\ln 2}{6}+\\frac{\\ln\\pi}{2}-6\\ln A=\\frac{2G}{\\pi}-\\frac{\\gamma}{2}-\\frac{\\ln 2}{3}+\\frac{3\\zeta'(2)}{\\pi^{2}}\\quad\\text{($G$ Catalan, $A$ Glaisher\u2013Kinkelin)}",
+    "mpmath_expr": "2*mp.catalan/mp.pi + mp.log(2)/6 + mp.log(mp.pi)/2 - 6*mp.log(mp.glaisher)",
+    "closed_form_value": "-0.221515581123043709698830019267001901686521878521837833366872495935695102301",
+    "integral_value": "-0.221515581123043709698830019267001901686521878521837833366872495935695102301",
+    "digits_matched": 89,
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q905653-how-to-find-large-int-1-infty-frac-1-x-ln-x-x-le.md",
+    "summary": "Substituting x=e^u gives I=int_0^inf (1+u-e^u)/(u^2(1+e^{2u}))du; expanding 1/(1+e^{2u}) as an alternating geometric series (justified by Abel summation plus dominated convergence) and evaluating each Laplace-type piece J(a)=(a-1)ln(a/(a-1))-1 yields an alternating series, which converts to -(1/4)int_0^1 t[psi((t+3)/4)-psi((t+1)/4)]dt. Integration by parts produces quarter-interval log-gamma integrals; Euler reflection together with int_0^{pi/4} ln sin w dw = -G/2-(pi/4)ln2 cancels int_0^{1/4} lnGamma, leaving only int_0^{1/2} lnGamma, evaluated rigorously via Hurwitz zeta and Lerch's formula as 5ln2/24+ln(pi)/4+1/8-(3/2)zeta'(-1). The result is I = 2G/pi + ln2/6 + ln(pi)/2 - 6 ln A (equivalently 2G/pi - gamma/2 - ln2/3 + 3 zeta'(2)/pi^2), verified to 89 significant digits against direct mpmath quadrature at dps=90, with two further independent numerics (quadrature in the original x variable to 42 digits and the accelerated alternating series to 70 digits) and numerical checks of every intermediate identity. Confidence is very high; the only inputs not derived in full are standard textbook facts (psi series, reflection formula, zeta(-1), zeta'(0), Hermite's representation of Hurwitz zeta used for smoothness of the continuation)."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "-0.221515581123043709698830019267",
+    "solver_value": "-0.221515581123043709698830019267",
+    "derivation_quality": "mostly_complete",
+    "notes": "Solver's closed form ln2/6 + ln(pi)/2 - 6lnA + 2G/pi is term-for-term identical to Cleo's answer (diff exactly 0 at 50 dps; alternate zeta'(2) form agrees to ~51 digits), and direct quadrature of the integral confirms the value, so the ground truth is not in doubt. The full write-up file is missing; grading rests on the structured summary, which lays out a coherent complete derivation chain. I independently verified every pivotal intermediate identity numerically: J(a)=(a-1)ln(a/(a-1))-1, the alternating series sum, the psi-integral representation -(1/4)int_0^1 t[psi((t+3)/4)-psi((t+1)/4)]dt, int_0^{1/2}lnGamma = 5ln2/24+lnpi/4+1/8-(3/2)zeta'(-1), and int_0^{pi/4}ln sin = -G/2-(pi/4)ln2 \u2014 all correct. Rated mostly_complete rather than complete only because the connecting algebra is summarized, not written out."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "solve": "wf_007e7cf5-6e3",
+    "grade": "wf_835c2285-3e8"
+   },
+   "solution_md": "results/solutions/q905653-how-to-find-large-int-1-infty-frac-1-x-ln-x-x-le.md"
+  },
+  {
+   "it": {
+    "n": 10,
+    "slug": "q714628-closed-form-for-int-infty-0-operatorname-ei-3x-d",
+    "title": "Closed form for $\\int_{-\\infty}^0\\operatorname{Ei}^3x\\,dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q714628-closed-form-for-int-infty-0-operatorname-ei-3x-d.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q714628-closed-form-for-int-infty-0-operatorname-ei-3x-d.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q714628-closed-form-for-int-infty-0-operatorname-ei-3x-d.md"
+   },
+   "truth": {
+    "closed_form_latex": "-3\\operatorname{Li}_2\\!\\left(\\tfrac14\\right)-6\\ln^2 2",
+    "mpmath_expr": "-3*mp.polylog(2, mp.mpf(1)/4) - 6*mp.log(2)**2",
+    "value": "-3.685676000757406368760166643423424557843",
+    "direct_value": "-3.685676000757406368760166643423424557843",
+    "digits_verified": 40,
+    "notes": "Main quantity: int_{-inf}^0 Ei^3(x) dx, which Cleo writes as int_0^infty Ei^3(-x) dx = -3 Li_2(1/4) - 6 ln^2 2. Verified by direct high-precision quadrature of mp.ei(-x)**3 over [0,inf) split at {1,5,20} at dps=50; closed form and direct value agree to ~48 digits (40 reported). Cleo's answer also gives a second result for int_0^infty Ei^4(-x) dx = 24 Li_3(1/4) - 48 Li_2(1/3) ln2 - 13 zeta(3) - 32 ln^3 2 + 48 ln^2 2 ln3 - 24 ln2 ln^2 3 + 6 pi^2 ln2; I also verified it numerically (= 14.03944924917113197361442800... , agrees to 30 digits with direct quadrature). No doubt about ground truth. The question additionally asks about the indefinite integral of Ei^3 x (eq. 6), which Cleo does not address."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\int_{-\\infty}^{0}\\operatorname{Ei}^{3}x\\,dx=-6\\ln^{2}2-3\\,\\operatorname{Li}_{2}\\!\\left(\\tfrac{1}{4}\\right)\\;=\\;-\\frac{\\pi^{2}}{2}-3\\ln^{2}2-6\\,\\operatorname{Li}_{2}\\!\\left(-\\tfrac{1}{2}\\right)\\;=\\;\\operatorname{Li}_{2}\\!\\left(\\tfrac{1}{9}\\right)+2\\ln^{2}3-6\\ln 2\\ln 3-\\frac{\\pi^{2}}{6}",
+    "mpmath_expr": "-6*mp.log(2)**2 - 3*mp.polylog(2, mp.mpf(1)/4)",
+    "closed_form_value": "-3.685676000757406368760166643423424557842888910308837303",
+    "integral_value": "-3.685676000757406368760166643423424557842888910308837303",
+    "digits_matched": 80,
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q714628-closed-form-for-int-infty-0-operatorname-ei-3x-d.md",
+    "summary": "Wrote the integral as -int_0^inf E1(s)^3 ds, integrated by parts to 3*int e^{-s}E1^2 (boundary terms vanish by elementary bounds on E1), used the kernel E1(s)=int_1^inf e^{-su}du/u with Tonelli to collapse to int_1^inf ln(2+u)/(u(1+u))du, and the substitution t=1/(1+u) reduced it to two elementary dilogarithm integrals whose Li2(1/2) parts cancel, giving the closed form -6 ln^2(2) - 3 Li2(1/4); equivalent forms with Li2(-1/2), Li2(1/3), Li2(1/9) were derived by proving the needed dilog functional equations by differentiation. The method also reproduces the known values -1 and ln 4 for the first and second powers. Two independent high-precision quadratures (Ei route and E1 route, mpmath dps 80-90) agree with the closed form to all 80 working digits (difference ~6e-90 at 90 dps), and every intermediate identity was verified numerically. Confidence is very high; the only externally cited facts are zeta(2)=pi^2/6 (Basel, used only for the alternative forms) and an honest unproven remark that the indefinite integral (6) lacks a closed form."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "-3.68567600075740636876016664342",
+    "solver_value": "-3.68567600075740636876016664342",
+    "derivation_quality": "mostly_complete",
+    "notes": "Solver's closed form -6ln^2(2) - 3Li2(1/4) is symbolically identical to Cleo's answer (terms reordered); at dps=50 the two mpmath expressions agree exactly and match direct quadrature of Ei^3(-x) over [0,inf) to ~49 digits, so no doubt about the ground truth. The solver's alternate Li2(-1/2) and Li2(1/9) forms also check to full precision. The referenced full write-up file was missing, but the structured summary gives the complete derivation chain; I spot-checked the IBP step (int E1^3 = 3 int e^{-s}E1^2), the Tonelli reduction to int_1^inf ln(2+u)/(u(1+u))du, and the t=1/(1+u) substitution to int_0^{1/2}(ln(1+t)-ln t)/(1-t)dt = Li2(1/4)+2ln^2(2) \u2014 all correct analytically and numerically. Rated mostly_complete only because the final elementary dilog evaluations are compressed in the summary and the full write-up file could not be read."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "solve": "wf_007e7cf5-6e3",
+    "grade": "wf_835c2285-3e8"
+   },
+   "solution_md": "results/solutions/q714628-closed-form-for-int-infty-0-operatorname-ei-3x-d.md"
+  },
+  {
+   "it": {
+    "n": 11,
+    "slug": "q918680-closed-form-for-the-imaginary-part-of-text-li-3",
+    "title": "Closed Form for the Imaginary Part of $\\text{Li}_3\\Big(\\frac{1+i}2\\Big)$",
+    "type": "other",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q918680-closed-form-for-the-imaginary-part-of-text-li-3.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q918680-closed-form-for-the-imaginary-part-of-text-li-3.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q918680-closed-form-for-the-imaginary-part-of-text-li-3.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\Im\\left[\\operatorname{Li}_3\\left(\\frac{1+i}{2}\\right)\\right]=\\frac{\\pi^3}{128}+\\frac{\\pi}{32}\\ln^2 2+\\frac14\\,{}_4F_3\\left(\\begin{matrix}\\tfrac12,\\tfrac12,1,1\\\\\\tfrac32,\\tfrac32,\\tfrac32\\end{matrix}\\;\\middle|\\;1\\right)",
+    "mpmath_expr": "mp.pi**3/128 + mp.pi/32*mp.log(2)**2 + mp.mpf(1)/4*mp.hyper([mp.mpf(1)/2, mp.mpf(1)/2, 1, 1], [mp.mpf(3)/2, mp.mpf(3)/2, mp.mpf(3)/2], 1)",
+    "value": "0.5700774070887689781956097575900745510631",
+    "direct_value": "0.5700774070887689781956097575900745510631",
+    "digits_verified": 40,
+    "notes": "Main quantity: Im[Li_3((1+i)/2)], the imaginary part of the trilogarithm at (1+i)/2. Cleo expresses it via the hypergeometric 4F3(1/2,1/2,1,1; 3/2,3/2,3/2; 1) (equivalently sum_{n>=0} 1/((2n+1)^3 binom(2n,n)^{-1}...), evaluated with mp.hyper). Verified two ways: (a) mpmath's mp.polylog(3,(1+i)/2) and (b) the defining power series sum z^n/n^3 computed at 60 dps with 400 terms; both agree with the closed form to all 40 significant digits. Cleo's answer has a second part: Im[Li_3(1+i)] = 3*pi^3/64 + (pi/16)ln^2 2 - (1/4)*4F3(...;1), which I also verified numerically (= 1.267083441888923963686650200213485875911, matches mp.polylog(3,1+1j) to 40 digits) and which is consistent with the identity in the question, Im Li_3((1+i)/2) + Im Li_3(1+i) = 7pi^3/128 + (3/32)pi ln^2 2. No doubt about the ground truth; the only caveat is that the closed form is 'closed' only if 4F3 at unit argument is accepted as closed form, as Cleo herself notes."
+   },
+   "solve": {
+    "status": "partial",
+    "closed_form_latex": "\\Im\\,\\operatorname{Li}_3\\!\\left(\\frac{1+i}{2}\\right)=\\frac{7\\pi^3}{128}+\\frac{3\\pi\\ln^2 2}{32}-\\Im\\,\\operatorname{Li}_3(1+i)",
+    "mpmath_expr": "7*mp.pi**3/128 + 3*mp.pi*mp.log(2)**2/32 - mp.im(mp.polylog(3, mp.mpc(1,1)))",
+    "closed_form_value": "0.57007740708876897819560975759007455106314580991873",
+    "integral_value": "0.57007740708876897819560975759007455106314580991873",
+    "digits_matched": 139,
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q918680-closed-form-for-the-imaginary-part-of-text-li-3.md",
+    "summary": "I proved rigorously (dilogarithm inversion with full branch control, then trilogarithm inversion by differentiation, specialized at z=1+i where 1/z=(1-i)/2) the exact reduction Im Li3((1+i)/2) = 7pi^3/128 + 3pi ln^2(2)/32 - Im Li3(1+i), plus the equivalent representations (1/2)Int_0^1 ln^2(1-x)/(1+x^2) dx and Sum sin(n pi/4)/(2^(n/2) n^3); both sides were computed by independent methods (own series summation, tanh-sinh quadrature, continuation-free integral representation) and agree to 139 significant digits. I further proved that the entire anharmonic-orbit functional-equation system has rank 2 on the imaginary parts and can only ever determine the sum Im Li3((1+i)/2) + Im Li3(1+i), never each constant separately. Exhaustive PSLQ at 130-digit precision excludes any rational relation of the target with pi^3, pi ln^2 2, G ln2, zeta(3), beta'(2), Gamma(1/4)/gamma constants, Ti3(sqrt2\u00b11), ln(1+sqrt2)-products, Cl2(pi/4)-products and level-8 L-derivatives, consistent with this constant's accepted status as an irreducible weight-3 level-4 basis generator in the multiple-polylogarithm literature. Status is set to \"partial\" out of honesty: the reduction is completely derived and verified far beyond 15 digits, but a genuinely classical closed form is believed not to exist, so the final expression renames the constant (via Im Li3(1+i)) rather than eliminating it. Any correct equivalent ground-truth form must equal 0.5700774070887689781956... which is what I verified."
+   },
+   "grade": {
+    "verdict": "equivalent_but_different_form",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "0.570077407088768978195609757590",
+    "solver_value": "0.570077407088768978195609757590",
+    "derivation_quality": "complete",
+    "notes": "I recomputed both mpmath expressions myself: Cleo's 4F3-based form and the solver's (7\u03c0\u00b3/128 + 3\u03c0 ln\u00b22/32 \u2212 Im Li\u2083(1+i)) both reproduce the direct mp.polylog(3,(1+i)/2) value to full precision (agree to ~50 digits at dps=50, ~80 at dps=80; difference is pure round-off). The write-up genuinely derives its boxed identity: dilog reflection/inversion lemmas with explicit branch control, trilog inversion (7) by differentiate-and-check, then specialization at z=1+i; I spot-checked the D4 branch algebra (ln(\u22121\u2212i)=(ln2)/2 \u2212 i\u00b73\u03c0/4, Im[(L\u2212i\u03c4)\u00b3]=\u22123L\u00b2\u03c4+\u03c4\u00b3) and it is correct. Verdict is equivalent_but_different_form rather than correct because the solver's exact form uses Im Li\u2083(1+i) whereas the ground truth uses the \u2084F\u2083 hypergeometric \u2014 different expressions of the same value. Caveat: neither the ground truth (4F3) nor the solver's form is a classical elementary closed form; the solver's essentially restates the addendum identity, but as an exact proven representation it is at the same tier as Cleo's reference, so I count it as solved."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "solve": "wf_c4cc16d6-a99",
+    "grade": "wf_f8778cfa-582"
+   },
+   "solution_md": "results/solutions/q918680-closed-form-for-the-imaginary-part-of-text-li-3.md"
+  },
+  {
+   "it": {
+    "n": 12,
+    "slug": "q918821-closed-form-for-large-int-0-1-frac-ln-2x-sqrt-1",
+    "title": "Closed form for ${\\large\\int}_0^1\\frac{\\ln^2x}{\\sqrt{1-x+x^2}}dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q918821-closed-form-for-large-int-0-1-frac-ln-2x-sqrt-1.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q918821-closed-form-for-large-int-0-1-frac-ln-2x-sqrt-1.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q918821-closed-form-for-large-int-0-1-frac-ln-2x-sqrt-1.md"
+   },
+   "truth": {
+    "closed_form_latex": "I=12\\operatorname{Li}_3\\!\\left(\\tfrac13\\right)+20\\operatorname{Li}_3\\!\\left(\\tfrac23\\right)+\\frac{32}{3}\\operatorname{Li}_2\\!\\left(\\tfrac23\\right)\\ln 3+\\left(4\\ln 2+\\frac{10}{3}\\ln 3\\right)\\operatorname{Li}_2\\!\\left(\\tfrac34\\right)-\\frac{163}{6}\\zeta(3)+8\\ln^3 2+\\frac{2}{3}\\ln^2 2\\,\\ln 3-\\frac{2}{3}\\ln 2\\,\\ln^2 3-\\frac{7\\pi^2}{3}\\ln 2+\\frac{11\\pi^2}{9}\\ln 3",
+    "mpmath_expr": "12*mp.polylog(3,mp.mpf(1)/3) + 20*mp.polylog(3,mp.mpf(2)/3) + mp.mpf(32)/3*mp.polylog(2,mp.mpf(2)/3)*mp.log(3) + (4*mp.log(2)+mp.mpf(10)/3*mp.log(3))*mp.polylog(2,mp.mpf(3)/4) - mp.mpf(163)/6*mp.zeta(3) + 8*mp.log(2)**3 + mp.mpf(2)/3*mp.log(2)**2*mp.log(3) - mp.mpf(2)/3*mp.log(2)*mp.log(3)**2 - 7*mp.pi**2/3*mp.log(2) + 11*mp.pi**2/9*mp.log(3)",
+    "value": "2.100290124838430655413586565140170651785",
+    "direct_value": "2.100290124838430655413586565140170651785",
+    "digits_verified": 40,
+    "notes": "Main quantity: I = int_0^1 ln^2(x)/sqrt(x^2-x+1) dx. Cleo's answer is a single closed form (no other parts). Verified by direct mpmath quadrature (integrable log^2 singularity at x=0 handled by tanh-sinh with split at 1/2); closed form and direct integral agree to all 40 reported digits (and to ~59 digits at dps=60, diff ~3e-60). Value also matches the OP's quoted numeric 2.10029012483843065541358656514017065178479851... No doubt about the ground truth. Conventions: mp.polylog(s,z) for Li_s, mp.zeta for Riemann zeta; no elliptic functions involved."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\int_0^1\\frac{\\ln^2x}{\\sqrt{x^2-x+1}}\\,dx=4\\ln\\frac43\\,\\operatorname{Li}_2\\!\\left(\\frac13\\right)-8\\operatorname{Li}_3\\!\\left(\\frac13\\right)-20\\operatorname{Li}_3\\!\\left(-\\frac12\\right)-\\frac{43}{6}\\zeta(3)+\\pi^{2}\\ln 2-\\frac{\\pi^{2}}{3}\\ln 3+\\frac{10}{3}\\ln^{3}2-\\frac{2}{3}\\ln^{3}3-6\\ln^{2}2\\,\\ln 3+4\\ln 2\\,\\ln^{2}3",
+    "mpmath_expr": "4*mp.log(mp.mpf(4)/3)*mp.polylog(2, mp.mpf(1)/3) - 8*mp.polylog(3, mp.mpf(1)/3) - 20*mp.polylog(3, -mp.mpf(1)/2) - mp.mpf(43)/6*mp.zeta(3) + mp.pi**2*mp.log(2) - mp.pi**2/3*mp.log(3) + mp.mpf(10)/3*mp.log(2)**3 - mp.mpf(2)/3*mp.log(3)**3 - 6*mp.log(2)**2*mp.log(3) + 4*mp.log(2)*mp.log(3)**2",
+    "closed_form_value": "2.10029012483843065541358656514017065178479851127691422449913",
+    "integral_value": "2.10029012483843065541358656514017065178479851127691422449913",
+    "digits_matched": 168,
+    "solution_file": "/home/riv/Code/cleo-bench/results/solutions/q918821-closed-form-for-large-int-0-1-frac-ln-2x-sqrt-1.md",
+    "summary": "Solved with a complete self-contained derivation. The Euler substitution w = 2x-1+2*sqrt(x^2-x+1) rationalizes the integral to I = int_1^3 ln^2((w-1)(w+3)/(4w)) dw/w; expanding the square gives ten integrals, each evaluated with classical polylog antiderivatives (all proved by differentiation), the hardest cross term via polarization plus the Mobius involution v -> (1-y)/(1+3y). Reduction through proved functional equations (reflection, Landen weight-2/3, inversions, duplication, Abel) yields a native closed form; two ladder identities - the Li2 ladder from Abel's identity and the weight-3 base-1/3 ladder, which I proved from scratch by evaluating int_0^{1/2} ln^2(1-t^2)/t dt two ways - compact it to the boxed result in Li2(1/3), Li3(1/3), Li3(-1/2). The closed form matches direct high-precision quadrature to 168+ significant digits (mp.dps=170), and was independently confirmed by PSLQ at 160 digits. Two lengthy collection steps were executed in exact rational arithmetic with sympy (verified numerically at every stage); all functional equations are applied strictly within their proven real domains."
+   },
+   "grade": {
+    "verdict": "equivalent_but_different_form",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "2.10029012483843065541358656514",
+    "solver_value": "2.10029012483843065541358656514",
+    "derivation_quality": "complete",
+    "notes": "I recomputed both mpmath expressions independently: at dps=50 they agree to ~49-50 digits and both match direct tanh-sinh quadrature of the integral (diff ~8e-50); at dps=60 the relative difference is ~1.5e-60, confirming exact equality. The solver's closed form is expressed in a different polylog basis (Li2(1/3), Li3(1/3), Li3(-1/2)) than the ground truth (Li2(2/3), Li2(3/4), Li3(2/3), Li3(1/3)), hence equivalent-but-different-form; the two are linked by the ladder identities R1/R2 the solver proves. The write-up is a fully self-contained derivation: Euler substitution rationalizing the integral, ten pieces each evaluated via antiderivatives proved by differentiation, a reduction table of classical functional equations (all proved), and two ladder identities proved from scratch. Spot-checked the Euler substitution algebra (1.2), lemma L5, and the R2 ladder proof - all sound; the only non-hand steps are two lengthy exact-rational collection steps done by CAS, each with proved inputs. No doubt about the ground truth."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "solve": "wf_9e62d9d7-a32",
+    "grade": "wf_9e62d9d7-a32"
+   },
+   "solution_md": "results/solutions/q918821-closed-form-for-large-int-0-1-frac-ln-2x-sqrt-1.md"
+  },
+  {
+   "it": {
+    "n": 13,
+    "slug": "q1150822-closed-form-for-int-0-infty-arctan-bigl-frac-2-p",
+    "title": "Closed form for $\\int_0^\\infty\\arctan\\Bigl(\\frac{2\\pi}{x-\\ln\\,x+\\ln(\\frac\\pi2)}\\Bigr)\\frac{dx}{x+1}$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q1150822-closed-form-for-int-0-infty-arctan-bigl-frac-2-p.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q1150822-closed-form-for-int-0-infty-arctan-bigl-frac-2-p.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1150822-closed-form-for-int-0-infty-arctan-bigl-frac-2-p.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\pi\\,\\ln\\left(\\frac{1+\\pi^2+\\ln^2\\left(\\frac{\\pi}{2}\\right)-2\\ln\\left(\\frac{\\pi}{2}\\right)}{1+\\frac{\\pi^2}{4}}\\right)",
+    "mpmath_expr": "mp.pi*mp.log((1 + mp.pi**2 + mp.log(mp.pi/2)**2 - 2*mp.log(mp.pi/2))/(1 + mp.pi**2/4))",
+    "value": "3.380582528445346979395359221627699216570",
+    "direct_value": "3.380582528445346979395359221627699216570",
+    "digits_verified": 40,
+    "notes": "Main quantity: I = int_0^inf arctan(2*pi/(x - ln x + ln(pi/2)))/(x+1) dx. Cleo's answer is a single expression with no other parts. Direct verification: the arctan argument's denominator x - ln x + ln(pi/2) has minimum 1 + ln(pi/2) > 0 at x=1, so the integrand is smooth and positive on (0, inf); integrated with mp.quad at dps=60 splitting at [0, 0.1, 1, 10, 100, 1000, inf]. Closed form and direct integral agree to ~50 digits (|diff| ~ 1e-51), and both match the OP's posted 60-digit numeric value. No doubt about the ground truth. Scratch script: /tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/truth/q1150822-closed-form-for-int-0-infty-arctan-bigl-frac-2-p/verify.py"
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\pi\\,\\ln\\!\\frac{\\pi^{2}+\\bigl(1-\\ln\\frac{\\pi}{2}\\bigr)^{2}}{1+\\frac{\\pi^{2}}{4}}",
+    "mpmath_expr": "mp.pi*mp.log((mp.pi**2 + (1 - mp.log(mp.pi/2))**2)/(1 + mp.pi**2/4))",
+    "closed_form_value": "3.3805825284453469793953592216276992165696856825906055108192183062787494273960882592324148229896557134833574135",
+    "integral_value": "3.3805825284453469793953592216276992165696856825906055108192183062787494273960882592324148229896557134833574135",
+    "digits_matched": 130,
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1150822-closed-form-for-int-0-infty-arctan-bigl-frac-2-p.md",
+    "summary": "Solved by embedding in the family I(a) with shift a (a0 = ln(pi/2)), differentiating under the integral to get a rational kernel T(a), and evaluating T(a) by a keyhole contour around [0,inf) for Psi_a(z) = z - log z + a on the arg-in-(0,2pi) branch: T(a) equals minus the real part of residues at z = -1 and at the unique zero zeta(a) = (v/sin v)e^{iv} (uniqueness proved via monotonicity of m(v) = (v/sin v)e^{-v cot v}; zeta(a0) = i*pi/2 exactly, the classical W(-pi/2) = i*pi/2). Along the zero curve, zeta' = zeta/(1-zeta) makes B(a) = ln(|1+zeta(a)|/|a-1-i*pi|) an exact antiderivative of T, with B(inf) = 0, giving I = pi*ln[(pi^2 + (1 - ln(pi/2))^2)/(1 + pi^2/4)]. Every analytic step (DCT interchanges, arc estimates, edge limits, zero counting, boundary asymptotics) is justified in the solution file, and all intermediate identities were independently checked numerically (residue formula to 50 digits, winding number = 1, antiderivative FD check, reassembly to 60 digits). The closed form matches two independent 130-dps quadratures of the original integral to 130 significant digits and reproduces the 61 digits quoted in the problem. Confidence: very high; no known gaps."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "3.38058252844534697939535922163",
+    "solver_value": "3.38058252844534697939535922163",
+    "derivation_quality": "complete",
+    "notes": "Recomputed both mpmath expressions at 50 dps: identical to all 50 digits (3.380582528445346979...), and my own independent quadrature of the original integral matches both exactly. The solver's numerator pi^2 + (1 - ln(pi/2))^2 is just the factored form of Cleo's 1 + pi^2 + ln^2(pi/2) - 2ln(pi/2), so the forms are essentially identical. The write-up is a genuine, rigorous derivation (Feynman parameter in the log-shift a, keyhole contour for the rational kernel with residues at -1 and the unique zeta(a) = -W_{-1}(-e^a), exact antiderivative B(a), zeta(a0) = i*pi/2); I spot-checked the jump identity, both residues/sign bookkeeping, the antiderivative step, and the monotonicity uniqueness lemma - all correct. No doubt about the ground truth."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "solve": "wf_835c2285-3e8",
+    "grade": "wf_835c2285-3e8"
+   },
+   "solution_md": "results/solutions/q1150822-closed-form-for-int-0-infty-arctan-bigl-frac-2-p.md"
+  },
+  {
+   "it": {
+    "n": 14,
+    "slug": "q1376159-a-difficult-logarithmic-integral-large-int-0-1-l",
+    "title": "A difficult logarithmic integral ${\\Large\\int}_0^1\\log(x)\\,\\log(2+x)\\,\\log(1+x)\\,\\log\\left(1+x^{-1}\\right)dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q1376159-a-difficult-logarithmic-integral-large-int-0-1-l.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q1376159-a-difficult-logarithmic-integral-large-int-0-1-l.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1376159-a-difficult-logarithmic-integral-large-int-0-1-l.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\int_0^1\\ln(2+x)\\ln(1+x)\\ln\\left(1+x^{-1}\\right)\\ln x\\,dx=\\frac{71}{36}\\ln^4 2+2\\ln^3 2\\ln 3+4\\ln 2\\ln^3 3-7\\ln^2 2\\ln^2 3-\\frac{2}{3}\\ln^3 2-\\frac{2}{3}\\ln^3 3-\\ln^2 2\\ln 3+6\\ln^2 2+3\\ln^2 3-12\\ln 2-\\frac{\\pi^4}{216}+\\pi^2\\left(\\frac{49}{36}\\ln^2 2-2\\ln 2\\ln 3-\\frac{\\ln 2}{3}+\\frac{\\ln 3}{3}-\\frac{1}{6}\\right)+\\left(6-2\\ln 2-2\\ln^2 2\\right)\\operatorname{Li}_2\\!\\left(\\tfrac13\\right)+(2-12\\ln 2)\\left[\\operatorname{Li}_3\\!\\left(\\tfrac13\\right)+\\operatorname{Li}_3\\!\\left(\\tfrac23\\right)\\right]-\\frac{2}{3}\\operatorname{Li}_4\\!\\left(\\tfrac12\\right)+3\\operatorname{Li}_4\\!\\left(\\tfrac14\\right)+\\left(\\frac54+\\frac{221}{12}\\ln 2\\right)\\zeta(3)",
+    "mpmath_expr": "mp.mpf(71)/36*mp.log(2)**4 + 2*mp.log(2)**3*mp.log(3) + 4*mp.log(2)*mp.log(3)**3 - 7*mp.log(2)**2*mp.log(3)**2 - mp.mpf(2)/3*mp.log(2)**3 - mp.mpf(2)/3*mp.log(3)**3 - mp.log(2)**2*mp.log(3) + 6*mp.log(2)**2 + 3*mp.log(3)**2 - 12*mp.log(2) - mp.pi**4/216 + mp.pi**2*(mp.mpf(49)/36*mp.log(2)**2 - 2*mp.log(2)*mp.log(3) - mp.log(2)/3 + mp.log(3)/3 - mp.mpf(1)/6) + (6 - 2*mp.log(2) - 2*mp.log(2)**2)*mp.polylog(2, mp.mpf(1)/3) + (2 - 12*mp.log(2))*(mp.polylog(3, mp.mpf(1)/3) + mp.polylog(3, mp.mpf(2)/3)) - mp.mpf(2)/3*mp.polylog(4, mp.mpf(1)/2) + 3*mp.polylog(4, mp.mpf(1)/4) + (mp.mpf(5)/4 + mp.mpf(221)/12*mp.log(2))*mp.zeta(3)",
+    "value": "-0.2472658500284537560829580316217317555576",
+    "direct_value": "-0.2472658500284537560829580316217317555576",
+    "digits_verified": 40,
+    "notes": "Main quantity: the definite integral I = int_0^1 log(x) log(2+x) log(1+x) log(1+1/x) dx (Cleo writes the factors in a different order; the integrand is identical). Cleo's answer is a single closed form with no other parts. Verification: evaluated the closed form at mp.mp.dps=50 and independently computed the integral with mp.quad (tanh-sinh) split at x=1/4 to handle the mild logarithmic singularity at x=0 (integrand ~ log2 * x * log^2 x there, integrable). Closed form and direct quadrature agree to ~51 significant digits (absolute difference ~7e-52), so all 40 reported digits match. Conventions: mp.polylog(s,z) for Li_s(z), mp.zeta(3); no elliptic/Barnes/Hurwitz functions needed. No doubt about the ground truth. Working script: /tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/truth/q1376159-a-difficult-logarithmic-integral-large-int-0-1-l/check.py"
+   },
+   "solve": {
+    "closed_form_latex": "\\frac{70}{3}\\operatorname{Li}_4\\!\\left(\\frac12\\right)+24\\operatorname{Li}_4\\!\\left(-\\frac12\\right)+2\\left(\\ln^2 2+\\ln 2-3\\right)\\operatorname{Li}_2\\!\\left(-\\frac12\\right)+2\\left(6\\ln 2-1\\right)\\operatorname{Li}_3\\!\\left(-\\frac12\\right)+\\frac{35}{36}\\ln^4 2+\\frac{2}{3}\\ln^3 2+3\\ln^2 2-3\\ln^2 2\\,\\ln 3-\\frac{23}{36}\\pi^2\\ln^2 2+6\\ln 2\\,\\ln 3-12\\ln 2+\\frac{77}{12}\\zeta(3)\\ln 2+\\frac{13}{4}\\zeta(3)-\\frac{\\pi^2}{6}-\\frac{\\pi^4}{216}",
+    "closed_form_value": "-0.247265850028453756082958031621731755557588987426606149337440",
+    "digits_matched": 659,
+    "integral_value": "-0.247265850028453756082958031621731755557588987426606149337440",
+    "mpmath_expr": "70*mp.polylog(4,mp.mpf(1)/2)/3 + 24*mp.polylog(4,-mp.mpf(1)/2) + 2*(mp.log(2)**2+mp.log(2)-3)*mp.polylog(2,-mp.mpf(1)/2) + 2*(6*mp.log(2)-1)*mp.polylog(3,-mp.mpf(1)/2) + 35*mp.log(2)**4/36 + 2*mp.log(2)**3/3 + 3*mp.log(2)**2 - 3*mp.log(2)**2*mp.log(3) - 23*mp.pi**2*mp.log(2)**2/36 + 6*mp.log(2)*mp.log(3) - 12*mp.log(2) + 77*mp.zeta(3)*mp.log(2)/12 + 13*mp.zeta(3)/4 - mp.pi**2/6 - mp.pi**4/216",
+    "solution_file": "/home/riv/Code/cleo-bench/results/solutions/q1376159-a-difficult-logarithmic-integral-large-int-0-1-l.md",
+    "status": "partial",
+    "summary": "The substitution t=1/(1+x) converts the integral to letters {0,\u00b11} on [1/2,1]; expanding and splitting at 1/2 reduces I exactly to 7 master integrals and then, via IBP identities, series/moment lemmas, generating functions (including the Li4-level formula for sum H_n x^n/n^3, proved by differentiation), a two-log trilogarithm lemma, and cube identities a^2b=((a+b)^3-(a-b)^3-2b^3)/6, to 25 explicit constants. The assembled closed form \u2014 containing only Li_k(\u00b11/2) plus zeta values and logs, all Li4(\u00b11/3), Li4(2/3), Li4(3/4) canceling \u2014 matches 680-digit quadrature to 659 significant digits, and an independent direct 44-dimensional PSLQ on I at 660 digits returned the identical formula. Full derivations are given for the reduction architecture and for the large majority of the constants (all level-2 pieces X1,X2,X3,C4 including the alternating Euler sum, the g/V/psi/phi1/phi2 families, W4, and Q1h). Five auxiliary weight-4 constants (phi3\u00b1, W1, W2, W3) are stated with exact values certified by 390-digit PSLQ (plus the 659-digit end-to-end check) but not symbolically derived \u2014 they require weight-4 Kummer-type functional equations \u2014 so status is honestly reported as partial despite the value being numerically certain."
+   },
+   "grade": {
+    "verdict": "equivalent_but_different_form",
+    "solved": false,
+    "digits_agree": 49,
+    "truth_value": "-0.247265850028453756082958031622",
+    "solver_value": "-0.247265850028453756082958031622",
+    "derivation_quality": "sketchy",
+    "notes": "I recomputed both mpmath expressions at dps=50: they agree with each other to ~49 significant digits and both match an independent tanh-sinh quadrature (split at 1/4) of the original integral to ~49 digits, so the value is correct beyond doubt. The solver's closed form uses a different atomic basis \u2014 Li4(\u00b11/2), Li2(-1/2), Li3(-1/2) \u2014 versus the ground truth's Li2(1/3), Li3(1/3)+Li3(2/3), Li4(1/4); the two are provably equal (the solver even notes the Landen/duplication links) but look genuinely different, hence equivalent_but_different_form. The write-up rigorously derives the reduction architecture and most constants, but five pivotal weight-4 constants (\u03c63\u00b1, W1, W2, W3) are only obtained by PSLQ and not derived symbolically (the author himself flags this and labels the solution \"partial\"), which is a real unjustified leap, so derivation_quality is sketchy and solved is false. No doubt about the ground truth itself."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "solve": "wf_9e62d9d7-a32",
+    "grade": "wf_9e62d9d7-a32"
+   },
+   "solution_md": "results/solutions/q1376159-a-difficult-logarithmic-integral-large-int-0-1-l.md"
+  },
+  {
+   "it": {
+    "n": 15,
+    "slug": "q970125-evaluate-int-0-1-frac-ln-1-x-x-text-li-3-left-fr",
+    "title": "Evaluate $\\int_0^1\\frac{\\ln(1-x)}{x}\\text{Li}_3\\left(\\frac{1+x}{2}\\right)dx$ , $\\int_0^1\\frac{\\ln^2(1-x)}{x}\\text{Li}_2\\left(\\frac{1+x}{2} \\right)dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q970125-evaluate-int-0-1-frac-ln-1-x-x-text-li-3-left-fr.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q970125-evaluate-int-0-1-frac-ln-1-x-x-text-li-3-left-fr.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q970125-evaluate-int-0-1-frac-ln-1-x-x-text-li-3-left-fr.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\frac{29\\,\\zeta(5)}{16}-\\frac{19\\pi^2}{96}\\zeta(3)+\\frac{5\\,\\zeta(3)}{16}\\ln^2 2+\\frac{\\ln^5 2}{40}-\\frac{5\\pi^2}{72}\\ln^3 2+\\frac{11\\pi^4}{1440}\\ln 2-3\\operatorname{Li}_5\\!\\left(\\tfrac12\\right)",
+    "mpmath_expr": "29*mp.zeta(5)/16 - 19*mp.pi**2/96*mp.zeta(3) + 5*mp.zeta(3)/16*mp.log(2)**2 + mp.log(2)**5/40 - 5*mp.pi**2/72*mp.log(2)**3 + 11*mp.pi**4/1440*mp.log(2) - 3*mp.polylog(5, mp.mpf(1)/2)",
+    "value": "-1.521822928855810015258392484855393115330",
+    "direct_value": "-1.521822928855810015258392484855393115330",
+    "digits_verified": 40,
+    "notes": "Main quantity: the first integral, I1 = int_0^1 ln(1-x)/x * Li_3((1+x)/2) dx (it is the one named in the question title/URL). Cleo's closed form for I1 verified by direct mpmath quadrature (mp.dps=50, split at x=0.5, integrable log singularity at x=1): agreement to all 45 displayed digits. The question also asks a second integral, I2 = int_0^1 ln^2(1-x)/x * Li_2((1+x)/2) dx; Cleo gives I2 = 81*zeta(5)/32 + 5*pi^2/16*zeta(3) - zeta(3)/8*ln^2(2) + ln^5(2)/15 - pi^2/18*ln^3(2) - pi^4/15*ln(2) + 2*Li_5(1/2) + 2*Li_4(1/2)*ln(2) = 3.320966878664867680345986121204894509677..., also verified numerically to 45 digits. No doubt about the ground truth."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "I_1=\\int_0^1\\frac{\\ln(1-x)}{x}\\,\\mathrm{Li}_3\\!\\Big(\\frac{1+x}{2}\\Big)dx=\\frac{29}{16}\\zeta(5)-\\frac{19}{16}\\zeta(2)\\zeta(3)+\\frac{11}{16}\\zeta(4)\\ln 2+\\frac{5}{16}\\zeta(3)\\ln^2 2-\\frac{5}{12}\\zeta(2)\\ln^3 2+\\frac{\\ln^5 2}{40}-3\\,\\mathrm{Li}_5\\!\\Big(\\frac12\\Big);\\qquad I_2=\\int_0^1\\frac{\\ln^2(1-x)}{x}\\,\\mathrm{Li}_2\\!\\Big(\\frac{1+x}{2}\\Big)dx=\\frac{81}{32}\\zeta(5)+\\frac{15}{8}\\zeta(2)\\zeta(3)-6\\zeta(4)\\ln 2-\\frac{1}{8}\\zeta(3)\\ln^2 2-\\frac{1}{3}\\zeta(2)\\ln^3 2+\\frac{\\ln^5 2}{15}+2\\ln 2\\,\\mathrm{Li}_4\\!\\Big(\\frac12\\Big)+2\\,\\mathrm{Li}_5\\!\\Big(\\frac12\\Big)",
+    "mpmath_expr": "29*mp.zeta(5)/16 - 19*mp.zeta(2)*mp.zeta(3)/16 + 11*mp.zeta(4)*mp.log(2)/16 + 5*mp.zeta(3)*mp.log(2)**2/16 - 5*mp.zeta(2)*mp.log(2)**3/12 + mp.log(2)**5/40 - 3*mp.polylog(5,mp.mpf(1)/2)",
+    "closed_form_value": "-1.52182292885581001525839248485539311533028568041866530576195346496728998166708957154751890942661667659",
+    "integral_value": "-1.52182292885581001525839248485539311533028568041866530576195346496728998166708957154751890942661667659",
+    "digits_matched": 100,
+    "solution_file": "/home/riv/Code/cleo-bench/results/solutions/q970125-evaluate-int-0-1-frac-ln-1-x-x-text-li-3-left-fr.md",
+    "summary": "Both requested integrals are evaluated in closed form (structured fields report the first integral I1; I2 is given in the LaTeX field and the solution file, I2 = 3.3209668786648676803459861212048945096771586843076655648528579730185726275446020950890735050687961269). Method: substituting u=1-x, I2 reduces via the dilogarithm reflection formula and three generating-function lemmas to explicit polylogs at 1/2 plus 3W with W=int_0^{1/2}Li2(t)^2 dt/t; I1 reduces via a parameter-differentiation representation Li3(1-u/2)=zeta(3)-int_0^{1/2}u Li2(1-au)/(1-au)da, partial fractions, and tail-swap rearrangements to multiple polylogarithms Li_{s1,...,sk}(1/2) of weight <=5 plus W and V. All such constants are then determined by a fully proved linear system of relations (shuffle, cutoff-stuffle, duplication, elementary-proved Hoffman regularized double-shuffle, Chen path composition with t->1-t reversal, and the Landen dictionary t=u/(1+u)), whose exact rational solution has corank exactly {Li4(1/2), Li5(1/2)} at weights 4,5; the relation generation and Gauss-Jordan elimination were machine-executed (each relation class proved in the text, every solved value verified numerically to >=40 digits), with independent cross-checks via a partial-fraction alternating-sum system and PSLQ. Both closed forms match 120-dps direct quadrature to >=100 significant digits. Caveat: the several hundred relation instances were generated/solved by computer from the proved templates rather than listed by hand."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "-1.52182292885581001525839248486",
+    "solver_value": "-1.52182292885581001525839248486",
+    "derivation_quality": "complete",
+    "notes": "Recomputed both mpmath expressions at dps=50: truth and solver agree to full precision (diff ~2.7e-51), and both match direct quadrature of I1. The solver's closed form is the ground truth written with zeta(2), zeta(4) instead of pi powers (19/16 zeta2 zeta3 = 19 pi^2/96 zeta3; 11/16 zeta4 L = 11 pi^4/1440 L), i.e. the same form. The solver also correctly gives the second integral I2 (matches Cleo to 50 digits). The write-up is a genuine, detailed derivation (u=1-x reduction, dilog reflection, generating-function lemmas, a proved weight-<=5 MZV-at-1/2 engine, assembly, plus PSLQ cross-check); spot-checks of core constants X, Y, W, V and identity (0.9) all verified numerically to 40 digits. No doubt about the ground truth."
+   },
+   "sources": {
+    "truth": "wf_007e7cf5-6e3",
+    "solve": "wf_9e62d9d7-a32",
+    "grade": "wf_9e62d9d7-a32"
+   },
+   "solution_md": "results/solutions/q970125-evaluate-int-0-1-frac-ln-1-x-x-text-li-3-left-fr.md"
+  },
+  {
+   "it": {
+    "n": 16,
+    "slug": "q1372767-integral-int-0-1-frac-log-x-log-1-x-sqrt-1-x-dx",
+    "title": "Integral $\\int_0^1\\frac{\\log(x)\\log(1+x)}{\\sqrt{1-x}}\\,dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q1372767-integral-int-0-1-frac-log-x-log-1-x-sqrt-1-x-dx.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q1372767-integral-int-0-1-frac-log-x-log-1-x-sqrt-1-x-dx.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1372767-integral-int-0-1-frac-log-x-log-1-x-sqrt-1-x-dx.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\int_0^1\\frac{\\ln(1+x)\\ln x}{\\sqrt{1-x}}\\,dx=16-8\\ln 2+4\\ln^2\\!\\left(1+\\sqrt{2}\\right)+\\sqrt{2}\\left[2\\ln^2 2+8\\left(\\ln 2-1\\right)\\ln\\!\\left(1+\\sqrt{2}\\right)-\\frac{7\\pi^2}{3}+16\\,\\operatorname{Li}_2\\!\\left(\\frac{1}{\\sqrt{2}}\\right)\\right]",
+    "mpmath_expr": "16 - 8*mp.log(2) + 4*mp.log(1+mp.sqrt(2))**2 + mp.sqrt(2)*(2*mp.log(2)**2 + 8*(mp.log(2)-1)*mp.log(1+mp.sqrt(2)) - 7*mp.pi**2/3 + 16*mp.polylog(2, 1/mp.sqrt(2)))",
+    "value": "-0.3045893944602556183567156862443346203446",
+    "direct_value": "-0.3045893944602556183567156862443346203446",
+    "digits_verified": 40,
+    "notes": "Main quantity: the definite integral I = int_0^1 log(x)*log(1+x)/sqrt(1-x) dx (integrable log singularity at x=0 and inverse-sqrt singularity at x=1). Cleo's answer is a single closed form for this integral; there are no other parts. Verified by direct mpmath quadrature (mp.quad split at x=0.5) at dps=50; agreement to all 40 reported digits (and to ~59 digits at dps=60, diff ~3e-60). Conventions: Li_2 is the standard dilogarithm mp.polylog(2, z) with real argument 1/sqrt(2); no elliptic or Hurwitz functions needed. No doubt about the ground truth."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "16-8\\ln 2+\\frac{\\sqrt{2}\\,\\pi^{2}}{3}-8\\sqrt{2}\\,\\ln\\!\\left(1+\\sqrt{2}\\right)+4\\ln^{2}\\!\\left(1+\\sqrt{2}\\right)+16\\sqrt{2}\\,\\operatorname{Li}_{2}\\!\\left(1-\\sqrt{2}\\right)",
+    "mpmath_expr": "16 - 8*mp.log(2) - 8*mp.sqrt(2)*mp.log(1+mp.sqrt(2)) + 4*mp.log(1+mp.sqrt(2))**2 + mp.sqrt(2)*mp.pi**2/3 + 16*mp.sqrt(2)*mp.polylog(2, 1-mp.sqrt(2))",
+    "closed_form_value": "-0.30458939446025561835671568624433462034460237466724",
+    "integral_value": "-0.30458939446025561835671568624433462034460237466724",
+    "digits_matched": 90,
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1372767-integral-int-0-1-frac-log-x-log-1-x-sqrt-1-x-dx.md",
+    "summary": "Substituting x = 1-t^2 gives I = 2*int_0^1 ln(1-t^2)ln(2-t^2) dt, which splits into four integrals of the form int ln(u) ln(c +/- u) du with c = sqrt(2)-/+1 over [0,1] and [1,2]; each is evaluated by parts with the dilogarithm primitive. In the sum, Li2(sqrt2-1) and Li2(-1-sqrt2) cancel exactly, and the remaining Li2(2sqrt2-2), Li2(-2-2sqrt2) reduce via Landen's identity, Euler reflection (1-x = (sqrt2-1)^2), the squaring identity, and Landen's value Li2(sqrt2-1)-Li2(1-sqrt2) = pi^2/8 - ln^2(1+sqrt2)/2, all proved from scratch. The final closed form retains one dilogarithm Li2(1-sqrt2), which PSLQ confirms admits no elementary reduction (no relation with pi^2, ln^2 2, L^2, L ln2 at 60 digits). Verification: 100-dps tanh-sinh quadrature agrees with the closed form to 90 significant digits; every intermediate identity was checked to ~1e-80, PSLQ independently recovered the exact coefficients, and the poster's 2F1 parameter-derivative expression matches to 41 digits. Confidence is very high; the only caveat is the (standard, unprovable) assumption that the residual dilog is genuinely irreducible, which does not affect correctness of the stated equality."
+   },
+   "grade": {
+    "verdict": "equivalent_but_different_form",
+    "solved": true,
+    "digits_agree": 49,
+    "truth_value": "-0.304589394460255618356715686244",
+    "solver_value": "-0.304589394460255618356715686244",
+    "derivation_quality": "complete",
+    "notes": "I independently recomputed both mpmath expressions at dps=50 plus direct quadrature; ground truth, solver, and quadrature all agree to ~49-50 digits (gt-sv diff ~8.6e-50). The solver's closed form uses Li2(1-sqrt2) and omits the ln^2(2) and L*ln2 terms present in Cleo's form, so it is a genuinely different-looking (simpler) but numerically identical expression -> equivalent_but_different_form. The write-up fully derives the result: substitution x=1-t^2, four by-parts integrals with dilog primitives, and Lemmas 2-5 proved by differentiation; I spot-checked identities (6.1), (6.2), and Lemma 5 numerically (all match to ~1e-50). No doubt about the ground truth."
+   },
+   "sources": {
+    "truth": "wf_c4cc16d6-a99",
+    "solve": "wf_c4cc16d6-a99",
+    "grade": "wf_f8778cfa-582"
+   },
+   "solution_md": "results/solutions/q1372767-integral-int-0-1-frac-log-x-log-1-x-sqrt-1-x-dx.md"
+  },
+  {
+   "it": {
+    "n": 17,
+    "slug": "q1153708-closer-form-for-int-0-infty-frac-arctan-x-2-log",
+    "title": "Closer form for $\\int_0^\\infty\\frac{(\\arctan{x})^2\\log^2({1+x^2})}{x^2}dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q1153708-closer-form-for-int-0-infty-frac-arctan-x-2-log.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q1153708-closer-form-for-int-0-infty-frac-arctan-x-2-log.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1153708-closer-form-for-int-0-infty-frac-arctan-x-2-log.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\int_0^\\infty\\frac{\\arctan^2 x\\,\\ln^2(1+x^2)}{x^2}\\,dx=\\frac{4\\pi}{3}\\ln^3 2+\\frac{2\\pi^3}{3}\\ln 2+\\frac{\\pi}{2}\\zeta(3)",
+    "mpmath_expr": "4*mp.pi/3*mp.log(2)**3 + 2*mp.pi**3/3*mp.log(2) + mp.pi/2*mp.zeta(3)",
+    "value": "17.61109914202609803451768551332218994471",
+    "direct_value": "17.61109914202609803451768551332218994471",
+    "digits_verified": 40,
+    "notes": "Main quantity: I = int_0^oo arctan(x)^2 * log(1+x^2)^2 / x^2 dx. Cleo's closed form I = (4*pi/3)ln^3(2) + (2*pi^3/3)ln(2) + (pi/2)zeta(3). Direct verification: integral split at x=1 with the tail mapped via x=1/t; mp.quad at dps=50-60 agrees with the closed form to all 40 reported digits (difference ~2.5e-60 at dps=60). No doubt about the ground truth. Note Cleo remarks the closed form differs slightly from the asker's conjectured template (no pi*ln^2(2) or plain pi*ln(2) terms, and zeta(3) carries a factor of pi); the answer has no other parts."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\frac{2}{3}\\pi^{3}\\ln 2+\\frac{4}{3}\\pi\\ln^{3}2+\\frac{\\pi\\,\\zeta(3)}{2}",
+    "mpmath_expr": "2*mp.pi**3*mp.log(2)/3 + 4*mp.pi*mp.log(2)**3/3 + mp.pi*mp.zeta(3)/2",
+    "closed_form_value": "17.6110991420260980345176855133221899447144462428948708760045302411322232677",
+    "integral_value": "17.6110991420260980345176855133221899447144462428948708760045302411322232677",
+    "digits_matched": 89,
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1153708-closer-form-for-int-0-infty-frac-arctan-x-2-log.md",
+    "summary": "Writing log(1+ix) = L + iT with L = (1/2)ln(1+x^2), T = arctan x, the identity 4L^2T^2 = (2/3)[L^4 + T^4 - Re log^4(1+ix)] splits I into three absolutely convergent integrals; rotating the contour of int x^-2 log^4(1+ix) dx onto the negative imaginary axis (justified by Cauchy's theorem on the cut plane C \\ i[0,inf) with explicit arc estimates) shows its real part vanishes exactly. The remaining pieces are classical: int x^-2 ln^4(1+x^2) dx = 48 pi zeta(3) + 8 pi^3 ln2 + 32 pi ln^3 2 via the third derivative of the Wallis Beta integral, and int x^-2 arctan^4 x dx = pi^3 ln2/2 - 9 pi zeta(3)/4 via the L^2 cosine expansion of ln sin(theta), with every differentiation-under-the-integral and termwise integration rigorously justified. Assembly gives I = (2/3)pi^3 ln2 + (4/3)pi ln^3 2 + pi zeta(3)/2. Direct 90-digit mpmath quadrature agrees with the closed form to ~89 significant digits (difference at working-precision level), and each intermediate piece, including Re P3 = 0 and Im P3 = 24 zeta(4), was verified separately. Confidence is very high; no gaps or caveats identified."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 49,
+    "truth_value": "17.6110991420260980345176855133",
+    "solver_value": "17.6110991420260980345176855133",
+    "derivation_quality": "complete",
+    "notes": "The solver's expression 2/3 pi^3 ln2 + 4/3 pi ln^3 2 + pi zeta(3)/2 is algebraically identical to the ground truth 4pi/3 ln^3 2 + 2pi^3/3 ln2 + pi/2 zeta(3); recomputed at dps=50 both give 17.611099142026098034517685513322..., diff ~4e-50 (rounding-limited). The write-up is a genuine, self-contained derivation: it splits I via the exact identity 4L^2T^2 = (2/3)[L^4+T^4-Re log^4(1+ix)] (verified pointwise), kills Re P3=0 by contour rotation onto the negative imaginary axis with explicit arc estimates, computes P1 via a Wallis/Beta third derivative (48 pi zeta(3)+8 pi^3 ln2+32 pi ln^3 2) and P2 via the L^2 cosine expansion of ln sin (pi^3 ln2/2 - 9 pi zeta(3)/4), then assembles correctly. Spot-checks of the Step-1 identity, the psi-derivative values, and the assembly all hold. No doubt about the ground truth."
+   },
+   "sources": {
+    "truth": "wf_c4cc16d6-a99",
+    "solve": "wf_c4cc16d6-a99",
+    "grade": "wf_f8778cfa-582"
+   },
+   "solution_md": "results/solutions/q1153708-closer-form-for-int-0-infty-frac-arctan-x-2-log.md"
+  },
+  {
+   "it": {
+    "n": 18,
+    "slug": "q570997-integral-int-0-1-frac-ln-left-x-sqrt2-right-sqrt",
+    "title": "Integral $\\int_0^1\\frac{\\ln\\left(x+\\sqrt2\\right)}{\\sqrt{2-x}\\,\\sqrt{1-x}\\,\\sqrt{\\vphantom{1}x}}\\mathrm dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q570997-integral-int-0-1-frac-ln-left-x-sqrt2-right-sqrt.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q570997-integral-int-0-1-frac-ln-left-x-sqrt2-right-sqrt.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q570997-integral-int-0-1-frac-ln-left-x-sqrt2-right-sqrt.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\frac{\\pi^{3/2}}{8\\sqrt{2}}\\cdot\\frac{7\\ln 2-\\ln\\left(17-12\\sqrt{2}\\right)-\\pi}{\\Gamma\\left(\\frac{3}{4}\\right)^{2}}",
+    "mpmath_expr": "mp.pi**mp.mpf('1.5')/(8*mp.sqrt(2)) * (7*mp.log(2) - mp.log(17-12*mp.sqrt(2)) - mp.pi) / mp.gamma(mp.mpf(3)/4)**2",
+    "value": "1.716114368162902406441849005033005386647",
+    "direct_value": "1.716114368162902406441849005033005386647",
+    "digits_verified": 40,
+    "notes": "Main quantity: I = int_0^1 ln(x+sqrt(2)) / (sqrt(2-x)*sqrt(1-x)*sqrt(x)) dx. Cleo's answer is a single expression with no other parts. Direct verification: substitution x = sin^2(t) removes both endpoint singularities, giving int_0^{pi/2} 2*ln(sin^2 t + sqrt2)/sqrt(2 - sin^2 t) dt; mp.quad at dps=60 agrees with the closed form to ~59 significant digits, so ground truth is confirmed beyond doubt. Note 17-12*sqrt(2) = (sqrt(2)-1)^4 < 1, so its log is negative; equivalently the numerator is 7*ln2 + 4*ln(1+sqrt2) - pi (since -ln(17-12sqrt2) = 4*ln(1+sqrt2)). No convention ambiguities (only Gamma(3/4))."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\frac{\\Gamma\\!\\left(\\frac14\\right)^2}{16\\sqrt{2\\pi}}\\left(7\\ln 2+4\\ln\\!\\left(1+\\sqrt{2}\\right)-\\pi\\right)",
+    "mpmath_expr": "mp.gamma(mp.mpf(1)/4)**2/(16*mp.sqrt(2*mp.pi))*(7*mp.log(2) + 4*mp.log(1+mp.sqrt(2)) - mp.pi)",
+    "closed_form_value": "1.71611436816290240644184900503300538664718708907610571155012",
+    "integral_value": "1.71611436816290240644184900503300538664718708907610571155012",
+    "digits_matched": 59,
+    "solution_file": "/home/riv/Code/cleo-bench/results/solutions/q570997-integral-int-0-1-frac-ln-left-x-sqrt2-right-sqrt.md",
+    "summary": "The substitution x = sin^2(theta), theta = am(u) turns the integral into sqrt(2)*int_0^K ln(sqrt2 + sn^2 u) du at the lemniscatic modulus k = 1/sqrt2 (nome q = e^-pi, tau = i). Since sn^2(iK'/2) = -sqrt2, the integrand factors exactly as a theta quotient shifted by the eighth-period point w0 = i*pi/4 (proved via a Liouville-argument addition identity), and log-mean values of theta functions over a period reduce the integral to K*ln C with C = t4^2/(k*theta4(w0)^2); the e^{-pi/4}*q^{-1/4} terms cancel at tau = i. The special value theta4(i*pi/4)^4 is evaluated in closed form from the duplication identity plus a three-term theta relation, giving C = 2^{7/8}(1+sqrt2)^{1/2}e^{-pi/8}, hence I = Gamma(1/4)^2/(16*sqrt(2*pi)) * (7 ln2 + 4 ln(1+sqrt2) - pi). Every identity used was proved (Liouville/series arguments, with Jacobi triple product and Gaussian Poisson summation cited as classical) and independently verified numerically to ~60 digits; the closed form matches direct high-precision quadrature to 59+ significant digits. Confidence is very high; the only external inputs are the two classical theorems noted."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 48,
+    "truth_value": "1.71611436816290240644184900503",
+    "solver_value": "1.71611436816290240644184900503",
+    "derivation_quality": "complete",
+    "notes": "I recomputed both mpmath expressions at dps=50 plus direct quadrature of the singularity-removed integral (x=sin^2 t): all three agree, gt-sol difference ~7e-50 (~48-49 significant digits). The solver's form Gamma(1/4)^2/(16 sqrt(2pi))*(7ln2+4ln(1+sqrt2)-pi) is algebraically identical to Cleo's Gamma(3/4)^2 form (via reflection Gamma(3/4)=pi*sqrt2/Gamma(1/4) and -ln(17-12sqrt2)=4ln(1+sqrt2)), so it is the same value in essentially the same form. The write-up is a genuinely complete, self-contained derivation: sn parametrized as a theta quotient at nome e^-pi, sqrt2+sn^2 factored via an addition identity at the eighth-period point w0=i*pi/4, reduced to K*ln C by rigorous logarithmic mean-value lemmas (all proved by Liouville/triple-product arguments), then theta4(i*pi/4) evaluated in closed form. Spot-checked steps 2a (Jacobi quartic identity), the mean-value lemma, and the final assembly (15)/(14) all hold; no ground-truth doubt."
+   },
+   "sources": {
+    "truth": "wf_c4cc16d6-a99",
+    "solve": "wf_9e62d9d7-a32",
+    "grade": "wf_9e62d9d7-a32"
+   },
+   "solution_md": "results/solutions/q570997-integral-int-0-1-frac-ln-left-x-sqrt2-right-sqrt.md"
+  },
+  {
+   "it": {
+    "n": 19,
+    "slug": "q909228-infinite-series-sum-n-1-infty-frac-h-n-n-32-n",
+    "title": "Infinite Series $\\sum_{n=1}^\\infty\\frac{H_n}{n^32^n}$",
+    "type": "series",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q909228-infinite-series-sum-n-1-infty-frac-h-n-n-32-n.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q909228-infinite-series-sum-n-1-infty-frac-h-n-n-32-n.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q909228-infinite-series-sum-n-1-infty-frac-h-n-n-32-n.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\frac{\\pi^4}{720}+\\frac{\\ln^4 2}{24}-\\frac{\\ln 2}{8}\\,\\zeta(3)+\\operatorname{Li}_4\\!\\left(\\frac12\\right)",
+    "mpmath_expr": "mp.pi**4/720 + mp.log(2)**4/24 - mp.log(2)/8*mp.zeta(3) + mp.polylog(4, mp.mpf(1)/2)",
+    "value": "0.5582373008332086382515173793324727859624",
+    "direct_value": "0.5582373008332086382515173793324727859624",
+    "digits_verified": 40,
+    "notes": "Main quantity: the series sum_{n>=1} H_n/(n^3 2^n) with H_n the n-th harmonic number. Cleo's answer is a single expression with no other parts. Verified by direct partial summation of 399 terms at 60-digit precision (terms decay like 2^-n, so convergence is geometric); closed form and direct sum agree to ~60 digits (difference ~5e-61). No doubt about the ground truth; this is a well-known classical identity. Convention: Li_4 is the standard polylogarithm mp.polylog(4, 1/2)."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\sum_{n=1}^\\infty\\frac{H_n}{n^3 2^n}=\\operatorname{Li}_4\\!\\left(\\tfrac12\\right)+\\frac{\\pi^4}{720}-\\frac{\\ln 2}{8}\\,\\zeta(3)+\\frac{\\ln^4 2}{24}",
+    "mpmath_expr": "mp.polylog(4, mp.mpf(1)/2) + mp.pi**4/720 - mp.log(2)*mp.zeta(3)/8 + mp.log(2)**4/24",
+    "closed_form_value": "0.55823730083320863825151737933247278596235920552729612849032191624",
+    "integral_value": "0.55823730083320863825151737933247278596235920552729612849032191624",
+    "digits_matched": 80,
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q909228-infinite-series-sum-n-1-infty-frac-h-n-n-32-n.md",
+    "summary": "Derived the closed form Li_4(1/2) + pi^4/720 - (ln2/8)zeta(3) + (ln^4 2)/24 for sum H_n/(n^3 2^n) via the generating function -ln(1-x)/(1-x) integrated three times, reducing the target at x=1/2 to A = int_0^{1/2} ln^2(1-t)/t dt and B = int_0^{1/2} ln t ln^2(1-t)/t dt. B was evaluated by the reflection t -> 1-t combined with the full-range integral I_1 = -pi^4/180 (proved via Euler's sum H_n/n^3 = (5/4)zeta(4), itself proved by a partial-fraction symmetrization of zeta(2)^2); the reflection reintroduces the target sum with coefficient -1, yielding a solvable linear equation. All auxiliary values (Li_2(1/2), Li_3(1/2) via reflection/Landen identities proved by differentiation, A = zeta(3)/4 - ln^3(2)/3, Sigma_1 = pi^2/12, Sigma_2 = zeta(3) - pi^2 ln2/12) were derived from scratch; only zeta(2) = pi^2/6 and zeta(4) = pi^4/90 are cited as classical. Numerics: closed form matches a brute-force 300-term partial sum to 80 significant digits, and every intermediate identity was verified to ~60 digits; the final algebra was also re-checked symbolically in sympy. Confidence is very high; no known gaps."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 40,
+    "truth_value": "0.558237300833208638251517379332",
+    "solver_value": "0.558237300833208638251517379332",
+    "derivation_quality": "complete",
+    "notes": "Recomputed both mpmath expressions at dps=50: they are literally the same four terms reordered and agree to all 40+ printed digits, matching a 300-term direct partial sum (difference ~1e-51 from finite-term truncation). Ground truth is a well-known classical identity; no doubt. The solver's write-up is a genuine, self-contained derivation: generating-function ladder to reduce Sigma_3 to Li_4(1/2), A, B; proves Li_2(1/2), Li_3(1/2) via reflection/Landen with derivative arguments, evaluates A, proves Euler's sum H_n/n^3 = 5/4 zeta(4) by partial-fraction symmetrization, evaluates the full-range integral I_1 = -pi^4/180, and breaks circularity by reflecting B to reintroduce Sigma_3 with coefficient -1. Spot-checked steps 0(d), 3, and 6 assembly (zeta(3)ln2 coeff -1/4, ln^4 2 coeff 1/12) all correct."
+   },
+   "sources": {
+    "truth": "wf_c4cc16d6-a99",
+    "solve": "wf_c4cc16d6-a99",
+    "grade": "wf_f8778cfa-582"
+   },
+   "solution_md": "results/solutions/q909228-infinite-series-sum-n-1-infty-frac-h-n-n-32-n.md"
+  },
+  {
+   "it": {
+    "n": 20,
+    "slug": "q1550806-closed-form-solution-to-int-0-1-arctan-2-x-sqrt",
+    "title": "Closed form solution to $\\int_0^1\\arctan^2(x)\\,\\sqrt{x}\\,dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q1550806-closed-form-solution-to-int-0-1-arctan-2-x-sqrt.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q1550806-closed-form-solution-to-int-0-1-arctan-2-x-sqrt.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q1550806-closed-form-solution-to-int-0-1-arctan-2-x-sqrt.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\frac{\\pi^2}{24}-\\frac{2\\pi}{3}+\\frac{1}{36\\sqrt{2}}\\left[5\\pi^2+12\\left(4+\\ln\\left(\\frac{1+\\sqrt{2}}{2}\\right)\\right)\\left(\\pi-2\\ln\\left(1+\\sqrt{2}\\right)\\right)-48\\operatorname{Li}_2\\left(\\sqrt{2}-1\\right)\\right]",
+    "mpmath_expr": "mp.pi**2/24 - 2*mp.pi/3 + (1/(36*mp.sqrt(2)))*(5*mp.pi**2 + 12*(4 + mp.log((1+mp.sqrt(2))/2))*(mp.pi - 2*mp.log(1+mp.sqrt(2))) - 48*mp.polylog(2, mp.sqrt(2)-1))",
+    "value": "0.2064908308551802691934225040635469051180",
+    "direct_value": "0.2064908308551802691934225040635469051180",
+    "digits_verified": 40,
+    "notes": "Main quantity: the definite integral I = int_0^1 arctan^2(x) * sqrt(x) dx. Cleo's answer is a single closed form with no other parts. Conventions: Li_2 is the standard dilogarithm (mp.polylog(2, z)); ln is natural log. Verified by direct mp.quad integration at dps=60: closed form and direct value agree to about 60 digits (difference ~1e-61), so no doubt about the ground truth. The integrand is smooth on [0,1] (only a mild sqrt behavior at 0), so quadrature is straightforward."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\int_0^1\\arctan^2(x)\\sqrt{x}\\,dx=\\frac{\\pi^2}{24}+\\frac{\\sqrt{2}\\,\\pi^2}{12}+\\frac{2(\\sqrt{2}-1)\\pi}{3}+\\frac{\\sqrt{2}\\,\\pi}{6}\\ln\\!\\frac{1+\\sqrt{2}}{2}-\\frac{4\\sqrt{2}}{3}\\ln(1+\\sqrt{2})-\\frac{2\\sqrt{2}}{3}\\,\\chi_2\\!\\left(\\frac{1}{\\sqrt{2}}\\right),\\qquad \\chi_2(z)=\\tfrac12\\left[\\operatorname{Li}_2(z)-\\operatorname{Li}_2(-z)\\right]",
+    "mpmath_expr": "mp.pi**2/24 + mp.sqrt(2)*mp.pi**2/12 + 2*(mp.sqrt(2)-1)*mp.pi/3 + mp.sqrt(2)*mp.pi/6*mp.log((1+mp.sqrt(2))/2) - 4*mp.sqrt(2)/3*mp.log(1+mp.sqrt(2)) - mp.sqrt(2)/3*(mp.polylog(2, 1/mp.sqrt(2)) - mp.polylog(2, -1/mp.sqrt(2)))",
+    "closed_form_value": "0.206490830855180269193422504063546905118016514274",
+    "integral_value": "0.206490830855180269193422504063546905118016514274",
+    "digits_matched": 120,
+    "solution_file": "/home/riv/Code/cleo-bench/results/solutions/q1550806-closed-form-solution-to-int-0-1-arctan-2-x-sqrt.md",
+    "summary": "Integration by parts reduces I to J1 = 2*int atan(t^2) (elementary) and A = int_0^1 atan(x^2)/(1+x^4). A-C (C the x^2-weighted companion) follows from x->1/x inversion plus a Tonelli/Feynman evaluation of int_0^infty atan(x^2)/(1+x^4) = pi^2/(8 sqrt2) - pi ln2/(4 sqrt2); A+C follows from IBP with antiderivative arctan(sqrt2 x/(1-x^2))/sqrt2, leaving D = int (x/(1+x^4)) arctan(sqrt2 x/(1-x^2)), which via the exact identity sin^2(phi) = sin(2 theta) (theta = atan x^2) collapses to (1/2) int_0^{pi/2} arcsin(sin w/sqrt2) dw = (1/2) chi_2(1/sqrt2). Every interchange (Tonelli, differentiation under the integral, termwise integration, branch choices) is justified in the solution file, and each intermediate identity plus the final formula were verified numerically: closed form matches direct quadrature to more than 120 significant digits at mp.dps=120. A PSLQ test indicates chi_2(1/sqrt2) does not reduce to elementary constants (pi^2, ln^2 2, ln 2 ln(1+sqrt2), Catalan, ...), so the Legendre-chi/dilogarithm term is intrinsic; an equivalent form using chi_2(3-2 sqrt2) via a proved Landen identity is also given. Confidence is high; no known gaps."
+   },
+   "grade": {
+    "verdict": "equivalent_but_different_form",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "0.206490830855180269193422504064",
+    "solver_value": "0.206490830855180269193422504064",
+    "derivation_quality": "complete",
+    "notes": "I independently recomputed both mpmath expressions at dps=50 and direct quadrature of int_0^1 atan^2(x)sqrt(x)dx; all three agree to 50 digits (0.20649083085518026919342250406354690511...), with residuals ~1e-51. The solver's form uses the Legendre chi function chi_2(1/sqrt2) and an explicit sqrt2*pi^2/12 term, whereas the ground truth uses Li_2(sqrt2-1); these are the same value in different-looking closed forms (linked by the Landen identity the write-up proves). The derivation is full and self-contained: IBP reduction to J and A, the A-C inversion using K_infty (Tonelli), the A+C IBP with antiderivative v, and the D-chain collapsing to (1/2)chi_2(1/sqrt2) via the sin^2(phi)=sin(2theta) identity and a differentiation-under-integral evaluation. I spot-checked Steps 4a, 6a, and 6d and they are correct. Ground truth itself is not in doubt."
+   },
+   "sources": {
+    "truth": "wf_c4cc16d6-a99",
+    "solve": "wf_9e62d9d7-a32",
+    "grade": "wf_9e62d9d7-a32"
+   },
+   "solution_md": "results/solutions/q1550806-closed-form-solution-to-int-0-1-arctan-2-x-sqrt.md"
+  },
+  {
+   "it": {
+    "n": 21,
+    "slug": "q564816-integral-int-0-pi-2-arctan-2-left-frac-6-sin-x-3",
+    "title": "Integral $\\int_0^{\\pi/2}\\arctan^2\\left(\\frac{6\\sin x}{3+\\cos 2x}\\right)\\mathrm dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q564816-integral-int-0-pi-2-arctan-2-left-frac-6-sin-x-3.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q564816-integral-int-0-pi-2-arctan-2-left-frac-6-sin-x-3.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q564816-integral-int-0-pi-2-arctan-2-left-frac-6-sin-x-3.md"
+   },
+   "truth": {
+    "closed_form_latex": "I=\\frac{\\pi}{2}\\Big(2\\,\\operatorname{Li}_2\\big((1-\\sqrt2)(2-\\sqrt5)\\big)-2\\,\\operatorname{Li}_2\\big((1-\\sqrt2)(\\sqrt5-2)\\big)+\\operatorname{Li}_2\\big(3-\\sqrt8\\big)-\\operatorname{Li}_2\\big(\\sqrt8-3\\big)+\\operatorname{Li}_2\\big(9-\\sqrt{80}\\big)-\\operatorname{Li}_2\\big(\\sqrt{80}-9\\big)\\Big)",
+    "mpmath_expr": "mp.pi/2*(2*mp.polylog(2,(1-mp.sqrt(2))*(2-mp.sqrt(5))) - 2*mp.polylog(2,(1-mp.sqrt(2))*(mp.sqrt(5)-2)) + mp.polylog(2,3-mp.sqrt(8)) - mp.polylog(2,mp.sqrt(8)-3) + mp.polylog(2,9-mp.sqrt(80)) - mp.polylog(2,mp.sqrt(80)-9))",
+    "value": "1.330970396842566666125327075956832032995",
+    "direct_value": "1.330970396842566666125327075956832032995",
+    "digits_verified": 45,
+    "notes": "Main quantity: I = int_0^{pi/2} arctan^2(6 sin x / (3 + cos 2x)) dx. Cleo's answer is a single expression (no other parts). All dilogarithm arguments are real with |z|<1, so mp.polylog(2, z) applies directly with no branch issues. Direct verification via mp.quad at dps=50 over the smooth integrand on [0, pi/2] matches the closed form to ~50 digits (difference ~1.3e-50); 45 digits explicitly compared. No doubt about the ground truth."
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "I=\\pi\\left[\\chi_2\\!\\left(3-2\\sqrt{2}\\right)+2\\,\\chi_2\\!\\left((\\sqrt{2}-1)(\\sqrt{5}-2)\\right)+\\chi_2\\!\\left(9-4\\sqrt{5}\\right)\\right],\\qquad \\chi_2(z)=\\sum_{k\\ge0}\\frac{z^{2k+1}}{(2k+1)^2}=\\tfrac12\\left[\\operatorname{Li}_2(z)-\\operatorname{Li}_2(-z)\\right]",
+    "mpmath_expr": "mp.pi*((mp.polylog(2,3-2*mp.sqrt(2))-mp.polylog(2,-(3-2*mp.sqrt(2))))/2 + (mp.polylog(2,9-4*mp.sqrt(5))-mp.polylog(2,-(9-4*mp.sqrt(5))))/2 + mp.polylog(2,(mp.sqrt(2)-1)*(mp.sqrt(5)-2)) - mp.polylog(2,-(mp.sqrt(2)-1)*(mp.sqrt(5)-2)))",
+    "closed_form_value": "1.330970396842566666125327075956832032995032819201208275430210",
+    "integral_value": "1.330970396842566666125327075956832032995032819201208275430210",
+    "digits_matched": 90,
+    "solution_file": "/home/riv/Code/cleo-bench/results/solutions/q564816-integral-int-0-pi-2-arctan-2-left-frac-6-sin-x-3.md",
+    "summary": "Since 3+cos2x = 2(2-sin^2 x), the integrand is [arctan(sin x)+arctan(sin x/2)]^2 by the arctan addition formula. I proved the Fourier expansion arctan(a sin x) = 2*sum_{n odd} t_a^n sin(nx)/n with t_a = (sqrt(1+a^2)-1)/a via the factorization (1-t e^{-ix})(1+t e^{ix}) = (1-t^2)(1+ia sin x) with principal-branch control; with t_1 = sqrt(2)-1 =: r and t_{1/2} = sqrt(5)-2 =: q, orthogonality of odd sines on [0,pi/2] (Parseval, justified by absolute uniform convergence) gives I = pi*sum_{n odd}(r^n+q^n)^2/n^2 = pi*[chi2(r^2)+2 chi2(rq)+chi2(q^2)]. Direct 90-digit quadrature (Gauss-Legendre and tanh-sinh) matches the closed form to 90 significant digits. Extensive PSLQ work (elementary-log bases at 320-digit tolerance, plus full relation-lattice enumeration of Rogers L-values over a 35-argument five-term orbit, which did recover known ladders like L(r^4)=5L(r^2)-1) indicates the chi2 form is minimal and no elementary pi^2/log form exists; that non-reducibility is heuristic, but the closed form itself is fully proven. Confidence in the stated evaluation is very high."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "1.33097039684256666612532707596",
+    "solver_value": "1.33097039684256666612532707596",
+    "derivation_quality": "complete",
+    "notes": "I recomputed both mpmath expressions at dps=50 and direct quadrature of the integrand; all three agree to full precision (truth-solver difference exactly 0, both match direct integral to ~50 digits, diff ~1.3e-50). The solver's chi2 form is algebraically the same form as the ground truth: ground-truth arguments are r^2=3-sqrt8, q^2=9-sqrt80, rq=(1-sqrt2)(2-sqrt5), and the Li2(z)-Li2(-z) pairings collapse to 2*chi2, giving pi[chi2(r^2)+2chi2(rq)+chi2(q^2)] identically. The write-up is a complete rigorous derivation: arctan addition to split the integrand, a proven Fourier expansion of arctan(a sin x) via principal-branch log control, and Parseval on odd sines over [0,pi/2] with justified term-by-term integration. No doubt about the ground truth."
+   },
+   "sources": {
+    "truth": "wf_c4cc16d6-a99",
+    "solve": "wf_9e62d9d7-a32",
+    "grade": "wf_9e62d9d7-a32"
+   },
+   "solution_md": "results/solutions/q564816-integral-int-0-pi-2-arctan-2-left-frac-6-sin-x-3.md"
+  },
+  {
+   "it": {
+    "n": 22,
+    "slug": "q577849-derivative-of-the-meijer-g-function-with-respect",
+    "title": "Derivative of the Meijer G-function with respect to one of its parameters",
+    "type": "other",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q577849-derivative-of-the-meijer-g-function-with-respect.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q577849-derivative-of-the-meijer-g-function-with-respect.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q577849-derivative-of-the-meijer-g-function-with-respect.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\mathcal{D}=\\left.\\partial_\\alpha G_{2,3}^{2,1}\\!\\left(1\\,\\middle|\\,\\begin{smallmatrix}1,\\alpha\\\\1,1,0\\end{smallmatrix}\\right)\\right|_{\\alpha=1}={_2F_2}\\!\\left(\\begin{smallmatrix}1,1\\\\2,2\\end{smallmatrix}\\,\\middle|\\,-1\\right)=\\gamma-\\operatorname{Ei}(-1)",
+    "mpmath_expr": "mp.euler - mp.ei(-1)",
+    "value": "0.7965995992970531342836758655425240800732",
+    "direct_value": "0.7965995992970531342836758655425240800732",
+    "digits_verified": 40,
+    "notes": "Main quantity: D = d/dalpha of the Meijer G-function G^{2,1}_{2,3}(1 | a=(1; alpha), b=(1,1; 0)) evaluated at alpha=1. Cleo gives two equivalent forms: D = 2F2(1,1;2,2;-1) = gamma - Ei(-1) (Euler-Mascheroni constant minus the exponential integral at -1). Convention: mp.meijerg([[1],[alpha]],[[1,1],[0]],1), i.e. m=2, n=1 with the alpha in the second (non-gamma-numerator) upper-parameter group; with this convention G(1)=1-1/e, and the parameter derivative computed by high-precision numerical differentiation (mp.diff at dps 70-80 with step sizes 1e-25 and 1e-30) matches gamma - Ei(-1) to better than 50 digits. Also verified mp.hyper([1,1],[2,2],-1) equals the same value to 45 digits, and the value matches the 61 digits Cleo quotes (0.79659959929705313428367586554252408007320662934683...). No doubts about the ground truth. Scratch script: /home/riv/Code/cleo-bench/results/scratch/truth/q577849-derivative-of-the-meijer-g-function-with-respect/verify.py"
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\gamma + E_1(1) \\;=\\; \\gamma - \\operatorname{Ei}(-1) \\;=\\; \\operatorname{Ein}(1) \\;=\\; \\sum_{n=1}^{\\infty}\\frac{(-1)^{n-1}}{n\\cdot n!}",
+    "mpmath_expr": "mp.euler + mp.e1(1)",
+    "closed_form_value": "0.79659959929705313428367586554252408007320662934683",
+    "integral_value": "0.79659959929705313428367586554252408007320662934683",
+    "digits_matched": 50,
+    "solution_file": "/home/riv/Code/cleo-bench/results/solutions/q577849-derivative-of-the-meijer-g-function-with-respect.md",
+    "summary": "Wrote the G-function as its Mellin-Barnes integral (1/2pi i) int Gamma(1-s)^2 Gamma(s) / (Gamma(1+s) Gamma(alpha-s)) ds on Re s = 1/2, justified differentiation under the integral in alpha (uniform Stirling bounds + Morera/Cauchy), reducing D to -(1/2pi i) int Gamma'(u)/(1-u) du after u = 1-s. Using 1/(1-u) = int_1^inf x^(u-2) dx, Fubini, and the rigorously proved Mellin pair Gamma'(u) <-> e^(-y) ln y (Fourier inversion), D = -int_0^1 e^(-t) ln t dt = gamma + E_1(1) = Ein(1) = sum (-1)^(n-1)/(n n!); an independent residue expansion reproduces the same series, and the same method gives G itself = 1 - 1/e at alpha=1 as a convention check. Numerics at 60 dps: Cauchy-circle differentiation of mpmath's meijerg and direct quadrature of the differentiated Mellin-Barnes line both give 0.796599599297053134283675865542524080073..., matching gamma + E_1(1) to at least 50 digits (line integral: 61 digits). Confidence is high; the only facts cited without full proof are textbook ones (uniform Stirling, Fourier inversion, Weierstrass product for psi(1) = -gamma)."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 48,
+    "truth_value": "0.796599599297053134283675865542",
+    "solver_value": "0.796599599297053134283675865542",
+    "derivation_quality": "complete",
+    "notes": "Recomputed at dps=50: ground truth mp.euler-mp.ei(-1) and solver mp.euler+mp.e1(1) are literally identical (difference exactly 0), since E_1(1)=-Ei(-1); essentially the same closed form. Independently confirmed the target quantity via mp.diff of mp.meijerg([[1],[a]],[[1,1],[0]],1) at alpha=1, plus the intermediate D=-int_0^1 e^-t ln t dt and the series sum (-1)^{n-1}/(n n!), all matching to full precision. The write-up is a rigorous, self-contained Mellin-Barnes derivation: contour setup, differentiation under the integral via uniform Stirling + Morera/Cauchy, reduction to -(1/2pi i)int Gamma'(u)/(1-u)du, a proven Gamma' Mellin pair via Fourier inversion, Fubini, and evaluation to gamma+E_1(1). Pivotal steps spot-checked and correct; no doubt about the ground truth."
+   },
+   "sources": {
+    "truth": "wf_9e62d9d7-a32",
+    "solve": "wf_9e62d9d7-a32",
+    "grade": "wf_9e62d9d7-a32"
+   },
+   "solution_md": "results/solutions/q577849-derivative-of-the-meijer-g-function-with-respect.md"
+  },
+  {
+   "it": {
+    "n": 23,
+    "slug": "q557439-integral-int-0-infty-frac-operatorname-arccot-le",
+    "title": "Integral $\\int_0^\\infty\\frac{\\operatorname{arccot}\\left(\\sqrt{x}-2\\,\\sqrt{x+1}\\right)}{x+1}\\mathrm dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q557439-integral-int-0-infty-frac-operatorname-arccot-le.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q557439-integral-int-0-infty-frac-operatorname-arccot-le.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q557439-integral-int-0-infty-frac-operatorname-arccot-le.md"
+   },
+   "truth": {
+    "closed_form_latex": "\\pi\\ln\\frac{3}{4}-\\Im\\,\\operatorname{Li}_2\\!\\left(\\frac{3i}{4}\\right)",
+    "mpmath_expr": "mp.pi*mp.log(mp.mpf(3)/4) - mp.im(mp.polylog(2, mp.mpc(0, mp.mpf(3)/4)))",
+    "value": "-1.614349990027648541373736790184307373237",
+    "direct_value": "-1.614349990027648541373736790184307373237",
+    "digits_verified": 40,
+    "notes": "Main quantity: I = int_0^inf arccot(sqrt(x)-2*sqrt(x+1))/(x+1) dx. Cleo's single-line answer: I = pi*ln(3/4) - Im Li_2(3i/4). Convention: arccot(y) = arctan(1/y) with range (-pi/2, pi/2)\\{0} (mpmath's acot), which is required for convergence since the argument sqrt(x)-2*sqrt(x+1) is always negative and tends to -inf; with the (0, pi) convention the integral would diverge. The integral is therefore negative, approx -1.6143. Direct verification via mp.quad with subdivision [0,1,10,100,10000,inf] at dps=80 agrees with the closed form to all 40 reported significant digits (raw agreement ~44 digits). No doubt about the ground truth; the answer has no other parts. Scratch script: /home/riv/Code/cleo-bench/results/scratch/truth/q557439-integral-int-0-infty-frac-operatorname-arccot-le/verify.py"
+   },
+   "solve": {
+    "status": "solved",
+    "closed_form_latex": "\\frac{\\pi}{2}\\ln\\frac{3}{4}-\\operatorname{Ti}_2\\!\\left(\\frac{4}{3}\\right)\\;=\\;-\\pi\\ln\\frac{4}{3}-\\operatorname{Ti}_2\\!\\left(\\frac{3}{4}\\right),\\qquad \\operatorname{Ti}_2(z)=\\int_0^z\\frac{\\arctan t}{t}\\,dt=\\Im\\operatorname{Li}_2(iz)",
+    "mpmath_expr": "mp.pi/2*mp.log(mp.mpf(3)/4) - mp.im(mp.polylog(2, mp.mpc(0, mp.mpf(4))/3))",
+    "closed_form_value": "-1.61434999002764854137373679018430737323694935699855074907972",
+    "integral_value": "-1.61434999002764854137373679018430737323694935699855074907972",
+    "digits_matched": 80,
+    "solution_file": "/home/riv/Code/cleo-bench/results/solutions/q557439-integral-int-0-infty-frac-operatorname-arccot-le.md",
+    "summary": "The integral converges only with the odd arccot convention (arccot y = arctan(1/y), Mathematica's ArcCot), which the derivation adopts. Substituting x = tan^2(theta) turns the integrand angle into -arctan(cos(theta)/(2-sin(theta))), whose theta-derivative is the rational kernel (2 sin(theta)-1)/(5-4 sin(theta)); one integration by parts against tan(theta) then reduces I to (pi/2)ln 2 + 3*int_0^{pi/2} ln(cos)/(5-4 sin), and rationalizing that kernel splits it into an even part evaluated by int_0^inf ln(1+p^2 v^2)/(1+v^2) dv = pi ln(1+p) and an odd part giving int_0^1 ln u/(9+16u^2) du = -Ti2(4/3)/12. The result I = (pi/2)ln(3/4) - Ti2(4/3) = -pi ln(4/3) - Ti2(3/4) was verified against direct high-precision quadrature of the original integral to 80 significant digits, with every intermediate identity checked numerically. PSLQ searches indicate Ti2(4/3) does not reduce to Catalan/pi/log constants, so this is the natural closed form; confidence is very high, the only caveat being the (forced) arccot convention."
+   },
+   "grade": {
+    "verdict": "correct",
+    "solved": true,
+    "digits_agree": 50,
+    "truth_value": "-1.61434999002764854137373679018",
+    "solver_value": "-1.61434999002764854137373679018",
+    "derivation_quality": "complete",
+    "notes": "Recomputed both mpmath expressions at dps=50-60: ground truth pi*ln(3/4)-Im Li2(3i/4) and solver's (pi/2)ln(3/4)-Im Li2(4i/3) agree to full precision (50+ digits, rel diff 0). The forms are essentially identical: the solver's own stated alternate form -pi*ln(4/3)-Ti2(3/4) = -pi*ln(4/3)-Im Li2(3i/4) = pi*ln(3/4)-Im Li2(3i/4), which is literally the ground truth. The write-up is a complete, rigorous derivation (trig substitution, integration by parts with justified vanishing boundary terms, rational-kernel split, Lemmas A/B/C each proved); I spot-checked the derivative formula (2) numerically (exact), and direct acot-convention quadrature of the original integral matches to ~22 digits. Both agree on the forced odd arccot convention required for convergence. No doubt about the ground truth."
+   },
+   "sources": {
+    "truth": "wf_9e62d9d7-a32",
+    "solve": "wf_9e62d9d7-a32",
+    "grade": "wf_9e62d9d7-a32"
+   },
+   "solution_md": "results/solutions/q557439-integral-int-0-infty-frac-operatorname-arccot-le.md"
+  },
+  {
+   "it": {
+    "n": 24,
+    "slug": "q554624-integral-int-0-infty-frac-1-x-sqrt-2-sqrt-2-x-2",
+    "title": "Integral $\\int_0^\\infty\\frac{1}{x\\,\\sqrt{2}+\\sqrt{2\\,x^2+1}}\\cdot\\frac{\\log x}{\\sqrt{x^2+1}}\\mathrm dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q554624-integral-int-0-infty-frac-1-x-sqrt-2-sqrt-2-x-2.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q554624-integral-int-0-infty-frac-1-x-sqrt-2-sqrt-2-x-2.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q554624-integral-int-0-infty-frac-1-x-sqrt-2-sqrt-2-x-2.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 25,
+    "slug": "q927427-does-int-0-1-frac-ln-x-1-x-cos-1-x-mathrm-dx-hav",
+    "title": "Does $\\int_0^1\\frac{\\ln x}{1+x}\\cos^{-1}x\\,\\mathrm dx$ have a closed from?",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q927427-does-int-0-1-frac-ln-x-1-x-cos-1-x-mathrm-dx-hav.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q927427-does-int-0-1-frac-ln-x-1-x-cos-1-x-mathrm-dx-hav.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q927427-does-int-0-1-frac-ln-x-1-x-cos-1-x-mathrm-dx-hav.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 26,
+    "slug": "q577704-integral-int-0-infty-frac-ln-left-1-x-sqrt-x-2-2",
+    "title": "Integral $\\int_0^\\infty\\frac{\\ln\\left(1+x+\\sqrt{x^2+2\\,x}\\right)\\,\\ln\\left(1+\\sqrt{x^2+2\\,x+2}\\right)}{x^2+2x+1}dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q577704-integral-int-0-infty-frac-ln-left-1-x-sqrt-x-2-2.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q577704-integral-int-0-infty-frac-ln-left-1-x-sqrt-x-2-2.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q577704-integral-int-0-infty-frac-ln-left-1-x-sqrt-x-2-2.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 27,
+    "slug": "q578605-integral-int-0-infty-frac-ln-left-sqrt-x-1-vphan",
+    "title": "Integral $\\int_0^\\infty\\frac{\\ln\\left(\\sqrt{x+1\\vphantom{x^0}}-1\\right)\\,\\ln\\left(\\sqrt{x^{-1}+1}+1\\right)}{(x+1)^{3/2}}dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q578605-integral-int-0-infty-frac-ln-left-sqrt-x-1-vphan.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q578605-integral-int-0-infty-frac-ln-left-sqrt-x-1-vphan.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q578605-integral-int-0-infty-frac-ln-left-sqrt-x-1-vphan.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 28,
+    "slug": "q702681-integral-int-0-1-frac-log-1-x-sqrt-x-x-3-dx",
+    "title": "Integral $\\int_0^1\\frac{\\log(1-x)}{\\sqrt{x-x^3}}dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q702681-integral-int-0-1-frac-log-1-x-sqrt-x-x-3-dx.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q702681-integral-int-0-1-frac-log-1-x-sqrt-x-x-3-dx.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q702681-integral-int-0-1-frac-log-1-x-sqrt-x-x-3-dx.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 29,
+    "slug": "q935366-simplification-of-an-expression-containing-opera",
+    "title": "Simplification of an expression containing $\\operatorname{Li}_3(x)$ terms",
+    "type": "other",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q935366-simplification-of-an-expression-containing-opera.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q935366-simplification-of-an-expression-containing-opera.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q935366-simplification-of-an-expression-containing-opera.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 30,
+    "slug": "q967398-extract-real-and-imaginary-parts-of-operatorname",
+    "title": "Extract real and imaginary parts of $\\operatorname{Li}_2\\left(i\\left(2\\pm\\sqrt3\\right)\\right)$",
+    "type": "other",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q967398-extract-real-and-imaginary-parts-of-operatorname.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q967398-extract-real-and-imaginary-parts-of-operatorname.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q967398-extract-real-and-imaginary-parts-of-operatorname.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 31,
+    "slug": "q930011-closed-forms-for-several-tough-integrals",
+    "title": "Closed-forms for several tough integrals",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q930011-closed-forms-for-several-tough-integrals.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q930011-closed-forms-for-several-tough-integrals.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q930011-closed-forms-for-several-tough-integrals.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 32,
+    "slug": "q964438-integral-int-0-1-frac-x-42-sqrt-x-4-x-2-1-operat",
+    "title": "Integral $\\int_0^1\\frac{x^{42}}{\\sqrt{x^4-x^2+1}}\\operatorname d \\!x$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q964438-integral-int-0-1-frac-x-42-sqrt-x-4-x-2-1-operat.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q964438-integral-int-0-1-frac-x-42-sqrt-x-4-x-2-1-operat.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q964438-integral-int-0-1-frac-x-42-sqrt-x-4-x-2-1-operat.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 33,
+    "slug": "q572859-closed-form-for-int-0-infty-frac-sin-x-cdot-oper",
+    "title": "Closed form for $\\int_0^\\infty\\frac{\\sin x\\,\\cdot\\,\\operatorname{Ci}x-\\cos x\\,\\cdot\\,\\operatorname{Si}x}{\\sqrt{16\\,x^2+1}}dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q572859-closed-form-for-int-0-infty-frac-sin-x-cdot-oper.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q572859-closed-form-for-int-0-infty-frac-sin-x-cdot-oper.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q572859-closed-form-for-int-0-infty-frac-sin-x-cdot-oper.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 34,
+    "slug": "q581215-integral-int-0-infty-x-2-e-x-2-operatorname-erf",
+    "title": "Integral $\\int_0^\\infty x^2\\,e^{-x^2}\\operatorname{erf}(x)\\,\\log(x)\\,dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q581215-integral-int-0-infty-x-2-e-x-2-operatorname-erf.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q581215-integral-int-0-infty-x-2-e-x-2-operatorname-erf.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q581215-integral-int-0-infty-x-2-e-x-2-operatorname-erf.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 35,
+    "slug": "q904320-improper-integral-containing-sqrt-cos-x-frac1-sq",
+    "title": "Improper integral containing $\\sqrt{\\cos x-\\frac1{\\sqrt 2}}$ in the denominator",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q904320-improper-integral-containing-sqrt-cos-x-frac1-sq.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q904320-improper-integral-containing-sqrt-cos-x-frac1-sq.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q904320-improper-integral-containing-sqrt-cos-x-frac1-sq.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 36,
+    "slug": "q710175-integral-int-0-1-frac-ln-x-x-1-ln-left-1-frac1-l",
+    "title": "Integral $\\int_0^1\\frac{\\ln x}{x-1}\\ln\\left(1+\\frac1{\\ln^2x}\\right)dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q710175-integral-int-0-1-frac-ln-x-x-1-ln-left-1-frac1-l.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q710175-integral-int-0-1-frac-ln-x-x-1-ln-left-1-frac1-l.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q710175-integral-int-0-1-frac-ln-x-x-1-ln-left-1-frac1-l.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 37,
+    "slug": "q576304-a-closed-form-for-int-0-1-2f-1-left-frac-1-4-fra",
+    "title": "A closed form for $\\int_0^1{_2F_1}\\left(-\\frac{1}{4},\\frac{5}{4};\\,1;\\,\\frac{x}{2}\\right)^2dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q576304-a-closed-form-for-int-0-1-2f-1-left-frac-1-4-fra.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q576304-a-closed-form-for-int-0-1-2f-1-left-frac-1-4-fra.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q576304-a-closed-form-for-int-0-1-2f-1-left-frac-1-4-fra.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 38,
+    "slug": "q704917-integral-int-0-infty-f-x-f-left-x-sqrt2-right-fr",
+    "title": "Integral $\\int_0^\\infty F(x)\\,F\\left(x\\,\\sqrt2\\right)\\frac{e^{-x^2}}{x^2} \\, dx$ involving Dawson's function",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q704917-integral-int-0-infty-f-x-f-left-x-sqrt2-right-fr.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q704917-integral-int-0-infty-f-x-f-left-x-sqrt2-right-fr.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q704917-integral-int-0-infty-f-x-f-left-x-sqrt2-right-fr.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  },
+  {
+   "it": {
+    "n": 39,
+    "slug": "q566513-closed-form-for-int-0-1-sqrt-frac-2-x-1-x-x-log",
+    "title": "Closed form for $\\int_0^1\\sqrt{\\frac{2-x}{(1-x)\\,x}}\\,\\log\\left(\\frac{(2-x)\\,x}{1-x}\\right)dx$",
+    "type": "integral",
+    "problem_file": "/home/riv/Code/cleo-bench/data/problems/q566513-closed-form-for-int-0-1-sqrt-frac-2-x-1-x-x-log.md",
+    "answer_file": "/home/riv/Code/cleo-bench/data/answers/q566513-closed-form-for-int-0-1-sqrt-frac-2-x-1-x-x-log.md",
+    "solution_file": "/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/solutions/q566513-closed-form-for-int-0-1-sqrt-frac-2-x-1-x-x-log.md"
+   },
+   "truth": null,
+   "solve": null,
+   "grade": null,
+   "sources": {},
+   "solution_md": null
+  }
+ ]
+}

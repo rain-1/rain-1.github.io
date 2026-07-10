@@ -1,0 +1,197 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 16\\[1ex]\large Integral $\int_0^1\frac{\log(x)\log(1+x)}{\sqrt{1-x}}\,dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/1372767}{question 1372767}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+\sloppy
+
+\section*{Problem}
+
+Evaluate in closed form
+$$I \;=\; \int_0^1 \frac{\log(x)\,\log(1+x)}{\sqrt{1-x}}\;dx .$$
+
+(The original poster had expressed $I$ through parameter--derivatives of ${}_2F_1$ at $(1,0;\tfrac32;-1)$ and asked for an explicit simplification.)
+
+\section*{Result}
+
+With $L:=\ln\!\left(1+\sqrt{2}\right)$,
+
+$$\boxed{\;I \;=\; 16-8\ln 2+\frac{\sqrt{2}\,\pi^{2}}{3}-8\sqrt{2}\,\ln\!\left(1+\sqrt{2}\right)+4\ln^{2}\!\left(1+\sqrt{2}\right)+16\sqrt{2}\;\operatorname{Li}_{2}\!\left(1-\sqrt{2}\right)\;}$$
+
+Numerically $I=-0.30458939446025561835671568624433462034460237466724\ldots$
+
+Equivalent forms (obtained from the identities proved below, both verified numerically):
+$$I=16-8\ln 2-8\sqrt2\,L+4L^{2}+8\sqrt2\,L^{2}-\frac{5\sqrt2\,\pi^{2}}{3}+16\sqrt2\,\operatorname{Li}_2\!\big(\sqrt2-1\big),$$
+$$I=16-8\ln 2-8\sqrt2\,L+4L^{2}+4\sqrt2\,L^{2}-\frac{2\sqrt2\,\pi^{2}}{3}+4\sqrt2\,\operatorname{Li}_2\!\big(3-2\sqrt2\big).$$
+
+The single remaining dilogarithm cannot (as far as is known, and as PSLQ confirms numerically) be reduced further: only the \emph{odd} part $\operatorname{Li}_2(\sqrt2-1)-\operatorname{Li}_2(1-\sqrt2)$ is classically elementary (Landen), and it is used below; the even part is genuinely new.
+
+\section*{Derivation}
+
+Throughout, $\operatorname{Li}_2$ denotes the dilogarithm, defined for real $z\le 1$ by
+$$\operatorname{Li}_2(z)\;=\;-\int_0^z \frac{\ln(1-s)}{s}\,ds ,$$
+which is real--analytic on $(-\infty,1)$, agrees with $\sum_{n\ge1}z^n/n^2$ for $|z|\le 1$, and satisfies $\operatorname{Li}_2'(z)=-\ln(1-z)/z$. We freely use $\operatorname{Li}_2(1)=\zeta(2)=\pi^2/6$. Write $L:=\ln(1+\sqrt2)$; note $\ln(\sqrt2-1)=-L$ and $\ln(2-\sqrt2)=\tfrac12\ln2-L$ (because $2-\sqrt2=\sqrt2(\sqrt2-1)$).
+
+\textbf{Convergence.} Near $x=0$ the integrand is $\sim x\ln x$, integrable; near $x=1$ it is $O\!\big((1-x)^{1/2}\big)$ because $\log x\to 0$. So $I$ converges absolutely.
+
+\subsection*{Step 1: remove the square root}
+
+Substitute $x=1-t^2$, $t=\sqrt{1-x}\in(0,1)$, $dx=-2t\,dt$, so $dx/\sqrt{1-x}=-2\,dt$:
+$$I=2\int_0^1 \ln\!\left(1-t^{2}\right)\ln\!\left(2-t^{2}\right)dt .$$
+
+\subsection*{Step 2: factor the logarithms}
+
+For $0<t<1$ all four factors below are positive, so
+$$\ln(1-t^2)=\ln(1-t)+\ln(1+t),\qquad \ln(2-t^2)=\ln(\sqrt2-t)+\ln(\sqrt2+t),$$
+and therefore $I=2\big(A_{--}+A_{-+}+A_{+-}+A_{++}\big)$ with
+$$A_{\sigma\tau}=\int_0^1 \ln(1+\sigma t)\,\ln(\sqrt2+\tau t)\,dt,\qquad \sigma,\tau\in\{-,+\}.$$
+Each $A_{\sigma\tau}$ converges absolutely ($\ln(1-t)$ is integrable). Shifting the variable ($u=1-t$ for $\sigma=-$, $u=1+t$ for $\sigma=+$) puts them in a uniform shape:
+$$A_{--}=\int_0^1 \ln u\,\ln(c_-+u)\,du,\qquad A_{-+}=\int_0^1 \ln u\,\ln(c_+-u)\,du,$$
+$$A_{++}=\int_1^2 \ln u\,\ln(c_-+u)\,du,\qquad A_{+-}=\int_1^2 \ln u\,\ln(c_+-u)\,du,$$
+where
+$$c_-:=\sqrt2-1,\qquad c_+:=\sqrt2+1 .$$
+(For $A_{-+}$: $\sqrt2+t=\sqrt2+1-u=c_+-u$; for $A_{+-}$: $\sqrt2-t=\sqrt2+1-u=c_+-u$; for $A_{++}$: $\sqrt2+t=c_-+u$. All log arguments stay positive: $c_+-u\ge c_+-2=\sqrt2-1>0$.)
+
+\subsection*{Step 3: dilogarithm primitives}
+
+\textbf{Lemma 1.} For $c>0$ and $0\le p<q$:
+\begin{equation*}\int_p^q\frac{\ln(1+u/c)}{u}\,du=\operatorname{Li}_2(-p/c)-\operatorname{Li}_2(-q/c). \tag{L1a}\end{equation*}
+For $c>q$ (so the argument stays in $(0,1)$):
+\begin{equation*}\int_p^q\frac{\ln(1-u/c)}{u}\,du=\operatorname{Li}_2(p/c)-\operatorname{Li}_2(q/c). \tag{L1b}\end{equation*}
+
+\emph{Proof.} Substitute $s=\mp u/c$ in the defining integral of $\operatorname{Li}_2$; equivalently, $\frac{d}{du}\operatorname{Li}_2(\mp u/c)=-\frac{\ln(1\pm u/c)}{u}$ by the chain rule. The integrands extend continuously to $u=0$ (limit $\pm 1/c$), so $p=0$ is allowed. $\blacksquare$
+
+Note that (L1a) with $q/c>1$ produces $\operatorname{Li}_2$ at arguments $<-1$; this is exactly the real-analytic continuation defined above, so no branch issues arise.
+
+\subsection*{Step 4: the four integrals}
+
+We use integration by parts, always differentiating $\ln u$. Let
+$$V_c(u):=(c+u)\ln(c+u)-u,\qquad W_c(u):=-(c-u)\ln(c-u)-u,$$
+so $V_c'(u)=\ln(c+u)$ and $W_c'(u)=\ln(c-u)$. Two algebraic splittings will be used:
+\begin{equation*}\frac{V_c(u)-V_c(0)}{u}=\frac{c\ln(1+u/c)}{u}+\ln(c+u)-1,\qquad
+\frac{W_c(u)-W_c(0)}{u}=-\frac{c\ln(1-u/c)}{u}+\ln(c-u)-1. \tag{4.1}\end{equation*}
+(Check: $(c+u)\ln(c+u)-c\ln c=c\ln(1+u/c)+u\ln(c+u)$, and similarly for $W$.)
+
+\textbf{(F1) $\int_0^1\ln u\,\ln(c+u)\,du$ ($c>0$).} Integrate by parts on $[\varepsilon,1]$ with $v(u)=V_c(u)-V_c(0)$ (so $v(0)=0$, $v'=\ln(c+u)$). Since $v(u)=\int_0^u\ln(c+w)\,dw=O(u)$, the boundary term $\ln\varepsilon\,v(\varepsilon)\to0$ as $\varepsilon\to0^+$, and $\ln 1=0$ kills the other end; also $v(u)/u$ is bounded, so the limit passes into the (absolutely convergent) integrals. Using (4.1), (L1a) with $(p,q)=(0,1)$, and $\int_0^1\ln(c+u)\,du=V_c(1)-V_c(0)$:
+$$\int_0^1\ln u\,\ln(c+u)\,du=-\int_0^1\frac{v(u)}{u}\,du
+=2+c\ln c-(1+c)\ln(1+c)+c\,\operatorname{Li}_2(-1/c).$$
+
+\textbf{(F2) $\int_0^1\ln u\,\ln(c-u)\,du$ ($c>1$).} Identically, with $v(u)=W_c(u)-W_c(0)$ and (L1b):
+$$\int_0^1\ln u\,\ln(c-u)\,du=2-c\ln c+(c-1)\ln(c-1)-c\,\operatorname{Li}_2(1/c).$$
+
+\textbf{(F3) $\int_1^2\ln u\,\ln(c+u)\,du$ ($c>0$).} No singularities here; integrate by parts with $V_c$ directly, then use (4.1) (the extra term $c\ln c/u$ integrates to $c\ln c\,\ln 2$) and (L1a) with $(p,q)=(1,2)$:
+$$\int_1^2\ln u\,\ln(c+u)\,du=\ln 2\;V_c(2)-V_c(2)+V_c(1)+1-c\ln c\,\ln2-c\big[\operatorname{Li}_2(-1/c)-\operatorname{Li}_2(-2/c)\big].$$
+
+\textbf{(F4) $\int_1^2\ln u\,\ln(c-u)\,du$ ($c>2$).} Same with $W_c$ and (L1b):
+$$\int_1^2\ln u\,\ln(c-u)\,du=\ln 2\;W_c(2)-W_c(2)+W_c(1)+1+c\ln c\,\ln2+c\big[\operatorname{Li}_2(1/c)-\operatorname{Li}_2(2/c)\big].$$
+
+Now insert $c=c_\mp$. Abbreviate the four dilogarithm values
+$$D_1=\operatorname{Li}_2(\sqrt2-1),\quad D_2=\operatorname{Li}_2\!\big(2(\sqrt2-1)\big),\quad D_3=\operatorname{Li}_2\!\big(-(\sqrt2+1)\big),\quad D_4=\operatorname{Li}_2\!\big(-2(\sqrt2+1)\big),$$
+noting $1/c_+=c_-=\sqrt2-1$ and $1/c_-=c_+=\sqrt2+1$. Using $c_-\ln c_-=-(\sqrt2-1)L$, $c_+\ln c_+=(\sqrt2+1)L$, $(1+c_-)\ln(1+c_-)=\tfrac{\sqrt2}{2}\ln2=(c_+-1)\ln(c_+-1)$, $V_{c_-}(2)=(\sqrt2+1)L-2$, $V_{c_-}(1)=\tfrac{\sqrt2}{2}\ln2-1$, $W_{c_+}(2)=(\sqrt2-1)L-2$, $W_{c_+}(1)=-\tfrac{\sqrt2}{2}\ln2-1$:
+
+$$A_{--}=2-(\sqrt2-1)L-\tfrac{\sqrt2}{2}\ln 2+(\sqrt2-1)\,D_3,$$
+$$A_{-+}=2-(\sqrt2+1)L+\tfrac{\sqrt2}{2}\ln 2-(\sqrt2+1)\,D_1,$$
+$$A_{++}=2+2\sqrt2\,L\ln 2+\Big(\tfrac{\sqrt2}{2}-2\Big)\ln 2-(\sqrt2+1)L-(\sqrt2-1)\,D_3+(\sqrt2-1)\,D_4,$$
+$$A_{+-}=2+2\sqrt2\,L\ln 2-\Big(2+\tfrac{\sqrt2}{2}\Big)\ln 2-(\sqrt2-1)L+(\sqrt2+1)\,D_1-(\sqrt2+1)\,D_2.$$
+
+(Each of these four closed forms was verified numerically to $80$ digits against direct quadrature of the corresponding integral.)
+
+\subsection*{Step 5: assemble}
+
+Adding, the $D_1$ and $D_3$ terms cancel \textbf{exactly}, the $\tfrac{\sqrt2}{2}\ln2$ terms cancel, and
+$$A_{--}+A_{-+}+A_{+-}+A_{++}=8-4\ln 2-4\sqrt2\,L+4\sqrt2\,L\ln 2-(\sqrt2+1)D_2+(\sqrt2-1)D_4 ,$$
+hence
+\begin{equation*}I=16-8\ln2-8\sqrt2\,L+8\sqrt2\,L\ln2-2(\sqrt2+1)\,D_2+2(\sqrt2-1)\,D_4. \tag{5.1}\end{equation*}
+
+\subsection*{Step 6: dilogarithm identities}
+
+\textbf{Lemma 2 (Landen).} For $0<x<1$:
+$$\operatorname{Li}_2(x)+\operatorname{Li}_2\!\Big(\frac{-x}{1-x}\Big)=-\tfrac12\ln^2(1-x).$$
+\emph{Proof.} Both sides vanish as $x\to0^+$ and are $C^1$ on $(0,1)$ (the second argument runs through $(-\infty,0)$, where $\operatorname{Li}_2$ is the real-analytic function above). Differentiating, with $z=\tfrac{-x}{1-x}$, $1-z=\tfrac{1}{1-x}$, $z'=-\tfrac{1}{(1-x)^2}$:
+$$-\frac{\ln(1-x)}{x}+\Big(-\frac{\ln(1-z)}{z}\Big)z'
+=-\frac{\ln(1-x)}{x}+\frac{\ln(1-x)}{x(1-x)}=\frac{\ln(1-x)}{1-x},$$
+which equals $\frac{d}{dx}\big[-\tfrac12\ln^2(1-x)\big]$. $\blacksquare$
+
+\textbf{Lemma 3 (Euler reflection).} For $0<x<1$: $\operatorname{Li}_2(x)+\operatorname{Li}_2(1-x)=\dfrac{\pi^2}{6}-\ln x\ln(1-x)$.
+\emph{Proof.} Differentiate: both sides have derivative $-\tfrac{\ln(1-x)}{x}+\tfrac{\ln x}{1-x}$; as $x\to0^+$ the left side $\to\operatorname{Li}_2(1)=\pi^2/6$ and $\ln x\ln(1-x)\to0$. $\blacksquare$
+
+\textbf{Lemma 4 (squaring).} For $|x|\le1$: $\operatorname{Li}_2(x)+\operatorname{Li}_2(-x)=\tfrac12\operatorname{Li}_2(x^2)$ (immediate from the absolutely convergent series). In particular, with $x=\tfrac12$ in Lemma 3, $\operatorname{Li}_2(\tfrac12)=\tfrac{\pi^2}{12}-\tfrac12\ln^2 2$.
+
+\textbf{Lemma 5 (Landen's value at $\sqrt2-1$).}
+$$\operatorname{Li}_2(\sqrt2-1)-\operatorname{Li}_2(1-\sqrt2)=\frac{\pi^2}{8}-\frac{L^{2}}{2}.$$
+\emph{Proof.} Apply Lemma 2 at $x_1=1-\tfrac1{\sqrt2}$ (then $\tfrac{-x_1}{1-x_1}=1-\sqrt2$) and at $x_2=\sqrt2-1$ (then $\tfrac{-x_2}{1-x_2}=-\tfrac1{\sqrt2}$, since $1-x_2=2-\sqrt2=\sqrt2(\sqrt2-1)$):
+$$\operatorname{Li}_2\!\big(1-\tfrac1{\sqrt2}\big)+\operatorname{Li}_2(1-\sqrt2)=-\tfrac18\ln^2 2, \qquad
+\operatorname{Li}_2(\sqrt2-1)+\operatorname{Li}_2\!\big(-\tfrac1{\sqrt2}\big)=-\tfrac12\big(\tfrac12\ln2-L\big)^2 .$$
+Lemma 3 at $x=\tfrac{1}{\sqrt2}$ (with $\ln(1-\tfrac1{\sqrt2})=-L-\tfrac12\ln2$) and Lemma 4 at $x=\tfrac1{\sqrt2}$ give
+$$\operatorname{Li}_2\!\big(\tfrac1{\sqrt2}\big)+\operatorname{Li}_2\!\big(1-\tfrac1{\sqrt2}\big)=\frac{\pi^2}{6}-\frac{L\ln2}{2}-\frac{\ln^2 2}{4},\qquad
+\operatorname{Li}_2\!\big(\tfrac1{\sqrt2}\big)+\operatorname{Li}_2\!\big(-\tfrac1{\sqrt2}\big)=\frac{\pi^2}{24}-\frac{\ln^2 2}{4}.$$
+Forming (second) $-$ (fourth) $+$ (third) $-$ (first), all dilogarithms except the two desired ones cancel, and the right side collapses to $\tfrac{\pi^2}{8}-\tfrac{L^2}{2}$. $\blacksquare$
+
+\textbf{Reduction of $D_2, D_4$.} Apply Lemma 2 at $x=2(\sqrt2-1)\in(0,1)$: here
+$$1-x=3-2\sqrt2=(\sqrt2-1)^2,\qquad \frac{-x}{1-x}=\frac{-2(\sqrt2-1)}{(\sqrt2-1)^2}=-\frac{2}{\sqrt2-1}=-2(\sqrt2+1),$$
+so
+\begin{equation*}D_2+D_4=-\tfrac12\ln^2\!\big((\sqrt2-1)^2\big)=-2L^{2}. \tag{6.1}\end{equation*}
+Next, Lemma 3 at the same $x$ (with $\ln x=\ln2-L$, $\ln(1-x)=-2L$), Lemma 4 at $x=\sqrt2-1$, and Lemma 5 give
+$$D_2=\frac{\pi^2}{6}+2L\ln2-2L^2-\operatorname{Li}_2\!\big((\sqrt2-1)^2\big),\qquad
+\operatorname{Li}_2\!\big((\sqrt2-1)^2\big)=4\operatorname{Li}_2(1-\sqrt2)+\frac{\pi^2}{4}-L^2,$$
+hence
+\begin{equation*}D_2=-\frac{\pi^{2}}{12}+2L\ln 2-L^{2}-4\operatorname{Li}_2\!\big(1-\sqrt2\big). \tag{6.2}\end{equation*}
+
+\subsection*{Step 7: final reduction}
+
+Insert $D_4=-2L^2-D_2$ from (6.1) into (5.1):
+$$I=16-8\ln2-8\sqrt2\,L+8\sqrt2\,L\ln2-4(\sqrt2-1)L^{2}-4\sqrt2\,D_2 ,$$
+then substitute (6.2). The $L\ln 2$ terms cancel ($8\sqrt2-8\sqrt2$) and the $L^2$ terms combine ($-4\sqrt2+4+4\sqrt2=4$):
+
+$$I=16-8\ln 2+\frac{\sqrt2\,\pi^{2}}{3}-8\sqrt2\,\ln(1+\sqrt2)+4\ln^{2}(1+\sqrt2)+16\sqrt2\,\operatorname{Li}_2\!\big(1-\sqrt2\big).$$
+
+The two equivalent forms in the Result section follow by rewriting $\operatorname{Li}_2(1-\sqrt2)$ via Lemma 5 ($\operatorname{Li}_2(1-\sqrt2)=\operatorname{Li}_2(\sqrt2-1)-\tfrac{\pi^2}{8}+\tfrac{L^2}{2}$) or via Lemma 4/Lemma 5 ($4\operatorname{Li}_2(1-\sqrt2)=\operatorname{Li}_2(3-2\sqrt2)-\tfrac{\pi^2}{4}+L^2$).
+
+\section*{Numerical verification}
+
+All computations with mpmath (scripts \texttt{verify1.py}, \texttt{verify2.py} in the scratch directory).
+
+\begin{itemize}
+\item Direct quadrature of the original integral (tanh--sinh, split at $0.5$ and $0.99$, \texttt{mp.dps=80}) and of the transformed integral $2\int_0^1\ln(1-t^2)\ln(2-t^2)\,dt$ agree to all $80$ digits:
+  $$I=-0.304589394460255618356715686244334620344602374667238662810239\ldots$$
+\item Each of the four closed forms $A_{--},A_{-+},A_{+-},A_{++}$ was checked against direct quadrature: errors $\le 1.3\cdot10^{-80}$.
+\item Identities (6.1), (6.2) and Lemma 5 were each checked to $\sim10^{-81}$.
+\item Final check at \texttt{mp.dps=100}: quadrature vs.\ the boxed closed form agree to \textbf{90 significant digits} (difference $1.8\cdot10^{-100}$, i.e.\ at quadrature precision):
+  \[\begin{gathered}\scriptstyle -0.30458939446025561835671568624433462034460237466723866281023\\[-2pt]\scriptstyle 8932648405863027220081308329913\ldots\end{gathered}\]
+\item Independent confirmation by integer-relation detection: PSLQ applied to $\{I,1,\ln2,\sqrt2L,L^2,\sqrt2\pi^2,\sqrt2\operatorname{Li}_2(1-\sqrt2),\dots\}$ (60 digits) recovered exactly
+  $-3I+48-24\ln2-24\sqrt2L+12L^2+\sqrt2\pi^2+48\sqrt2\operatorname{Li}_2(1-\sqrt2)=0$, i.e.\ the boxed formula.
+\item Cross-check of the problem statement: the poster's expression $4(1-\ln 2)\,{}_2F_1^{(0,1,0,0)}(1,0;\tfrac32;-1)-2\,{}_2F_1^{(1,1,0,0)}(1,0;\tfrac32;-1)-2\,{}_2F_1^{(0,1,1,0)}(1,0;\tfrac32;-1)$, evaluated with mpmath parameter differentiation, matches $I$ to $\sim41$ digits.
+\end{itemize}
+
+\section*{Notes}
+
+\begin{itemize}
+\item The derivation is complete and self-contained: substitution, four elementary-by-parts integrals with the dilogarithm primitive (Lemma 1), and the classical dilogarithm identities (Lemmas 2--5), each proved by differentiation from $\operatorname{Li}_2(z)=-\int_0^z\ln(1-s)\,ds/s$ plus $\zeta(2)=\pi^2/6$ (Basel; assumed known). All $\operatorname{Li}_2$ arguments stay on $(-\infty,1)$, where $\operatorname{Li}_2$ is real-analytic, so there are no branch subtleties.
+\item One dilogarithm, $\operatorname{Li}_2(1-\sqrt2)$ (equivalently $\operatorname{Li}_2(\sqrt2-1)$ or $\operatorname{Li}_2(3-2\sqrt2)$), remains in the answer. Only the odd combination $\operatorname{Li}_2(\sqrt2-1)-\operatorname{Li}_2(1-\sqrt2)=\tfrac{\pi^2}{8}-\tfrac12\ln^2(1+\sqrt2)$ is elementary (Lemma 5); the even combination is not expected to reduce. As heuristic support, PSLQ at 60 digits with coefficient bound $10^{8}$ found \textbf{no} rational relation between $\operatorname{Li}_2(1-\sqrt2)$ and $\{\pi^2,\ln^2 2,L^2,L\ln 2,1\}$. So this is the natural ``simplest'' closed form; a proof of irreducibility is of course not claimed (such independence statements are open in general).
+\item Caveat none otherwise: every algebraic step above was additionally verified numerically to $\ge 80$ digits.
+\end{itemize}
+
+\end{document}

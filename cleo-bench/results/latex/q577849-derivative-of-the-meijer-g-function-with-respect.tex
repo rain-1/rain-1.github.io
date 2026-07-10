@@ -1,0 +1,293 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 22\\[1ex]\large Derivative of the Meijer G-function with respect to one of its parameters}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/577849}{question 577849}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in closed form the derivative of the Meijer G-function with respect to one of its upper parameters,
+\[
+\mathcal{D}=\left.\partial_\alpha\, G_{2,3}^{2,1}\!\left(1\,\middle|\,\begin{array}{c}1,\alpha\\1,1,0\end{array}\right)\right|_{\alpha=1}.
+\]
+
+Here the Meijer G-function is taken in the standard (MathWorld / Wolfram / mpmath) convention
+\[
+G_{p,q}^{m,n}\!\left(z\,\middle|\,\begin{array}{c}a_1,\dots,a_p\\ b_1,\dots,b_q\end{array}\right)
+=\frac{1}{2\pi i}\int_{L}
+\frac{\prod_{j=1}^{m}\Gamma(b_j-s)\,\prod_{j=1}^{n}\Gamma(1-a_j+s)}
+{\prod_{j=m+1}^{q}\Gamma(1-b_j+s)\,\prod_{j=n+1}^{p}\Gamma(a_j-s)}\;z^{s}\,ds ,
+\]
+with $L$ a contour separating the poles of the factors $\Gamma(b_j-s)$, $j\le m$, from those of the factors $\Gamma(1-a_j+s)$, $j\le n$.
+
+\section*{Result}
+
+\[
+\boxed{\;
+\begin{aligned}
+\mathcal{D}
+&=\gamma+E_1(1)
+=\gamma-\operatorname{Ei}(-1)
+=\operatorname{Ein}(1)\\
+&=\int_0^1\frac{1-e^{-t}}{t}\,dt
+=\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{n\cdot n!}\\
+&= 0.79659959929705313428367586554252408\ldots
+\end{aligned}
+\;}
+\]
+
+where $\gamma$ is the Euler--Mascheroni constant, $E_1(x)=\int_x^\infty t^{-1}e^{-t}dt$, $\operatorname{Ei}$ is the exponential integral, and $\operatorname{Ein}(z)=\int_0^z t^{-1}(1-e^{-t})\,dt$ is the complementary (entire) exponential integral.
+
+As a by-product, the same method gives the value of the function itself:
+$G_{2,3}^{2,1}\!\left(1\middle|{1,1\atop 1,1,0}\right)=1-e^{-1}$.
+
+\section*{Derivation}
+
+\subsection*{1. The Mellin--Barnes representation and its contour}
+
+For our indices $m=2,\ n=1,\ p=2,\ q=3$ and parameters $a_1=1,\ a_2=\alpha,\ b_1=b_2=1,\ b_3=0$, the definition reads
+\begin{equation*}
+G(\alpha):=G_{2,3}^{2,1}\!\left(1\,\middle|\,\begin{array}{c}1,\alpha\\1,1,0\end{array}\right)
+=\frac{1}{2\pi i}\int_{L}\Phi(s,\alpha)\,ds,
+\qquad
+\Phi(s,\alpha)=\frac{\Gamma(1-s)^2\,\Gamma(s)}{\Gamma(1+s)\,\Gamma(\alpha-s)} . \tag{1}
+\end{equation*}
+
+Indeed: the group $j\le m=2$ contributes $\Gamma(b_1-s)\Gamma(b_2-s)=\Gamma(1-s)^2$; the group $j\le n=1$ contributes $\Gamma(1-a_1+s)=\Gamma(s)$; the denominator gets $\Gamma(1-b_3+s)=\Gamma(1+s)$ from $j=m+1=3$ and $\Gamma(a_2-s)=\Gamma(\alpha-s)$ from $j=n+1=2$; and $z^s=1^s=1$.
+
+\textbf{Contour.} The poles of $\Gamma(1-s)^2$ lie at $s=1,2,3,\dots$ (double poles), and the poles of $\Gamma(s)$ lie at $s=0,-1,-2,\dots$. The factor $1/\Gamma(\alpha-s)$ is entire in $s$ (reciprocal Gamma is entire), so it contributes no poles. Hence for every $\alpha$ any vertical line $L=\{\Re s=c\}$ with $0<c<1$, oriented upward, is an admissible separating contour; we fix $c=\tfrac12$.
+
+\textbf{Convergence.} We use the classical uniform asymptotics on vertical lines (uniform version of Stirling's formula; e.g. NIST DLMF 5.11.9): for $\sigma$ in a compact set,
+\begin{equation*}
+|\Gamma(\sigma+it)|=\sqrt{2\pi}\,|t|^{\sigma-\frac12}e^{-\pi|t|/2}\bigl(1+O(|t|^{-1})\bigr),\qquad |t|\to\infty, \tag{2}
+\end{equation*}
+and $\psi(\sigma+it)=\log|t|+O(1)$ (from $\psi(w)=\log w+O(1/|w|)$, valid uniformly in $|\arg w|\le\pi-\delta$).
+
+For $s=\tfrac12+it$, (2) gives (with $\alpha$ ranging over the closed disk $D_{1/4}=\{|\alpha-1|\le\frac14\}$):
+
+\begin{itemize}
+\item numerator: $|\Gamma(1-s)|^2|\Gamma(s)|\le C_1(1+|t|)^{1/2-c}e^{-3\pi|t|/2}$, since the $|t|$-exponents are $(1-c)-\frac12$ (twice) and $c-\frac12$;
+\item $1/|\Gamma(1+s)|\le C_2(1+|t|)^{-c-1/2}e^{\pi|t|/2}$;
+\item $1/|\Gamma(\alpha-s)|\le C_3(1+|t|)^{1/4}e^{\pi|t|/2}$ uniformly for $\alpha\in D_{1/4}$. Indeed $w=\alpha-s$ has $\Re w=\Re\alpha-\tfrac12\in[\tfrac14,\tfrac34]$ and $|\Im w|\in[|t|-\tfrac14,\,|t|+\tfrac14]$; by (2), $|\Gamma(w)|\ge c_0(1+|t|)^{\Re w-1/2}e^{-\pi(|t|+1/4)/2}$ for $|t|\ge T_0$, while on the compact set $\{|t|\le T_0,\ \alpha\in D_{1/4}\}$ the continuous non-vanishing function $\Gamma(\alpha-s)$ is bounded away from $0$ ($\Gamma$ has no zeros, and its poles lie outside the strip $\tfrac14\le\Re w\le\tfrac34$).
+\end{itemize}
+
+Multiplying,
+\begin{equation*}
+|\Phi(\tfrac12+it,\alpha)|\;\le\;C\,(1+|t|)^{-3/4}\,e^{-\pi|t|/2}
+\qquad\text{for all }t\in\mathbb R,\ \alpha\in D_{1/4}. \tag{3}
+\end{equation*}
+
+So the integral (1) converges absolutely, uniformly for $\alpha\in D_{1/4}$. (The exponential decay rate $e^{-\pi|t|/2}$ is exactly the general rule $e^{-(m+n-\frac{p+q}{2})\pi|t|}$ with $m+n-\frac{p+q}{2}=\frac12>0$, which is the condition for the G-function to exist at $|z|=1$, $\arg z=0$.) By Cauchy's theorem the value is independent of $c\in(0,1)$: shifting the line crosses no poles and the horizontal connecting segments vanish by (3)-type bounds, which hold uniformly for $c$ in compact subsets of $(0,1)$.
+
+\emph{(Consistency of conventions was additionally confirmed numerically: the integral (1) reproduces mpmath's \texttt{meijerg} to about 60 significant digits for $\alpha\in\{1,\,1.3,\,0.6,\,1.2+0.3i\}$; see \S Numerical verification.)}
+
+\subsection*{2. Analyticity in $\alpha$ and differentiation under the integral sign}
+
+For each fixed $s$ on $L$, $\alpha\mapsto\Phi(s,\alpha)$ is entire (reciprocal Gamma is entire). By the uniform bound (3):
+
+\begin{itemize}
+\item $G(\alpha)$ is continuous on $D_{1/4}$ (dominated convergence);
+\item for every closed triangle $\Delta\subset \operatorname{int}D_{1/4}$, Fubini (justified by (3), a triangle has finite length) gives $\oint_{\Delta}G(\alpha)\,d\alpha=\frac{1}{2\pi i}\int_L\oint_\Delta \Phi(s,\alpha)\,d\alpha\,ds=0$, so $G$ is analytic in $\operatorname{int}D_{1/4}$ by Morera's theorem.
+\end{itemize}
+
+By the Cauchy integral formula for the derivative and Fubini once more (again legitimate by (3), the circle $|\alpha-1|=\tfrac18$ being compact),
+\begin{equation*}
+\begin{aligned}
+G'(1)&=\frac{1}{2\pi i}\oint_{|\alpha-1|=\frac18}\frac{G(\alpha)}{(\alpha-1)^2}\,d\alpha\\
+&=\frac{1}{2\pi i}\int_L\left[\frac{1}{2\pi i}\oint_{|\alpha-1|=\frac18}\frac{\Phi(s,\alpha)}{(\alpha-1)^2}\,d\alpha\right]ds
+=\frac{1}{2\pi i}\int_L \partial_\alpha\Phi(s,\alpha)\Big|_{\alpha=1}\,ds .
+\end{aligned}
+\end{equation*}
+
+Since $\partial_\alpha\,\Gamma(\alpha-s)^{-1}=-\psi(\alpha-s)/\Gamma(\alpha-s)$, at $\alpha=1$:
+\[
+\partial_\alpha\Phi(s,\alpha)\Big|_{\alpha=1}
+=-\frac{\Gamma(1-s)^2\Gamma(s)\,\psi(1-s)}{\Gamma(1+s)\,\Gamma(1-s)}
+=-\frac{\Gamma(1-s)\,\psi(1-s)}{s},
+\]
+using $\Gamma(s)/\Gamma(1+s)=1/s$. Hence
+\begin{equation*}
+\mathcal{D}=-\frac{1}{2\pi i}\int_{(\frac12)}\frac{\Gamma(1-s)\,\psi(1-s)}{s}\,ds . \tag{4}
+\end{equation*}
+
+(The differentiated integrand again obeys a bound $C(1+|t|)^{-1}\log(2+|t|)\,e^{-\pi|t|/2}$ by (2), so (4) converges absolutely.)
+
+\subsection*{3. Reflection of the variable}
+
+Substitute $u=1-s$. As $s$ runs up the line $\Re s=\tfrac12$, $u$ runs \textbf{down} the line $\Re u=\tfrac12$, and $ds=-du$; the two sign changes cancel, so with the standard upward orientation
+\begin{equation*}
+\mathcal{D}=-\frac{1}{2\pi i}\int_{(\frac12)}\frac{\Gamma(u)\,\psi(u)}{1-u}\,du
+=-\frac{1}{2\pi i}\int_{(\frac12)}\frac{\Gamma'(u)}{1-u}\,du , \tag{5}
+\end{equation*}
+since $\Gamma'(u)=\Gamma(u)\psi(u)$.
+
+\subsection*{4. A Mellin pair for $\Gamma'$}
+
+\textbf{Lemma.} For $0<c'<1$ and every $y>0$,
+\begin{equation*}
+\frac{1}{2\pi i}\int_{(c')}\Gamma'(u)\,y^{-u}\,du\;=\;e^{-y}\ln y . \tag{6}
+\end{equation*}
+
+\emph{Proof.} Euler's integral $\Gamma(u)=\int_0^\infty e^{-y}y^{u-1}dy$ converges absolutely and locally uniformly in $\Re u>0$, so it defines an analytic function there, and differentiation under the integral sign (dominated convergence: for $0<\sigma_1\le\Re u\le\sigma_2$, $|e^{-y}y^{u-1}\ln y|\le e^{-y}\max(y^{\sigma_1-1},y^{\sigma_2-1})|\ln y|\in L^1(0,\infty)$) gives
+\[
+\Gamma'(u)=\int_0^\infty e^{-y}\,(\ln y)\,y^{u-1}\,dy,\qquad \Re u>0;
+\]
+that is, $\Gamma'$ is the Mellin transform of $g(y):=e^{-y}\ln y$ on the strip $\Re u>0$.
+
+Substituting $y=e^{-w}$ turns the Mellin transform on the line $\Re u=c'$ into a Fourier transform:
+\[
+\Gamma'(c'+i\tau)=\int_{\mathbb R}h(w)\,e^{-i\tau w}\,dw=\widehat h(\tau),
+\qquad h(w):=g(e^{-w})e^{-c'w}=-\,w\,e^{-e^{-w}}e^{-c'w}.
+\]
+
+Now $h$ is continuous on $\mathbb R$ and $h\in L^1(\mathbb R)$: as $w\to+\infty$, $|h(w)|\le|w|e^{-c'w}$ decays exponentially; as $w\to-\infty$, the factor $e^{-e^{-w}}$ decays double-exponentially and beats $|w|e^{-c'w}$. Moreover $\widehat h(\tau)=\Gamma'(c'+i\tau)=\Gamma(c'+i\tau)\psi(c'+i\tau)$ satisfies, by (2) and $\psi(c'+i\tau)=O(\log|\tau|)$,
+\[
+|\widehat h(\tau)|\le C(1+|\tau|)^{c'-1/2}\log(2+|\tau|)\,e^{-\pi|\tau|/2},
+\]
+so $\widehat h\in L^1(\mathbb R)$. By the Fourier inversion theorem (valid pointwise when $h\in L^1\cap C^0$ and $\widehat h\in L^1$),
+\[
+h(w)=\frac{1}{2\pi}\int_{\mathbb R}\widehat h(\tau)e^{i\tau w}\,d\tau\qquad\text{for every }w\in\mathbb R .
+\]
+
+With $y=e^{-w}$, i.e. $y^{-i\tau}=e^{i\tau w}$,
+\[
+\frac{1}{2\pi i}\int_{(c')}\Gamma'(u)y^{-u}du
+=\frac{y^{-c'}}{2\pi}\int_{\mathbb R}\widehat h(\tau)e^{i\tau w}d\tau
+=y^{-c'}h(w)=y^{-c'}\cdot g(y)\,y^{c'}=e^{-y}\ln y. \qquad\blacksquare
+\]
+
+\subsection*{5. Fubini and reduction to a one-dimensional integral}
+
+On the line $\Re u=c'=\tfrac12<1$ we have the absolutely convergent elementary representation
+\[
+\frac{1}{1-u}=\int_1^\infty x^{\,u-2}\,dx .
+\]
+
+Insert this into (5). The double integral converges absolutely:
+\[
+\int_{\mathbb R}\int_1^\infty\bigl|\Gamma'(\tfrac12+i\tau)\bigr|\,x^{-3/2}\,dx\,d\tau
+=\Bigl(\int_{\mathbb R}\bigl|\Gamma'(\tfrac12+i\tau)\bigr|d\tau\Bigr)\cdot 2<\infty ,
+\]
+by the exponential decay of $\Gamma'$ on the line. Hence Fubini's theorem applies and, using the Lemma with $y=1/x\in(0,1]$ (note $x^{u}=y^{-u}$):
+\[
+\mathcal{D}
+=-\int_1^\infty \frac{1}{x^{2}}\left[\frac{1}{2\pi i}\int_{(\frac12)}\Gamma'(u)\,x^{u}\,du\right]dx
+=-\int_1^\infty \frac{e^{-1/x}\,\ln(1/x)}{x^{2}}\,dx .
+\]
+
+Substituting $t=1/x$ ($dt=-x^{-2}dx$):
+\begin{equation*}
+\mathcal{D}=-\int_0^1 e^{-t}\,\ln t\;dt . \tag{7}
+\end{equation*}
+
+\subsection*{6. Evaluation of the elementary integral}
+
+\textbf{(a) Closed form via $\gamma$ and $E_1$.} Differentiating Euler's integral at $u=1$ (justified in \S4) and using $\Gamma'(1)=\psi(1)\Gamma(1)=\psi(1)$:
+\[
+\int_0^\infty e^{-t}\ln t\,dt=\Gamma'(1)=\psi(1)=-\gamma .
+\]
+
+(The classical fact $\psi(1)=-\gamma$ follows from the Weierstrass product $\frac1{\Gamma(z)}=ze^{\gamma z}\prod_{n\ge1}\bigl(1+\frac zn\bigr)e^{-z/n}$: logarithmic differentiation gives $\psi(z)=-\frac1z-\gamma+\sum_{n\ge1}\bigl(\frac1n-\frac1{n+z}\bigr)$, and at $z=1$ the sum telescopes to $1$, so $\psi(1)=-1-\gamma+1=-\gamma$.)
+
+Also, integrating by parts on $[1,\infty)$ (boundary terms vanish since $\ln 1=0$ and $e^{-t}\ln t\to0$),
+\[
+\int_1^\infty e^{-t}\ln t\,dt=\bigl[-e^{-t}\ln t\bigr]_1^\infty+\int_1^\infty\frac{e^{-t}}{t}\,dt=E_1(1).
+\]
+
+Therefore
+\[
+\mathcal{D}=-\int_0^1 e^{-t}\ln t\,dt
+=-\int_0^\infty e^{-t}\ln t\,dt+\int_1^\infty e^{-t}\ln t\,dt
+=\gamma+E_1(1)=\gamma-\operatorname{Ei}(-1),
+\]
+using $E_1(x)=-\operatorname{Ei}(-x)$ for $x>0$.
+
+\textbf{(b) Equivalent forms.} Integrating (7) by parts with $v(t)=1-e^{-t}$ (the antiderivative of $e^{-t}$ vanishing at $0$, so that the boundary term at $0$ dies: $(1-e^{-t})\ln t\sim t\ln t\to0$):
+\[
+\mathcal{D}=-\bigl[(1-e^{-t})\ln t\bigr]_0^1+\int_0^1\frac{1-e^{-t}}{t}\,dt=\operatorname{Ein}(1),
+\]
+and termwise integration of the uniformly convergent series $\frac{1-e^{-t}}{t}=\sum_{n\ge1}\frac{(-1)^{n-1}t^{n-1}}{n!}$ on $[0,1]$ gives
+\[
+\mathcal{D}=\sum_{n=1}^\infty\frac{(-1)^{n-1}}{n\cdot n!}
+=1-\frac14+\frac1{18}-\frac1{96}+\cdots .
+\]
+
+(That $\operatorname{Ein}(1)=\gamma+E_1(1)$ is the classical connection formula $\operatorname{Ein}(z)=\gamma+\ln z+E_1(z)$ at $z=1$, re-proved here by parts (a)--(b).)
+
+\subsection*{7. Consistency checks inside the same framework}
+
+\textbf{Residue expansion (independent route to the same series).} In (5) one may close the contour to the left, around the double poles of $\Gamma'(u)$ at $u=-k$, $k\ge0$; the arcs vanish by standard estimates for Mellin--Barnes integrals (reflection formula plus (2); the mechanism is identical to the classical Cahen--Mellin integral $\frac{1}{2\pi i}\int_{(c')}\Gamma(u)y^{-u}du=e^{-y}$). From $\Gamma(u)=\frac{(-1)^k}{k!}\bigl[\varepsilon^{-1}+\psi(k+1)+O(\varepsilon)\bigr]$ ($\varepsilon=u+k$) we get $\Gamma'(u)=\frac{(-1)^k}{k!}\bigl[-\varepsilon^{-2}+O(1)\bigr]$, and with $\frac{1}{1-u}=\frac{1}{1+k}\bigl(1+\frac{\varepsilon}{1+k}+O(\varepsilon^2)\bigr)$,
+\[
+\operatorname*{Res}_{u=-k}\frac{\Gamma'(u)}{1-u}=-\frac{(-1)^k}{k!\,(k+1)^2},
+\qquad
+\mathcal{D}=-\sum_{k\ge0}\operatorname*{Res}_{u=-k}=\sum_{k\ge0}\frac{(-1)^k}{k!\,(k+1)^2}
+=\sum_{n\ge1}\frac{(-1)^{n-1}}{n\cdot n!},
+\]
+in agreement with \S6(b). (The main proof does \textbf{not} rely on this contour closing; it is a check.)
+
+\textbf{Value of the function itself.} Exactly the same steps applied to $G(1)$ instead of $G'(1)$ --- i.e. (1) at $\alpha=1$, then $u=1-s$, giving $\frac{1}{2\pi i}\int_{(1/2)}\frac{\Gamma(u)}{1-u}du$, then Fubini and the Cahen--Mellin pair $\frac{1}{2\pi i}\int_{(c')}\Gamma(u)y^{-u}du=e^{-y}$ --- yield
+\[
+G_{2,3}^{2,1}\!\left(1\middle|{1,1\atop 1,1,0}\right)=\int_0^1 e^{-t}\,dt=1-e^{-1},
+\]
+confirmed numerically to 40 digits, which also pins down the parameter conventions.
+
+\section*{Numerical verification}
+
+All computations with mpmath at \texttt{mp.mp.dps = 60} (script \texttt{verify.py} in the scratch directory).
+
+\begin{enumerate}
+\sloppy
+\item \textbf{Convention check.} The Mellin--Barnes integral (1) computed by direct quadrature along $\Re s=\tfrac12$ (split points up to $|t|=100$, integrand decay $e^{-\pi|t|/2}$) agrees with \texttt{mp.meijerg([[1],[alpha]], [[1,1],[0]], 1)} to $\sim10^{-60}$ for $\alpha=1,\ 1.3,\ 0.6,\ 1.2+0.3i$; and $G(1)=0.63212055882855767840\ldots=1-e^{-1}$ (40 digits).
+
+\item \textbf{Direct computation of $\mathcal D$} (two independent ways):
+\begin{itemize}
+\item Cauchy-circle differentiation of mpmath's own \texttt{meijerg}: \texttt{mp.diff(G, 1, method='quad', radius=0.5)} gives
+\[\mathcal D = 0.79659959929705313428367586554252408007320662934683\]
+(imaginary part $\sim10^{-72}$).
+\item Direct quadrature of the differentiated Mellin--Barnes integral (4):
+\begin{multline*}
+-\frac1{2\pi}\int_{\mathbb R}\frac{\Gamma(\tfrac12-it)\,\psi(\tfrac12-it)}{\tfrac12+it}\,dt\\
+= 0.79659959929705313428367586554252408007320662934683.
+\end{multline*}
+\end{itemize}
+
+\item \textbf{Closed form.} $\gamma+E_1(1)=$ \texttt{mp.euler + mp.e1(1)}
+\[=0.79659959929705313428367586554252408007320662934683;\]
+the series $\sum_{n\ge1}\frac{(-1)^{n-1}}{n\,n!}$ and $-\int_0^1e^{-t}\ln t\,dt$ give the identical value.
+
+\item \textbf{Agreement.} The \texttt{meijerg}-based derivative matches the closed form to all computed digits (relative difference $0$ at 60-digit working precision; the line-integral route agrees to $61$ digits). Conservatively: \textbf{at least 50 significant digits agree.}
+\end{enumerate}
+
+\section*{Notes}
+
+\begin{itemize}
+\item The proof is self-contained modulo standard textbook facts: uniform Stirling asymptotics on vertical strips (DLMF 5.11), $\psi(w)=\log w+O(1/w)$, Fubini--Tonelli, Morera + Cauchy integral formula for analyticity/differentiation under the integral, the Fourier inversion theorem for $h\in L^1\cap C^0$ with $\widehat h\in L^1$, Euler's integral for $\Gamma$, and the Weierstrass product (for $\psi(1)=-\gamma$). Every interchange (differentiation under the integral in \S2 and \S4, Fubini in \S5) is justified by the explicit absolute bounds (2)--(3).
+\item The contour-closing argument in \S7 is presented only as an independent consistency check; the main chain (\S\S1--6) avoids arc estimates entirely.
+\item The identity $E_1(x)=-\operatorname{Ei}(-x)$ ($x>0$) is used only to restate the answer; the primary closed form is $\mathcal D=\gamma+E_1(1)=\operatorname{Ein}(1)$.
+\item Numerically, $\mathcal D = 0.796599599297053134283675865542524080073206629346833\ldots$
+\end{itemize}
+
+\end{document}

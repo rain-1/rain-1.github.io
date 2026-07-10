@@ -1,0 +1,287 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 17\\[1ex]\large Closer form for $\int_0^\infty\frac{(\arctan{x})^2\log^2({1+x^2})}{x^2}dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/1153708}{question 1153708}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in closed form
+\[
+I \;=\; \int_0^\infty\frac{(\arctan x)^2\,\log^2(1+x^2)}{x^2}\,dx .
+\]
+
+\section*{Result}
+
+\[
+\boxed{\,I \;=\; \frac{2}{3}\,\pi^3\ln 2 \;+\; \frac{4}{3}\,\pi\ln^3 2 \;+\; \frac{\pi\,\zeta(3)}{2}
+\;=\;\frac{\pi}{6}\Bigl(4\pi^2\ln 2+8\ln^3 2+3\zeta(3)\Bigr)\, }
+\]
+
+Numerically
+\[
+I = 17.6110991420260980345176855133221899447144462428948708760045\ldots
+\]
+
+\section*{Derivation}
+
+Throughout, $\log$ denotes the principal branch on $\mathbb{C}\setminus(-\infty,0]$, and $\ln$ the real logarithm.
+
+\subsection*{Step 0. Convergence}
+
+Write $f(x)=\dfrac{(\arctan x)^2\log^2(1+x^2)}{x^2}$. As $x\to0^+$, $\arctan x\sim x$ and $\log(1+x^2)\sim x^2$, so $f(x)=O(x^4)$; as $x\to\infty$, $f(x)=O(\ln^2 x/x^2)$. Hence $I$ converges absolutely.
+
+\subsection*{Step 1. An algebraic splitting via $\log^4(1+ix)$}
+
+For $x>0$ the point $1+ix$ lies in the open first quadrant, so the principal logarithm gives
+\[
+\log(1+ix)\;=\;\tfrac12\ln(1+x^2)\;+\;i\arctan x\;=\;L+iT,
+\qquad L:=\tfrac12\ln(1+x^2),\quad T:=\arctan x .
+\]
+By the binomial theorem,
+\[
+\Re\log^4(1+ix)=\Re\,(L+iT)^4=L^4-6L^2T^2+T^4 ,
+\]
+hence
+\[
+(\arctan x)^2\log^2(1+x^2)\;=\;T^2(2L)^2\;=\;4L^2T^2
+\;=\;\frac{2}{3}\Bigl[L^4+T^4-\Re\log^4(1+ix)\Bigr].
+\]
+Each of the three resulting integrals converges absolutely:
+
+\begin{itemize}
+\item $\dfrac{L^4}{x^2}=O(x^6)$ at $0$ and $O(\ln^4x/x^2)$ at $\infty$;
+\item $\dfrac{T^4}{x^2}=O(x^2)$ at $0$ and $O(x^{-2})$ at $\infty$;
+\item $\dfrac{|\log^4(1+ix)|}{x^2}=O(x^2)$ at $0$ (since $\log(1+ix)=ix+O(x^2)$) and $O(\ln^4x/x^2)$ at $\infty$ (since $|\log(1+ix)|\le\tfrac12\ln(1+x^2)+\tfrac\pi2$).
+\end{itemize}
+
+Therefore, by linearity,
+\[
+I=\frac23\left[\frac{1}{16}\,P_1+P_2-\Re P_3\right],
+\qquad
+\begin{aligned}
+P_1&:=\int_0^\infty\frac{\ln^4(1+x^2)}{x^2}\,dx,\\
+P_2&:=\int_0^\infty\frac{\arctan^4x}{x^2}\,dx,\\
+P_3&:=\int_0^\infty\frac{\log^4(1+ix)}{x^2}\,dx ,
+\end{aligned}
+\]
+where $16L^4=\ln^4(1+x^2)$ explains the factor $\tfrac1{16}$.
+
+\subsection*{Step 2. $\Re P_3=0$ by contour rotation}
+
+Let $F(z)=\dfrac{\log^4(1+iz)}{z^2}$. The principal $\log(1+iz)$ fails to be analytic exactly where $1+iz\in(-\infty,0]$, i.e. on the ray $\{it:\ t\ge1\}$. Consequently $F$ is analytic on the cut plane
+\[
+W:=\mathbb{C}\setminus\{iy:\ y\ge0\},
+\]
+which is open and \textbf{simply connected}, and which contains the closed fourth-quadrant sector $\{z\ne 0:\ -\tfrac\pi2\le\arg z\le0\}$ except that its two straight edges lie in $W$ as well (the positive real axis and the negative imaginary axis avoid the cut).
+
+For $0<\epsilon<\tfrac12<2<R$ consider the closed curve $\gamma\subset W$:
+\[
+\gamma:\quad[\epsilon,R]\ \oplus\ A_R\ \oplus\ [-iR,-i\epsilon]\ \oplus\ a_\epsilon,
+\]
+where $A_R:\phi\mapsto Re^{i\phi}$ with $\phi$ decreasing from $0$ to $-\tfrac\pi2$, and $a_\epsilon:\phi\mapsto\epsilon e^{i\phi}$ with $\phi$ increasing from $-\tfrac\pi2$ to $0$. By Cauchy's theorem in the simply connected domain $W$,
+\[
+\int_\gamma F(z)\,dz=0 .
+\]
+
+\textbf{Arc estimates.} For $z=Re^{i\phi}$, $\phi\in[-\tfrac\pi2,0]$, the point $iz=Re^{i(\phi+\pi/2)}$ lies in the closed first quadrant, so $\Re(1+iz)\ge1$, $0\le\arg(1+iz)\le\tfrac\pi2$, and $|1+iz|\le1+R$; hence
+\[
+|\log(1+iz)|\le\ln(1+R)+\tfrac\pi2,
+\qquad
+\Bigl|\int_{A_R}F\Bigr|\le\frac{\pi R}{2}\cdot\frac{\bigl(\ln(1+R)+\pi/2\bigr)^4}{R^2}\xrightarrow[R\to\infty]{}0 .
+\]
+For $|w|\le\tfrac12$ one has $|\log(1+w)|=\bigl|\int_0^1\frac{w\,dt}{1+tw}\bigr|\le\frac{|w|}{1-|w|}\le2|w|$; hence on $a_\epsilon$ (where $|iz|=\epsilon\le\tfrac12$), $|F|\le\frac{(2\epsilon)^4}{\epsilon^2}=16\epsilon^2$ and
+\[
+\Bigl|\int_{a_\epsilon}F\Bigr|\le\frac{\pi\epsilon}{2}\cdot16\epsilon^2\xrightarrow[\epsilon\to0]{}0 .
+\]
+
+\textbf{The rotated ray.} On $[-iR,-i\epsilon]$ put $z=-it$, $t\in[\epsilon,R]$: then $1+iz=1+t>0$, $z^2=-t^2$, $dz=-i\,dt$, so
+\[
+\int_{-iR}^{-i\epsilon}F(z)\,dz=\int_R^\epsilon\frac{\ln^4(1+t)}{-t^2}\,(-i)\,dt
+=-\,i\int_\epsilon^R\frac{\ln^4(1+t)}{t^2}\,dt .
+\]
+Letting $\epsilon\to0$, $R\to\infty$ (both limiting integrals converge: the integrand is $O(t^2)$ at $0$ and $O(\ln^4t/t^2)$ at $\infty$) yields
+\[
+P_3=\;i\int_0^\infty\frac{\ln^4(1+t)}{t^2}\,dt ,
+\]
+which is purely imaginary. Hence
+\[
+\Re P_3=0 .
+\]
+
+\textit{(Cross-check, used only numerically below: substituting $s=1/(1+t)$ and expanding $(1-s)^{-2}=\sum_{k\ge1}ks^{k-1}$ --- termwise by monotone convergence --- gives $\int_0^\infty\frac{\ln^4(1+t)}{t^2}\,dt=\sum_{k\ge1}k\cdot\frac{4!}{k^5}=24\,\zeta(4)=\frac{4\pi^4}{15}$, so $\Im P_3=\frac{4\pi^4}{15}$; this was confirmed numerically, validating the rotation independently.)}
+
+\subsection*{Step 3. $P_1$ via a Beta-function derivative}
+
+Integrate by parts with $v=-1/x$; the boundary terms vanish because $\ln^4(1+x^2)/x=O(x^7)$ as $x\to0$ and $O(\ln^4x/x)$ as $x\to\infty$:
+\[
+P_1=\int_0^\infty\frac{1}{x}\cdot\frac{8x\,\ln^3(1+x^2)}{1+x^2}\,dx
+=8\int_0^\infty\frac{\ln^3(1+x^2)}{1+x^2}\,dx .
+\]
+Substituting $x=\tan\theta$ (so $\frac{dx}{1+x^2}=d\theta$ and $\ln(1+\tan^2\theta)=-2\ln\cos\theta$),
+\[
+P_1=8\int_0^{\pi/2}(-2\ln\cos\theta)^3\,d\theta=-64\int_0^{\pi/2}\ln^3\cos\theta\,d\theta .
+\]
+
+Let $f(a)=\int_0^{\pi/2}\cos^a\theta\,d\theta$ for $a>-1$. The substitution $u=\sin^2\theta$ gives the Wallis/Beta evaluation
+\[
+f(a)=\tfrac12B\!\left(\tfrac12,\tfrac{a+1}2\right)=\frac{\sqrt{\pi}}{2}\,\frac{\Gamma\!\left(\frac{a+1}{2}\right)}{\Gamma\!\left(\frac{a}{2}+1\right)} .
+\]
+For $a\in(-\tfrac12,\tfrac12)$ and $k\le3$, $\bigl|\partial_a^k\cos^a\theta\bigr|=\cos^a\theta\,|\ln\cos\theta|^k\le\cos^{-1/2}\theta\,|\ln\cos\theta|^3+1$, which is integrable on $(0,\tfrac\pi2)$; hence differentiation under the integral sign is justified and
+\[
+f^{(3)}(0)=\int_0^{\pi/2}\ln^3\cos\theta\,d\theta .
+\]
+Write $g=\ln f=\ln\tfrac{\sqrt\pi}{2}+\ln\Gamma\!\left(\tfrac{a+1}2\right)-\ln\Gamma\!\left(\tfrac a2+1\right)$. Then
+\[
+g'(0)=\tfrac12\bigl[\psi(\tfrac12)-\psi(1)\bigr],\qquad
+g''(0)=\tfrac14\bigl[\psi'(\tfrac12)-\psi'(1)\bigr],\qquad
+g'''(0)=\tfrac18\bigl[\psi''(\tfrac12)-\psi''(1)\bigr].
+\]
+From $\psi^{(n)}(x)=(-1)^{n+1}n!\sum_{k\ge0}(k+x)^{-n-1}$ and $\sum_{k\ge0}(k+\tfrac12)^{-s}=(2^s-1)\zeta(s)$:
+\[
+\psi(\tfrac12)-\psi(1)=-2\ln2,\qquad
+\psi'(\tfrac12)=\tfrac{\pi^2}{2},\ \psi'(1)=\tfrac{\pi^2}{6},\qquad
+\psi''(\tfrac12)=-14\zeta(3),\ \psi''(1)=-2\zeta(3).
+\]
+Hence
+\[
+g'(0)=-\ln2,\qquad g''(0)=\frac{\pi^2}{12},\qquad g'''(0)=-\frac{3\zeta(3)}{2}.
+\]
+Since $f=e^g$, $f'''=(g'''+3g'g''+g'^3)f$, and $f(0)=\tfrac\pi2$:
+\[
+\int_0^{\pi/2}\ln^3\cos\theta\,d\theta
+=\frac{\pi}{2}\left[-\frac{3\zeta(3)}{2}-\frac{\pi^2\ln2}{4}-\ln^32\right]
+=-\frac{3\pi\zeta(3)}{4}-\frac{\pi^3\ln2}{8}-\frac{\pi\ln^32}{2}.
+\]
+Therefore
+\[
+P_1=-64\int_0^{\pi/2}\ln^3\cos\theta\,d\theta
+=48\pi\zeta(3)+8\pi^3\ln2+32\pi\ln^32 .
+\]
+
+\subsection*{Step 4. $P_2$ via Fourier analysis}
+
+Substituting $x=\tan\theta$ (so $\frac{dx}{x^2}=\frac{\sec^2\theta}{\tan^2\theta}\,d\theta=\frac{d\theta}{\sin^2\theta}$),
+\[
+P_2=\int_0^{\pi/2}\frac{\theta^4}{\sin^2\theta}\,d\theta .
+\]
+Integrating by parts with $\frac{1}{\sin^2\theta}=-\frac{d}{d\theta}\cot\theta$ (boundary terms: $\theta^4\cot\theta\sim\theta^3\to0$ at $0$, and $\cot\tfrac\pi2=0$):
+\[
+P_2=4\int_0^{\pi/2}\theta^3\cot\theta\,d\theta .
+\]
+Integrating by parts again with $\cot\theta=\frac{d}{d\theta}\ln\sin\theta$ (boundary terms: $\theta^3\ln\sin\theta\sim\theta^3\ln\theta\to0$ at $0$, and $\ln\sin\tfrac\pi2=0$):
+\[
+\int_0^{\pi/2}\theta^3\cot\theta\,d\theta=-3\int_0^{\pi/2}\theta^2\ln\sin\theta\,d\theta .
+\]
+
+The system $\{\cos 2k\theta\}_{k\ge0}$ is a complete orthogonal system in $L^2(0,\tfrac\pi2)$ (it is the standard cosine basis for an interval of length $\tfrac\pi2$), with $\int_0^{\pi/2}\cos^2 2k\theta\,d\theta=\tfrac\pi4$ for $k\ge1$. The expansion coefficients of $F(\theta)=\ln\sin\theta\in L^2(0,\tfrac\pi2)$ are computed directly:
+
+\begin{itemize}
+\item $k=0$: the classical Euler integral $\int_0^{\pi/2}\ln\sin\theta\,d\theta=-\tfrac\pi2\ln2$. (Proof: with $J$ denoting this integral, $\theta\mapsto\tfrac\pi2-\theta$ gives $J=\int_0^{\pi/2}\ln\cos\theta\,d\theta$; then $2J=\int_0^{\pi/2}\ln\frac{\sin2\theta}{2}\,d\theta=\tfrac12\int_0^{\pi}\ln\sin u\,du-\tfrac\pi2\ln2=J-\tfrac\pi2\ln2$, using symmetry of $\ln\sin$ about $\tfrac\pi2$.)
+\item $k\ge1$: integrating by parts,
+\[
+\begin{aligned}
+\int_0^{\pi/2}\ln\sin\theta\,\cos2k\theta\,d\theta
+&=\Bigl[\ln\sin\theta\,\frac{\sin2k\theta}{2k}\Bigr]_0^{\pi/2}-\frac{1}{2k}\int_0^{\pi/2}\cot\theta\,\sin2k\theta\,d\theta\\
+&=-\frac{1}{2k}\cdot\frac{\pi}{2}=-\frac{\pi}{4k},
+\end{aligned}
+\]
+because the boundary term vanishes and $\cot\theta\,\sin2k\theta=1+2\sum_{j=1}^{k-1}\cos2j\theta+\cos2k\theta$ (an identity easily proved by induction from $\sin2(k{+}1)\theta-\sin2k\theta=2\cos(2k{+}1)\theta\sin\theta$), whose integral over $(0,\tfrac\pi2)$ equals $\tfrac\pi2$ since $\int_0^{\pi/2}\cos2j\theta\,d\theta=0$ for $j\ge1$.
+\end{itemize}
+
+Thus the orthogonal expansion of $\ln\sin\theta$ in $L^2(0,\tfrac\pi2)$ is
+\[
+\ln\sin\theta=-\ln2-\sum_{k\ge1}\frac{\cos2k\theta}{k}\qquad\text{(convergence in }L^2(0,\tfrac\pi2)\text{)},
+\]
+by Riesz--Fischer (the coefficients are square-summable, and a function equals its expansion in a complete orthogonal system). Pairing with $\theta^2\in L^2(0,\tfrac\pi2)$ --- legitimate term by term because the inner product is continuous in $L^2$ --- and using the elementary moments
+\[
+\int_0^{\pi/2}\theta^2\,d\theta=\frac{\pi^3}{24},
+\qquad
+\int_0^{\pi/2}\theta^2\cos2k\theta\,d\theta=\frac{(-1)^k\,\pi}{4k^2}\quad(k\ge1),
+\]
+(the latter from two integrations by parts, using $\sin\pi k=0$, $\cos\pi k=(-1)^k$), we get
+\[
+\int_0^{\pi/2}\theta^2\ln\sin\theta\,d\theta
+=-\frac{\pi^3\ln2}{24}-\sum_{k\ge1}\frac1k\cdot\frac{(-1)^k\pi}{4k^2}
+=-\frac{\pi^3\ln2}{24}+\frac{\pi}{4}\,\eta(3)
+=-\frac{\pi^3\ln2}{24}+\frac{3\pi\zeta(3)}{16},
+\]
+where $\eta(3)=(1-2^{-2})\zeta(3)=\tfrac34\zeta(3)$. Hence
+\[
+\int_0^{\pi/2}\theta^3\cot\theta\,d\theta=\frac{\pi^3\ln2}{8}-\frac{9\pi\zeta(3)}{16},
+\qquad
+P_2=\frac{\pi^3\ln2}{2}-\frac{9\pi\zeta(3)}{4}.
+\]
+
+\subsection*{Step 5. Assembly}
+
+\[
+\frac{P_1}{16}=3\pi\zeta(3)+\frac{\pi^3\ln2}{2}+2\pi\ln^32,
+\]
+\[
+\frac{P_1}{16}+P_2-\Re P_3
+=\Bigl(3-\tfrac94\Bigr)\pi\zeta(3)+\Bigl(\tfrac12+\tfrac12\Bigr)\pi^3\ln2+2\pi\ln^32
+=\frac{3\pi\zeta(3)}{4}+\pi^3\ln2+2\pi\ln^32 ,
+\]
+and finally
+\[
+I=\frac23\left[\frac{3\pi\zeta(3)}{4}+\pi^3\ln2+2\pi\ln^32\right]
+=\frac{\pi\zeta(3)}{2}+\frac{2\pi^3\ln2}{3}+\frac{4\pi\ln^32}{3}.
+\]
+
+\[
+\int_0^\infty\frac{(\arctan x)^2\log^2(1+x^2)}{x^2}\,dx
+=\frac{2}{3}\pi^3\ln 2+\frac{4}{3}\pi\ln^3 2+\frac{\pi\zeta(3)}{2}.
+\]
+
+(In the notation of the original post: $\tfrac ab=\tfrac23$ for $\pi^3\ln2$, $\tfrac cd=\tfrac43$ for $\pi\ln^32$, the coefficient of $\zeta(3)$ is $\tfrac\pi2$, and all remaining guessed terms have coefficient $0$.)
+
+\section*{Numerical verification}
+
+All computations with mpmath at \texttt{mp.mp.dps = 90} (also run at 60); the integral was split as $\int_0^1+\int_1^\infty$ with $x\mapsto1/x$ on the tail (the transformed integrand has only an integrable $\ln^2$-singularity at $0$, handled by tanh--sinh quadrature with an extra split point).
+
+\begin{itemize}
+\item Direct quadrature:
+\[
+\begin{aligned}
+I=\;&17.61109914202609803451768551332218994471444\\
+&62428948708760045302411322232677\ldots
+\end{aligned}
+\]
+\item Closed form $\ \frac{2\pi^3\ln2}{3}+\frac{4\pi\ln^32}{3}+\frac{\pi\zeta(3)}{2}$: identical string; $|{\rm diff}|\approx7.9\cdot10^{-90}$, i.e. agreement to about \textbf{89--90 significant digits} (all working digits).
+\item Piece checks (each to $\ge40$ digits): $P_1=48\pi\zeta(3)+8\pi^3\ln2+32\pi\ln^32=386.680506\ldots$ \checkmark; $P_2=\frac{\pi^3\ln2}{2}-\frac{9\pi\zeta(3)}{4}=2.2491170739\ldots$ \checkmark; $\Re P_3\approx-1.4\cdot10^{-57}$ (claim: $0$) \checkmark; $\Im P_3=25.9757576090\ldots=24\zeta(4)=\tfrac{4\pi^4}{15}$ \checkmark (independent confirmation of the contour rotation).
+\item Intermediates: $\int_0^{\pi/2}\ln^3\cos\theta\,d\theta$ and $\int_0^{\pi/2}\theta^3\cot\theta\,d\theta$ verified against their closed forms to $\ge55$ digits. The pointwise algebraic identity of Step 1 was checked at a sample point to $60$ digits.
+\end{itemize}
+
+\section*{Notes}
+
+\begin{itemize}
+\item The derivation is complete and self-contained. The one genuinely structural step is Step 1--2: the identity $4L^2T^2=\tfrac23[L^4+T^4-\Re\log^4(1+ix)]$ reduces $I$ to two purely real classical integrals, because the mixed term $\Re\int_0^\infty x^{-2}\log^4(1+ix)\,dx$ vanishes identically after rotating the contour onto the negative imaginary axis (where $\log(1+ix)$ becomes the real $\ln(1+t)$). All contour, branch, and limiting arguments are justified in Step 2 (simply connected cut plane $W=\mathbb{C}\setminus i[0,\infty)$, explicit arc estimates).
+\item Every interchange of limit and integral is justified: differentiation under the integral sign in Step 3 (dominated by $\cos^{-1/2}\theta|\ln\cos\theta|^3$), and termwise integration in Step 4 via genuine $L^2$-convergence of the orthogonal expansion of $\ln\sin\theta$ (no Abel-summation or pointwise-Fourier subtleties are needed, since all expansion coefficients were computed by elementary integration by parts).
+\item No caveats: the numerical agreement is limited only by working precision.
+\end{itemize}
+
+\end{document}

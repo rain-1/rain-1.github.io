@@ -1,0 +1,237 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 1\\[1ex]\large Integral $\int_{-1}^1\frac1x\sqrt{\frac{1+x}{1-x}}\ln\left(\frac{2\,x^2+2\,x+1}{2\,x^2-2\,x+1}\right) \mathrm dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/562694}{question 562694}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in exact closed form
+$$I=\int_{-1}^1\frac1x\sqrt{\frac{1+x}{1-x}}\,\ln\!\left(\frac{2x^2+2x+1}{2x^2-2x+1}\right)\mathrm{d}x
+\;\approx\; 8.372211626601275661625747121\ldots$$
+
+(The poster is also interested in the variants with only the numerator or only the denominator under the logarithm; these are treated in the Notes.)
+
+\section*{Result}
+
+$$\boxed{\;I \;=\; 4\pi\,\operatorname{arccot}\sqrt{\varphi}\;}\qquad\text{where }\;\varphi=\frac{1+\sqrt5}{2}\;\text{ is the golden ratio.}$$
+
+Equivalent forms:
+$$I \;=\; 4\pi\arctan\frac{1}{\sqrt\varphi}\;=\;4\pi\arctan\sqrt{\varphi-1}\;=\;4\pi\arcsin\frac{\sqrt5-1}{2}\;=\;2\pi\arccos\left(\sqrt5-2\right)\;=\;4\pi\,\Re\arcsin(1+i).$$
+
+Numerically,
+$$I=8.37221162660127566162574712109841263808172805388220741371708829675812473\ldots$$
+
+\section*{Derivation}
+
+\textbf{Notation.} $\operatorname{Log}$ and $\sqrt{\cdot}$ denote the principal branches (cut along $(-\infty,0]$); thus $\Re\sqrt w>0$ for $w\notin(-\infty,0]$, and $\operatorname{Arg}\in(-\pi,\pi]$. Throughout, $\varphi=\frac{1+\sqrt5}2$, so that
+$$\varphi^2=\varphi+1,\qquad \varphi^{-1}=\varphi-1,\qquad \varphi-\varphi^{-1}=1 .$$
+All complex-valued integrals of a real variable are understood componentwise (real and imaginary parts), so real-variable theorems (FTC, substitution, Fubini, parity) apply verbatim.
+
+\subsection*{Step 0: convergence and reality}
+
+For all real $x$,
+$$2x^2\pm 2x+1=(x\pm1)^2+x^2>0,$$
+so the logarithm is a real logarithm of a positive quantity --- no branch issues in the integrand. Behaviour at the three delicate points of $(-1,1)$:
+
+\begin{itemize}
+\item $x\to0$: $\ln(1\pm2x+2x^2)=\pm2x+O(x^3)$ (the $x^2$-terms cancel: $2x^2-\tfrac{(\pm2x)^2}{2}=0$), so the log factor is $4x+O(x^3)$ and the integrand extends continuously with value $4$ at $x=0$ (removable singularity).
+\item $x\to1^-$: the integrand is $O\big((1-x)^{-1/2}\big)$ --- integrable.
+\item $x\to-1^+$: the integrand is $O\big((1+x)^{1/2}\big)\to0$.
+\end{itemize}
+
+Hence $I$ converges absolutely.
+
+\subsection*{Step 1: a parameter representation of the logarithm}
+
+For real $x,t$ put
+$$P_\pm(t)=1\pm 2xt+2x^2t^2=(1\pm xt)^2+(xt)^2 .$$
+Each $P_\pm$ is a sum of two squares that cannot vanish simultaneously ($xt=\mp1$ and $xt=0$ are incompatible), so $P_\pm(t)>0$ for \textbf{all} real $t$, and $t\mapsto\ln\frac{P_+(t)}{P_-(t)}$ is smooth on $\mathbb R$. Moreover
+$$P_+P_-=(1+2x^2t^2)^2-(2xt)^2=1+4x^4t^4 .$$
+Differentiate:
+$$\frac{d}{dt}\ln\frac{P_+(t)}{P_-(t)}
+=\frac{2x+4x^2t}{P_+}-\frac{-2x+4x^2t}{P_-}
+=\frac{(2x+4x^2t)P_- -(-2x+4x^2t)P_+}{1+4x^4t^4}.$$
+The numerator is
+$$2x\,(P_-+P_+)+4x^2t\,(P_--P_+)=2x(2+4x^2t^2)+4x^2t(-4xt)=4x\left(1-2x^2t^2\right).$$
+Since $P_\pm(0)=1$ and $P_\pm(1)=2x^2\pm2x+1$, the fundamental theorem of calculus gives, \textbf{for every real $x$},
+\begin{equation}\ln\frac{2x^2+2x+1}{2x^2-2x+1}=\int_0^1\frac{4x\,(1-2x^2t^2)}{1+4x^4t^4}\,dt. \tag{1}\end{equation}
+
+\textit{(Where this comes from: $P_+(t)=\lvert1+(1+i)xt\rvert^2$, and $(1)$ is the real form of $\frac{d}{dt}\operatorname{Log}\frac{1+(1+i)xt}{1-(1+i)xt}=\frac{2(1+i)x}{1-2ix^2t^2}$, whose doubled real part is exactly $\frac{4x(1-2x^2t^2)}{1+4x^4t^4}$. The identity $(1)$ itself, however, is purely real and was verified above by direct differentiation, so no branch discussion is needed.)}
+
+\subsection*{Step 2: insert and swap (Tonelli--Fubini)}
+
+On $(-1,1)$ we have $\sqrt{\frac{1+x}{1-x}}=\frac{1+x}{\sqrt{1-x^2}}$. For $x\neq0$ the factor $\frac1x$ cancels the $x$ in $(1)$:
+$$\frac1x\sqrt{\frac{1+x}{1-x}}\,\ln\frac{2x^2+2x+1}{2x^2-2x+1}
+=\int_0^1 \frac{1+x}{\sqrt{1-x^2}}\cdot\frac{4\,(1-2x^2t^2)}{1+4x^4t^4}\,dt .$$
+For $(x,t)\in(-1,1)\times[0,1]$ we have $|1-2x^2t^2|\le1$ and $1+4x^4t^4\ge1$, so the absolute value of the double integrand is at most $\frac{4(1+x)}{\sqrt{1-x^2}}$, and
+$$\int_{-1}^{1}\frac{4(1+x)}{\sqrt{1-x^2}}\,dx=4\pi<\infty .$$
+By Tonelli the double integral converges absolutely, and Fubini yields
+\begin{equation}I=\int_0^1 A(t)\,dt,\qquad
+A(t):=\int_{-1}^1 \frac{1+x}{\sqrt{1-x^2}}\cdot\frac{4\,(1-2x^2t^2)}{1+4x^4t^4}\,dx. \tag{2}\end{equation}
+
+\subsection*{Step 3: parity}
+
+Split $\frac{1+x}{\sqrt{1-x^2}}=\frac{1}{\sqrt{1-x^2}}+\frac{x}{\sqrt{1-x^2}}$. The factor $\frac{4(1-2x^2t^2)}{1+4x^4t^4}$ is even in $x$; the contribution of the odd part $\frac{x}{\sqrt{1-x^2}}$ is an absolutely integrable odd function on $(-1,1)$, hence integrates to $0$. Therefore
+\begin{equation}A(t)=8\int_0^1 \frac{1-2t^2x^2}{\sqrt{1-x^2}\,\big(1+4t^4x^4\big)}\,dx. \tag{3}\end{equation}
+
+\subsection*{Step 4: two lemmas}
+
+\begin{lemma}
+\textit{For $\lambda\in\mathbb C$ with $\Re\lambda>0$,}
+$$\int_0^\infty\frac{d\tau}{1+\lambda^2\tau^2}=\frac{\pi}{2\lambda}.$$
+\end{lemma}
+
+\begin{proof}
+Write $\lambda=\lambda_1+i\lambda_2$, $\lambda_1>0$, and $\mu=\operatorname{Arg}\lambda\in(-\tfrac\pi2,\tfrac\pi2)$. Factor $1+\lambda^2\tau^2=(1+i\lambda\tau)(1-i\lambda\tau)$. For $\tau>0$,
+$$\Im(1+i\lambda\tau)=\lambda_1\tau>0,\qquad \Im(1-i\lambda\tau)=-\lambda_1\tau<0,$$
+and both factors equal $1$ at $\tau=0$; in particular both stay off $(-\infty,0]$ for all $\tau\ge0$ (so also $1+\lambda^2\tau^2\neq0$). Hence $\tau\mapsto\operatorname{Log}(1\pm i\lambda\tau)$ are $C^1$ on $[0,\infty)$ with derivatives $\frac{\pm i\lambda}{1\pm i\lambda\tau}$, and with the partial fractions $\frac{1}{1+\lambda^2\tau^2}=\frac12\Big(\frac{1}{1+i\lambda\tau}+\frac{1}{1-i\lambda\tau}\Big)$,
+$$\int_0^R\frac{d\tau}{1+\lambda^2\tau^2}
+=\frac{1}{2i\lambda}\Big[\operatorname{Log}(1+i\lambda R)-\operatorname{Log}(1-i\lambda R)\Big].$$
+As $R\to\infty$: $\dfrac{|1+i\lambda R|}{|1-i\lambda R|}\to1$, so the difference of the real parts of the Logs tends to $0$. For the arguments, $1+i\lambda R=i\lambda R\big(1+\frac{1}{i\lambda R}\big)$ and $1-i\lambda R=-i\lambda R\big(1-\frac{1}{i\lambda R}\big)$, where the parenthetical factors tend to $1$; since $\arg(i\lambda)=\mu+\frac\pi2\in(0,\pi)$ and $\arg(-i\lambda)=\mu-\frac\pi2\in(-\pi,0)$ are interior points of $(-\pi,\pi)$ where $\operatorname{Arg}$ is continuous,
+$$\operatorname{Arg}(1+i\lambda R)\to\mu+\tfrac\pi2,\qquad \operatorname{Arg}(1-i\lambda R)\to\mu-\tfrac\pi2 .$$
+Hence the bracket tends to $i\big[(\mu+\tfrac\pi2)-(\mu-\tfrac\pi2)\big]=i\pi$, and the integral equals $\frac{i\pi}{2i\lambda}=\frac{\pi}{2\lambda}$.
+\end{proof}
+
+\begin{lemma}
+\textit{For $t\in[0,1]$ and $\beta:=2it^2$,}
+$$\int_0^1\frac{dx}{\sqrt{1-x^2}\,\big(1-\beta x^2\big)}=\frac{\pi}{2\sqrt{1-\beta}}\qquad(\text{principal root}).$$
+\end{lemma}
+
+\begin{proof}
+Since $\Re(1-\beta x^2)=1$, we have $|1-\beta x^2|\ge1$: the integrand is well defined and absolutely integrable (the only singularity is the integrable $(1-x^2)^{-1/2}$ at $x=1$). Substitute $x=\sin\theta$ ($\theta\in[0,\tfrac\pi2]$), then $\tau=\tan\theta$ ($\tau\in[0,\infty)$), both monotone $C^1$ bijections applied to an absolutely convergent integral; using $\sin^2\theta=\frac{\tau^2}{1+\tau^2}$, $d\theta=\frac{d\tau}{1+\tau^2}$,
+$$\int_0^1\frac{dx}{\sqrt{1-x^2}(1-\beta x^2)}
+=\int_0^{\pi/2}\frac{d\theta}{1-\beta\sin^2\theta}
+=\int_0^\infty\frac{d\tau}{1+(1-\beta)\tau^2}.$$
+Let $\lambda=\sqrt{1-\beta}$ (principal). Since $\Re(1-\beta)=1>0$, we get $|\operatorname{Arg}(1-\beta)|<\tfrac\pi2$, hence $|\operatorname{Arg}\lambda|<\tfrac\pi4$ and $\Re\lambda>0$, with $\lambda^2=1-\beta$ exactly. Lemma 1 finishes the proof.
+\end{proof}
+
+\subsection*{Step 5: evaluation of $A(t)$}
+
+For real $s$,
+$$\frac{1+i}{1-2is}=\frac{(1+i)(1+2is)}{1+4s^2}=\frac{(1-2s)+i\,(1+2s)}{1+4s^2}
+\quad\Longrightarrow\quad
+\frac{1-2s}{1+4s^2}=\Re\,\frac{1+i}{1-2is}.$$
+Apply this with $s=t^2x^2\ge0$ inside $(3)$ and pull $\Re$ out of the absolutely convergent integral (linearity; the factor $\frac1{\sqrt{1-x^2}}$ is real):
+\begin{equation}A(t)=8\,\Re\left[(1+i)\int_0^1\frac{dx}{\sqrt{1-x^2}\,\big(1-2it^2x^2\big)}\right]
+\overset{\text{Lemma 2}}{=}8\,\Re\frac{(1+i)\,\pi}{2\sqrt{1-2it^2}}
+=4\pi\,\Re\,\frac{1+i}{\sqrt{1-2it^2}}. \tag{4}\end{equation}
+\textit{(Consistency check: $A(0)=4\pi$, matching $8\int_0^1\frac{dx}{\sqrt{1-x^2}}=4\pi$.)}
+
+\subsection*{Step 6: the final integration --- explicit antiderivative with branch control}
+
+By $(2)$ and $(4)$,
+\begin{equation}I=4\pi\,\Re\int_0^1\frac{(1+i)\,dt}{\sqrt{1-2it^2}}. \tag{5}\end{equation}
+Define on $[0,1]$
+$$q(t):=i(1+i)\,t+\sqrt{1-2it^2}\;=\;-t+it+\sqrt{1-2it^2},
+\qquad \Phi(t):=-i\operatorname{Log} q(t).$$
+
+\textbf{(i) The path $q(t)$ stays in the open right half-plane.} For $w=u+iv\notin(-\infty,0]$ the principal root satisfies
+$$\Re\sqrt w=|w|^{1/2}\cos\tfrac{\alpha}2=\sqrt{\tfrac{|w|+u}{2}},\qquad \alpha=\operatorname{Arg}w\in(-\pi,\pi),$$
+(using $\cos\frac\alpha2>0$ and $2\cos^2\frac\alpha2=1+\cos\alpha$). With $w=1-2it^2$ (so $u=1$, $|w|=\sqrt{1+4t^4}$):
+$$\Re\,q(t)=-t+\sqrt{\frac{\sqrt{1+4t^4}+1}{2}}\;\ge\;1-t>0\quad(0\le t<1),$$
+and at $t=1$: $\Re\,q(1)=\sqrt{\frac{1+\sqrt5}{2}}-1=\sqrt\varphi-1>0$. So $\Re q(t)>0$ on all of $[0,1]$; in particular $q(t)\neq0$ and $q(t)$ avoids the branch cut of $\operatorname{Log}$.
+
+\textbf{(ii) $\Phi'=(1+i)(1-2it^2)^{-1/2}$.} Since $\Re(1-2it^2)=1>0$, the map $t\mapsto\sqrt{1-2it^2}$ is $C^1$ with derivative $\frac{-2it}{\sqrt{1-2it^2}}$ (chain rule for the principal root off its cut). By (i), $\operatorname{Log}q(t)$ is $C^1$ with derivative $q'/q$. Now
+$$q'(t)=i(1+i)-\frac{2it}{\sqrt{1-2it^2}}
+=\frac{i\big[(1+i)\sqrt{1-2it^2}-2t\big]}{\sqrt{1-2it^2}},$$
+while, using $i(1+i)^2=i\cdot 2i=-2$,
+$$(1+i)\,q(t)=i(1+i)^2t+(1+i)\sqrt{1-2it^2}=-2t+(1+i)\sqrt{1-2it^2}.$$
+Comparing, $q'(t)=\dfrac{i\,(1+i)\,q(t)}{\sqrt{1-2it^2}}$, hence
+$$\Phi'(t)=-i\,\frac{q'(t)}{q(t)}=\frac{1+i}{\sqrt{1-2it^2}},\qquad t\in[0,1].$$
+
+\textbf{(iii) FTC.} $\Phi$ is $C^1$ on $[0,1]$ and $\Phi(0)=-i\operatorname{Log}1=0$, so
+$$\int_0^1\frac{(1+i)\,dt}{\sqrt{1-2it^2}}=\Phi(1)=-i\operatorname{Log}\big(\sqrt{1-2i}+i-1\big).$$
+Writing $\operatorname{Log}q=\ln|q|+i\operatorname{Arg}q$ gives $\Re\big[-i\operatorname{Log}q\big]=\operatorname{Arg}q$, so by $(5)$
+\begin{equation}I=4\pi\,\operatorname{Arg}\big(\sqrt{1-2i}+i-1\big). \tag{6}\end{equation}
+\textit{(Remark: $\Phi(1)=-i\operatorname{Log}\big(i(1+i)+\sqrt{1-(1+i)^2}\big)=\arcsin(1+i)$ in the principal branch, so $(6)$ states $I=4\pi\,\Re\arcsin(1+i)$.)}
+
+\subsection*{Step 7: algebraic evaluation}
+
+Compute $\sqrt{1-2i}$: seek $p-iq$ with $p>0$ and $(p-iq)^2=p^2-q^2-2ipq=1-2i$, i.e. $p^2-q^2=1$, $pq=1$. Then $q=1/p$ and $p^4-p^2-1=0$, so $p^2=\frac{1+\sqrt5}{2}=\varphi$ (the positive root). Hence
+$$\sqrt{1-2i}=\sqrt\varphi-\frac{i}{\sqrt\varphi},$$
+which is indeed the principal root ($\Re=\sqrt\varphi>0$); as a check, $\big(\sqrt\varphi-\tfrac{i}{\sqrt\varphi}\big)^2=\varphi-\varphi^{-1}-2i=1-2i$ by $\varphi-\varphi^{-1}=1$.
+
+Therefore, using $1-\frac{1}{\sqrt\varphi}=\frac{\sqrt\varphi-1}{\sqrt\varphi}$,
+$$q(1)=\big(\sqrt\varphi-1\big)+i\Big(1-\frac1{\sqrt\varphi}\Big)
+=\big(\sqrt\varphi-1\big)\Big(1+\frac{i}{\sqrt\varphi}\Big).$$
+Since $\sqrt\varphi>1$, the scalar $\sqrt\varphi-1$ is a positive real, so
+$$\operatorname{Arg}q(1)=\operatorname{Arg}\Big(1+\frac{i}{\sqrt\varphi}\Big)=\arctan\frac{1}{\sqrt\varphi}=\operatorname{arccot}\sqrt\varphi .$$
+By $(6)$,
+$$\boxed{\,I=4\pi\,\operatorname{arccot}\sqrt\varphi\,,\qquad \varphi=\frac{1+\sqrt5}{2}.}$$
+
+\textbf{Equivalent forms.} Let $\theta=\operatorname{arccot}\sqrt\varphi\in(0,\tfrac\pi2)$. Then $\csc^2\theta=1+\cot^2\theta=1+\varphi=\varphi^2$, so $\sin\theta=\varphi^{-1}=\frac{\sqrt5-1}{2}$, giving
+$$I=4\pi\arcsin\frac{\sqrt5-1}{2}.$$
+Also $\varphi^{-2}=2-\varphi$ gives $\cos2\theta=1-2\varphi^{-2}=2\varphi-3=\sqrt5-2$, whence $I=2\pi\arccos(\sqrt5-2)$; and $\varphi^{-1}=\varphi-1$ gives $\frac{1}{\sqrt\varphi}=\sqrt{\varphi-1}$, whence $I=4\pi\arctan\sqrt{\varphi-1}$.
+
+\textit{(Interpretation: the computation is a rigorous implementation of ``differentiation under the integral sign'': for the family $F(a)=\int_{-1}^1\frac1x\sqrt{\frac{1+x}{1-x}}\ln\frac{1+ax}{1-ax}\,dx$ one finds $F'(a)=\frac{2\pi}{\sqrt{1-a^2}}$, i.e. $F(a)=2\pi\arcsin a$; our parameter path $a=(1+i)t$, $t\in0\to1$, evaluates the continuation at $a=1+i$ and its conjugate simultaneously, and Steps 1--6 supply exactly the branch bookkeeping that makes ``$I=2\pi\big(\arcsin(1+i)+\arcsin(1-i)\big)=4\pi\Re\arcsin(1+i)$'' legitimate.)}
+
+\section*{Numerical verification}
+
+All computations with mpmath (scripts \texttt{verify.py}, \texttt{steps.py}, \texttt{bonus.py} in the work directory).
+
+\textbf{Direct evaluation of $I$ (dps = 130).}
+\begin{itemize}
+\item Raw form: tanh--sinh quadrature of the original integrand over $[-1,-\tfrac12,0,\tfrac12,1]$ gives
+$8.37221162660127566162574712109841263808172805388220741371708829675\mathbf{78}\ldots$ --- agrees with the closed form to \textbf{67 significant digits} (limited only by quadrature error at the $(1-x)^{-1/2}$ endpoint).
+\item Transformed form: by the parity argument of Step 3 applied to the original integrand (the log factor is odd under $x\mapsto-x$, and $\frac{1+x}{x\sqrt{1-x^2}}=\underbrace{\tfrac1{x\sqrt{1-x^2}}}_{\text{odd}}+\underbrace{\tfrac1{\sqrt{1-x^2}}}_{\text{even}}$), $I=2\int_0^1 \frac{1}{x\sqrt{1-x^2}}\ln\frac{2x^2+2x+1}{2x^2-2x+1}dx$; substituting $x=\sin\theta$,
+$$I=2\int_0^{\pi/2}\ln\!\left(\frac{1+2\sin\theta+2\sin^2\theta}{1-2\sin\theta+2\sin^2\theta}\right)\frac{d\theta}{\sin\theta},$$
+whose quadrature agrees with the closed form to \textbf{at least 130 significant digits} (difference exactly $0$ at working precision).
+\end{itemize}
+
+\textbf{Closed form (dps = 130).}
+$$4\pi\operatorname{arccot}\sqrt{\tfrac{1+\sqrt5}{2}}
+=8.3722116266012756616257471210984126380817280538822074137170882967581247324454208531970527675700569221956937115\ldots$$
+This also reproduces all 28 digits quoted in the original post, $8.372211626601275661625747121\ldots$
+
+\textbf{Step-by-step checks} (dps = 60, script \texttt{steps.py}):
+\begin{itemize}
+\item identity $(1)$ at $x=0.3,\,-0.77,\,0.999,\,\pm1$: quadrature vs. logarithm --- exact to working precision; also verified symbolically with sympy ($\frac{d}{dt}\ln\frac{P_+}{P_-}-\frac{4x(1-2x^2t^2)}{1+4x^4t^4}\equiv0$ and $P_+P_-=1+4x^4t^4$);
+\item $(3)$ vs. $(4)$ at $t=0.25,\,0.7,\,1.0$: agreement to $\sim10^{-32}$;
+\item Lemma 2 at $t=0.33,\,0.9$: $\sim10^{-33}$; Lemma 1 for three test $\lambda$'s with $\Re\lambda>0$: $\le10^{-61}$;
+\item $\Phi'$ vs. $(1+i)(1-2it^2)^{-1/2}$ at $t=0.2,0.6,0.95$ (central differences): $\sim10^{-37}$; $\min_{[0,1]}\Re q(t)=0.2720196495\ldots=\sqrt\varphi-1$ attained at $t=1$;
+\item $\int_0^1(1+i)(1-2it^2)^{-1/2}dt=\Phi(1)=\arcsin(1+i)=0.66623943249251525510\ldots+1.06127506190503565203\ldots i$ (three ways, identical);
+\item $\sqrt{1-2i}=\sqrt\varphi-i/\sqrt\varphi$ and $\operatorname{Arg}q(1)=\arctan(1/\sqrt\varphi)=\Re\arcsin(1+i)=\arcsin\frac{\sqrt5-1}{2}$: all equal to $0.6662394324925152551040048959777927206675\ldots$
+\end{itemize}
+
+\textbf{Conclusion:} direct numerics and the closed form agree to $\ge67$ significant digits (raw form) and $\ge130$ digits (exactly transformed form) --- far beyond coincidence.
+
+\section*{Notes}
+
+\textbf{The two sub-questions.} With the same tools one gets closed forms for the numerator-only and denominator-only variants:
+$$N:=\int_{-1}^1\frac1x\sqrt{\frac{1+x}{1-x}}\,\ln(2x^2+2x+1)\,dx
+=\pi\ln\frac{\varphi+\sqrt\varphi}{2}+2\pi\operatorname{arccot}\sqrt\varphi\approx 5.342613660915948744102794714,$$
+$$D:=\int_{-1}^1\frac1x\sqrt{\frac{1+x}{1-x}}\,\ln(2x^2-2x+1)\,dx
+=\pi\ln\frac{\varphi+\sqrt\varphi}{2}-2\pi\operatorname{arccot}\sqrt\varphi\approx-3.029597965685326917522952407 .$$
+Sketch (each step of the same rigor level as above): $N-D=I$; for the sum, $(2x^2+2x+1)(2x^2-2x+1)=1+4x^4$ is even, so by the parity argument of Step 3, $N+D=\int_{-1}^1\frac{\ln(1+4x^4)}{\sqrt{1-x^2}}dx=2\int_0^{\pi/2}\ln(1+4\sin^4\theta)\,d\theta$. Writing $1+4\sin^4\theta=|1-2i\sin^2\theta|^2$, one needs $G(s):=\int_0^{\pi/2}\operatorname{Log}(1-2is\sin^2\theta)\,d\theta$ at $s=1$ (then $N+D=4\,\Re\,G(1)$). Since $\Re(1-2is\sin^2\theta)=1$, the derivative $\partial_s$-integrand $\frac{-2i\sin^2\theta}{1-2is\sin^2\theta}$ is bounded by $2$; dominated convergence permits differentiation under the integral, and for $s>0$, by Lemma 2,
+$$G'(s)=\frac1s\int_0^{\pi/2}\Big[1-\frac{1}{1-2is\sin^2\theta}\Big]d\theta=\frac1s\Big[\frac\pi2-\frac{\pi}{2\sqrt{1-2is}}\Big].$$
+The function $\widetilde G(s):=\pi\operatorname{Log}\frac{1+\sqrt{1-2is}}{2}$ is well defined ($\Re\sqrt{1-2is}\ge1$) with the same derivative: putting $w=1-2is$, $s=\frac{i(w-1)}2=\frac i2(\sqrt w-1)(\sqrt w+1)$, one checks $\frac{\pi}{2s}\frac{\sqrt w-1}{\sqrt w}=\frac{-i\pi}{\sqrt w(1+\sqrt w)}=\widetilde G'(s)$. Both vanish at $s=0$, so $G\equiv\widetilde G$ on $[0,1]$ and
+$$N+D=4\pi\ln\Big|\frac{1+\sqrt{1-2i}}{2}\Big|=2\pi\ln\frac{(1+\sqrt\varphi)^2+\varphi^{-1}}{4}=2\pi\ln\frac{\varphi+\sqrt\varphi}{2},$$
+using $(1+\sqrt\varphi)^2+\varphi^{-1}=1+2\sqrt\varphi+\varphi+(\varphi-1)=2(\varphi+\sqrt\varphi)$. Both $N$ and $D$ were confirmed numerically to $\sim30$ digits (\texttt{bonus.py}).
+
+\textbf{Caveats.} None of substance for the main result: every interchange (Fubini in Step 2, $\Re\leftrightarrow\int$ in Step 5), every substitution, and every branch of $\operatorname{Log}/\sqrt{\cdot}$ used is justified in the text; the two lemmas are proved from scratch; no special-function identities are quoted beyond the principal-branch definitions themselves. The only steps taken from the standard toolbox are Tonelli--Fubini, the fundamental theorem of calculus, dominated convergence (Notes only), and continuity of $\operatorname{Arg}$ off the cut. The final answer also matches the numeric value quoted in the original post to all 28 posted digits.
+
+\end{document}

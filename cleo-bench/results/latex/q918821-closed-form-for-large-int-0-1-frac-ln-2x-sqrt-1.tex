@@ -1,0 +1,467 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 12\\[1ex]\large Closed form for ${\large\int}_0^1\frac{\ln^2x}{\sqrt{1-x+x^2}}dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/918821}{question 918821}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in exact closed form
+\[
+I=\int_0^1\frac{\ln^2x}{\sqrt{x^2-x+1}}\,dx \approx 2.100290124838430655413586565140170651784798511276914224\ldots
+\]
+
+\section*{Result}
+
+\[
+\boxed{\;
+\begin{aligned}
+I={}&4\ln\tfrac43\,\operatorname{Li}_2\!\Big(\tfrac13\Big)-8\operatorname{Li}_3\!\Big(\tfrac13\Big)-20\operatorname{Li}_3\!\Big(-\tfrac12\Big)
+-\frac{43}{6}\,\zeta(3)+\pi^{2}\ln 2-\frac{\pi^{2}}{3}\ln 3\\
+&+\frac{10}{3}\ln^{3}2-\frac{2}{3}\ln^{3}3-6\ln^{2}2\,\ln 3+4\ln 2\,\ln^{2}3\;
+\end{aligned}}
+\]
+
+Equivalent forms (proved below, all verified to 168+ digits):
+
+\textit{Negative-argument form:}
+\[
+\begin{aligned}
+I={}&2\ln\tfrac43\,\operatorname{Li}_2\!\Big(-\tfrac13\Big)-4\operatorname{Li}_3\!\Big(-\tfrac13\Big)-20\operatorname{Li}_3\!\Big(-\tfrac12\Big)-\frac{95}{6}\zeta(3)+\frac{5\pi^2}{3}\ln2\\
+&+\frac{10}{3}\ln^32-\frac{\ln^33}{3}-6\ln^22\ln3+2\ln2\ln^23 .
+\end{aligned}
+\]
+
+\textit{Ladder-free (``native'') form, which the derivation produces first:}
+\[
+\begin{aligned}
+I={}&-4\ln 3\,\operatorname{Li}_2\!\Big(\tfrac13\Big)+4\ln 2\,\operatorname{Li}_2\!\Big(-\tfrac13\Big)-4\operatorname{Li}_3\!\Big(\tfrac13\Big)-2\operatorname{Li}_3\!\Big(-\tfrac13\Big)-20\operatorname{Li}_3\!\Big(-\tfrac12\Big)\\
+&-\frac{23}{2}\zeta(3)+\frac{5\pi^{2}}{3}\ln 2+\frac{10}{3}\ln^{3}2-\ln^{3}3-6\ln^{2}2\,\ln 3+2\ln 2\,\ln^{2}3 .
+\end{aligned}
+\]
+
+\begin{center}\rule{0.5\textwidth}{0.4pt}\end{center}
+
+\section*{Derivation}
+
+Throughout, $\operatorname{Li}_s(z)=\sum_{n\ge1}z^n/n^s$ for $|z|\le 1$ ($s=2,3$), extended analytically to $\mathbb C\setminus[1,\infty)$; on the real ray $z<1$ both functions are real-analytic, with
+\[
+\operatorname{Li}_2'(z)=-\frac{\ln(1-z)}{z},\qquad \operatorname{Li}_3'(z)=\frac{\operatorname{Li}_2(z)}{z},
+\]
+and $\operatorname{Li}_2,\operatorname{Li}_3$ extend continuously to $z=1$. We write $\operatorname{Li}_2(1)=\zeta(2)=\frac{\pi^2}{6}$, $\operatorname{Li}_3(1)=\zeta(3)$, and from $\operatorname{Li}_s(-1)=-(1-2^{1-s})\zeta(s)$ (split the defining series into even/odd $n$):
+\begin{equation*}
+\operatorname{Li}_2(-1)=-\frac{\pi^{2}}{12},\qquad \operatorname{Li}_3(-1)=-\frac34\zeta(3). \tag{V}
+\end{equation*}
+
+Every antiderivative and functional equation below is proved by the same two-step scheme: \textbf{(a)} both sides are real-analytic on the stated open interval and their derivatives agree there (a finite computation with the formulas above); \textbf{(b)} the constants agree at one (possibly limiting) point. All limits used at endpoints are elementary ($t^a\ln^bt\to0$ etc.) and are indicated where they occur.
+
+\subsection*{0. Toolkit}
+
+\subsubsection*{0.1 Antiderivatives}
+
+For $x\in(0,1)$:
+
+\textbf{(A1)}
+\[
+\int_0^x\frac{\ln^2(1-t)}{t}\,dt=\ln^2(1-x)\ln x+2\ln(1-x)\operatorname{Li}_2(1-x)-2\operatorname{Li}_3(1-x)+2\zeta(3)=:P_2(x).
+\]
+
+\textit{Proof.} Differentiate the right side: $\frac{d}{dx}\big[\ln^2(1-x)\ln x\big]=-\frac{2\ln(1-x)\ln x}{1-x}+\frac{\ln^2(1-x)}{x}$; $\frac{d}{dx}\big[2\ln(1-x)\operatorname{Li}_2(1-x)\big]=-\frac{2\operatorname{Li}_2(1-x)}{1-x}+\frac{2\ln(1-x)\ln x}{1-x}$ (using $\operatorname{Li}_2'(1-x)\cdot(-1)=\frac{\ln x}{1-x}$); $\frac{d}{dx}\big[-2\operatorname{Li}_3(1-x)\big]=\frac{2\operatorname{Li}_2(1-x)}{1-x}$. The sum is $\frac{\ln^2(1-x)}{x}$. As $x\to0^+$ the right side $\to0$ because $\ln^2(1-x)\ln x\sim x^2\ln x\to0$, $\ln(1-x)\operatorname{Li}_2(1-x)\to0$, $-2\operatorname{Li}_3(1)+2\zeta(3)=0$. $\square$
+
+\textbf{(A2)}
+\[
+\int_0^x\frac{\ln t\,\ln(1-t)}{t}\,dt=\operatorname{Li}_3(x)-\ln x\,\operatorname{Li}_2(x).
+\]
+
+\textit{Proof.} $\frac{d}{dx}$RHS $=\frac{\operatorname{Li}_2(x)}{x}-\frac{\operatorname{Li}_2(x)}{x}+\frac{\ln x\ln(1-x)}{x}$; at $x\to0^+$ both sides $\to0$ ($\ln x\operatorname{Li}_2(x)\sim x\ln x$). $\square$
+
+\textbf{(A3)} For $c>0$ and $t>0$: $\displaystyle\int\frac{\ln t\,\ln(1+ct)}{t}\,dt=\operatorname{Li}_3(-ct)-\ln t\,\operatorname{Li}_2(-ct)+C.$
+
+\textit{Proof.} $\frac{d}{dt}\operatorname{Li}_3(-ct)=\frac{\operatorname{Li}_2(-ct)}{t}$ and $\frac{d}{dt}\operatorname{Li}_2(-ct)=-\frac{\ln(1+ct)}{t}$, so the derivative of the RHS is $\frac{\operatorname{Li}_2(-ct)}{t}-\frac{\operatorname{Li}_2(-ct)}{t}+\frac{\ln t\ln(1+ct)}{t}$. Both $\operatorname{Li}_2,\operatorname{Li}_3$ are analytic on the negative real axis, so this holds on all of $t>0$. $\square$
+
+\textbf{(A4)} For $x\in(0,1)$: $\displaystyle\int_0^x\frac{\ln^2t}{1-t}\,dt=-\ln^2x\ln(1-x)-2\ln x\operatorname{Li}_2(x)+2\operatorname{Li}_3(x).$
+
+\textit{Proof.} Derivative of RHS: $-\frac{2\ln x\ln(1-x)}{x}+\frac{\ln^2x}{1-x}-\frac{2\operatorname{Li}_2(x)}{x}+\frac{2\ln x\ln(1-x)}{x}+\frac{2\operatorname{Li}_2(x)}{x}=\frac{\ln^2x}{1-x}$; at $x\to0^+$: $x\ln^2x\to0$, $x\ln x\to0$, so RHS $\to0$. $\square$
+
+\textbf{(A5)} For $c>0$, $x>0$: $\displaystyle\int_0^x\frac{c\,\ln^2t}{1+ct}\,dt=\ln^2x\ln(1+cx)+2\ln x\operatorname{Li}_2(-cx)-2\operatorname{Li}_3(-cx).$
+
+\textit{Proof.} Same differentiation as (A4) with $1-t\mapsto 1+ct$; limits at $0^+$ vanish identically as before. $\square$
+
+\textbf{(A6)} For $0<z_1<z_2$, with $y=\dfrac{z}{1+z}$ and
+\[
+F(y):=\ln^2(1-y)\ln y+2\ln(1-y)\operatorname{Li}_2(1-y)-2\operatorname{Li}_3(1-y)-\tfrac13\ln^3(1-y),
+\]
+\[
+\int_{z_1}^{z_2}\frac{\ln^2(1+z)}{z}\,dz=F\!\Big(\frac{z_2}{1+z_2}\Big)-F\!\Big(\frac{z_1}{1+z_1}\Big).
+\]
+
+\textit{Proof.} Substitute $y=\frac{z}{1+z}$ (increasing bijection $(0,\infty)\to(0,1)$): $1+z=\frac1{1-y}$, $\frac{dz}{z}=\frac{dy}{y(1-y)}$, so the integrand becomes $\ln^2(1-y)\big(\frac1y+\frac1{1-y}\big)dy$. Then $\int\frac{\ln^2(1-y)}{y}dy$ is the antiderivative in (A1) and $\int\frac{\ln^2(1-y)}{1-y}dy=-\frac13\ln^3(1-y)$. $\square$
+
+Also, as $y\to0^+$, $F(y)\to-2\zeta(3)$, hence
+\begin{equation*}
+G(x):=\int_0^x\frac{\ln^2(1+t)}{t}\,dt=F\!\Big(\frac{x}{1+x}\Big)+2\zeta(3). \tag{A6$'$}
+\end{equation*}
+
+\subsubsection*{0.2 Functional equations}
+
+\textbf{(L1) Euler reflection.} For $x\in(0,1)$: $\operatorname{Li}_2(x)+\operatorname{Li}_2(1-x)=\dfrac{\pi^2}{6}-\ln x\ln(1-x)$.
+
+\textit{Proof.} Derivative of LHS $=-\frac{\ln(1-x)}{x}+\frac{\ln x}{1-x}$ = derivative of RHS; as $x\to0^+$, LHS $\to\zeta(2)$, RHS $\to\frac{\pi^2}6$. $\square$
+
+\textbf{(L2) Landen (weight 2).} For $x\in[0,1)$: $\operatorname{Li}_2\!\Big(\dfrac{-x}{1-x}\Big)=-\operatorname{Li}_2(x)-\dfrac12\ln^2(1-x)$.
+
+\textit{Proof.} With $u=\frac{-x}{1-x}$ one has $1-u=\frac1{1-x}$ and $\frac{u'}{u}=\frac{1}{x(1-x)}$, so $\frac{d}{dx}\operatorname{Li}_2(u)=-\ln(1-u)\frac{u'}{u}=\frac{\ln(1-x)}{x(1-x)}$; the derivative of the RHS is $\frac{\ln(1-x)}{x}+\frac{\ln(1-x)}{1-x}=\frac{\ln(1-x)}{x(1-x)}$ as well. Equality at $x=0$. $\square$
+
+\textbf{(L3) Inversion (weight 2).} For $x>0$: $\operatorname{Li}_2(-x)+\operatorname{Li}_2(-1/x)=-\dfrac{\pi^2}{6}-\dfrac12\ln^2x$.
+
+\textit{Proof.} $\frac{d}{dx}\operatorname{Li}_2(-x)=-\frac{\ln(1+x)}{x}$, $\frac{d}{dx}\operatorname{Li}_2(-1/x)=\frac{\ln(1+1/x)}{x}$; the sum is $-\frac{\ln x}{x}$, matching the RHS. At $x=1$: $2\operatorname{Li}_2(-1)=-\frac{\pi^2}6$ by (V). $\square$
+
+\textbf{(L4) Inversion (weight 3).} For $x>0$: $\operatorname{Li}_3(-x)-\operatorname{Li}_3(-1/x)=-\dfrac{\pi^2}{6}\ln x-\dfrac16\ln^3x$.
+
+\textit{Proof.} Derivative of LHS $=\frac{\operatorname{Li}_2(-x)+\operatorname{Li}_2(-1/x)}{x}=-\frac{\pi^2}{6x}-\frac{\ln^2x}{2x}$ by (L3); equality of constants at $x=1$. $\square$
+
+\textbf{(L5) Landen three-term equation (weight 3).} For $x\in(0,1)$:
+\[
+\operatorname{Li}_3(x)+\operatorname{Li}_3(1-x)+\operatorname{Li}_3\!\Big(1-\frac1x\Big)=\zeta(3)+\frac{\ln^3x}{6}+\frac{\pi^2}{6}\ln x-\frac12\ln^2x\,\ln(1-x).
+\]
+
+\textit{Proof.} Note $1-\frac1x=\frac{-(1-x)}{x}$, so by (L2) applied at $1-x$: $\operatorname{Li}_2\big(1-\frac1x\big)=-\operatorname{Li}_2(1-x)-\frac12\ln^2x$. Differentiating the LHS:
+\begin{align*}
+&\frac{\operatorname{Li}_2(x)}{x}-\frac{\operatorname{Li}_2(1-x)}{1-x}+\frac{\operatorname{Li}_2\big(1-\frac1x\big)}{x(x-1)}\\
+&=\frac{\operatorname{Li}_2(x)}{x}-\operatorname{Li}_2(1-x)\Big[\frac1{1-x}-\frac1{x(1-x)}\Big]+\frac{\ln^2x}{2x(1-x)}\\
+&=\frac{\operatorname{Li}_2(x)+\operatorname{Li}_2(1-x)}{x}+\frac{\ln^2x}{2x(1-x)},
+\end{align*}
+and by (L1) this equals $\frac1x\big(\frac{\pi^2}6-\ln x\ln(1-x)\big)+\frac{\ln^2x}{2x(1-x)}$, which is exactly the derivative of the RHS. As $x\to1^-$ both sides tend to $\zeta(3)$ (using $\ln^2x\,\ln(1-x)\to0$). $\square$
+
+\textbf{(L6) Duplication.} $\operatorname{Li}_3(z)+\operatorname{Li}_3(-z)=\tfrac14\operatorname{Li}_3(z^2)$ for $|z|\le1$ (immediate from the series: even terms survive doubled).
+
+\textbf{(L7) Half-values.} From (L1) at $x=\frac12$ and (L5) at $x=\frac12$ (where $1-\frac1x=-1$, using (V)):
+\[
+\operatorname{Li}_2\!\Big(\frac12\Big)=\frac{\pi^2}{12}-\frac{\ln^22}{2},\qquad
+\operatorname{Li}_3\!\Big(\frac12\Big)=\frac{7}{8}\zeta(3)-\frac{\pi^2}{12}\ln2+\frac{\ln^32}{6}.
+\]
+
+\textbf{(L8) Abel's identity.} For $x,y\in(0,1)$ with $x+y<1$:
+\[
+\operatorname{Li}_2\!\Big(\frac{x}{1-y}\Big)+\operatorname{Li}_2\!\Big(\frac{y}{1-x}\Big)-\operatorname{Li}_2\!\Big(\frac{xy}{(1-x)(1-y)}\Big)=\operatorname{Li}_2(x)+\operatorname{Li}_2(y)+\ln(1-x)\ln(1-y).
+\]
+
+\textit{Proof.} Fix $y$ and differentiate in $x$. With $1-\frac{x}{1-y}=\frac{1-x-y}{1-y}$, $1-\frac{y}{1-x}=\frac{1-x-y}{1-x}$ and $1-\frac{xy}{(1-x)(1-y)}=\frac{1-x-y}{(1-x)(1-y)}$, the derivative of the LHS is
+\[
+-\frac{1}{x}\ln\frac{1-x-y}{1-y}-\frac{1}{1-x}\ln\frac{1-x-y}{1-x}+\Big(\frac1x+\frac1{1-x}\Big)\ln\frac{1-x-y}{(1-x)(1-y)},
+\]
+which simplifies (all $\ln(1-x-y)$ terms cancel) to $-\frac{\ln(1-x)}{x}-\frac{\ln(1-y)}{1-x}$, the derivative of the RHS. At $x=0$ both sides equal $\operatorname{Li}_2(y)$. $\square$
+
+\textbf{Corollary (R1).} Setting $x=y=\frac13$ in (L8) gives $2\operatorname{Li}_2(\frac12)-\operatorname{Li}_2(\frac14)=2\operatorname{Li}_2(\frac13)+\ln^2\frac23$. Substituting $\operatorname{Li}_2(\frac14)=-\operatorname{Li}_2(-\frac13)-\frac12\ln^2\frac34$ (that is (L2) at $x=\frac14$, since $\frac{-1/4}{3/4}=-\frac13$) and (L7):
+\begin{equation*}
+\boxed{\;2\operatorname{Li}_2\!\Big(\frac13\Big)-\operatorname{Li}_2\!\Big(-\frac13\Big)=\frac{\pi^2}{6}-\frac{\ln^23}{2}.\;}\tag{R1}
+\end{equation*}
+(The elementary logs combine as $\frac{\pi^2}6-\ln^22+\frac12(\ln3-2\ln2)^2-(\ln3-\ln2)^2=\frac{\pi^2}6-\frac{\ln^23}2$.)
+
+\subsection*{1. Rationalization by an Euler substitution}
+
+Let
+\[
+w(x)=2x-1+2\sqrt{x^2-x+1},\qquad x\in[0,1].
+\]
+Since $x^2-x+1=(x-\frac12)^2+\frac34>(x-\frac12)^2$, we have $2\sqrt{x^2-x+1}>|2x-1|$, hence $w(x)>0$ and
+\[
+w'(x)=2+\frac{2x-1}{\sqrt{x^2-x+1}}=\frac{w(x)}{\sqrt{x^2-x+1}}>0 ,
+\]
+so $w$ is a $C^1$ increasing bijection $[0,1]\to[1,3]$ with
+\begin{equation*}
+\frac{dw}{w}=\frac{dx}{\sqrt{x^2-x+1}}. \tag{1.1}
+\end{equation*}
+Its inverse is rational: for $w\in[1,3]$ put $u(w)=\frac{(w-1)(w+3)}{4w}=\frac{w^2+2w-3}{4w}$. A direct expansion gives
+\[
+16w^2\big(u^2-u+1\big)=(w^2+2w-3)^2-4w(w^2+2w-3)+16w^2=w^4+6w^2+9=(w^2+3)^2,
+\]
+so $\sqrt{u^2-u+1}=\frac{w^2+3}{4w}$ ($>0$), and therefore
+\[
+2u-1+2\sqrt{u^2-u+1}=\frac{w^2+2w-3}{2w}-1+\frac{w^2+3}{2w}=w,
+\]
+i.e. $u=x(w)$. Consequently, by (1.1) (the integral is absolutely convergent at $x=0^+\leftrightarrow w=1^+$, where the integrand has an integrable $\ln^2(w-1)$ singularity):
+\begin{equation*}
+I=\int_1^3\ln^2\!\left(\frac{(w-1)(w+3)}{4w}\right)\frac{dw}{w}. \tag{1.2}
+\end{equation*}
+
+\subsection*{2. Expansion}
+
+Write $A=\ln(w-1)$, $B=\ln(w+3)$, $C=\ln w$, $c=2\ln2$ and expand $(A+B-C-c)^2$ in (1.2). With
+\[
+\int_1^3\frac{dw}{w}=\ln3,\qquad\int_1^3 C\,\frac{dw}{w}=\frac{\ln^23}{2},\qquad\int_1^3C^2\,\frac{dw}{w}=\frac{\ln^33}{3},
+\]
+we obtain
+\begin{equation*}
+I=\alpha_2+\beta_2+\frac{\ln^33}{3}+4\ln^22\,\ln3+2\gamma-2\delta_A-2\delta_B-4\ln2\,(\alpha_1+\beta_1)+2\ln2\,\ln^23, \tag{2.1}
+\end{equation*}
+where
+\[
+\alpha_k=\int_1^3 A^k\frac{dw}{w},\quad \beta_k=\int_1^3B^k\frac{dw}{w}\ (k=1,2),\quad
+\delta_A=\int_1^3 AC\frac{dw}{w},\quad \delta_B=\int_1^3BC\frac{dw}{w},\quad \gamma=\int_1^3AB\frac{dw}{w}.
+\]
+
+\subsection*{3. Evaluation of the pieces}
+
+\textbf{(3a)} The function $\frac{\ln^2 w}{2}+\operatorname{Li}_2(1/w)$ has derivative $\frac{\ln w}{w}+\frac{\ln(1-1/w)}{w}=\frac{\ln(w-1)}{w}$ on $w>1$, so
+\[
+\alpha_1=\Big[\frac{\ln^2w}{2}+\operatorname{Li}_2\!\big(\tfrac1w\big)\Big]_1^3=\frac{\ln^23}{2}+\operatorname{Li}_2\!\Big(\frac13\Big)-\frac{\pi^2}{6}.
+\]
+
+\textbf{(3b)} With $w=3v$ and $\int\frac{\ln(1+v)}{v}dv=-\operatorname{Li}_2(-v)$:
+\[
+\beta_1=\int_{1/3}^1\frac{\ln3+\ln(1+v)}{v}\,dv=\ln^23+\frac{\pi^2}{12}+\operatorname{Li}_2\!\Big(-\frac13\Big),
+\]
+using $\operatorname{Li}_2(-1)=-\frac{\pi^2}{12}$.
+
+\textbf{(3c)} $\delta_A$: write $A=C+\ln(1-\frac1w)$ and substitute $v=1/w$ in the second part:
+\[
+\delta_A=\frac{\ln^33}{3}-\int_{1/3}^1\frac{\ln v\,\ln(1-v)}{v}\,dv
+\overset{\text{(A2)}}{=}\frac{\ln^33}{3}-\Big[\zeta(3)-\operatorname{Li}_3\!\Big(\frac13\Big)-\ln3\operatorname{Li}_2\!\Big(\frac13\Big)\Big].
+\]
+
+\textbf{(3d)} $\delta_B$: with $w=3v$,
+\[
+\delta_B=\int_{1/3}^1\frac{(\ln3+\ln v)(\ln3+\ln(1+v))}{v}\,dv
+=\ln^33-\frac{\ln^33}{2}+\ln3\Big(\frac{\pi^2}{12}+\operatorname{Li}_2\!\Big(-\frac13\Big)\Big)+\int_{1/3}^1\frac{\ln v\ln(1+v)}{v}dv,
+\]
+and by (A3) with $c=1$,
+\[
+\int_{1/3}^1\frac{\ln v\ln(1+v)}{v}dv=\big[\operatorname{Li}_3(-v)-\ln v\operatorname{Li}_2(-v)\big]_{1/3}^1
+=-\frac34\zeta(3)-\operatorname{Li}_3(-\tfrac13)-\ln3\operatorname{Li}_2(-\tfrac13).
+\]
+Hence
+\[
+\delta_B=\frac{\ln^33}{2}+\frac{\pi^2\ln3}{12}-\frac34\zeta(3)-\operatorname{Li}_3\!\Big(-\frac13\Big).
+\]
+
+\textbf{(3e)} $\alpha_2$: substituting $v=1/w$ gives $A=\ln(1-v)-\ln v$, so
+\[
+\begin{gathered}
+\alpha_2=\int_{1/3}^1\big[\ln(1-v)-\ln v\big]^2\frac{dv}{v}=E_1-2\int_{1/3}^1\frac{\ln v\ln(1-v)}{v}dv+\frac{\ln^33}{3},\\
+E_1:=\int_{1/3}^1\frac{\ln^2(1-v)}{v}\,dv .
+\end{gathered}
+\]
+By (A1) (endpoint limits at $v\to1^-$ all vanish: $\ln^2(1-v)\ln v\to0$, $\ln(1-v)\operatorname{Li}_2(1-v)\to0$, $\operatorname{Li}_3(0)=0$),
+\[
+E_1=\ln3\,\ln^2\frac23-2\ln\frac23\,\operatorname{Li}_2\!\Big(\frac23\Big)+2\operatorname{Li}_3\!\Big(\frac23\Big),
+\]
+so, with (A2) as in (3c),
+\[
+\alpha_2=E_1+\frac{\ln^33}{3}-2\zeta(3)+2\operatorname{Li}_3\!\Big(\frac13\Big)+2\ln3\operatorname{Li}_2\!\Big(\frac13\Big).
+\]
+
+\textbf{(3f)} $\beta_2$: with $w=3v$,
+\[
+\begin{gathered}
+\beta_2=\ln^33+2\ln3\Big(\frac{\pi^2}{12}+\operatorname{Li}_2\!\Big(-\frac13\Big)\Big)+\int_{1/3}^1\frac{\ln^2(1+v)}{v}\,dv,\\
+\int_{1/3}^1\frac{\ln^2(1+v)}{v}dv\overset{\text{(A6)}}{=}F\!\Big(\frac12\Big)-F\!\Big(\frac14\Big).
+\end{gathered}
+\]
+Using (L7), a short computation gives
+\[
+F\!\Big(\frac12\Big)=-\ln^32-2\ln2\operatorname{Li}_2\!\Big(\frac12\Big)-2\operatorname{Li}_3\!\Big(\frac12\Big)+\frac{\ln^32}{3}=-\frac74\zeta(3),
+\]
+while $F(\frac14)=\ln^2\frac34\,\ln\frac14+2\ln\frac34\operatorname{Li}_2(\frac34)-2\operatorname{Li}_3(\frac34)-\frac13\ln^3\frac34$.
+
+\textbf{(3g)} $\gamma$: substituting $v=1/w$ ($A=\ln\frac{1-v}{v}$, $B=\ln\frac{1+3v}{v}$),
+\[
+\gamma=\int_{1/3}^1\big[\ln(1-v)-\ln v\big]\big[\ln(1+3v)-\ln v\big]\frac{dv}{v}
+=H-\int_{1/3}^1\frac{\ln v\ln(1-v)}{v}dv-M+\frac{\ln^33}{3},
+\]
+where $H:=\int_{1/3}^1\frac{\ln(1-v)\ln(1+3v)}{v}dv$ and, by (A3) with $c=3$,
+\[
+M:=\int_{1/3}^1\frac{\ln v\,\ln(1+3v)}{v}\,dv=\big[\operatorname{Li}_3(-3v)-\ln v\operatorname{Li}_2(-3v)\big]_{1/3}^1
+=\operatorname{Li}_3(-3)+\frac34\zeta(3)+\frac{\pi^2\ln3}{12}.
+\]
+
+\textbf{(3h) The mixed integral $H$ by polarization and a M\"obius involution.} From $2PQ=P^2+Q^2-(P-Q)^2$,
+\[
+H=\frac12\big[E_1+E_2-R\big],\qquad E_2:=\int_{1/3}^1\frac{\ln^2(1+3v)}{v}dv,\qquad
+R:=\int_{1/3}^1\ln^2\!\Big(\frac{1-v}{1+3v}\Big)\frac{dv}{v}.
+\]
+For $E_2$, the substitution $z=3v$ and (A6) give
+\[
+E_2=\int_1^3\frac{\ln^2(1+z)}{z}\,dz=F\!\Big(\frac34\Big)-F\!\Big(\frac12\Big)=F\!\Big(\frac34\Big)+\frac74\zeta(3),
+\]
+\[
+F\!\Big(\frac34\Big)=4\ln^22\,\ln\frac34-4\ln2\operatorname{Li}_2\!\Big(\frac14\Big)-2\operatorname{Li}_3\!\Big(\frac14\Big)+\frac{8\ln^32}{3}.
+\]
+For $R$, use the \textbf{involution} $v=\frac{1-y}{1+3y}$ (a self-inverse M\"obius map exchanging $[0,\frac13]$ and $[\frac13,1]$): then $\frac{1-v}{1+3v}=y$ (indeed $1-v=\frac{4y}{1+3y}$, $1+3v=\frac{4}{1+3y}$), and $\frac{dv}{v}=d\ln v=\big(\frac{-1}{1-y}-\frac{3}{1+3y}\big)dy$, so (orientation reverses)
+\[
+R=\int_0^{1/3}\ln^2y\left(\frac{1}{1-y}+\frac{3}{1+3y}\right)dy
+\overset{\text{(A4),(A5)}}{=}\ln^33+2\ln3\operatorname{Li}_2\!\Big(\frac13\Big)+2\operatorname{Li}_3\!\Big(\frac13\Big)+\frac{\pi^2\ln3}{6}+\frac32\zeta(3),
+\]
+where the boundary values used are: at $y\to0^+$ everything vanishes; at $y=\frac13$, (A4) gives $\ln^33-\ln2\ln^23+2\ln3\operatorname{Li}_2(\frac13)+2\operatorname{Li}_3(\frac13)$ and (A5) gives $\ln2\ln^23+\frac{\pi^2\ln3}{6}+\frac32\zeta(3)$ (by (V)).
+
+\textit{(Each of (3a)--(3h) was verified independently by high-precision quadrature to 60 digits.)}
+
+\subsection*{4. Reduction table}
+
+The pieces above involve $\operatorname{Li}_2$ at $\frac23,\frac14,\frac34$ and $\operatorname{Li}_3$ at $\frac23,\frac14,\frac34,-3$. Reduce them to the basis
+\[
+\Big\{\operatorname{Li}_2\big(\tfrac13\big),\ \operatorname{Li}_2\big(-\tfrac13\big),\ \operatorname{Li}_3\big(\tfrac13\big),\ \operatorname{Li}_3\big(-\tfrac13\big),\ \operatorname{Li}_3\big(-\tfrac12\big)\Big\}
+\]
+by the toolkit identities (each line follows from the lemma cited, applied strictly inside its proven domain):
+
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{lll}
+\hline
+value & reduction & by \\
+\hline
+$\operatorname{Li}_2(\frac23)$ & $\frac{\pi^2}{6}+\ln3\ln\frac23-\operatorname{Li}_2(\frac13)$ & (L1), $x=\frac13$ \\
+$\operatorname{Li}_2(\frac14)$ & $-\operatorname{Li}_2(-\frac13)-\frac12\ln^2\frac34$ & (L2), $x=\frac14$ \\
+$\operatorname{Li}_2(\frac34)$ & $\frac{\pi^2}{6}+2\ln2\ln\frac34+\operatorname{Li}_2(-\frac13)+\frac12\ln^2\frac34$ & (L1), $x=\frac14$ + previous \\
+$\operatorname{Li}_3(-2)$ & $\operatorname{Li}_3(-\frac12)-\frac{\pi^2\ln2}{6}-\frac{\ln^32}{6}$ & (L4), $x=2$ \\
+$\operatorname{Li}_3(-3)$ & $\operatorname{Li}_3(-\frac13)-\frac{\pi^2\ln3}{6}-\frac{\ln^33}{6}$ & (L4), $x=3$ \\
+$\operatorname{Li}_3(\frac23)$ & $\zeta(3)+\frac{\ln^33}{3}-\frac{\pi^2\ln3}{6}-\frac{\ln2\ln^23}{2}-\operatorname{Li}_3(\frac13)-\operatorname{Li}_3(-2)$ & (L5), $x=\frac13$ (where $1-\frac1x=-2$) \\
+$\operatorname{Li}_3(\frac14)$ & $4\operatorname{Li}_3(\frac12)+4\operatorname{Li}_3(-\frac12)=\frac72\zeta(3)-\frac{\pi^2\ln2}{3}+\frac{2\ln^32}{3}+4\operatorname{Li}_3(-\frac12)$ & (L6), $z=\frac12$; (L7) \\
+$\operatorname{Li}_3(\frac34)$ & $\zeta(3)+\frac{8\ln^32}{3}-\frac{\pi^2\ln2}{3}-2\ln^22\ln3-\operatorname{Li}_3(\frac14)-\operatorname{Li}_3(-3)$ & (L5), $x=\frac14$ (where $1-\frac1x=-3$) \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{5. Assembly: the native closed form}
+
+Substituting (3a)--(3h) and the reduction table into (2.1) and collecting terms is a finite computation in exact rational arithmetic (performed symbolically with a computer-algebra system, and independently confirmed numerically to 60 and then 170 digits). The result is the \textbf{native form}
+\begin{equation*}
+\begin{aligned}
+I={}&-\frac{23}{2}\zeta(3)+\frac{5\pi^2}{3}\ln2+\frac{10}{3}\ln^32-\ln^33-6\ln^22\ln3+2\ln2\ln^23\\
+&-4\operatorname{Li}_3\!\Big(\frac13\Big)-2\operatorname{Li}_3\!\Big(-\frac13\Big)-20\operatorname{Li}_3\!\Big(-\frac12\Big)\\
+&-4\ln3\,\operatorname{Li}_2\!\Big(\frac13\Big)+4\ln2\,\operatorname{Li}_2\!\Big(-\frac13\Big).
+\end{aligned}\tag{5.1}
+\end{equation*}
+This is already a complete closed form; the remaining sections only beautify it.
+
+\subsection*{6. Two ladder identities}
+
+\textbf{(R1)} was proved in \S0.2: $\;2\operatorname{Li}_2(\frac13)-\operatorname{Li}_2(-\frac13)=\frac{\pi^2}{6}-\frac{\ln^23}{2}$.
+
+\textbf{(R2) The weight-3 ladder.}
+\begin{equation*}
+2\operatorname{Li}_3\!\Big(\frac13\Big)-\operatorname{Li}_3\!\Big(-\frac13\Big)=\frac{13}{6}\zeta(3)+\frac{\ln^33}{6}-\frac{\pi^2}{6}\ln3. \tag{R2}
+\end{equation*}
+
+\textit{Proof.} Consider $\mathcal J=\displaystyle\int_0^{1/2}\frac{\ln^2(1-t^2)}{t}\,dt$ and evaluate it in two ways.
+
+(i) The substitution $u=t^2$ ($\frac{dt}{t}=\frac{du}{2u}$) gives $\mathcal J=\frac12P_2\big(\frac14\big)$, with $P_2$ from (A1).
+
+(ii) Expanding $\ln^2(1-t^2)=\big[\ln(1-t)+\ln(1+t)\big]^2$ and using the polarization identity $2\ln(1-t)\ln(1+t)=\ln^2(1-t)+\ln^2(1+t)-\ln^2\frac{1-t}{1+t}$:
+\[
+\mathcal J=2P_2\big(\tfrac12\big)+2G\big(\tfrac12\big)-V,\qquad V:=\int_0^{1/2}\ln^2\!\Big(\frac{1-t}{1+t}\Big)\frac{dt}{t},
+\]
+with $G$ from (A6$'$). For $V$, the involution $s=\frac{1-t}{1+t}$ (i.e. $t=\frac{1-s}{1+s}$, $\frac{dt}{t}=\big(\frac{-1}{1-s}-\frac{1}{1+s}\big)ds$, mapping $t\in(0,\frac12)$ onto $s\in(\frac13,1)$ with reversed orientation) yields
+\[
+\begin{aligned}
+V&=\int_{1/3}^1\ln^2s\left(\frac{1}{1-s}+\frac{1}{1+s}\right)ds\\
+&\overset{\text{(A4),(A5)}}{=}\Big[\frac72\zeta(3)\Big]-\Big[\ln^33-\ln2\ln^23+2\ln3\operatorname{Li}_2\big(\tfrac13\big)+2\operatorname{Li}_3\big(\tfrac13\big)\Big]\\
+&\qquad-\Big[\ln^23\ln\tfrac43-2\ln3\operatorname{Li}_2\big(-\tfrac13\big)+2\operatorname{Li}_3\big(-\tfrac13\big)\Big].
+\end{aligned}
+\]
+Also, by (A1), (A6$'$), (L7):
+\[
+\begin{gathered}
+P_2\big(\tfrac12\big)=\frac{\zeta(3)}{4}-\frac{\ln^32}{3},\qquad
+G\big(\tfrac12\big)=F\big(\tfrac13\big)+2\zeta(3),\\
+F\big(\tfrac13\big)=\ln^2\tfrac23\ln\tfrac13+2\ln\tfrac23\operatorname{Li}_2\big(\tfrac23\big)-2\operatorname{Li}_3\big(\tfrac23\big)-\tfrac13\ln^3\tfrac23,
+\end{gathered}
+\]
+\[
+P_2\big(\tfrac14\big)=\ln^2\tfrac34\,\ln\tfrac14+2\ln\tfrac34\operatorname{Li}_2\big(\tfrac34\big)-2\operatorname{Li}_3\big(\tfrac34\big)+2\zeta(3).
+\]
+Equating (i) and (ii), inserting the reduction table of \S4, and collecting terms in exact arithmetic produces the relation
+\begin{equation*}
+\begin{aligned}
+&\big(6\ln3-4\ln2\big)\operatorname{Li}_2\!\Big(\frac13\Big)+\big(2\ln2-3\ln3\big)\operatorname{Li}_2\!\Big(-\frac13\Big)
++6\operatorname{Li}_3\!\Big(\frac13\Big)-3\operatorname{Li}_3\!\Big(-\frac13\Big)\\
+&=\frac{13}{2}\zeta(3)-\frac{\pi^2\ln2}{3}+\ln2\ln^23-\ln^33.
+\end{aligned}\tag{6.1}
+\end{equation*}
+Now subtract $(3\ln3-2\ln2)\times$(R1), i.e.
+\[
+(6\ln3-4\ln2)\operatorname{Li}_2\!\Big(\frac13\Big)-(3\ln3-2\ln2)\operatorname{Li}_2\!\Big(-\frac13\Big)
+=\frac{\pi^2\ln3}{2}-\frac{3\ln^33}{2}-\frac{\pi^2\ln2}{3}+\ln2\ln^23 .
+\]
+The $\operatorname{Li}_2$ terms cancel completely, leaving $6\operatorname{Li}_3(\frac13)-3\operatorname{Li}_3(-\frac13)=\frac{13}{2}\zeta(3)+\frac{\ln^33}{2}-\frac{\pi^2\ln3}{2}$, which is (R2). $\square$
+
+\textit{(Both (6.1) and (R2) were verified numerically to 170 digits. (R2) is the classical trilogarithm ladder equivalent to $\operatorname{Li}_3(\frac19)=4\operatorname{Li}_3(\frac13)+4\operatorname{Li}_3(-\frac13)$ combined with $3\operatorname{Li}_3(\frac13)-\frac14\operatorname{Li}_3(\frac19)=\frac{13}{6}\zeta(3)+\frac{\ln^33}{6}-\frac{\pi^2\ln3}{6}$.)}
+
+\subsection*{7. Final form}
+
+Apply (R1) and (R2) to (5.1):
+\[
+\begin{gathered}
+4\ln2\,\operatorname{Li}_2\!\Big(-\frac13\Big)=8\ln2\operatorname{Li}_2\!\Big(\frac13\Big)-\frac{2\pi^2\ln2}{3}+2\ln2\ln^23,\\
+-2\operatorname{Li}_3\!\Big(-\frac13\Big)=-4\operatorname{Li}_3\!\Big(\frac13\Big)+\frac{13}{3}\zeta(3)-\frac{\pi^2\ln3}{3}+\frac{\ln^33}{3}.
+\end{gathered}
+\]
+Substituting and collecting:
+\[
+\boxed{\;
+\begin{aligned}
+I=\int_0^1\frac{\ln^2x}{\sqrt{x^2-x+1}}\,dx
+={}&4\ln\tfrac43\,\operatorname{Li}_2\!\Big(\tfrac13\Big)-8\operatorname{Li}_3\!\Big(\tfrac13\Big)-20\operatorname{Li}_3\!\Big(-\tfrac12\Big)
+-\frac{43}{6}\zeta(3)+\pi^{2}\ln2\\
+&-\frac{\pi^{2}}{3}\ln3+\frac{10}{3}\ln^{3}2-\frac{2}{3}\ln^{3}3-6\ln^{2}2\,\ln3+4\ln2\,\ln^{2}3\;
+\end{aligned}}
+\]
+
+The negative-argument variant in the Result section follows the same way, trading $\operatorname{Li}_2(\frac13),\operatorname{Li}_3(\frac13)$ for $\operatorname{Li}_2(-\frac13),\operatorname{Li}_3(-\frac13)$ via (R1), (R2). Using (L6)+(L7) one may also replace $\operatorname{Li}_3(-\frac12)$ by $\frac14\operatorname{Li}_3(\frac14)-\operatorname{Li}_3(\frac12)$ if arguments in $(0,1)$ are preferred.
+
+\begin{center}\rule{0.5\textwidth}{0.4pt}\end{center}
+
+\section*{Numerical verification}
+
+All computations with mpmath at \texttt{mp.dps = 170}:
+
+\begin{itemize}
+\item Direct tanh--sinh quadrature of $\int_0^1\frac{\ln^2x}{\sqrt{x^2-x+1}}dx$ (split at $\frac14,\frac12$) and of the rationalized form (1.2) agree to $2.9\times10^{-170}$:
+\[
+I=2.10029012483843065541358656514017065178479851127691422449913\ldots
+\]
+matching (and extending) the 54 digits quoted in the problem statement.
+\item The boxed closed form evaluates to the same number; $|I_{\text{quad}}-I_{\text{closed}}|\approx2.1\times10^{-170}$, i.e.\ \textbf{agreement to 168+ significant digits} (the native form (5.1) and the negative-argument variant agree to the same precision).
+\item Every intermediate piece $(\alpha_1,\beta_1,\alpha_2,\beta_2,\delta_A,\delta_B,\gamma,E_1,E_2,R,H,M,\dots)$ was checked against direct quadrature to $\sim60$ digits; the ladder identities (R1), (R2), Abel's identity (L8) (at interior test points) and the Landen equation (L5) were checked to 170 digits.
+\item The closed form was independently \textit{discovered} by PSLQ (integer relation over the 12-element basis
+\[
+\{I,\zeta(3),\pi^2\ln2,\pi^2\ln3,\ln^32,\ln^33,\ln^22\ln3,\ln2\ln^23,\operatorname{Li}_3(\tfrac13),\operatorname{Li}_3(-\tfrac12),\ln2\operatorname{Li}_2(\tfrac13),\ln3\operatorname{Li}_2(\tfrac13)\}
+\]
+at 160 digits, residual $\sim10^{-159}$) and then \textit{proved} as above --- the derivation is logically independent of PSLQ.
+\end{itemize}
+
+\section*{Notes}
+
+\begin{itemize}
+\item The derivation is complete and self-contained: the only inputs are the elementary antiderivatives (A1)--(A6), the classical functional equations (L1)--(L8) (each proved by differentiation plus one point evaluation, applied only on real intervals where all arguments stay in $(-\infty,1]$ and the real-analytic branches are the ones occurring), the Euler substitution of \S1, and the involution tricks of \S3h/\S6.
+\item Two collection steps (the assembly in \S5 and the reduction (6.1)) involve straightforward but lengthy exact rational-linear algebra; they were executed with a computer-algebra system (sympy, exact arithmetic --- no floating point) and double-checked numerically at 60--170 digits. Every input identity to those collections is proved in the text, so this is a matter of verified bookkeeping, not of mathematical gaps.
+\item The constants $\operatorname{Li}_3(\frac13)$ (equivalently $\operatorname{Li}_3(-\frac13)$ or $\operatorname{Li}_3(\frac19)$, modulo (R2)/(L6)) and $\operatorname{Li}_3(-\frac12)$ (equivalently $\operatorname{Li}_3(\frac14)$ or $\operatorname{Li}_3(\frac34)$) are not known to reduce to $\zeta(3)$ and elementary constants, and PSLQ searches at 160 digits found no such reduction; the boxed form is minimal in that sense.
+\item Bookkeeping identity worth recording: the mixed integral of \S3h is $H=\int_{1/3}^{1}\frac{\ln(1-v)\ln(1+3v)}{v}dv$, and the ``two-ways'' identity of \S6 is what makes the base-$\frac13$ trilogarithm ladder (R2) elementary --- no appeal to Kummer's two-variable trilogarithm equation is needed.
+\end{itemize}
+
+\end{document}

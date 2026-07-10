@@ -1,0 +1,267 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+\Urlmuskip=0mu plus 1mu\relax
+\def\UrlBreaks{\do\/\do\-\do\_\do\.\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 10\\[1ex]\large Closed form for $\int_{-\infty}^0\operatorname{Ei}^3x\,dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/714628}{question 714628}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Let $\operatorname{Ei}x$ denote the exponential integral,
+$$\operatorname{Ei}x=-\int_{-x}^{\infty}\frac{e^{-t}}{t}\,dt ,$$
+(for $x<0$ the integral is a proper convergent one; that is the only range we need). Given the elementary facts
+$$\int\operatorname{Ei}x\,dx=x\operatorname{Ei}x-e^{x},\qquad
+\int\operatorname{Ei}^{2}x\,dx=x\operatorname{Ei}^{2}x-2e^{x}\operatorname{Ei}x+2\operatorname{Ei}(2x),$$
+$$\int_{-\infty}^{0}\operatorname{Ei}x\,dx=-1,\qquad
+\int_{-\infty}^{0}\operatorname{Ei}^{2}x\,dx=\ln 4 ,$$
+the question asks whether these results generalize to higher powers, in particular whether there are closed forms for
+$$\text{(6)}\quad\int\operatorname{Ei}^{3}x\,dx
+\qquad\text{or}\qquad
+\text{(7)}\quad\int_{-\infty}^{0}\operatorname{Ei}^{3}x\,dx .$$
+The requested quantity (the title of the question) is (7).
+
+\section*{Result}
+
+$$\boxed{\;\int_{-\infty}^{0}\operatorname{Ei}^{3}x\,dx
+\;=\;-6\ln^{2}2-3\operatorname{Li}_{2}\!\Big(\frac14\Big)\;}
+$$
+with the equivalent rewritings (all proved below)
+$$\begin{aligned}
+\int_{-\infty}^{0}\operatorname{Ei}^{3}x\,dx
+&=-\frac{\pi^{2}}{2}-3\ln^{2}2-6\operatorname{Li}_{2}\!\Big(-\frac12\Big)\\
+&=6\operatorname{Li}_{2}\!\Big(\frac13\Big)+3\ln^{2}3-6\ln2\ln3-\frac{\pi^{2}}{2}\\
+&=\operatorname{Li}_{2}\!\Big(\frac19\Big)+2\ln^{2}3-6\ln2\ln3-\frac{\pi^{2}}{6},
+\end{aligned}$$
+where $\operatorname{Li}_2(z)=\sum_{n\ge1}z^n/n^2$. Numerically
+{\footnotesize$$\int_{-\infty}^{0}\operatorname{Ei}^{3}x\,dx=
+-3.6856760007574063687601666434234245578428889103088373027967888611\ldots$$}
+
+For the indefinite integral (6), integration by parts gives
+$$\int\operatorname{Ei}^{3}x\,dx=x\operatorname{Ei}^{3}x-3e^{x}\operatorname{Ei}^{2}x+6\int\frac{e^{2x}\operatorname{Ei}x}{x}\,dx,$$
+and the remaining primitive $\int e^{2x}\operatorname{Ei}(x)\,dx/x$ does not appear to be expressible through elementary functions and $\operatorname{Ei}$ (no proof of impossibility is claimed here); see the Notes. The definite integral (7), however, has the exact closed form above.
+
+\section*{Derivation}
+
+\subsection*{0. Notation and reduction to $E_1$}
+
+For $s>0$ put
+$$E_1(s)=\int_{s}^{\infty}\frac{e^{-t}}{t}\,dt .$$
+For $x<0$ the definition of $\operatorname{Ei}$ gives directly $\operatorname{Ei}(x)=-E_1(-x)$. Substituting $x=-s$,
+\begin{equation}\Omega:=\int_{-\infty}^{0}\operatorname{Ei}^{3}x\,dx=-\int_{0}^{\infty}E_1(s)^{3}\,ds .
+\tag{0.1}\end{equation}
+
+Two elementary bounds for $E_1$ will be used repeatedly:
+
+\begin{itemize}
+\item For $0<s\le 1$:
+ \begin{equation}E_1(s)=\int_s^1\frac{e^{-t}}{t}dt+E_1(1)\le\int_s^1\frac{dt}{t}+E_1(1)\le \ln\frac1s+1 .
+ \tag{0.2}\end{equation}
+\item For $s>0$:
+ \begin{equation}E_1(s)\le\frac1s\int_s^\infty e^{-t}\,dt=\frac{e^{-s}}{s}.
+ \tag{0.3}\end{equation}
+\end{itemize}
+
+By (0.2) the integrand in (0.1) is $O(\ln^3(1/s))$ near $0$ and by (0.3) it is $O(e^{-3s}/s^3)$ at infinity, so the integral converges absolutely.
+
+\subsection*{1. Integration by parts}
+
+$E_1$ is $C^1$ on $(0,\infty)$ with $E_1'(s)=-e^{-s}/s$ (fundamental theorem of calculus). Hence on any $[\varepsilon,N]\subset(0,\infty)$,
+$$\frac{d}{ds}\big(s\,E_1(s)^3\big)=E_1(s)^3+3sE_1(s)^2\Big(-\frac{e^{-s}}{s}\Big)
+=E_1(s)^3-3e^{-s}E_1(s)^2 ,$$
+so
+$$\int_{\varepsilon}^{N}E_1^{3}\,ds=\Big[s\,E_1(s)^{3}\Big]_{\varepsilon}^{N}
++3\int_{\varepsilon}^{N}e^{-s}E_1(s)^{2}\,ds .$$
+By (0.3), $N\,E_1(N)^3\le e^{-3N}/N^{2}\to0$ as $N\to\infty$; by (0.2), $\varepsilon\,E_1(\varepsilon)^3\le\varepsilon(\ln\frac1\varepsilon+1)^3\to0$ as $\varepsilon\to0^+$. Both integrals converge absolutely (same bounds), so
+\begin{equation}\int_{0}^{\infty}E_1(s)^{3}\,ds=3\int_{0}^{\infty}e^{-s}E_1(s)^{2}\,ds=:3K .
+\tag{1.1}\end{equation}
+
+\subsection*{2. Kernel representation and Tonelli}
+
+Substituting $t=su$ ($u>1$) in the definition of $E_1$,
+\begin{equation}E_1(s)=\int_{1}^{\infty}\frac{e^{-su}}{u}\,du\qquad(s>0).
+\tag{2.1}\end{equation}
+Therefore
+$$e^{-s}E_1(s)^{2}=\int_{1}^{\infty}\!\!\int_{1}^{\infty}\frac{e^{-s(1+u+v)}}{uv}\,du\,dv,$$
+and the map $(s,u,v)\mapsto e^{-s(1+u+v)}/(uv)$ is nonnegative and measurable on $(0,\infty)\times(1,\infty)^{2}$. By Tonelli's theorem the triple integral may be computed iteratedly in any order; integrating over $s$ first ($\int_0^\infty e^{-cs}ds=1/c$),
+\begin{equation}K=\int_{1}^{\infty}\!\!\int_{1}^{\infty}\frac{du\,dv}{uv\,(1+u+v)} .
+\tag{2.2}\end{equation}
+(The iterated evaluation below produces a finite value, which retroactively confirms integrability; Tonelli needs no integrability hypothesis for nonnegative integrands.)
+
+\subsection*{3. The inner integral}
+
+For $c>0$, partial fractions give $\dfrac{1}{v(v+c)}=\dfrac1c\Big(\dfrac1v-\dfrac1{v+c}\Big)$, whence
+$$\int_{1}^{\infty}\frac{dv}{v(v+c)}=\frac1c\,\Big[\ln\frac{v}{v+c}\Big]_{1}^{\infty}=\frac{\ln(1+c)}{c}.$$
+With $c=1+u$ this turns (2.2) into a single integral:
+\begin{equation}K=\int_{1}^{\infty}\frac{\ln(2+u)}{u\,(1+u)}\,du .
+\tag{3.1}\end{equation}
+(Convergent: integrand $\sim\ln u/u^{2}$ at infinity.)
+
+\subsection*{4. Rationalizing substitution}
+
+Let $t=\dfrac{1}{1+u}$, a smooth decreasing bijection $(1,\infty)\to(0,\tfrac12)$, i.e. $u=\dfrac{1-t}{t}$. Then
+$$du=-\frac{dt}{t^{2}},\qquad 2+u=\frac{1+t}{t},\qquad u(1+u)=\frac{1-t}{t}\cdot\frac1t=\frac{1-t}{t^{2}},$$
+so
+\begin{equation}K=\int_{0}^{1/2}\frac{\ln(1+t)-\ln t}{1-t}\,dt .
+\tag{4.1}\end{equation}
+Both pieces below converge separately ($1-t\ge\tfrac12$ on $[0,\tfrac12]$, and $-\ln t$ is integrable at $0$).
+
+\subsection*{5. The two elementary pieces}
+
+Throughout, $\operatorname{Li}_2(z)=\sum_{n\ge1}\frac{z^{n}}{n^{2}}=-\int_{0}^{z}\frac{\ln(1-w)}{w}\,dw$ for $z\le 1$ (the integral representation follows by termwise integration of the series of $-\ln(1-w)/w$, justified on $[0,z]$, $0\le z<1$, by uniform convergence, and extends to $z=1$ by monotone convergence). In particular
+\begin{equation}\frac{d}{dz}\operatorname{Li}_{2}(z)=-\frac{\ln(1-z)}{z}\qquad(z<1).
+\tag{5.1}\end{equation}
+
+\textbf{(a)} On $[0,\tfrac12]$ expand $\frac{1}{1-t}=\sum_{n\ge0}t^{n}$; every term $t^{n}\,(-\ln t)\ge0$, so by monotone convergence (Tonelli for series),
+$$\int_{0}^{1/2}\frac{-\ln t}{1-t}\,dt=\sum_{n\ge0}\int_{0}^{1/2}t^{n}(-\ln t)\,dt
+=\sum_{n\ge0}\left(\frac{\ln 2}{(n+1)2^{\,n+1}}+\frac{1}{(n+1)^{2}2^{\,n+1}}\right)
+=\ln^{2}2+\operatorname{Li}_{2}\!\Big(\frac12\Big),$$
+using $\int_{0}^{a}t^{n}(-\ln t)\,dt=\frac{a^{n+1}}{n+1}\ln\frac1a+\frac{a^{n+1}}{(n+1)^{2}}$ and $\sum_{m\ge1}\frac{(1/2)^{m}}{m}=\ln 2$.
+
+\textbf{(b)} Substitute $v=1-t$ (so $1+t=2-v$):
+$$\int_{0}^{1/2}\frac{\ln(1+t)}{1-t}\,dt=\int_{1/2}^{1}\frac{\ln(2-v)}{v}\,dv
+=\int_{1/2}^{1}\frac{\ln 2}{v}\,dv+\int_{1/2}^{1}\frac{\ln\!\big(1-\frac v2\big)}{v}\,dv .$$
+The first integral is $\ln^{2}2$. For the second, by (5.1) $\frac{d}{dv}\operatorname{Li}_2(v/2)=-\ln(1-\frac v2)/v$ (valid since $v/2\in[\tfrac14,\tfrac12]$), so it equals $\big[-\operatorname{Li}_{2}(v/2)\big]_{1/2}^{1}=\operatorname{Li}_{2}(\tfrac14)-\operatorname{Li}_{2}(\tfrac12)$. Hence
+$$\int_{0}^{1/2}\frac{\ln(1+t)}{1-t}\,dt=\ln^{2}2-\operatorname{Li}_{2}\!\Big(\frac12\Big)+\operatorname{Li}_{2}\!\Big(\frac14\Big).$$
+
+Adding (a) and (b), the $\operatorname{Li}_{2}(\tfrac12)$ terms cancel:
+\begin{equation}K=2\ln^{2}2+\operatorname{Li}_{2}\!\Big(\frac14\Big).
+\tag{5.2}\end{equation}
+
+\subsection*{6. Conclusion}
+
+Combining (0.1), (1.1), (5.2):
+$$\begin{aligned}
+\int_{-\infty}^{0}\operatorname{Ei}^{3}x\,dx=-3K
+&=\;-6\ln^{2}2-3\operatorname{Li}_{2}\!\Big(\frac14\Big)\\
+&=\;-3.685676000757406368760166643423424557842888910\ldots
+\end{aligned}$$
+
+Note that the main result uses \textbf{no} dilogarithm identity at all --- only the definition of $\operatorname{Li}_2$.
+
+\subsection*{7. Equivalent forms}
+
+The following classical identities are proved from scratch; each ``differentiation proof'' uses (5.1) and checks the constant at one point.
+
+\textbf{(i) Duplication.} For $|z|<1$, from the absolutely convergent series,
+$$\operatorname{Li}_{2}(z)+\operatorname{Li}_{2}(-z)=2\sum_{n\ \mathrm{even}}\frac{z^{n}}{n^{2}}=\tfrac12\operatorname{Li}_{2}(z^{2}).$$
+At $z=\tfrac12$: $\operatorname{Li}_{2}(\tfrac14)=2\operatorname{Li}_{2}(\tfrac12)+2\operatorname{Li}_{2}(-\tfrac12)$.
+
+\textbf{(ii) Euler's value.} For $0<x<1$ let $R(x)=\operatorname{Li}_{2}(x)+\operatorname{Li}_{2}(1-x)+\ln x\ln(1-x)$. By (5.1),
+$$R'(x)=-\frac{\ln(1-x)}{x}+\frac{\ln x}{1-x}+\frac{\ln(1-x)}{x}-\frac{\ln x}{1-x}=0 ,$$
+so $R$ is constant; letting $x\to0^{+}$ gives $R\equiv\operatorname{Li}_{2}(1)=\zeta(2)=\pi^{2}/6$ (Basel's classical evaluation). At $x=\tfrac12$: $\operatorname{Li}_{2}(\tfrac12)=\frac{\pi^{2}}{12}-\frac{\ln^{2}2}{2}$.
+
+From (i)+(ii): $3\operatorname{Li}_{2}(\tfrac14)=\frac{\pi^{2}}{2}-3\ln^{2}2+6\operatorname{Li}_{2}(-\tfrac12)$, hence
+$$\Omega=-6\ln^{2}2-3\operatorname{Li}_{2}\!\Big(\frac14\Big)
+=-\frac{\pi^{2}}{2}-3\ln^{2}2-6\operatorname{Li}_{2}\!\Big(-\frac12\Big).$$
+
+\textbf{(iii) Landen's transformation.} For $0\le x<1$ let $L(x)=\operatorname{Li}_{2}\!\big(\frac{-x}{1-x}\big)+\operatorname{Li}_{2}(x)+\tfrac12\ln^{2}(1-x)$. With $w=\frac{-x}{1-x}$ one has $1-w=\frac{1}{1-x}$ and $w'=-\frac{1}{(1-x)^{2}}$, so by (5.1)
+$$\frac{d}{dx}\operatorname{Li}_{2}(w)=-\frac{\ln(1-w)}{w}\,w'
+=-\frac{(1-x)\ln(1-x)}{x}\cdot\Big(-\frac{1}{(1-x)^{2}}\Big)\cdot(-1)^{\,0}
+=\frac{\ln(1-x)}{x(1-x)} ,$$
+hence
+$$L'(x)=\frac{\ln(1-x)}{x(1-x)}-\frac{\ln(1-x)}{x}-\frac{\ln(1-x)}{1-x}
+=\ln(1-x)\Big[\frac{1}{x(1-x)}-\frac1x-\frac{1}{1-x}\Big]=0 ,$$
+and $L(0)=0$, i.e. $\operatorname{Li}_{2}\!\big(\frac{-x}{1-x}\big)=-\operatorname{Li}_{2}(x)-\frac12\ln^{2}(1-x)$. At $x=\tfrac13$ (so $\frac{-x}{1-x}=-\tfrac12$):
+$$\operatorname{Li}_{2}\!\Big(-\frac12\Big)=-\operatorname{Li}_{2}\!\Big(\frac13\Big)-\frac12\ln^{2}\frac32 .$$
+Substituting into the previous display, and using $3\ln^{2}\frac32-3\ln^{2}2=3\ln^{2}3-6\ln2\ln3$,
+$$\Omega=6\operatorname{Li}_{2}\!\Big(\frac13\Big)+3\ln^{2}3-6\ln2\ln3-\frac{\pi^{2}}{2}.$$
+
+\textbf{(iv) A squaring identity and Landen's $\tfrac13$--$\tfrac19$ ladder.} For $0\le x<\tfrac12$ let
+$$S(x)=2\operatorname{Li}_{2}\!\Big(\frac{x}{1-x}\Big)-2\operatorname{Li}_{2}(x)-\operatorname{Li}_{2}\!\Big(\frac{x^{2}}{(1-x)^{2}}\Big)-\ln^{2}(1-x).$$
+With $w=\frac{x}{1-x}$: $1-w=\frac{1-2x}{1-x}$, $w'=\frac{1}{(1-x)^{2}}$, so $\frac{d}{dx}\operatorname{Li}_2(w)=-\frac{1}{x(1-x)}\ln\frac{1-2x}{1-x}$; with $W=w^{2}$: $1-W=\frac{1-2x}{(1-x)^{2}}$, $W'=\frac{2x}{(1-x)^{3}}$, so $\frac{d}{dx}\operatorname{Li}_2(W)=-\frac{2}{x(1-x)}\ln\frac{1-2x}{(1-x)^{2}}$. Hence
+$$\begin{aligned}
+S'(x)&=\frac{2}{x(1-x)}\Big[\ln\frac{1-2x}{(1-x)^{2}}-\ln\frac{1-2x}{1-x}\Big]
++\frac{2\ln(1-x)}{x}+\frac{2\ln(1-x)}{1-x}\\
+&=-\frac{2\ln(1-x)}{x(1-x)}+\frac{2\ln(1-x)}{x(1-x)}=0,
+\end{aligned}$$
+and $S(0)=0$. At $x=\tfrac14$:
+$$2\operatorname{Li}_{2}\!\Big(\frac13\Big)-2\operatorname{Li}_{2}\!\Big(\frac14\Big)-\operatorname{Li}_{2}\!\Big(\frac19\Big)=\ln^{2}\frac34 .$$
+Combining this with (i)--(iii) (eliminate $\operatorname{Li}_2(\tfrac14)$ via $\operatorname{Li}_{2}(\tfrac14)=\frac{\pi^{2}}{6}-\ln^{2}2-2\operatorname{Li}_{2}(\tfrac13)-\ln^{2}\frac32$, which follows from (i),(ii),(iii)) and simplifying the logarithms with $2\ln^{2}2+2\ln^{2}\frac32-\ln^{2}\frac34=\ln^{2}3$ yields Landen's ladder
+$$6\operatorname{Li}_{2}\!\Big(\frac13\Big)-\operatorname{Li}_{2}\!\Big(\frac19\Big)=\frac{\pi^{2}}{3}-\ln^{2}3 ,$$
+and therefore
+$$\Omega=\operatorname{Li}_{2}\!\Big(\frac19\Big)+2\ln^{2}3-6\ln2\ln3-\frac{\pi^{2}}{6}.$$
+
+\begin{sloppypar}
+$\operatorname{Li}_2(\tfrac14)$ (equivalently $\operatorname{Li}_2(-\tfrac12)$, $\operatorname{Li}_2(\tfrac13)$, $\operatorname{Li}_2(\tfrac19)$ --- all four are linearly related over $\mathbb{Q}[\pi^2,\ln 2,\ln 3]$ by (i)--(iv)) is not known to reduce to elementary constants, so a genuine dilogarithm value remains in the answer.
+\end{sloppypar}
+
+\subsection*{8. Consistency of the method with the known cases}
+
+The same three-step scheme reproduces the values quoted in the problem:
+
+\begin{itemize}
+\item $n=1$: $\int_{0}^{\infty}E_1\,ds=[sE_1]_0^\infty+\int_0^\infty e^{-s}ds=1$, so $\int_{-\infty}^{0}\operatorname{Ei}x\,dx=-1$ --- formula (4). $\checkmark$
+\item $n=2$: $\int_{0}^{\infty}E_1^{2}\,ds=2\int_{0}^{\infty}e^{-s}E_1\,ds
+ =2\int_{1}^{\infty}\frac{du}{u(1+u)}=2\ln 2$, and since $(-E_1)^2=E_1^2$,
+ $\int_{-\infty}^{0}\operatorname{Ei}^{2}x\,dx=+\int_0^\infty E_1^2\,ds=\ln 4$ --- formula (5). $\checkmark$
+\end{itemize}
+
+\subsection*{9. Remark on the indefinite integral (6)}
+
+Differentiating ($\operatorname{Ei}'(x)=e^{x}/x$ for $x\neq0$),
+$$\frac{d}{dx}\Big[x\operatorname{Ei}^{3}x-3e^{x}\operatorname{Ei}^{2}x\Big]
+=\operatorname{Ei}^{3}x-\frac{6\,e^{2x}\operatorname{Ei}x}{x},$$
+so
+$$\int\operatorname{Ei}^{3}x\,dx=x\operatorname{Ei}^{3}x-3e^{x}\operatorname{Ei}^{2}x+6\int\frac{e^{2x}\operatorname{Ei}x}{x}\,dx .$$
+For the square, the analogous step produced $\int\frac{e^{2x}}{x}dx=\operatorname{Ei}(2x)$, which closes in terms of $\operatorname{Ei}$; for the cube one needs $\int e^{2x}\operatorname{Ei}(x)\,dx/x$, a genuinely two-scale primitive for which no expression in elementary functions and $\operatorname{Ei}$ (of any arguments) is known. We do not prove non-existence; but this is why the pattern of (2)--(3) stops, while the definite integral (7) still evaluates in closed form. (Note also that splitting the definite integral along this identity is illegitimate: $e^{x}\operatorname{Ei}^{2}x\sim\ln^{2}|x|\to+\infty$ as $x\to0^{-}$ and $e^{2x}\operatorname{Ei}(x)/x\sim\ln|x|/x$ is non-integrable at $0^-$; the divergences cancel only in the combination above. Our route via $E_1$ in Step 1 keeps all boundary terms finite.)
+
+\section*{Numerical verification}
+
+Script: \nolinkurl{/tmp/claude-1000/-home-riv-Code-cleo-bench/817bd907-85a0-4bc2-a728-b3544bb304b6/scratchpad/cleo/work/q714628-closed-form-for-int-infty-0-operatorname-ei-3x-d/verify.py}, run with mpmath at \texttt{mp.dps = 80} (and re-checked at \texttt{mp.dps = 90}).
+
+Two independent direct quadratures (tanh--sinh with split points; the integrand has only an integrable $\ln^3$ endpoint singularity at $0$ and exponential decay at infinity):
+
+\begin{itemize}
+\item $\displaystyle\int_{-\infty}^{0}\operatorname{Ei}(x)^{3}dx$ via \texttt{mp.ei}:\\
+ {\footnotesize$-3.6856760007574063687601666434234245578428889103088373027967888611$}\\ (est. quadrature error $\sim10^{-84}$);
+\item $-\displaystyle\int_{0}^{\infty}E_1(s)^{3}ds$ via \texttt{mp.e1}: identical to all 80 digits.
+\end{itemize}
+
+Closed form \texttt{-6*mp.log(2)**2 - 3*mp.polylog(2, mpf(1)/4)}:
+{\footnotesize$$-3.6856760007574063687601666434234245578428889103088373027967888611$$}
+
+\textbf{Agreement: all 80 working digits} (difference $0$ at 80 dps; at 90 dps the difference is $6.4\cdot10^{-90}$), far beyond the required 25. The three alternative closed forms agree with the first to all 80 digits as well.
+
+Every intermediate step of the derivation was also checked numerically to $\sim$80 digits:
+\begin{itemize}
+\item the integration-by-parts identity $\int_0^\infty E_1^3=3\int_0^\infty e^{-s}E_1^2$ (residual $\sim10^{-81}$),
+\item $K=\int_1^\infty\frac{\ln(2+u)}{u(1+u)}du=\int_0^{1/2}\frac{\ln(1+t)-\ln t}{1-t}dt=2\ln^22+\operatorname{Li}_2(\tfrac14)$ (residuals $0$ at 80 dps),
+\item the pieces 5(a), 5(b) separately (residuals $0$),
+\item the dilogarithm identities (i)--(iv) and the $\tfrac13$--$\tfrac19$ ladder (residuals $\lesssim10^{-81}$),
+\item the sanity values (4) $=-1$ and (5) $=\ln 4$ to 30 digits.
+\end{itemize}
+
+\section*{Notes}
+
+\begin{itemize}
+\item The main derivation (Sections 0--6) is complete and self-contained: the only tools are the fundamental theorem of calculus, Tonelli's theorem for nonnegative integrands (twice: once for the $s$-integration, once for termwise series integration via monotone convergence), elementary partial fractions, and the definition $\operatorname{Li}_2(z)=-\int_0^z\ln(1-w)\,dw/w$. Remarkably, the primary form $-6\ln^{2}2-3\operatorname{Li}_{2}(1/4)$ requires no dilogarithm functional equation at all --- the $\operatorname{Li}_2(1/2)$ contributions of the two pieces in Step 5 cancel.
+\item The equivalent forms in Section 7 use Euler's $\zeta(2)=\pi^{2}/6$, which I cite as classical (Basel problem) rather than re-derive; every dilogarithm functional equation used is proved by differentiation from scratch.
+\item Section 9 (about the indefinite integral (6)) is an honest remark, not a theorem: I do not prove that $\int e^{2x}\operatorname{Ei}(x)\,dx/x$ is not expressible via elementary functions and $\operatorname{Ei}$; deciding that would require differential-algebra machinery (Liouville-type theory for Ei-extensions) beyond the scope here. The requested definite integral (7) is fully solved.
+\item The same scheme for the fourth power gives $\int_0^\infty E_1^4=4\int_{[1,\infty)^2}\frac{\ln(2+u+v)}{uv(1+u+v)}\,du\,dv$, a weight-3 (trilogarithm-level) object; the method generalizes but the answers leave the dilogarithm class.
+\end{itemize}
+
+\end{document}

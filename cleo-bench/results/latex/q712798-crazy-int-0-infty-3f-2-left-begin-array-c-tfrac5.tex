@@ -1,0 +1,206 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 2\\[1ex]\large Crazy $\displaystyle\int_0^\infty{_3F_2}\!\left(\begin{smallmatrix}\tfrac58,\tfrac58,\tfrac98\\\tfrac12,\tfrac{13}8\end{smallmatrix}\,\middle|\ {-x}\right)^{\!2}\frac{dx}{\sqrt x}$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/712798}{question 712798}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in closed form
+$$I=\int_0^\infty{}_3F_2\!\left(\begin{array}{c}\tfrac58,\ \tfrac58,\ \tfrac98\\[2pt] \tfrac12,\ \tfrac{13}8\end{array}\ \middle|\ -x\right)^{\!2}\,\frac{dx}{\sqrt x}.$$
+
+\section*{Result}
+
+$$\boxed{\,I=\frac{25\,\Gamma\!\left(\tfrac34\right)^2}{3\sqrt{\pi}}\Bigl(2\ln\bigl(1+\sqrt2\bigr)-\sqrt2\Bigr)
+=\frac{50\,\pi^{3/2}}{3\,\Gamma\!\left(\tfrac14\right)^2}\Bigl(2\ln\bigl(1+\sqrt2\bigr)-\sqrt2\Bigr)\,}$$
+
+$$I = 2.460685302449425108981967679044937181349580663151474781\ldots$$
+
+(The two forms agree because $\Gamma(\tfrac14)\Gamma(\tfrac34)=\pi\sqrt2$, hence $\Gamma(\tfrac34)^2=2\pi^2/\Gamma(\tfrac14)^2$. Also $2\ln(1+\sqrt2)=\ln(3+2\sqrt2)=2\,\operatorname{arcsinh}1$.)
+
+\section*{Derivation}
+
+Throughout put
+$$a=\tfrac58,\qquad p=2a=\tfrac54 .$$
+The parameter pattern of the hypergeometric is exactly
+$${}_3F_2\!\left(\begin{array}{c}a,\ a,\ a+\tfrac12\\ \tfrac12,\ a+1\end{array}\ \middle|\ -x\right)=:F(x),$$
+since $\tfrac58=a$, $\tfrac98=a+\tfrac12$, $\tfrac{13}8=a+1$. This pattern is what makes the problem tractable: the pair $\bigl(a,a+\tfrac12;\tfrac12\bigr)$ triggers a quadratic (elementary) ${}_2F_1$ evaluation, and the pair $\bigl(a;a+1\bigr)$ is a single Euler-type integration.
+
+All powers of complex numbers below are \textbf{principal branches}; every complex number raised to a power will lie in the open right half-plane $\Re z>0$ (or be a positive real), so no branch ambiguity ever arises.
+
+\subsection*{Step 1. An elementary form for the ${}_2F_1$ kernel}
+
+\textbf{Claim.} For all real $s$,
+\begin{equation}
+{}_2F_1\!\left(a,\ a+\tfrac12;\ \tfrac12;\ -s^2\right)
+=\frac{(1+is)^{-2a}+(1-is)^{-2a}}{2}=\Re\,(1+is)^{-2a}. \tag{1}
+\end{equation}
+
+\emph{Proof.} For $|z|<1$ the binomial series gives
+$$\frac{(1-z)^{-2a}+(1+z)^{-2a}}{2}=\sum_{m\ \mathrm{even}}\frac{(2a)_m}{m!}\,z^{m}=\sum_{k\ge0}\frac{(2a)_{2k}}{(2k)!}\,z^{2k}.$$
+Splitting the products over even/odd factors (the Pochhammer duplication identities)
+$$(2a)_{2k}=4^k\,(a)_k\Bigl(a+\tfrac12\Bigr)_k,\qquad (2k)!=4^k\,k!\,\Bigl(\tfrac12\Bigr)_k,$$
+we get $\sum_k \frac{(a)_k(a+\frac12)_k}{(\frac12)_k\,k!}z^{2k}={}_2F_1(a,a+\tfrac12;\tfrac12;z^2)$ for $|z|<1$.
+
+Now fix the branch discussion for $z=is$, $s\in\mathbb R$. The left side, as a function of $s$, is $\varphi(s^2)$ where $\varphi(w)={}_2F_1(a,a+\tfrac12;\tfrac12;-w)$ is analytic on $\mathbb C\setminus(-\infty,-1]$; since $-s^2\le 0$ we stay in its domain, so $s\mapsto\varphi(s^2)$ is real-analytic on all of $\mathbb R$. The right side of (1) is real-analytic on $\mathbb R$ as well, because $1\pm is$ lies in the closed right half-plane minus $0$ for every real $s$, away from the cut of the principal power. Both sides agree for $|s|<1$ by the series computation, hence for all real $s$ by analytic continuation. Finally $\overline{(1+is)^{-2a}}=(1-is)^{-2a}$ for real $s$, so the average is $\Re(1+is)^{-2a}$. $\square$
+
+\subsection*{Step 2. Euler integral for the lower-parameter shift $a\mapsto a+1$}
+
+Since $\dfrac{(a)_n}{(a+1)_n}=\dfrac{a}{a+n}=a\displaystyle\int_0^1 t^{\,a+n-1}\,dt$, termwise integration of the (uniformly convergent) series for $0\le x<1$ gives
+$$F(x)=a\int_0^1 t^{\,a-1}\,{}_2F_1\!\left(a,\ a+\tfrac12;\ \tfrac12;\ -xt\right)dt .$$
+Both sides are analytic in $x$ on $\Omega=\mathbb C\setminus(-\infty,-1]$ — the left side is the principal branch of the ${}_3F_2$; the right side is analytic on $\Omega$ because for $x\in\Omega$ and $t\in(0,1]$ we have $xt\in\Omega$ (the product $xt$ can only land on $(-\infty,-1]$ if $x$ itself is real $\le-1$), the integrand is jointly continuous and locally uniformly bounded, so Morera/dominated convergence applies. Agreement on $[0,1)$ therefore extends to all $x\ge0$.
+
+Inserting (1) with $s=\sqrt{xt}$ and substituting $t=v^2$ ($dt=2v\,dv$):
+\begin{equation}
+F(x)=2a\int_0^1 v^{\,2a-1}\,\Re\,(1+iv\sqrt x\,)^{-2a}\,dv ,\qquad x\ge 0. \tag{2}
+\end{equation}
+(Representation (2) was verified numerically to $50$ digits at $x=0.7,\ 3.3,\ 100$; see the verification section.)
+
+\subsection*{Step 3. Square, substitute $x=y^2$, and interchange (Fubini)}
+
+With $x=y^2$, $dx/\sqrt x=2\,dy$, and writing the square of (2) as a double integral,
+$$
+I=2\int_0^\infty F(y^2)^2\,dy
+=2\,(2a)^2\int_0^\infty\!\!\iint_{[0,1]^2}(uv)^{2a-1}\,
+\Re(1+iuy)^{-p}\,\Re(1+ivy)^{-p}\,du\,dv\,dy .
+$$
+To swap the $y$-integral with the $(u,v)$-integral we check absolute integrability. Since $\bigl|\Re(1+iuy)^{-p}\bigr|\le|1+iuy|^{-p}=(1+u^2y^2)^{-p/2}\le 1$, with $m=\max(u,v)$,
+$$\int_0^\infty\bigl|\Re(1+iuy)^{-p}\,\Re(1+ivy)^{-p}\bigr|\,dy
+\le\int_0^\infty(1+m^2y^2)^{-p/2}\,dy=\frac{c_1}{m},\qquad
+c_1=\int_0^\infty\frac{ds}{(1+s^2)^{5/8}}<\infty$$
+($c_1$ converges because $2\cdot\tfrac58=\tfrac54>1$), and
+$$\iint_{[0,1]^2}(uv)^{1/4}\,\frac{c_1}{\max(u,v)}\,du\,dv
+=2c_1\int_0^1 u^{-3/4}\Bigl(\int_0^u v^{1/4}dv\Bigr)du=\frac{16\,c_1}{15}<\infty .$$
+(This bound also proves $I<\infty$.) Hence, by Fubini,
+\begin{equation}
+I=2\,(2a)^2\iint_{[0,1]^2}(uv)^{2a-1}\,W(u,v)\,du\,dv,\qquad
+W(u,v)=\int_0^\infty \Re(1+iuy)^{-p}\ \Re(1+ivy)^{-p}\,dy . \tag{3}
+\end{equation}
+
+\subsection*{Step 4. The kernel integral $W(u,v)$ in closed form}
+
+Write $A=(1+iuy)^{-p}$, $B=(1+ivy)^{-p}$; for real $y$, $\bar B=(1-ivy)^{-p}$, and
+$$\Re A\,\Re B=\tfrac12\Re(AB)+\tfrac12\Re(A\bar B)
+\;\Longrightarrow\;
+W=\tfrac12\,\Re J_{+}+\tfrac12\,\Re J_{-},$$
+$$J_{+}=\int_0^\infty (1+iuy)^{-p}(1+ivy)^{-p}\,dy,\qquad
+J_{-}=\int_0^\infty (1+iuy)^{-p}(1-ivy)^{-p}\,dy .$$
+
+\textbf{(a) $\Re J_{+}=0$.} For $\kappa>0$ the principal power $(1+i\kappa y)^{-p}$ is analytic in $y$ except on the cut $\{y=it:\ t\ge 1/\kappa\}$ (where $1+i\kappa y\in(-\infty,0]$), which lies on the \textbf{positive} imaginary axis. So the integrand of $J_+$ is analytic on the closed fourth quadrant. On the arc $|y|=R$, $\arg y\in[-\tfrac\pi2,0]$, the integrand is $O(R^{-2p})=O(R^{-5/2})$, so the arc contributes $O(R^{-3/2})\to0$. By Cauchy's theorem we may rotate the ray of integration to the negative imaginary axis, $y=-i\tau$:
+$$J_{+}=-i\int_0^\infty (1+u\tau)^{-p}(1+v\tau)^{-p}\,d\tau\ \in\ i\,\mathbb R
+\quad\Longrightarrow\quad \Re J_{+}=0 .$$
+
+\textbf{(b) $\Re J_{-}$.} For $y\ge0$ both $1+iuy$ and $1-ivy$ lie in the open right half-plane, where principal powers multiply: $(z_1z_2)^{-p}=z_1^{-p}z_2^{-p}$ whenever $|\arg z_1|,|\arg z_2|<\tfrac\pi2$. Completing the square,
+$$(1+iuy)(1-ivy)=1+uvy^2+i(u-v)y=uv\Bigl[(y+i\delta)^2+\sigma^2\Bigr],
+\qquad \delta=\frac{u-v}{2uv},\quad \sigma=\frac{u+v}{2uv},$$
+which is consistent at $y=0$ because $uv(\sigma^2-\delta^2)=\frac{(u+v)^2-(u-v)^2}{4uv}=1$; note $\sigma>|\delta|$. Since $\Re\bigl[(y+i\delta)^2+\sigma^2\bigr]=\frac{1+uvy^2}{uv}>0$ and $uv>0$, principal branches again factor, and
+$$J_{-}=(uv)^{-p}\int_{\Gamma}\bigl(w^2+\sigma^2\bigr)^{-p}\,dw,$$
+where $\Gamma$ is the horizontal ray from $i\delta$ to $i\delta+\infty$ ($w=y+i\delta$). The principal power $(w^2+\sigma^2)^{-p}$ is analytic off $\{w=it:\ |t|\ge\sigma\}$, and the strip $|\Im w|\le|\delta|<\sigma$, $\Re w\ge0$, avoids that set. Deform $\Gamma$ to the vertical segment from $i\delta$ down to $0$ followed by $[0,\infty)$; the far vertical connector at $\Re w=R$ contributes $O(R^{-5/2})\cdot|\delta|\to0$. On the segment $w=i\tau$ ($\tau$ between $0$ and $\delta$) we have $w^2+\sigma^2=\sigma^2-\tau^2\in(0,\sigma^2]$, so the integrand is \textbf{real} while $dw=i\,d\tau$ — that piece is purely imaginary. Hence
+$$\Re J_{-}=(uv)^{-p}\int_0^\infty\bigl(y^2+\sigma^2\bigr)^{-p}dy
+=(uv)^{-p}\,\sigma^{1-2p}\,\frac{\sqrt\pi\;\Gamma\!\left(p-\tfrac12\right)}{2\,\Gamma(p)}
+=\frac{\sqrt\pi\;\Gamma\!\left(p-\tfrac12\right)}{2\,\Gamma(p)}\;
+\frac{2^{2p-1}\,(uv)^{p-1}}{(u+v)^{2p-1}},$$
+using the Beta evaluation $\int_0^\infty(y^2+\sigma^2)^{-p}dy=\tfrac12\sigma^{1-2p}B\bigl(\tfrac12,p-\tfrac12\bigr)$ (substitute $y=\sigma\tan\theta$), valid since $p=\tfrac54>\tfrac12$.
+
+So
+\begin{equation}
+W(u,v)=\frac{\sqrt\pi\;\Gamma\!\left(p-\tfrac12\right)}{4\,\Gamma(p)}\,
+\frac{2^{2p-1}(uv)^{p-1}}{(u+v)^{2p-1}} . \tag{4}
+\end{equation}
+(Identity (4) was verified numerically to $\sim50$ digits at several $(u,v)$; see below.)
+
+\subsection*{Step 5. Assembling: an elementary double integral}
+
+Insert (4) into (3). With $a=\tfrac58$, $p=\tfrac54$ we have $(uv)^{2a-1}(uv)^{p-1}=(uv)^{1/2}$ and $2p-1=\tfrac32$:
+$$
+I=(2a)^2\,\frac{\sqrt\pi\,\Gamma\!\left(\tfrac34\right)}{2\,\Gamma\!\left(\tfrac54\right)}\;2^{3/2}\,D,
+\qquad
+D=\iint_{[0,1]^2}\frac{\sqrt{uv}}{(u+v)^{3/2}}\,du\,dv .
+$$
+By the $u\leftrightarrow v$ symmetry and the scaling $v=ut$ on the region $v<u$,
+$$D=2\int_0^1\!\!\int_0^u\frac{\sqrt{uv}}{(u+v)^{3/2}}\,dv\,du
+=2\int_0^1 u^{1/2}\,du\int_0^1\frac{\sqrt t}{(1+t)^{3/2}}\,dt
+=\frac43\int_0^1\frac{\sqrt t\;dt}{(1+t)^{3/2}} .$$
+Substituting $t=\sinh^2 w$ turns the last integral into $2\int\tanh^2w\,dw=2(w-\tanh w)$, so
+$$\int_0^1\frac{\sqrt t\;dt}{(1+t)^{3/2}}
+=2\Bigl(\operatorname{arcsinh}1-\tfrac1{\sqrt2}\Bigr)=2\ln\bigl(1+\sqrt2\bigr)-\sqrt2,
+\qquad
+D=\frac43\Bigl(2\ln(1+\sqrt2)-\sqrt2\Bigr).$$
+
+\subsection*{Step 6. Final constants}
+
+$$
+I=\frac{25}{16}\cdot\frac{\sqrt\pi\,\Gamma\!\left(\tfrac34\right)}{2\,\Gamma\!\left(\tfrac54\right)}\cdot 2^{3/2}\cdot\frac43\Bigl(2\ln(1+\sqrt2)-\sqrt2\Bigr)
+=\frac{25\cdot 2^{7/2}}{96}\cdot\frac{\sqrt\pi\,\Gamma\!\left(\tfrac34\right)}{\Gamma\!\left(\tfrac54\right)}\Bigl(2\ln(1+\sqrt2)-\sqrt2\Bigr).
+$$
+Now $\Gamma\!\left(\tfrac54\right)=\tfrac14\Gamma\!\left(\tfrac14\right)$ and the reflection formula $\Gamma\!\left(\tfrac14\right)\Gamma\!\left(\tfrac34\right)=\dfrac{\pi}{\sin(\pi/4)}=\pi\sqrt2$ give
+$\dfrac{\sqrt\pi\,\Gamma(3/4)}{\Gamma(5/4)}=\dfrac{4\sqrt2\,\pi^{3/2}}{\Gamma(1/4)^2}$, hence
+$$
+I=\frac{25\cdot2^{7/2}\cdot 4\sqrt2}{96}\cdot\frac{\pi^{3/2}}{\Gamma\!\left(\tfrac14\right)^2}\Bigl(2\ln(1+\sqrt2)-\sqrt2\Bigr)
+=\frac{50\,\pi^{3/2}}{3\,\Gamma\!\left(\tfrac14\right)^2}\Bigl(2\ln\bigl(1+\sqrt2\bigr)-\sqrt2\Bigr),
+$$
+and equivalently, using $\Gamma(\tfrac34)^2=2\pi^2/\Gamma(\tfrac14)^2$,
+$$
+I=\frac{25\,\Gamma\!\left(\tfrac34\right)^2}{3\sqrt\pi}\Bigl(2\ln\bigl(1+\sqrt2\bigr)-\sqrt2\Bigr).
+$$
+
+$\blacksquare$
+
+\textbf{Remark.} The same computation evaluates the whole family
+$\int_0^\infty {}_3F_2\bigl(a,a,a+\tfrac12;\tfrac12,a+1;-x\bigr)^2 x^{-1/2}dx$ for $\tfrac12<a<1$ (so that $p=2a$ satisfies $p>\tfrac12$ for Step 4 and the Fubini bounds hold); the double integral $\iint (uv)^{3a-2}(u+v)^{1-4a}\,du\,dv$ is again elementary-hypergeometric. Wait — for general $a$ the exponents are $(uv)^{2a-1+p-1}=(uv)^{3a-2}$ and $(u+v)^{4a-1}$; the special value $a=\tfrac58$ makes it the pleasant $\iint\sqrt{uv}\,(u+v)^{-3/2}$. \emph{(This remark is illustrative only; the boxed result for $a=5/8$ is what was proved above.)}
+
+\section*{Numerical verification}
+
+All computations with mpmath. Working precision \texttt{mp.dps = 60} (spot checks at 50).
+
+\begin{enumerate}
+\item \textbf{Representation (2)} vs \texttt{mp.hyp3f2(5/8,5/8,9/8,1/2,13/8,-x)} at $x=0.7,\,3.3,\,100$: differences $0$, $0$, $8\times10^{-53}$ at 50 dps.
+\item \textbf{Kernel identity (4)} vs direct quadrature of $W(u,v)=\int_0^\infty\Re(1+iuy)^{-5/4}\Re(1+ivy)^{-5/4}dy$ at $(u,v)=(0.3,0.9),\,(0.5,0.5),\,(0.05,0.77)$: differences $\lesssim 3\times10^{-51}$.
+\item \textbf{Direct evaluation of $I$} at 60 dps using \texttt{mp.hyp3f2} itself (no ingredient of the derivation):
+$I=\int_0^1 F(x)^2x^{-1/2}dx+\int_0^1F(1/w)^2w^{-3/2}dw$, computed as $2\int_0^1F(y^2)^2dy$ (smooth) plus, with $w=z^4$, $4\int_0^1F(z^{-4})^2z^{-3}dz$ (integrand $\sim z^2\log^2z$ at $0$), each by tanh--sinh quadrature (\texttt{maxdegree=9}):
+$$I_{\text{num}}=2.460685302449425108981967679044937181349580663151474781\ldots$$
+\item \textbf{Closed form} at 60 dps:
+\begin{multline*}
+\frac{25\,\Gamma(3/4)^2}{3\sqrt\pi}\bigl(2\ln(1+\sqrt2)-\sqrt2\bigr)\\
+=2.460685302449425108981967679044937181349580663151474781\ldots
+\end{multline*}
+Relative difference $|I_{\text{num}}-I_{\text{cf}}|/I_{\text{cf}}\approx1.3\times10^{-61}$: \textbf{60 significant digits agree} (the full working precision).
+\item \textbf{Independent cross-check (Mellin--Parseval).} With $\tilde F(s)=\frac{\Gamma(s)\Gamma(\frac58-s)^2\Gamma(\frac98-s)\,\Gamma(\frac12)\Gamma(\frac{13}8)}{\Gamma(\frac58)^2\Gamma(\frac98)\,\Gamma(\frac12-s)\Gamma(\frac{13}8-s)}$ (the Mellin transform of $F$), Parseval gives $I=\frac1\pi\int_0^\infty\Re\bigl[\tilde F(\tfrac14+it)\tilde F(\tfrac14-it)\bigr]dt$; after the cancellation of $\Gamma(s)$ and $\Gamma(\tfrac12-s)$ in the product this Gamma-integral was evaluated numerically at 60 dps and agrees with the closed form to $6\times10^{-61}$. This route uses none of Steps 1--6.
+\end{enumerate}
+
+Scripts: \texttt{step1\_checks.py}, \texttt{step2\_direct.py}, \texttt{step3\_highprec.py}, \texttt{step4\_digits.py} in the scratch work directory.
+
+\section*{Notes}
+
+\begin{itemize}
+\item The proof is self-contained: the only inputs are the binomial series, the Pochhammer duplication identities, Cauchy's theorem (two explicitly justified contour deformations, with the decay rate $|y|^{-5/2}$ making all arcs vanish), the Beta integral $\int_0^\infty(y^2+\sigma^2)^{-p}dy$, and one Fubini interchange with an explicit absolutely-convergent majorant (which simultaneously proves $I<\infty$).
+\item Branch handling: every principal power occurs at an argument in the closed right half-plane off the cut, and both factorization steps $(z_1z_2)^{-p}=z_1^{-p}z_2^{-p}$ are applied only when $|\arg z_i|<\pi/2$, where they are valid.
+\item The analytic-continuation arguments in Steps 1--2 (from $|x|<1$ to $x\ge0$) are standard and fully justified (domains are connected, both sides analytic, agreement on a set with a limit point); they were additionally confirmed numerically.
+\item The Mellin--Parseval computation in the verification section is only a cross-check, not part of the proof; its own hypotheses (strip of analyticity $0<\Re s<\tfrac58$ containing $\Re s=\tfrac14$, $L^2$/$L^1$ conditions from the $e^{-2\pi|t|}$ decay of the Gamma product) do hold, but the derivation does not rely on it.
+\item No step is conjectural; I consider the result proved.
+\end{itemize}
+
+\end{document}

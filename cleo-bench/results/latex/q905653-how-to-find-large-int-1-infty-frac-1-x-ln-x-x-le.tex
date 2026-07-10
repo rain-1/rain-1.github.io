@@ -1,0 +1,302 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{seqsplit}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 9\\[1ex]\large How to find ${\large\int}_1^\infty\frac{1-x+\ln x}{x \left(1+x^2\right) \ln^2 x} \mathrm dx$?}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/905653}{question 905653}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in closed form
+$$
+I=\int_1^\infty\frac{1-x+\ln x}{x\left(1+x^2\right)\ln^2 x}\,\mathrm dx .
+$$
+
+\section*{Result}
+
+$$
+\boxed{\;I \;=\; \frac{2G}{\pi}\;+\;\frac{\ln 2}{6}\;+\;\frac{\ln \pi}{2}\;-\;6\ln A\;=\;\frac{2G}{\pi}+\ln\frac{2^{1/6}\sqrt{\pi}}{A^{6}}\;}
+$$
+
+where $G=\sum_{j\ge 0}\frac{(-1)^j}{(2j+1)^2}$ is Catalan's constant and $A$ is the Glaisher--Kinkelin constant, $\ln A=\frac1{12}-\zeta'(-1)$. Equivalent forms:
+
+$$
+I=\frac{2G}{\pi}+\frac{\ln 2}{6}+\frac{\ln\pi}{2}-\frac12+6\zeta'(-1)
+\;=\;\frac{2G}{\pi}-\frac{\gamma}{2}-\frac{\ln 2}{3}+\frac{3\zeta'(2)}{\pi^{2}} .
+$$
+
+Numerically,
+$$
+I=-0.22151558112304370969883001926700190168652187852183783336687\ldots
+$$
+
+\section*{Derivation}
+
+\subsection*{Step 0. Substitution and convergence}
+
+The integrand is continuous on $(1,\infty)$. Near $x=1$ write $x=1+\epsilon$: the numerator is
+$1-x+\ln x=-\tfrac{\epsilon^2}{2}+O(\epsilon^3)$ while $x(1+x^2)\ln^2x=2\epsilon^2+O(\epsilon^3)$, so the integrand extends continuously to $x=1$ with value $-\tfrac14$. As $x\to\infty$ the integrand is $\sim -\dfrac{1}{x^{2}\ln^{2}x}$. Hence $I$ converges absolutely.
+
+Substitute $x=e^u$ ($dx=e^u\,du$):
+\begin{equation*}
+I=\int_0^\infty\frac{1+u-e^{u}}{u^{2}\left(1+e^{2u}\right)}\,du .
+\tag{1}
+\end{equation*}
+The new integrand extends continuously to $u=0$ (value $-\tfrac14$, since $1+u-e^u=-\tfrac{u^2}2+O(u^3)$) and is $O(e^{-u}/u^{2})$ as $u\to\infty$.
+
+\subsection*{Step 1. The Laplace-type building block}
+
+For $a>1$ define
+$$
+J(a)=\int_0^\infty\frac{1+u-e^{u}}{u^{2}}\,e^{-au}\,du .
+$$
+The integral converges absolutely (bounded near $0$; $\sim -e^{-(a-1)u}/u^2$ at $\infty$).
+
+\textbf{Claim.} $\displaystyle J(a)=(a-1)\ln\frac{a}{a-1}-1$.
+
+\emph{Proof.} On any half line $a\ge 1+\delta$ ($\delta>0$) we may differentiate under the integral sign twice, because the differentiated integrands are dominated by the integrable functions $\frac{|1+u-e^u|}{u}e^{-(1+\delta)u}$ and $|1+u-e^u|\,e^{-(1+\delta)u}$ uniformly in $a\ge1+\delta$. Thus
+$$
+J''(a)=\int_0^\infty(1+u-e^{u})e^{-au}\,du=\frac1a+\frac1{a^{2}}-\frac1{a-1}.
+$$
+Moreover $J(a)\to0$ and $J'(a)\to0$ as $a\to\infty$ by dominated convergence (the integrands tend to $0$ pointwise and are dominated as above). Since $J''(b)=\frac1{b^2}-\frac1{b(b-1)}=O(b^{-2})$ is integrable at $\infty$, and an antiderivative of $J''$ is $\ln\frac{b}{b-1}-\frac1b\;(\to 0)$,
+$$
+J'(a)=J'(\infty)-\int_a^\infty J''(b)\,db=\ln\frac{a}{a-1}-\frac1a .
+$$
+An antiderivative of $J'$ is $A(b)=(b-1)\ln\frac{b}{b-1}$ --- indeed $A'(b)=\ln\frac{b}{b-1}+(b-1)\bigl(\frac1b-\frac1{b-1}\bigr)=\ln\frac{b}{b-1}-\frac1b$ --- and $A(b)\to1$ as $b\to\infty$. Since $J'(b)=\frac{1}{2b^{2}}+O(b^{-3})$ is integrable at $\infty$,
+$$
+J(a)=J(\infty)-\int_a^\infty J'(b)\,db=0-\bigl(1-A(a)\bigr)=(a-1)\ln\frac{a}{a-1}-1 .\qquad\blacksquare
+$$
+
+\subsection*{Step 2. Expansion of $(1+e^{2u})^{-1}$: an alternating series for $I$}
+
+For $0<r<1$ and $u>0$,
+$$
+\frac{r e^{-2u}}{1+re^{-2u}}=\sum_{n\ge1}(-1)^{n-1}r^{n}e^{-2nu},
+$$
+absolutely convergent. Because $e^{-2nu}\le e^{-2u}$ for $n\ge1$,
+$$
+\sum_{n\ge1} r^{n}\int_0^\infty\frac{|1+u-e^{u}|}{u^{2}}e^{-2nu}\,du
+\;\le\;\frac{r}{1-r}\int_0^\infty\frac{|1+u-e^{u}|}{u^{2}}e^{-2u}\,du<\infty ,
+$$
+so Fubini--Tonelli applies and, using Step 1,
+$$
+I(r):=\int_0^\infty\frac{1+u-e^{u}}{u^{2}}\cdot\frac{r e^{-2u}}{1+re^{-2u}}\,du
+=\sum_{n\ge1}(-1)^{n-1}r^{n}J(2n).
+$$
+Now let $r\to1^-$.
+
+\emph{Left side.} Pointwise $\frac{r e^{-2u}}{1+re^{-2u}}\to\frac{1}{1+e^{2u}}$, and $0\le\frac{r e^{-2u}}{1+re^{-2u}}\le e^{-2u}$ (the denominator exceeds $1$), so the integrand is dominated by $\frac{|1+u-e^{u}|}{u^{2}}e^{-2u}\in L^{1}(0,\infty)$; by dominated convergence $I(r)\to I$ (by (1)).
+
+\emph{Right side.} The numbers $|J(2n)|=1-(2n-1)\ln\bigl(1+\frac{1}{2n-1}\bigr)$ decrease strictly to $0$: the function $c\mapsto c\ln(1+1/c)$ is strictly increasing on $(0,\infty)$ (its derivative $\ln(1+h)-\frac{h}{1+h}>0$ with $h=1/c$, since $\ln(1+h)>\frac{h}{1+h}$ for $h>0$) and tends to $1$. Hence $\sum_{n\ge1}(-1)^{n-1}J(2n)$ converges by the Leibniz test, and by Abel's theorem $\sum(-1)^{n-1}r^nJ(2n)\to\sum(-1)^{n-1}J(2n)$ as $r\to1^-$.
+
+Therefore
+\begin{equation*}
+I=\sum_{n\ge1}(-1)^{n-1}\left[(2n-1)\ln\frac{2n}{2n-1}-1\right].
+\tag{2}
+\end{equation*}
+
+\subsection*{Step 3. From the series to a digamma integral}
+
+For $c>0$, $\displaystyle\int_0^1\frac{t}{c+t}\,dt=1-c\ln\frac{c+1}{c}$; with $c=2n-1$,
+$$
+(2n-1)\ln\frac{2n}{2n-1}-1=-\int_0^1\frac{t}{2n-1+t}\,dt .
+$$
+The alternating series $\sum_{n\ge1}\frac{(-1)^{n-1}}{2n-1+t}$ has, for every fixed $t\in[0,1]$, terms strictly decreasing in $n$, so by the Leibniz estimate its partial-sum remainders are bounded by $\frac{1}{2N+1+t}\le\frac1{2N}$ \textbf{uniformly} in $t\in[0,1]$. Hence the partial sums converge uniformly on $[0,1]$ and we may integrate term by term in (2):
+$$
+I=-\int_0^1 t\sum_{n\ge1}\frac{(-1)^{n-1}}{2n-1+t}\,dt .
+$$
+From the classical series $\psi(z)=-\gamma+\sum_{m\ge0}\bigl(\frac1{m+1}-\frac1{m+z}\bigr)$ one gets, for $z>0$,
+\begin{equation*}
+\begin{aligned}
+\sum_{k\ge0}\frac{(-1)^{k}}{k+z}
+&=\sum_{m\ge0}\left[\frac{1}{2m+z}-\frac{1}{2m+1+z}\right]
+=\frac12\sum_{m\ge0}\left[\frac{1}{m+\frac z2}-\frac{1}{m+\frac{z+1}2}\right]\\
+&=\frac12\left[\psi\Bigl(\frac{z+1}2\Bigr)-\psi\Bigl(\frac z2\Bigr)\right].
+\end{aligned}
+\end{equation*}
+Writing $2n-1+t=2\bigl(m+\frac{1+t}{2}\bigr)$, $m=n-1$, gives
+$$
+\sum_{n\ge1}\frac{(-1)^{n-1}}{2n-1+t}
+=\frac12\sum_{m\ge0}\frac{(-1)^{m}}{m+\frac{1+t}{2}}
+=\frac14\left[\psi\Bigl(\frac{t+3}{4}\Bigr)-\psi\Bigl(\frac{t+1}{4}\Bigr)\right],
+$$
+so that
+\begin{equation*}
+I=-\frac14\int_0^1 t\left[\psi\Bigl(\frac{t+3}{4}\Bigr)-\psi\Bigl(\frac{t+1}{4}\Bigr)\right]dt .
+\tag{3}
+\end{equation*}
+
+\subsection*{Step 4. Integration by parts: log-gamma integrals}
+
+Since $\frac{d}{dt}\ln\Gamma\bigl(\frac{t+c}{4}\bigr)=\frac14\psi\bigl(\frac{t+c}{4}\bigr)$ and all functions involved are smooth on $[0,1]$ (arguments stay in $[\tfrac14,1]$),
+$$
+I=-\int_0^1 t\,\frac{d}{dt}\!\left[\ln\frac{\Gamma\bigl(\frac{t+3}{4}\bigr)}{\Gamma\bigl(\frac{t+1}{4}\bigr)}\right]dt
+=-\left[t\,\ln\frac{\Gamma\bigl(\frac{t+3}{4}\bigr)}{\Gamma\bigl(\frac{t+1}{4}\bigr)}\right]_0^1
++\int_0^1 \ln\frac{\Gamma\bigl(\frac{t+3}{4}\bigr)}{\Gamma\bigl(\frac{t+1}{4}\bigr)}\,dt .
+$$
+The boundary term is $-\ln\frac{\Gamma(1)}{\Gamma(1/2)}=\ln\sqrt\pi=\frac{\ln\pi}{2}$. Substituting $u=\frac{t+3}{4}$ and $u=\frac{t+1}{4}$ in the two integrals:
+\begin{equation*}
+I=\frac{\ln\pi}{2}+4\left[\int_{3/4}^{1}\ln\Gamma(u)\,du-\int_{1/4}^{1/2}\ln\Gamma(u)\,du\right].
+\tag{4}
+\end{equation*}
+
+\subsection*{Step 5. Reflection and a Catalan lemma}
+
+\textbf{Lemma.} $\displaystyle\int_0^{\pi/4}\ln\sin w\,dw=-\frac{G}{2}-\frac{\pi}{4}\ln 2$.
+
+\emph{Proof.} For $0<r<1$, $\sum_{k\ge1}\frac{r^{k}\cos 2kx}{k}=-\frac12\ln\bigl(1-2r\cos 2x+r^{2}\bigr)$ (real part of $-\ln(1-re^{2ix})$), with both sides continuous in $x$. Integrating over $[0,\pi/4]$ (the series converges uniformly in $x$ for fixed $r<1$):
+$$
+\sum_{k\ge1}\frac{r^{k}\sin(k\pi/2)}{2k^{2}}=-\frac12\int_0^{\pi/4}\ln\bigl(1-2r\cos 2x+r^{2}\bigr)\,dx .
+$$
+As $r\to1^-$ the left side tends to $\sum_{j\ge0}\frac{(-1)^{j}}{2(2j+1)^{2}}=\frac{G}{2}$ (the power series has absolutely summable coefficients). On the right, $1-2r\cos2x+r^{2}=(1-r)^{2}+2r(1-\cos 2x)$, so for $\tfrac12\le r<1$ it lies between $1-\cos 2x$ and $4$; hence the integrand is dominated by $\ln 4+\bigl|\ln(1-\cos 2x)\bigr|\in L^{1}(0,\pi/4)$, and pointwise it tends to $\ln(2-2\cos2x)=2\ln(2\sin x)$. Dominated convergence gives
+$$
+\frac{G}{2}=-\int_0^{\pi/4}\ln(2\sin x)\,dx=-\frac{\pi}{4}\ln 2-\int_0^{\pi/4}\ln\sin x\,dx . \qquad\blacksquare
+$$
+
+Now substitute $u=1-v$ and use the reflection formula $\Gamma(v)\Gamma(1-v)=\pi/\sin\pi v$:
+$$
+\int_{3/4}^{1}\ln\Gamma(u)\,du=\int_0^{1/4}\ln\Gamma(1-v)\,dv
+=\int_0^{1/4}\bigl[\ln\pi-\ln\sin\pi v\bigr]dv-\int_0^{1/4}\ln\Gamma(v)\,dv .
+$$
+With $w=\pi v$ and the Lemma, $\int_0^{1/4}\ln\sin \pi v\,dv=\frac1\pi\int_0^{\pi/4}\ln\sin w\,dw=-\frac{G}{2\pi}-\frac{\ln2}{4}$, so
+$$
+\int_{3/4}^{1}\ln\Gamma(u)\,du=\frac{\ln\pi}{4}+\frac{G}{2\pi}+\frac{\ln 2}{4}-\int_0^{1/4}\ln\Gamma(v)\,dv .
+$$
+Substituting this into (4) and writing $\int_{1/4}^{1/2}\ln\Gamma=\int_0^{1/2}\ln\Gamma-\int_0^{1/4}\ln\Gamma$, the integrals $\int_0^{1/4}\ln\Gamma$ \textbf{cancel}:
+\begin{equation*}
+I=\frac{\ln\pi}{2}+4\left[\frac{\ln\pi}{4}+\frac{G}{2\pi}+\frac{\ln 2}{4}-L\right],
+\qquad L:=\int_0^{1/2}\ln\Gamma(u)\,du .
+\tag{5}
+\end{equation*}
+
+\subsection*{Step 6. The moment $L=\int_0^{1/2}\ln\Gamma(u)\,du$}
+
+We use the Hurwitz zeta function $\zeta(s,x)=\sum_{n\ge0}(n+x)^{-s}$ ($\Re s>1$, $x>0$), which continues to a function analytic in $s\in\mathbb C\setminus\{1\}$, smooth in $x>0$ (e.g. by Hermite's classical integral representation
+$\zeta(s,x)=\frac{x^{1-s}}{s-1}+\frac{x^{-s}}{2}+2\int_0^\infty\frac{\sin(s\arctan(t/x))}{(x^{2}+t^{2})^{s/2}\,(e^{2\pi t}-1)}\,dt$,
+valid for all $s\ne1$, $x>0$, and manifestly jointly smooth/analytic). We need four classical facts:
+
+\begin{enumerate}
+\item $\partial_x\zeta(w,x)=-w\,\zeta(w+1,x)$ for $w\ne 0,1$. (Termwise for $\Re w>1$; both sides are analytic in $w$ on $\mathbb C\setminus\{0,1\}$ for fixed $x$ --- differentiation in $x$ under Hermite's integral is dominated --- so the identity extends by analytic continuation.)
+\item The exact shift $\zeta(w,\epsilon)=\epsilon^{-w}+\zeta(w,1+\epsilon)$, and continuity of $x\mapsto\zeta(w,x)$ at $x=1$.
+\item $\zeta(s,\tfrac12)=(2^{s}-1)\zeta(s)$: for $\Re s>1$, $\sum_{n\ge0}(n+\tfrac12)^{-s}=2^{s}\sum_{n\ge0}(2n+1)^{-s}=2^{s}(1-2^{-s})\zeta(s)$; both sides are meromorphic in $s$ with matching residue $1$ at $s=1$, so the identity holds for all $s\neq1$.
+\item \textbf{Lerch's formula} $\ln\Gamma(x)=\zeta'(0,x)+\frac12\ln 2\pi$, where $\zeta'(0,x)=\partial_s\zeta(s,x)\big|_{s=0}$.
+\end{enumerate}
+
+\emph{Proof of 4.} By 1 (at $w=s$, then $s\to0$) and the Laurent expansion of the Hurwitz zeta at its pole,
+$$
+\zeta(w,x)=\frac{1}{w-1}-\psi(x)+O(w-1)\qquad(w\to1),
+$$
+which follows from $\zeta(w,x)-\zeta(w)=\sum_{n\ge0}\bigl[(n+x)^{-w}-(n+1)^{-w}\bigr]$ (uniformly convergent for $w\in[1,2]$, equal at $w=1$ to $-\psi(x)-\gamma$ by the classical $\psi$ series) together with $\zeta(w)=\frac1{w-1}+\gamma+O(w-1)$. Then
+\begin{equation*}
+\begin{aligned}
+\partial_x\,\zeta'(0,x)&=\partial_s\bigl[-s\,\zeta(s+1,x)\bigr]_{s=0}
+=\lim_{s\to0}\Bigl[-\zeta(s+1,x)-s\,\partial_s\zeta(s+1,x)\Bigr]\\
+&=\lim_{s\to0}\Bigl[-\Bigl(\tfrac1s-\psi(x)\Bigr)+\tfrac1s\Bigr]+0=\psi(x),
+\end{aligned}
+\end{equation*}
+using $\zeta(s+1,x)=\frac1s-\psi(x)+c_1(x)s+O(s^2)$ (the interchange of $\partial_x$ and $\partial_s$ is legitimate by joint analyticity/smoothness from Hermite's formula). Hence $\zeta'(0,x)-\ln\Gamma(x)$ is constant in $x$; at $x=1$ it equals $\zeta'(0)=-\frac12\ln2\pi$ (classical value). $\blacksquare$
+
+\textbf{Computation of $L$.} For $\Re s<1$ define $\Phi(s)=\int_0^{1/2}\zeta(s,x)\,dx$ (the integrand is $O(x^{-\Re s})$ at $0$, integrable). By 1 and the fundamental theorem of calculus, for $s$ near $0$,
+$$
+\int_\epsilon^{1/2}\zeta(s,x)\,dx=\frac{\zeta(s-1,\epsilon)-\zeta(s-1,\tfrac12)}{s-1},
+$$
+and by 2, $\zeta(s-1,\epsilon)=\epsilon^{1-s}+\zeta(s-1,1+\epsilon)\to\zeta(s-1)$ as $\epsilon\to0^{+}$ (here $\Re(1-s)>0$). With 3,
+$$
+\Phi(s)=\frac{\zeta(s-1)-(2^{s-1}-1)\zeta(s-1)}{s-1}=\frac{\bigl(2-2^{s-1}\bigr)\zeta(s-1)}{s-1}=:g(s).
+$$
+$\Phi$ is analytic near $s=0$ and may be differentiated under the integral sign: for $|s|\le\frac14$ and $0<x\le\frac12$, $|\zeta(s,x)|\le x^{-1/4}+\max_{|s|\le 1/4,\,0\le x\le 1/2}|\zeta(s,1+x)|$ by 2, an integrable bound independent of $s$, so Cauchy's integral formula gives $\Phi'(0)=\int_0^{1/2}\zeta'(0,x)\,dx$.
+
+Now differentiate $g(s)=(2-2^{s-1})h(s)$, $h(s)=\frac{\zeta(s-1)}{s-1}$, at $s=0$, using $\zeta(-1)=-\frac1{12}$:
+$$
+h(0)=\frac{\zeta(-1)}{-1}=\frac1{12},\qquad
+h'(0)=\frac{\zeta'(s-1)}{s-1}-\frac{\zeta(s-1)}{(s-1)^{2}}\Big|_{s=0}=\frac1{12}-\zeta'(-1),
+$$
+$$
+g'(0)=-\frac{\ln 2}{2}\cdot\frac{1}{12}+\frac32\Bigl(\frac1{12}-\zeta'(-1)\Bigr)
+=-\frac{\ln 2}{24}+\frac18-\frac32\,\zeta'(-1).
+$$
+Finally, by Lerch's formula (fact 4),
+\begin{equation*}
+L=\int_0^{1/2}\Bigl[\zeta'(0,x)+\frac{\ln 2\pi}{2}\Bigr]dx
+=g'(0)+\frac{\ln 2\pi}{4}
+=\frac{5\ln 2}{24}+\frac{\ln\pi}{4}+\frac18-\frac32\,\zeta'(-1).
+\tag{6}
+\end{equation*}
+With the Glaisher--Kinkelin constant defined by $\ln A=\frac1{12}-\zeta'(-1)$, this is the classical value
+$L=\frac{5\ln2}{24}+\frac{\ln\pi}{4}+\frac32\ln A$.
+
+\subsection*{Step 7. Assembly}
+
+Insert (6) into (5):
+$$
+I=\frac{\ln\pi}{2}+\frac{2G}{\pi}+\ln\pi+\ln 2-4L
+=\frac{\ln\pi}{2}+\frac{2G}{\pi}+\ln 2-\frac{5\ln 2}{6}-\frac12+6\,\zeta'(-1),
+$$
+that is,
+$$
+\boxed{\;I=\frac{2G}{\pi}+\frac{\ln 2}{6}+\frac{\ln\pi}{2}-\frac12+6\,\zeta'(-1)
+=\frac{2G}{\pi}+\frac{\ln 2}{6}+\frac{\ln\pi}{2}-6\ln A\; }.
+$$
+
+\textbf{Remark (equivalent $\zeta'(2)$ form).} Logarithmic differentiation of the functional equation
+$\zeta(s)=2^{s}\pi^{s-1}\sin\frac{\pi s}{2}\,\Gamma(1-s)\,\zeta(1-s)$ at $s=-1$ (where $\cot(-\frac\pi2)=0$, $\psi(2)=1-\gamma$) gives
+$\frac{\zeta'(-1)}{\zeta(-1)}=\ln 2\pi-(1-\gamma)-\frac{\zeta'(2)}{\zeta(2)}$, hence
+$12\ln A=\gamma+\ln 2\pi-\frac{6\zeta'(2)}{\pi^{2}}$ and
+$$
+I=\frac{2G}{\pi}-\frac{\gamma}{2}-\frac{\ln 2}{3}+\frac{3\,\zeta'(2)}{\pi^{2}} .
+$$
+
+\section*{Numerical verification}
+
+All computations with mpmath (scripts in the scratch directory, \texttt{own\_fable5/}).
+
+\textbf{Target quantity, computed directly, two independent ways.}
+
+\begin{itemize}
+\item Quadrature of the substituted form (1) at \texttt{mp.dps = 90}, with the factor $(e^u-1-u)/u^2$ evaluated by its Taylor series for $u\le1$ to avoid catastrophic cancellation, on the split $[0,1,5,20,\infty]$:
+  \texttt{\seqsplit{I\_quad = -0.221515581123043709698830019267001901686521878521837833366872495935695102301}}
+\item Quadrature \textbf{in the original variable $x$} on $[1,2,10,100,\infty]$ at \texttt{mp.dps = 50} (numerator $\ln(1+e)-e$ computed by a stable series near $x=1$): agrees with the closed form to $3.5\times10^{-43}$ (about 42 significant digits).
+\item Summation of the alternating series (2) with \texttt{mp.nsum(..., method='a')} at \texttt{mp.dps = 70}: agrees with the quadrature to all $\sim$70 digits.
+\end{itemize}
+
+\textbf{Closed form.}
+\texttt{\seqsplit{2*mp.catalan/mp.pi + mp.log(2)/6 + mp.log(mp.pi)/2 - 6*mp.log(mp.glaisher)}}
+= \texttt{\seqsplit{-0.221515581123043709698830019267001901686521878521837833366872495935695102301}}
+
+Absolute difference at \texttt{mp.dps = 90}: $2.45\times10^{-91}$, i.e.\ \textbf{89 agreeing significant digits}. The three equivalent closed forms (via $\ln A$, via $\zeta'(-1)$, via $\zeta'(2)$) agree with one another to full working precision.
+
+\textbf{Every intermediate identity was verified numerically as well} (at 40--50 digits): the closed form of $J(a)$ at $a=2,4,7.3$; representation (3); representation (4); the reflection identity of Step 5; $\int_0^{\pi/4}\ln\sin w\,dw=-\frac G2-\frac\pi4\ln2$; formula (6) for $L$; Raabe's value $\int_0^1\ln\Gamma=\frac12\ln2\pi$ (not needed in the final chain, checked for sanity); the alternating digamma identity at $t=0.37$; and $a_n=-\int_0^1\frac{t\,dt}{2n-1+t}$ at $n=5$. All differences were $\le 10^{-40}$.
+
+\section*{Notes}
+
+\begin{itemize}
+\item The derivation is complete and self-contained up to the following classical, textbook inputs: the series $\psi(z)=-\gamma+\sum_{m\ge0}\bigl(\frac1{m+1}-\frac1{m+z}\bigr)$; Euler's reflection formula; the expansion $\zeta(w)=\frac1{w-1}+\gamma+O(w-1)$; the special values $\zeta(-1)=-\frac1{12}$ and $\zeta'(0)=-\frac12\ln2\pi$; Hermite's integral representation of the Hurwitz zeta function (used only to guarantee joint smoothness/analyticity, so that $\partial_x\zeta(w,x)=-w\zeta(w+1,x)$ extends by continuation and $\partial_x\partial_s=\partial_s\partial_x$ at $s=0$); and the functional equation of $\zeta$ (used only for the optional $\zeta'(2)$ form). Everything else --- the closed form of $J(a)$, the Abel/dominated-convergence passage to the alternating series, the digamma integral, the cancellation of $\int_0^{1/4}\ln\Gamma$, Lerch's formula, and the evaluation of $\int_0^{1/2}\ln\Gamma$ --- is derived above.
+\item All interchanges of limit operations are justified where they occur: Fubini--Tonelli and Abel's theorem plus dominated convergence in Step 2; uniform convergence (Leibniz remainder bound) in Step 3; dominated convergence in the Catalan lemma; Cauchy-formula differentiation under the integral in Step 6.
+\item Here $\ln A=\frac1{12}-\zeta'(-1)$ is taken as the definition of the Glaisher--Kinkelin constant; its equivalence with Kinkelin's limit $\ln A=\lim_{n\to\infty}\bigl[\sum_{k\le n}k\ln k-\bigl(\frac{n^2}2+\frac n2+\frac1{12}\bigr)\ln n+\frac{n^{2}}4\bigr]$ is classical and is not needed for the result.
+\item Confidence: very high. The value was verified two independent numerical ways (direct quadrature in both variables, and the accelerated alternating series) against the closed form, with 89 matching significant digits, and every intermediate identity was checked numerically.
+\end{itemize}
+
+\end{document}

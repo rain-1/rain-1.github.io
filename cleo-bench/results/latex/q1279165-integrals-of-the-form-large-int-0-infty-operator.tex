@@ -1,0 +1,336 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 8\\[1ex]\large Integrals of the form ${\large\int}_0^\infty\operatorname{arccot}(x)\cdot\operatorname{arccot}(a\,x)\cdot\operatorname{arccot}(b\,x)\ dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/1279165}{question 1279165}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Solution: $\displaystyle I(a,b)=\int_0^\infty\operatorname{arccot}(x)\operatorname{arccot}(ax)\operatorname{arccot}(bx)\,dx$ --- the case $b=1$}
+
+\subsection*{Problem}
+
+For $a,b>0$ let
+\[I(a,b)=\int_0^\infty\operatorname{arccot}(x)\cdot\operatorname{arccot}(a x)\cdot\operatorname{arccot}(b x)\,dx .\]
+Known are $I(a,0)=\frac{\pi^2}{4}\bigl[\ln(1+\tfrac1a)+\tfrac{\ln(1+a)}{a}\bigr]$ (G\&R 4.511) and
+$I(1,1)=\frac{3\pi^2}{4}\ln 2-\frac{21}{8}\zeta(3)$.
+\textbf{Asked:} a general closed form for $I(a,1)$, or at least closed forms for $I(2,1)$ and $I(3,1)$.
+
+Throughout, $\operatorname{arccot}x:=\arctan(1/x)\in(0,\pi/2)$ for $x>0$, and
+\[\chi_s(z):=\tfrac12\bigl[\operatorname{Li}_s(z)-\operatorname{Li}_s(-z)\bigr]=\sum_{k\ge0}\frac{z^{2k+1}}{(2k+1)^s}\qquad(\text{Legendre chi}).\]
+
+\subsection*{Result}
+
+\textbf{General closed form.} For every $a\ge 1$, with
+\[c=\frac{a-1}{a+1},\qquad 1+c=\frac{2a}{a+1},\qquad 1-c^2=\frac{4a}{(a+1)^2},\]
+\[\boxed{\begin{aligned}
+I(a,1)=\;&\frac{\pi^2}{4a}\Bigl[(a+1)\ln(a+1)-a\ln a+a\ln2\Bigr]+\frac{7(a-1)}{8a}\,\zeta(3)\\[2pt]
+&+\frac{a-1}{a}\,\chi_3\!\left(\frac{a-1}{a+1}\right)-\chi_3\!\left(\frac1a\right)-\ln a\;\chi_2\!\left(\frac1a\right)-2\ln\frac{2a}{a+1}\;\chi_2\!\left(\frac{a-1}{a+1}\right)\\[2pt]
+&+\ln a\,\ln\frac{2a}{a+1}\,\ln\frac{a-1}{a+1}-\frac23\ln^3\frac{2a}{a+1}\\[2pt]
+&+\frac14\operatorname{Li}_3\!\left(\frac{4a}{(a+1)^2}\right)-\frac14\ln\frac{4a}{(a+1)^2}\,\operatorname{Li}_2\!\left(\frac{4a}{(a+1)^2}\right)\\[2pt]
+&-2\operatorname{Li}_3\!\left(\frac{a+1}{2a}\right)-2\ln\frac{2a}{a+1}\,\operatorname{Li}_2\!\left(\frac{a+1}{2a}\right).
+\end{aligned}}\]
+(At $a=1$ the term with $\ln\frac{a-1}{a+1}$ is absent --- its coefficient vanishes --- and the formula evaluates \emph{exactly} to $\frac{3\pi^2}{4}\ln 2-\frac{21}{8}\zeta(3)$, reproducing $(3)$; see \S7.)
+
+\textbf{Companion for $0<a<1$} (same method, stated for completeness; \S8):
+\[\begin{aligned}
+I(a,1)=\;&\frac{\pi^2}{4a}\Bigl[(a+1)\ln(a+1)-a\ln a+a\ln2\Bigr]+\frac{7(a-1)}{8a}\,\zeta(3)\\
+&+\frac{1-a}{a}\chi_3\!\left(\frac{1-a}{1+a}\right)-\chi_3(a)+\ln a\,\chi_2(a)+2\ln\frac{2a}{1+a}\,\chi_2\!\left(\frac{1-a}{1+a}\right)\\
+&+\ln a\,\ln\frac{2a}{1+a}\,\ln\frac{1-a}{1+a}
++\frac14\operatorname{Li}_3\!\left(\frac{4a}{(1+a)^2}\right)-\frac14\ln\frac{4a}{(1+a)^2}\operatorname{Li}_2\!\left(\frac{4a}{(1+a)^2}\right)\\
+&-2\operatorname{Li}_3\!\left(\frac{2a}{1+a}\right)+2\ln\frac{2a}{1+a}\,\operatorname{Li}_2\!\left(\frac{2a}{1+a}\right).
+\end{aligned}\]
+
+\textbf{The two requested special values.} Reducing all polylogarithms by classical identities (\S9):
+
+\[\boxed{\;\begin{aligned}
+I(2,1)=\;&\frac{21}{4}\zeta(3)+\frac{17}{2}\operatorname{Li}_3\!\left(-\tfrac12\right)
+-\frac34\operatorname{Li}_3\!\left(\tfrac13\right)+\frac34\operatorname{Li}_3\!\left(-\tfrac13\right)
+-\frac14\operatorname{Li}_3\!\left(-\tfrac18\right)\\
+&-2\ln 2\,\operatorname{Li}_2\!\left(\tfrac13\right)
++\pi^2\!\left(\frac{3\ln 3}{8}-\frac{7\ln 2}{12}\right)
++2\ln^2 2\,\ln 3-\ln 2\,\ln^2 3-\frac{7}{24}\ln^3 2
+\end{aligned}\;}\]
+
+\[\boxed{\;\begin{aligned}
+I(3,1)=\;&-\frac74\zeta(3)+\frac32\operatorname{Li}_3\!\left(\tfrac13\right)+\frac14\operatorname{Li}_3\!\left(-\tfrac13\right)+\frac23\operatorname{Li}_3\!\left(-\tfrac12\right)\\
+&+\ln 3\,\operatorname{Li}_2\!\left(\tfrac13\right)
++\pi^2\!\left(\frac{35\ln 2}{36}-\frac{3\ln 3}{8}\right)-\frac{\ln^3 2}{9}+\frac{5\ln^3 3}{24}
+\end{aligned}\;}\]
+
+Numerically,
+\[I(2,1)=1.51208605444427919260956727012207121505106065118750693166259359404\ldots\]
+\[I(3,1)=1.25096386740952300916042368441067490079970979116162141329074248875\ldots\]
+
+A by-product worth displaying is the central lemma (Step 3), of independent interest:
+\[\int_0^\infty\frac{x\,\operatorname{arccot}^2 x}{x^2+\gamma^2}\,dx
+=\frac{\pi^2}{4}\ln\frac{1+\gamma}{\gamma}-\frac78\zeta(3)+\chi_3\!\left(\frac{\gamma-1}{\gamma+1}\right)\qquad(\gamma>0).\]
+
+\begin{center}\rule{0.4\textwidth}{0.4pt}\end{center}
+
+\section*{Derivation}
+
+\subsection*{0. Plan and notation}
+
+Since two factors coincide when $b=1$,
+\[I(a,1)=\int_0^\infty\operatorname{arccot}^2(x)\,\operatorname{arccot}(ax)\,dx .\]
+We (1) differentiate in the parameter to reduce to the one--parameter integral $N(\gamma)$ above; (2) evaluate $N(\gamma)$ in closed form (Key Lemma); (3) integrate $N$ once more, which requires four classical weight-3 integrals with explicit antiderivatives; (4) assemble, and (5) specialize to $a=2,3$. Every antiderivative below can be checked by direct differentiation (all were also machine-verified symbolically, and every displayed identity was verified numerically to $\ge 60$ digits).
+
+We use repeatedly: $\dfrac{d}{dz}\operatorname{Li}_2(z)=-\dfrac{\ln(1-z)}{z}$, $\dfrac{d}{dz}\operatorname{Li}_3(z)=\dfrac{\operatorname{Li}_2(z)}{z}$, hence
+\[\begin{gathered}
+\frac{d}{dz}\operatorname{Li}_2(1-z)=\frac{\ln z}{1-z},\qquad
+\frac{d}{dz}\operatorname{Li}_3(1-z)=-\frac{\operatorname{Li}_2(1-z)}{1-z},\\
+\chi_2'(z)=\frac{\operatorname{artanh}z}{z},\qquad \chi_3'(z)=\frac{\chi_2(z)}{z}.
+\end{gathered}\]
+Also $\operatorname{Li}_2(1)=\frac{\pi^2}{6}$, $\operatorname{Li}_2(-1)=-\frac{\pi^2}{12}$, $\chi_2(1)=\frac{\pi^2}{8}$, $\chi_3(1)=\sum_{k\ge0}(2k+1)^{-3}=(1-2^{-3})\zeta(3)=\frac78\zeta(3)$.
+
+\subsection*{1. Reduction to one parameter}
+
+For $\gamma\ge 0$ put
+\[\Phi(\gamma):=\int_0^\infty\operatorname{arccot}^2(x)\,\arctan\frac{\gamma}{x}\,dx,
+\qquad\text{so}\qquad I(a,1)=\Phi(1/a),\quad \Phi(0)=0 ,\]
+because $\operatorname{arccot}(ax)=\arctan\frac{1/a}{x}$.
+
+For $0<\gamma_0\le\gamma\le\Gamma$ the $\gamma$-derivative of the integrand is
+$\operatorname{arccot}^2(x)\,\frac{x}{x^2+\gamma^2}$, dominated by the integrable function
+$\operatorname{arccot}^2(x)\frac{x}{x^2+\gamma_0^2}=O(\min(x,x^{-3}))$; hence $\Phi$ is differentiable on $(0,\infty)$ with
+\[\Phi'(\gamma)=N(\gamma):=\int_0^\infty\frac{x\,\operatorname{arccot}^2x}{x^2+\gamma^2}\,dx\;\ge 0 .\]
+By dominated convergence $\Phi$ is continuous at $0^+$, so by monotone convergence and the fundamental theorem of calculus,
+\begin{equation}
+I(a,1)=\int_0^{1/a}N(\gamma)\,d\gamma. \tag{1.1}
+\end{equation}
+
+\subsection*{2. The auxiliary function $\Lambda$}
+
+Let
+\[\Lambda(z):=\int_0^z\frac{-\ln s}{1-s^2}\,ds\qquad(z>0),\]
+whose integrand is positive and continuous on $(0,\infty)$ (removable singularity at $s=1$, where it tends to $\tfrac12$).
+
+\textbf{(2a)} $\displaystyle\Lambda(1)=\int_0^1(-\ln s)\sum_{k\ge0}s^{2k}\,ds=\sum_{k\ge0}\frac1{(2k+1)^2}=\frac{\pi^2}{8}$ (monotone convergence).
+
+\textbf{(2b)} \emph{Landen form:} for all $z>0$,
+\begin{equation}
+\Lambda(z)=\frac{\pi^2}{8}+\chi_2\!\left(\frac{z-1}{z+1}\right). \tag{2.1}
+\end{equation}
+\emph{Proof.} Both sides equal $\frac{\pi^2}{8}$ at $z=1$. With $u=\frac{z-1}{z+1}\in(-1,1)$ one has $\operatorname{artanh}u=\frac12\ln\frac{1+u}{1-u}=\frac12\ln z$ and $u'(z)=\frac{2}{(z+1)^2}$, so
+\[\frac{d}{dz}\,\chi_2(u)=\frac{\operatorname{artanh}u}{u}\,u'
+=\frac{\ln z}{2}\cdot\frac{z+1}{z-1}\cdot\frac{2}{(z+1)^2}
+=\frac{\ln z}{z^2-1}=-\frac{\ln z}{1-z^2}=\Lambda'(z).\qquad\square\]
+
+\textbf{(2c)} For $p,\eta>0$:
+\begin{equation}
+A(p,\eta):=\int_0^\infty\frac{\arctan(\eta/x)}{x^2+p^2}\,dx=\frac1p\,\Lambda\!\left(\frac{\eta}{p}\right). \tag{2.2}
+\end{equation}
+\emph{Proof.} Scaling $x=p\xi$ reduces to $p=1$. Let $\Lambda_0(\mu)=\int_0^\infty\frac{\arctan(\mu/\xi)}{1+\xi^2}d\xi$; then $\Lambda_0(0)=0$ and (differentiation under the integral, justified as in \S1)
+\[\begin{aligned}
+\Lambda_0'(\mu)&=\int_0^\infty\frac{\xi\,d\xi}{(\xi^2+\mu^2)(1+\xi^2)}
+=\frac12\int_0^\infty\frac{du}{(u+\mu^2)(u+1)}\\
+&=\frac{1}{2(1-\mu^2)}\Bigl[\ln\frac{u+\mu^2}{u+1}\Bigr]_0^\infty
+=\frac{-\ln\mu}{1-\mu^2}=\Lambda'(\mu),
+\end{aligned}\]
+so $\Lambda_0=\Lambda$. $\square$
+
+\subsection*{3. Key Lemma}
+
+\begin{lemma}
+For every $\gamma>0$,
+\[N(\gamma)=\int_0^\infty\frac{x\,\operatorname{arccot}^2x}{x^2+\gamma^2}\,dx
+=\frac{\pi^2}{4}\,\ln\frac{1+\gamma}{\gamma}-\frac78\zeta(3)+\chi_3\!\left(\frac{\gamma-1}{\gamma+1}\right).\]
+\end{lemma}
+
+\emph{Proof.} By the fundamental theorem of calculus in $s$,
+\[\operatorname{arccot}^2x=\arctan^2\frac1x=2\int_0^1\arctan\frac sx\cdot\frac{x}{x^2+s^2}\,ds .\]
+All integrands are nonnegative, so Tonelli gives
+\[N(\gamma)=2\int_0^1\!\!\int_0^\infty\frac{x^2\,\arctan(s/x)}{(x^2+s^2)(x^2+\gamma^2)}\,dx\,ds .\]
+For $s\neq\gamma$,
+$\frac{x^2}{(x^2+s^2)(x^2+\gamma^2)}=\frac{1}{\gamma^2-s^2}\Bigl[\frac{\gamma^2}{x^2+\gamma^2}-\frac{s^2}{x^2+s^2}\Bigr]$,
+so by (2.2) and $\Lambda(1)=\frac{\pi^2}8$ the inner integral equals
+\[\frac{\gamma^2 A(\gamma,s)-s^2A(s,s)}{\gamma^2-s^2}
+=\frac{\gamma\,\Lambda(s/\gamma)-\frac{\pi^2}{8}\,s}{\gamma^2-s^2}.\]
+The apparent pole at $s=\gamma$ is removable (numerator vanishes there). Substituting $s=\gamma\sigma$,
+\begin{equation}
+N(\gamma)=2\int_0^{1/\gamma}\frac{\Lambda(\sigma)-\frac{\pi^2}{8}\sigma}{1-\sigma^2}\,d\sigma . \tag{3.1}
+\end{equation}
+Insert (2.1) in the form $\Lambda(\sigma)-\frac{\pi^2}{8}\sigma=\frac{\pi^2}{8}(1-\sigma)-\chi_2\bigl(\frac{1-\sigma}{1+\sigma}\bigr)$:
+\[N(\gamma)=\frac{\pi^2}{4}\int_0^{1/\gamma}\frac{d\sigma}{1+\sigma}
+-2\int_0^{1/\gamma}\frac{\chi_2\bigl(\frac{1-\sigma}{1+\sigma}\bigr)}{1-\sigma^2}\,d\sigma .\]
+In the second integral substitute $u=\frac{1-\sigma}{1+\sigma}$, i.e. $\sigma=\frac{1-u}{1+u}$, for which $\frac{d\sigma}{1-\sigma^2}=-\frac{du}{2u}$; as $\sigma:0\to 1/\gamma$, $u:1\to\frac{\gamma-1}{\gamma+1}$. Using $\chi_3'(u)=\chi_2(u)/u$,
+\[2\int_0^{1/\gamma}\frac{\chi_2(u(\sigma))}{1-\sigma^2}\,d\sigma
+=\int_{(\gamma-1)/(\gamma+1)}^{1}\frac{\chi_2(u)}{u}\,du
+=\chi_3(1)-\chi_3\!\left(\frac{\gamma-1}{\gamma+1}\right).\]
+With $\chi_3(1)=\frac78\zeta(3)$ the Lemma follows. $\square$
+
+\emph{(Check: $\gamma=1$ gives the classical $\int_0^\infty\frac{x\operatorname{arccot}^2x}{1+x^2}dx=\int_0^{\pi/2}\theta^2\cot\theta\,d\theta=\frac{\pi^2}{4}\ln2-\frac78\zeta(3)$.)}
+
+\subsection*{4. Integrating the Lemma; reduction to $X(c)$}
+
+Let $w=\frac1a\in(0,1]$ (so $a\ge1$). From (1.1),
+\begin{equation}
+I(a,1)=\frac{\pi^2}{4}\Bigl[(1+w)\ln(1+w)-w\ln w\Bigr]-\frac{7}{8}\zeta(3)\,w+\Xi(w),
+\qquad \Xi(w):=\int_0^{w}\chi_3\!\left(\frac{\gamma-1}{\gamma+1}\right)d\gamma, \tag{4.1}
+\end{equation}
+using $\int_0^w\ln\frac{1+\gamma}{\gamma}\,d\gamma=(1+w)\ln(1+w)-w\ln w$.
+
+In $\Xi$ substitute $z=\frac{1-\gamma}{1+\gamma}$ ($\gamma=\frac{1-z}{1+z}$, $d\gamma=-\frac{2\,dz}{(1+z)^2}$) and use that $\chi_3$ is odd:
+\[\Xi(w)=-2\int_{c}^{1}\frac{\chi_3(z)}{(1+z)^2}\,dz,\qquad
+c:=\frac{1-w}{1+w}=\frac{a-1}{a+1}\in[0,1).\]
+Integrating by parts with $d\bigl(-\frac1{1+z}\bigr)$ and $\chi_3'(z)=\chi_2(z)/z$, then splitting $\frac{1}{z(1+z)}=\frac1z-\frac1{1+z}$ and using $\int_c^1\frac{\chi_2}{z}=\chi_3(1)-\chi_3(c)$:
+\begin{equation}
+\Xi(w)=-\frac78\zeta(3)+\frac{2c}{1+c}\,\chi_3(c)+2X(c),
+\qquad X(c):=\int_c^1\frac{\chi_2(z)}{1+z}\,dz,\qquad \frac{2c}{1+c}=\frac{a-1}{a}. \tag{4.2}
+\end{equation}
+
+\subsection*{5. Evaluation of $X(c)$}
+
+Write $\chi_2=\frac12(\operatorname{Li}_2(z)-\operatorname{Li}_2(-z))$ and integrate each part by parts against $d\ln(1+z)$:
+\[\int_c^1\frac{\operatorname{Li}_2(z)}{1+z}dz=\Bigl[\ln(1+z)\operatorname{Li}_2(z)\Bigr]_c^1+\int_c^1\frac{\ln(1+z)\ln(1-z)}{z}dz,\]
+\[\int_c^1\frac{\operatorname{Li}_2(-z)}{1+z}dz=\Bigl[\ln(1+z)\operatorname{Li}_2(-z)\Bigr]_c^1+\int_c^1\frac{\ln^2(1+z)}{z}dz .\]
+Since $\operatorname{Li}_2(1)-\operatorname{Li}_2(-1)=\frac{\pi^2}{4}$,
+\begin{equation}
+X(c)=\frac{\pi^2\ln2}{8}-\ln(1+c)\,\chi_2(c)+\tfrac12\mathcal A(c)-\tfrac12\mathcal B(c), \tag{5.1}
+\end{equation}
+\[\mathcal A(c):=\int_c^1\frac{\ln(1-z)\ln(1+z)}{z}dz,\qquad
+\mathcal B(c):=\int_c^1\frac{\ln^2(1+z)}{z}dz .\]
+
+\subsection*{6. The four antiderivative lemmas}
+
+\textbf{(A1)} $\displaystyle \mathcal C(x):=\int_0^x\frac{\ln^2(1-v)}{v}\,dv
+=\ln^2(1-x)\ln x+2\ln(1-x)\operatorname{Li}_2(1-x)-2\operatorname{Li}_3(1-x)+2\zeta(3)$.
+\emph{Proof:} differentiate the right side; all non-elementary terms cancel pairwise, leaving $\frac{\ln^2(1-x)}{x}$; the right side $\to0$ as $x\to0^+$. In particular $\mathcal C(1)=2\zeta(3)$.
+
+\textbf{(A2)} $\displaystyle g(z):=\int_0^z\frac{\ln^2(1+t)}{t}\,dt
+=\ln^2(1+z)\ln z-\frac23\ln^3(1+z)-2\ln(1+z)\operatorname{Li}_2\!\Bigl(\frac1{1+z}\Bigr)-2\operatorname{Li}_3\!\Bigl(\frac1{1+z}\Bigr)+2\zeta(3)$.
+\emph{Proof:} substitute $s=\frac{t}{1+t}$, so $\frac{dt}{t}=\frac{ds}{s(1-s)}$ and $\ln(1+t)=-\ln(1-s)$; then
+$g(z)=\mathcal C\bigl(\frac{z}{1+z}\bigr)+\frac13\ln^3(1+z)$, and expand (A1) with $1-\frac{z}{1+z}=\frac1{1+z}$. (Equivalently: differentiate the right side directly.)
+With $\operatorname{Li}_2(\tfrac12)=\frac{\pi^2}{12}-\frac{\ln^22}{2}$ and $\operatorname{Li}_3(\tfrac12)=\frac{7\zeta(3)}{8}-\frac{\pi^2\ln2}{12}+\frac{\ln^32}{6}$ one gets $g(1)=\frac{\zeta(3)}{4}$, hence
+\begin{equation}
+\mathcal B(c)=g(1)-g(c)=\frac{\zeta(3)}{4}-g(c). \tag{6.1}
+\end{equation}
+
+\textbf{(A3)} Let $\Psi(t):=\ln^2t\,\ln\frac{1-t}{1+t}-4\chi_3(t)+4\ln t\,\chi_2(t)$. Then, with $t(z)=\frac{1-z}{1+z}$,
+\[\frac{d}{dz}\,\Psi(t(z))=\frac{1}{z}\ln^2\frac{1-z}{1+z},\qquad \Psi(1)=-4\chi_3(1)=-\frac72\zeta(3),\qquad \Psi(0^+)=0 .\]
+\emph{Proof:} under $t=\frac{1-z}{1+z}$ one has $\frac{dz}{z}=-\frac{2\,dt}{1-t^2}$ and $\ln\frac{1-z}{1+z}=\ln t$, so the claim is equivalent to $\int\frac{\ln^2 t}{1-t^2}\,dt$ having primitive $-\frac12\Psi(t)$, which follows from
+$\int\frac{\ln^2t}{1\mp t}dt=\mp\ln^2t\ln(1\mp t)\pm2\bigl[\operatorname{Li}_3(\pm t)-\ln t\operatorname{Li}_2(\pm t)\bigr]$,
+each checked by differentiation using $\frac{d}{dt}\bigl[\operatorname{Li}_3(\pm t)-\ln t\operatorname{Li}_2(\pm t)\bigr]=\frac{\ln t\ln(1\mp t)}{t}$.
+
+\textbf{(A4)} From the algebraic identity $\ln(1-z)\ln(1+z)=\frac14\ln^2(1-z^2)-\frac14\ln^2\frac{1-z}{1+z}$ and $v=z^2$ in the first part,
+\[\int_0^c\frac{\ln(1-z)\ln(1+z)}{z}dz=\frac18\,\mathcal C(c^2)-\frac14\Bigl[\Psi\bigl(t(c)\bigr)-\Psi(1)\Bigr],
+\qquad t(c)=\frac{1-c}{1+c}=\frac1a .\]
+At $c=0$ this yields the classical $\int_0^1\frac{\ln(1-z)\ln(1+z)}{z}dz=\frac{\zeta(3)}4-\frac78\zeta(3)=-\frac58\zeta(3)$, and consequently
+\begin{equation}
+\mathcal A(c)=\frac{\zeta(3)}{4}-\frac18\,\mathcal C(c^2)+\frac14\,\Psi\!\left(\frac1a\right). \tag{6.2}
+\end{equation}
+
+\subsection*{7. Assembly: the general formula for $a\ge1$}
+
+Insert (6.1)--(6.2) into (5.1), then (5.1) into (4.2), then (4.2) into (4.1). Collecting the $\zeta(3)$'s:
+$-\frac{7w}{8}-\frac78-\frac14+2=\frac78(1-w)=\frac{7(a-1)}{8a}$. Note $\Psi(1/a)=\ln^2a\,\ln c-4\chi_3(1/a)-4\ln a\,\chi_2(1/a)$ (since $\ln\frac{1-1/a}{1+1/a}=\ln c$), and $1+c=\frac{2a}{a+1}$, $1-c^2=\frac{4a}{(a+1)^2}$.
+
+The pure-logarithm terms multiplying $\ln c$ collapse: writing $a=\frac{1+c}{1-c}$, i.e. $\ln a=\ln(1+c)-\ln(1-c)$,
+\[\begin{aligned}
+&\frac{\ln^2a-\ln^2(1-c^2)}{4}+\ln^2(1+c)\\
+&\qquad=\frac{[\ln(1+c)-\ln(1-c)]^2-[\ln(1+c)+\ln(1-c)]^2}{4}+\ln^2(1+c)
+=\ln a\,\ln(1+c).
+\end{aligned}\]
+This yields exactly the boxed general formula in \textbf{Result}. Its evaluation at $a=1$ ($c=0$) is exact:
+\[\begin{aligned}
+I(1,1)&=\frac{\pi^2}{4}\bigl[2\ln2+\ln2\bigr]-\chi_3(1)+\frac14\operatorname{Li}_3(1)-2\operatorname{Li}_3(1)\\
+&=\frac{3\pi^2}{4}\ln2-\Bigl(\frac78-\frac14+2\Bigr)\zeta(3)=\frac{3\pi^2}{4}\ln2-\frac{21}{8}\zeta(3),
+\end{aligned}\]
+which is the known value $(3)$ --- a strong structural check.
+
+\subsection*{8. The companion branch $0<a<1$}
+
+Here $w=1/a>1$. Split $\Xi(w)=\Xi(1)+\int_1^w\chi_3\bigl(\frac{\gamma-1}{\gamma+1}\bigr)d\gamma$ and substitute $z=\frac{\gamma-1}{\gamma+1}$ (Jacobian now $\frac{2}{(1-z)^2}$):
+\[\Xi(w)=\Xi(1)+2\int_0^{c'}\frac{\chi_3(z)}{(1-z)^2}\,dz,\qquad c'=\frac{1-a}{1+a}.\]
+Integration by parts against $d\bigl(\frac{1}{1-z}\bigr)$ gives
+$\Xi(w)=\Xi(1)+\frac{2c'}{1-c'}\chi_3(c')-2Y(c')$ with $Y(c')=\int_0^{c'}\frac{\chi_2(z)}{1-z}dz$, and one more integration by parts (against $-\ln(1-z)$, using $\chi_2'(z)=\frac{1}{2z}\ln\frac{1+z}{1-z}$) gives
+\[Y(c')=-\ln(1-c')\,\chi_2(c')+\frac12\int_0^{c'}\frac{\ln(1-z)\ln(1+z)}{z}dz-\frac12\,\mathcal C(c'),\]
+where both integrals are supplied by (A1) and (A4) (now with $t(c')=\frac{1-c'}{1+c'}=a$). Assembling exactly as in \S7 (the same log-collapse applies with $a=\frac{1-c'}{1+c'}$) produces the companion formula displayed in \textbf{Result}; it was verified numerically to 60 digits at $a=0.1,0.3,0.5,0.7,0.9$, and both branches give $\frac{3\pi^2}{4}\ln2-\frac{21}{8}\zeta(3)$ at $a=1$.
+
+\subsection*{9. Specialization to $a=2$ and $a=3$}
+
+For $a=2$: $c=\frac13$, $\frac1a=\frac12$, $1+c=\frac43$, $1-c^2=\frac89$, $\frac{a+1}{2a}=\frac34$; for $a=3$: $c=\frac12$, $\frac1a=\frac13$, $1+c=\frac32$, $1-c^2=\frac34$, $\frac{a+1}{2a}=\frac23$. The general formula then contains $\operatorname{Li}_{2,3}$ at
+$\{\pm\frac13,\pm\frac12,\frac34,\frac89\}$ (for $a=2$) and $\{\pm\frac12,\pm\frac13,\frac34,\frac23\}$ (for $a=3$). These are reduced with the following classical identities (each also verified numerically to $\ge40$ digits):
+
+\emph{Dilogarithm.} Reflection $\operatorname{Li}_2(x)+\operatorname{Li}_2(1-x)=\frac{\pi^2}6-\ln x\ln(1-x)$; Landen $\operatorname{Li}_2\bigl(\frac{-x}{1-x}\bigr)=-\operatorname{Li}_2(x)-\frac12\ln^2(1-x)$; duplication $\operatorname{Li}_2(x)+\operatorname{Li}_2(-x)=\frac12\operatorname{Li}_2(x^2)$; $\operatorname{Li}_2(\tfrac12)=\frac{\pi^2}{12}-\frac{\ln^22}2$. From these one derives (used below):
+\[\operatorname{Li}_2\!\left(-\tfrac12\right)=-\operatorname{Li}_2\!\left(\tfrac13\right)-\tfrac12\ln^2\tfrac32,\qquad
+\operatorname{Li}_2\!\left(-\tfrac13\right)=2\operatorname{Li}_2\!\left(\tfrac13\right)+\tfrac12\ln^23-\tfrac{\pi^2}6,\]
+\[\operatorname{Li}_2\!\left(\tfrac34\right)=2\operatorname{Li}_2\!\left(\tfrac13\right)-2\ln^22+\ln^23,\qquad
+\operatorname{Li}_2\!\left(\tfrac89\right)=\tfrac{\pi^2}2+6\ln2\ln3-5\ln^23-6\operatorname{Li}_2\!\left(\tfrac13\right),\]
+\[\operatorname{Li}_2\!\left(\tfrac23\right)=\frac{\pi^2}{6}-\ln\tfrac13\,\ln\tfrac23-\operatorname{Li}_2\!\left(\tfrac13\right)\qquad(\text{reflection at }x=\tfrac13).\]
+For instance, the second identity follows from Landen at $x=-\frac13$ [$\operatorname{Li}_2(\frac14)=-\operatorname{Li}_2(-\frac13)-\frac12\ln^2\frac43$] combined with duplication and the $\frac12$-values; the third from reflection at $x=\frac34$ plus duplication $\operatorname{Li}_2(\frac14)=2\operatorname{Li}_2(\frac12)+2\operatorname{Li}_2(-\frac12)$; the fourth from reflection at $x=\frac89$ plus duplication $\operatorname{Li}_2(\frac19)=2\operatorname{Li}_2(\frac13)+2\operatorname{Li}_2(-\frac13)$.
+
+\emph{Trilogarithm.} Duplication $\operatorname{Li}_3(x)+\operatorname{Li}_3(-x)=\frac14\operatorname{Li}_3(x^2)$; Landen's three-term relation (for $0<x<1$)
+\[\operatorname{Li}_3(x)+\operatorname{Li}_3(1-x)+\operatorname{Li}_3\!\Bigl(\frac{-x}{1-x}\Bigr)
+=\zeta(3)+\frac{\ln^3(1-x)}{6}+\frac{\pi^2}{6}\ln(1-x)-\frac12\ln x\ln^2(1-x),\]
+used at $x=\frac14$ (relating $\operatorname{Li}_3(\frac34),\operatorname{Li}_3(\frac14),\operatorname{Li}_3(-\frac13)$), at $x=\frac19$ (relating $\operatorname{Li}_3(\frac89),\operatorname{Li}_3(\frac19),\operatorname{Li}_3(-\frac18)$), and at $x=\frac13$ (relating $\operatorname{Li}_3(\frac23),\operatorname{Li}_3(\frac13),\operatorname{Li}_3(-\frac12)$); together with
+$\operatorname{Li}_3(\frac14)=4\operatorname{Li}_3(\frac12)+4\operatorname{Li}_3(-\frac12)$, $\operatorname{Li}_3(\frac19)=4\operatorname{Li}_3(\frac13)+4\operatorname{Li}_3(-\frac13)$ (duplication) and
+$\operatorname{Li}_3(\tfrac12)=\frac{7\zeta(3)}8-\frac{\pi^2\ln2}{12}+\frac{\ln^32}6$.
+(Landen's relation is itself proved by differentiating in $x$ --- the derivative identity reduces to the dilogarithm reflection and Landen formulas --- and checking the value $\zeta(3)$ at $x\to0^+$.)
+
+Carrying out these substitutions (exact rational bookkeeping, done symbolically and re-verified numerically to 100 digits) gives the two boxed evaluations in \textbf{Result}. Equivalently, with the Legendre chi, the $a=2$ value can be written
+\[\begin{aligned}
+I(2,1)=\;&\frac{21}{4}\zeta(3)+\frac{17}{2}\operatorname{Li}_3\!\left(-\tfrac12\right)-\frac32\chi_3\!\left(\tfrac13\right)-\frac14\operatorname{Li}_3\!\left(-\tfrac18\right)-2\ln2\operatorname{Li}_2\!\left(\tfrac13\right)\\
+&+\pi^2\Bigl(\tfrac{3\ln3}{8}-\tfrac{7\ln2}{12}\Bigr)+2\ln^22\ln3-\ln2\ln^23-\tfrac{7}{24}\ln^32 .
+\end{aligned}\]
+
+\begin{center}\rule{0.4\textwidth}{0.4pt}\end{center}
+
+\section*{Numerical verification}
+
+All computations with mpmath at 60--100 significant digits (\texttt{mp.dps} = 60, 80, 100), integrals by Gauss--Legendre \texttt{mp.quad} with split points $[0,\frac1{50},\frac15,1,5,50,500,5000,10^5,\infty]$.
+
+\begin{enumerate}
+\item \textbf{$\Lambda$ identity (2.1):} agreement with direct quadrature to 60 digits at $z=0.3$ and $z=2.7$.
+\item \textbf{Key Lemma:} $N(\gamma)$ vs. direct quadrature --- 60 digits at $\gamma=0.5,\,1,\,2.3$.
+\item \textbf{Formula (1.1):} direct $I(a,1)$ vs. $\int_0^{1/a}N_{\text{closed}}$ --- 60 digits at $a=2,3,1.5,5$.
+\item \textbf{General closed form ($a\ge1$):} vs. direct triple-arccot quadrature --- \textbf{79--80 digits} of agreement at $a=1,1.5,2,3,5,10$ (at working precision 80).
+\item \textbf{Companion ($a<1$):} 59--60 digits at $a=0.1,0.3,0.5,0.7,0.9$.
+\item \textbf{Antiderivative lemmas (A1)--(A3), (2.1), and the $H$-derivative identity:} verified symbolically (sympy \texttt{diff} + \texttt{simplify} return 0).
+\item \textbf{All dilog/trilog reduction identities of \S9:} verified numerically to $\ge40$ digits.
+\item \textbf{Final values (100 digits of working precision):}
+\[\begin{aligned}
+I(2,1)_{\rm direct}=I(2,1)_{\rm closed}=\;&1.51208605444427919260956727012207121505106065\\
+&1187506931662593594041998044060620041043\ldots
+\end{aligned}\]
+\[\begin{aligned}
+I(3,1)_{\rm direct}=I(3,1)_{\rm closed}=\;&1.25096386740952300916042368441067490079970979\\
+&1161621413290742488754988861633184783699\ldots
+\end{aligned}\]
+with $|{\rm direct}-{\rm closed}|<6\cdot10^{-101}$ in both cases (about 100 matching significant digits; conservatively $\ge79$ digits certified by the independent 80-dps run).
+\end{enumerate}
+
+Structural exact checks: the general formula reproduces $I(1,1)=\frac{3\pi^2}{4}\ln2-\frac{21}{8}\zeta(3)$ exactly at $a=1$, and the Key Lemma at $\gamma=1$ reproduces $\int_0^{\pi/2}\theta^2\cot\theta\,d\theta=\frac{\pi^2}4\ln2-\frac78\zeta(3)$.
+
+\section*{Notes}
+
+\begin{itemize}
+\item \textbf{Scope.} The main boxed formula is proved for $a\ge1$, which covers everything the question asks ($I(a,1)$ with $a=2,3$, and the general shape); the $0<a<1$ companion is derived by the identical method (\S8) and numerically confirmed, so $I(a,1)$ is in closed form for all $a>0$. The answer to the posed question is therefore \textbf{yes}.
+\item \textbf{Rigor.} Every non-elementary evaluation rests on: differentiation under the integral sign with explicit dominating functions; Tonelli for one positive double integral; substitutions and integrations by parts with explicit antiderivatives, each verifiable (and machine-verified) by differentiation; and the classical polylogarithm identities listed in \S9 (reflection/Landen/duplication/inversion-free set, plus the standard $\operatorname{Li}_{2,3}(\frac12)$ values). I am not aware of any gap.
+\item \textbf{Minimality of the basis is not claimed.} The constants $\operatorname{Li}_3(-\frac12)$, $\operatorname{Li}_3(\pm\frac13)$, $\operatorname{Li}_3(-\frac18)$, $\operatorname{Li}_2(\frac13)$ admit (to my knowledge) no further reduction to more elementary constants; other equivalent presentations (e.g. via $\operatorname{Li}_3(\frac89)$, $\operatorname{Li}_3(\frac19)$, $\operatorname{Li}_3(\frac34)$, or Legendre chi values) are possible via the same identity set.
+\item The Key Lemma $\int_0^\infty\frac{x\operatorname{arccot}^2x}{x^2+\gamma^2}dx=\frac{\pi^2}4\ln\frac{1+\gamma}{\gamma}-\frac78\zeta(3)+\chi_3\bigl(\frac{\gamma-1}{\gamma+1}\bigr)$ and the intermediate representation $I(a,1)=\int_0^{1/a}N$ make the structure of the whole family transparent; the same machinery would give the full two-parameter $I(a,b)$ (an extra integration of the same kind), though this was not required here.
+\end{itemize}
+
+\end{document}

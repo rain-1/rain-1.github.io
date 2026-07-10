@@ -1,0 +1,383 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 6\\[1ex]\large Yet another log-sin integral $\int\limits_0^{\pi/3}\log(1+\sin x)\log(1-\sin x)\,dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/1588996}{question 1588996}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in closed form
+\[
+I=\int_0^{\pi/3}\log(1+\sin x)\log(1-\sin x)\,dx\approx-0.41142425522824105371\ldots
+\]
+
+\section*{Result}
+
+With $G=\sum_{k\ge0}\frac{(-1)^k}{(2k+1)^2}$ (Catalan's constant), $\operatorname{Cl}_2(\theta)=\sum_{n\ge1}\frac{\sin n\theta}{n^2}$ (Clausen function), and the inverse tangent integral of order 3,
+\[
+\operatorname{Ti}_3(x)=\sum_{k\ge0}\frac{(-1)^k x^{2k+1}}{(2k+1)^3}=\Im\operatorname{Li}_3(ix),
+\]
+the value is
+\[
+\boxed{\;
+\begin{aligned}
+I={}&-\frac{25\pi^3}{216}+\frac{\pi}{3}\log^2 2-\log 2\,\operatorname{Cl}_2\!\Big(\frac{\pi}{3}\Big)\\
+&-\frac{\pi}{6}\log^2\!\big(2+\sqrt3\big)+\frac{8G}{3}\log\!\big(2+\sqrt3\big)+4\,\operatorname{Ti}_3\!\big(2-\sqrt3\big)
+\end{aligned}
+\;}
+\]
+
+Equivalently, using the inversion $\operatorname{Ti}_3(2-\sqrt3)=\frac{\pi}{4}\log^2(2+\sqrt3)+\frac{\pi^3}{16}-\operatorname{Ti}_3(2+\sqrt3)$,
+\[
+\begin{aligned}
+I={}&\frac{29\pi^3}{216}+\frac{\pi}{3}\log^2 2-\log 2\,\operatorname{Cl}_2\!\Big(\frac{\pi}{3}\Big)\\
+&+\frac{5\pi}{6}\log^2\!\big(2+\sqrt3\big)+\frac{8G}{3}\log\!\big(2+\sqrt3\big)-4\,\operatorname{Ti}_3\!\big(2+\sqrt3\big).
+\end{aligned}
+\]
+
+Numerically $I=-0.4114242552282410537103283722220855175392234960313920\ldots$
+
+Throughout write $\lambda:=\log(2+\sqrt3)$, so $\log(2-\sqrt3)=-\lambda$ (since $(2-\sqrt3)(2+\sqrt3)=1$).
+
+\section*{Derivation}
+
+\subsection*{0. Algebraic splitting}
+
+For $0\le x\le\pi/3$ both $1\pm\sin x>0$, and $ab=\frac{(a+b)^2-(a-b)^2}{4}$ gives
+\[
+\log(1+\sin x)\log(1-\sin x)=\frac14\log^2(1-\sin^2x)-\frac14\log^2\frac{1+\sin x}{1-\sin x}
+=\log^2\cos x-\log^2\tan\Big(\frac\pi4+\frac x2\Big),
+\]
+where we used $1-\sin^2x=\cos^2x$ with $\cos x>0$, and
+\[
+\frac{1+\sin x}{1-\sin x}=\frac{(\cos\frac x2+\sin\frac x2)^2}{(\cos\frac x2-\sin\frac x2)^2}
+=\tan^2\Big(\frac\pi4+\frac x2\Big)>0 .
+\]
+In the second piece substitute $t=\frac\pi4+\frac x2$ ($dx=2\,dt$, $t:\frac\pi4\to\frac{5\pi}{12}$) and then $w=\tan t$ ($dt=\frac{dw}{1+w^2}$, $\tan\frac{5\pi}{12}=2+\sqrt3$):
+\[
+\int_0^{\pi/3}\log^2\tan\Big(\frac\pi4+\frac x2\Big)dx=2\int_{\pi/4}^{5\pi/12}\log^2\tan t\,dt
+=2\int_1^{2+\sqrt3}\frac{\log^2w}{1+w^2}\,dw .
+\]
+Hence
+\begin{equation*}
+I=A-2B,\qquad
+A:=\int_0^{\pi/3}\log^2\cos x\,dx,\qquad
+B:=\int_1^{2+\sqrt3}\frac{\log^2w}{1+w^2}\,dw. \tag{0.1}
+\end{equation*}
+
+\begin{center}\rule{0.6\textwidth}{0.4pt}\end{center}
+
+\subsection*{1. The log-cosine part $A$}
+
+\subsubsection*{1.1 A Beta-function lemma: $\displaystyle\int_0^{\pi/2}\log^2(2\cos x)\,dx=\frac{\pi^3}{24}$}
+
+For $\Re s>-1$ the Beta integral and the Legendre duplication formula $\Gamma\!\big(\frac{s+1}{2}\big)\Gamma\!\big(\frac s2+1\big)=2^{-s}\sqrt\pi\,\Gamma(s+1)$ give
+\[
+\int_0^{\pi/2}(2\cos x)^s\,dx=2^s\cdot\frac12 B\Big(\frac{s+1}2,\frac12\Big)
+=\frac{2^s\sqrt{\pi}\,\Gamma(\frac{s+1}2)}{2\,\Gamma(\frac s2+1)}
+=\frac{\pi}{2}\,\frac{\Gamma(1+s)}{\Gamma(1+\frac s2)^2}=:f(s).
+\]
+Both sides are analytic in $s$ near $0$; differentiation under the integral sign is justified since $(2\cos x)^s\log^k(2\cos x)$ is dominated on $[0,\frac\pi2]$, uniformly for $|s|\le\frac12$, by the integrable function $\big((2\cos x)^{1/2}+(2\cos x)^{-1/2}\big)\log^k\!\frac{4}{2\cos x}\cdot C$. From $\log\Gamma(1+u)=-\gamma u+\sum_{k\ge2}\frac{(-1)^k\zeta(k)}{k}u^k$,
+\[
+g(s):=\log\Gamma(1+s)-2\log\Gamma\Big(1+\frac s2\Big)=\frac{\zeta(2)}{4}s^2-\frac{\zeta(3)}{4}s^3+O(s^4),
+\]
+so $f(s)=\frac\pi2 e^{g(s)}$ has $f''(0)=\frac\pi2 g''(0)=\frac{\pi}{2}\cdot\frac{\pi^2}{12}$, i.e.
+\begin{equation*}
+\int_0^{\pi/2}\log^2(2\cos x)\,dx=f''(0)=\frac{\pi^3}{24}. \tag{1.1}
+\end{equation*}
+
+\subsubsection*{1.2 Complex representation}
+
+For $0\le x<\pi/2$ we have $1+e^{2ix}=2\cos x\,e^{ix}$ with $\Re(1+e^{2ix})=1+\cos2x>0$, so for the principal logarithm
+\begin{equation*}
+\log(1+e^{2ix})=\log(2\cos x)+ix. \tag{1.2}
+\end{equation*}
+For $w=a+ib$ one has $a^2=\Re(w^2)+b^2$; applying this to $(1.2)$,
+\begin{equation*}
+\log^2(2\cos x)=\Re\big[\log^2(1+e^{2ix})\big]+x^2. \tag{1.3}
+\end{equation*}
+
+\subsubsection*{1.3 An explicit antiderivative}
+
+Let
+\[
+H(z):=\log^2(1-z)\log z+2\log(1-z)\operatorname{Li}_2(1-z)-2\operatorname{Li}_3(1-z),
+\]
+with all branches principal. Using $\operatorname{Li}_2'(u)=-\frac{\log(1-u)}{u}$ and $\operatorname{Li}_3'(u)=\frac{\operatorname{Li}_2(u)}{u}$,
+\begin{equation*}
+\begin{aligned}
+H'(z)&=\frac{\log^2(1-z)}{z}-\frac{2\log(1-z)\log z}{1-z}
++\Big[\frac{2\log(1-z)\log z}{1-z}-\frac{2\operatorname{Li}_2(1-z)}{1-z}\Big]+\frac{2\operatorname{Li}_2(1-z)}{1-z}\\
+&=\frac{\log^2(1-z)}{z},
+\end{aligned}
+\tag{1.4}
+\end{equation*}
+valid wherever $z\notin(-\infty,0]$ and $1-z\notin[1,\infty)$ (so that all principal branches are analytic; note $\frac{d}{du}\operatorname{Li}_2(u)=-\frac{\log(1-u)}{u}$ holds with the principal $\log$ whenever $u\notin[1,\infty)$).
+
+Now parametrize $z(x)=-e^{2ix}=e^{i(2x-\pi)}$ for $x\in(\pi/3,\pi/2)$; then $z$ runs over the arc $\{e^{i\phi}:\phi\in(-\pi/3,0)\}$. Along it:
+\begin{itemize}
+\item $z\notin(-\infty,0]$ and $\arg z\in(-\pi/3,0)$, so $\log z$ is principal and analytic;
+\item $1-z=1-e^{i\phi}=2\sin\frac{|\phi|}{2}\,e^{i(\pi-|\phi|)/2}$ has modulus $\le1$ and argument in $[\pi/3,\pi/2)$, hence stays off the cut $[1,\infty)$ (also at the endpoint $z_0=e^{-i\pi/3}$, where $1-z_0=e^{i\pi/3}$, the functions $\operatorname{Li}_2,\operatorname{Li}_3$ are analytic since $e^{i\pi/3}\notin[1,\infty)$).
+\end{itemize}
+Since $z'(x)=2iz(x)$ and $1-z(x)=1+e^{2ix}$ (principal branch, by $(1.2)$),
+\[
+\frac{d}{dx}H(z(x))=H'(z)\,2iz=2i\log^2(1+e^{2ix}).
+\]
+As $x\to\pi/2^-$, $z\to1$ along the circle and $H(z)\to0$: indeed $\operatorname{Li}_3(1-z)\to0$, $\log(1-z)\operatorname{Li}_2(1-z)=O(|1-z|\log|1-z|)\to0$, and $\log^2(1-z)\log z=O(|1-z|\log^2|1-z|)\to0$ because $|\log z|=|2x-\pi|\asymp|1-z|$ on the circle. The integrand has only an integrable $\log^2$ singularity at $x=\pi/2$, so by the fundamental theorem of calculus (improper at the right endpoint)
+\begin{equation*}
+\int_{\pi/3}^{\pi/2}\log^2(1+e^{2ix})\,dx=\frac{1}{2i}\big[0-H(e^{-i\pi/3})\big]=\frac{i}{2}H(e^{-i\pi/3}). \tag{1.5}
+\end{equation*}
+
+\subsubsection*{1.4 Polylogarithms at $e^{i\pi/3}$}
+
+All series below converge absolutely on $|z|=1$ for weight $\ge2$, so rearrangement is legitimate, and $\operatorname{Li}_2,\operatorname{Li}_3$ are continuous on the closed unit disk (uniform convergence), so these series values agree with the principal branches used above.
+
+\textbf{(a) Multiplication formula.} For $|z|\le1$ and $\omega=e^{2\pi i/3}$, summing the series,
+\[
+\operatorname{Li}_s(z)+\operatorname{Li}_s(\omega z)+\operatorname{Li}_s(\omega^2z)=3^{1-s}\operatorname{Li}_s(z^3),\qquad s=2,3.
+\]
+Take $z=e^{i\pi/3}$; the three arguments are $e^{i\pi/3},\,e^{i\pi}=-1,\,e^{i5\pi/3}=\overline{e^{i\pi/3}}$. Taking real parts and using $\Re\operatorname{Li}_s(\bar u)=\Re\operatorname{Li}_s(u)$, $\operatorname{Li}_2(-1)=-\frac{\pi^2}{12}$, $\operatorname{Li}_3(-1)=-\frac34\zeta(3)$:
+\[
+2\,\Re\operatorname{Li}_2(e^{i\pi/3})=\tfrac13\big(-\tfrac{\pi^2}{12}\big)+\tfrac{\pi^2}{12}=\tfrac{\pi^2}{18}
+\;\Longrightarrow\;\Re\operatorname{Li}_2(e^{i\pi/3})=\frac{\pi^2}{36},
+\]
+\[
+2\,\Re\operatorname{Li}_3(e^{i\pi/3})=\tfrac19\big(-\tfrac34\zeta(3)\big)+\tfrac34\zeta(3)=\tfrac23\zeta(3)
+\;\Longrightarrow\;\Re\operatorname{Li}_3(e^{i\pi/3})=\frac{\zeta(3)}{3}.
+\]
+
+\textbf{(b) The Glaisher sum $\operatorname{Sl}_3$.} For $0<\theta<2\pi$ the series $\sum_{n\ge1}\frac{e^{in\theta}}{n}$ converges (Dirichlet test), so by Abel's theorem it equals $-\log(1-e^{i\theta})$; from $1-e^{i\theta}=2\sin\frac\theta2\,e^{i(\theta-\pi)/2}$,
+\[
+\sum_{n\ge1}\frac{\sin n\theta}{n}=\frac{\pi-\theta}{2}.
+\]
+To integrate this termwise, integrate the Abel means: for $0<r<1$, $\int_0^\theta\sum_n r^n\frac{\sin nt}{n}\,dt=\sum_n r^n\frac{1-\cos n\theta}{n^2}$ (uniform convergence). As $r\to1^-$ the left side tends to $\int_0^\theta\frac{\pi-t}{2}dt$ by dominated convergence, because $\big|\Im\log(1-re^{it})\big|=|\arg(1-re^{it})|\le\frac\pi2$ uniformly (as $\Re(1-re^{it})>0$); the right side tends to $\sum_n\frac{1-\cos n\theta}{n^2}$ (dominated by $2/n^2$). Hence
+\begin{equation*}
+\sum_{n\ge1}\frac{\cos n\theta}{n^2}=\frac{\pi^2}{6}-\frac{\pi\theta}{2}+\frac{\theta^2}{4},\qquad 0\le\theta\le2\pi, \tag{1.6}
+\end{equation*}
+and integrating once more (now the series converges uniformly),
+\begin{equation*}
+\operatorname{Sl}_3(\theta):=\sum_{n\ge1}\frac{\sin n\theta}{n^3}=\frac{\pi^2\theta}{6}-\frac{\pi\theta^2}{4}+\frac{\theta^3}{12},\qquad 0\le\theta\le2\pi. \tag{1.7}
+\end{equation*}
+In particular $\Im\operatorname{Li}_3(e^{i\pi/3})=\operatorname{Sl}_3(\pi/3)=\pi^3\big(\frac1{18}-\frac1{36}+\frac1{324}\big)=\frac{5\pi^3}{162}$. Also $(1.6)$ at $\theta=\pi/3$ re-confirms (a). Therefore
+\begin{equation*}
+\operatorname{Li}_2(e^{i\pi/3})=\frac{\pi^2}{36}+i\operatorname{Cl}_2\!\Big(\frac\pi3\Big),\qquad
+\operatorname{Li}_3(e^{i\pi/3})=\frac{\zeta(3)}{3}+\frac{5i\pi^3}{162}. \tag{1.8}
+\end{equation*}
+
+\subsubsection*{1.5 Assembling $A$}
+
+At $z_0=e^{-i\pi/3}$: $\log z_0=-\frac{i\pi}{3}$, $1-z_0=e^{i\pi/3}$, $\log(1-z_0)=\frac{i\pi}{3}$, so by $(1.8)$
+\[
+H(z_0)=\Big(-\frac{\pi^2}{9}\Big)\Big(-\frac{i\pi}{3}\Big)+\frac{2i\pi}{3}\Big(\frac{\pi^2}{36}+i\operatorname{Cl}_2(\tfrac\pi3)\Big)-2\Big(\frac{\zeta(3)}{3}+\frac{5i\pi^3}{162}\Big)
+=-\frac{2\pi}{3}\operatorname{Cl}_2\!\Big(\frac\pi3\Big)-\frac{2\zeta(3)}{3}-\frac{i\pi^3}{162},
+\]
+since $\frac{1}{27}+\frac{1}{54}-\frac{5}{81}=-\frac1{162}$. By $(1.5)$,
+\[
+\Re\int_{\pi/3}^{\pi/2}\log^2(1+e^{2ix})\,dx=\Re\Big[\frac i2 H(z_0)\Big]=\frac{\pi^3}{324}.
+\]
+Combining with $(1.3)$,
+\[
+\int_{\pi/3}^{\pi/2}\log^2(2\cos x)\,dx=\frac{\pi^3}{324}+\int_{\pi/3}^{\pi/2}x^2dx
+=\frac{\pi^3}{324}+\frac{\pi^3}{24}-\frac{\pi^3}{81}=\frac{7\pi^3}{216},
+\]
+and with $(1.1)$,
+\begin{equation*}
+\int_0^{\pi/3}\log^2(2\cos x)\,dx=\frac{\pi^3}{24}-\frac{7\pi^3}{216}=\frac{\pi^3}{108}. \tag{1.9}
+\end{equation*}
+
+Next, the weight-2 analogue. With the same parametrization on $x\in(0,\pi/3)$, i.e. the arc $\{e^{i\phi}:\phi\in(-\pi,-\pi/3)\}$, we have $-\operatorname{Li}_2'(z)=\frac{\log(1-z)}{z}$ with all branches principal ($1-z$ lies in the closed upper half plane off $[1,\infty)$, $z$ off $[0,\infty)$; both endpoints are regular points of $\operatorname{Li}_2$), so
+\[
+\int_0^{\pi/3}\log(1+e^{2ix})\,dx=\frac{1}{2i}\Big[\operatorname{Li}_2(-1)-\operatorname{Li}_2(e^{-i\pi/3})\Big]
+=\frac{1}{2i}\Big[-\frac{\pi^2}{12}-\frac{\pi^2}{36}+i\operatorname{Cl}_2\!\Big(\frac\pi3\Big)\Big],
+\]
+using $\operatorname{Li}_2(e^{-i\pi/3})=\overline{\operatorname{Li}_2(e^{i\pi/3})}$. Taking real parts and using $(1.2)$:
+\begin{equation*}
+\int_0^{\pi/3}\log(2\cos x)\,dx=\frac12\operatorname{Cl}_2\!\Big(\frac\pi3\Big). \tag{1.10}
+\end{equation*}
+
+Finally, from $\log\cos x=\log(2\cos x)-\log2$ and $(1.9)$--$(1.10)$:
+\begin{equation*}
+\begin{aligned}
+A&=\int_0^{\pi/3}\log^2(2\cos x)\,dx-2\log2\int_0^{\pi/3}\log(2\cos x)\,dx+\frac{\pi}{3}\log^22\\
+&=\frac{\pi^3}{108}-\log2\,\operatorname{Cl}_2\!\Big(\frac\pi3\Big)+\frac{\pi}{3}\log^22.
+\end{aligned}
+\tag{1.11}
+\end{equation*}
+
+\begin{center}\rule{0.6\textwidth}{0.4pt}\end{center}
+
+\subsection*{2. The log-tangent part $B$}
+
+Define for $x>0$
+\[
+\operatorname{Ti}_2(x)=\int_0^x\frac{\arctan t}{t}\,dt,\qquad \operatorname{Ti}_3(x)=\int_0^x\frac{\operatorname{Ti}_2(t)}{t}\,dt;
+\]
+for $|x|\le1$ these equal the series $\sum_k\frac{(-1)^kx^{2k+1}}{(2k+1)^{2}}$, $\sum_k\frac{(-1)^kx^{2k+1}}{(2k+1)^{3}}$. Moreover $\operatorname{Ti}_k(x)=\Im\operatorname{Li}_k(ix)$ for all $x>0$: the imaginary axis avoids the cut $[1,\infty)$, and $\frac{d}{dx}\Im\operatorname{Li}_2(ix)=\Im\frac{-\log(1-ix)}{x}=\frac{\arctan x}{x}$, $\frac{d}{dx}\Im\operatorname{Li}_3(ix)=\frac{\Im\operatorname{Li}_2(ix)}{x}$, with all functions vanishing at $x=0$.
+
+\subsubsection*{2.1 Antiderivative}
+
+\[
+\begin{aligned}
+\frac{d}{dw}\Big[\log^2 w\,\arctan w&-2\log w\,\operatorname{Ti}_2(w)+2\operatorname{Ti}_3(w)\Big]\\
+&=\frac{\log^2w}{1+w^2}+\frac{2\log w\arctan w}{w}-\frac{2\operatorname{Ti}_2(w)}{w}-\frac{2\log w\arctan w}{w}+\frac{2\operatorname{Ti}_2(w)}{w}\\
+&=\frac{\log^2w}{1+w^2}.
+\end{aligned}
+\]
+Hence, with $c:=2+\sqrt3$, $\arctan c=\frac{5\pi}{12}$, $\log c=\lambda$:
+\begin{equation*}
+B=\Big[\log^2w\arctan w-2\log w\operatorname{Ti}_2(w)+2\operatorname{Ti}_3(w)\Big]_1^{c}
+=\frac{5\pi}{12}\lambda^2-2\lambda\operatorname{Ti}_2(c)+2\operatorname{Ti}_3(c)-2\operatorname{Ti}_3(1). \tag{2.1}
+\end{equation*}
+
+\subsubsection*{2.2 $\operatorname{Ti}_3(1)=\dfrac{\pi^3}{32}$}
+
+By $(1.7)$: $\operatorname{Ti}_3(1)=\sum_k\frac{(-1)^k}{(2k+1)^3}=\sum_n\frac{\sin(n\pi/2)}{n^3}=\operatorname{Sl}_3(\pi/2)=\pi^3\big(\frac1{12}-\frac1{16}+\frac1{96}\big)=\frac{\pi^3}{32}$.
+
+\subsubsection*{2.3 $\operatorname{Ti}_2$ at $2\pm\sqrt3$}
+
+\textbf{(a) A Clausen identity.} For $0<\sigma\le\pi$, parametrizing the upper unit arc $z=e^{i\phi}$, $\phi\in(0,\sigma]$, and using $-\operatorname{Li}_2'(z)=\frac{\log(1-z)}{z}$ (principal branches; $1-e^{i\phi}=2\sin\frac\phi2\,e^{i(\phi-\pi)/2}$ stays off both cuts, and $\operatorname{Li}_2$ is continuous up to $z=1$):
+\[
+\int_0^\sigma\log\big(1-e^{i\phi}\big)\,d\phi=\frac1i\Big[\operatorname{Li}_2(1)-\operatorname{Li}_2(e^{i\sigma})\Big],
+\]
+the improper endpoint $\phi=0$ being harmless (logarithmic singularity). Real parts give
+\[
+\int_0^\sigma\log\Big(2\sin\frac\phi2\Big)d\phi=-\operatorname{Cl}_2(\sigma)
+\;\Longrightarrow\;
+\int_0^\theta\log(2\sin t)\,dt=-\frac12\operatorname{Cl}_2(2\theta)\quad(0<\theta\le\tfrac\pi2),
+\]
+and, by $t\mapsto\frac\pi2-t$ and $\operatorname{Cl}_2(\pi)=0$,
+\[
+\int_0^\theta\log(2\cos t)\,dt=\frac12\operatorname{Cl}_2(\pi-2\theta).
+\]
+Hence
+\begin{equation*}
+\int_0^{\pi/12}\log\tan t\,dt=-\frac12\Big[\operatorname{Cl}_2\!\Big(\frac{\pi}{6}\Big)+\operatorname{Cl}_2\!\Big(\frac{5\pi}{6}\Big)\Big]. \tag{2.2}
+\end{equation*}
+
+\textbf{(b) Character evaluation.} Since $\sin\frac{5n\pi}{6}=\sin\big(n\pi-\frac{n\pi}6\big)=-(-1)^n\sin\frac{n\pi}{6}$, even $n$ cancel and odd $n$ double in $(2.2)$:
+\[
+\operatorname{Cl}_2\!\Big(\frac{\pi}{6}\Big)+\operatorname{Cl}_2\!\Big(\frac{5\pi}{6}\Big)=2\sum_{m\ \mathrm{odd}}\frac{\sin(m\pi/6)}{m^2}.
+\]
+For odd $m$: if $3\nmid m$ then $\sin\frac{m\pi}{6}=\frac12\chi_{-4}(m)$ and if $m=3m'$ then $\sin\frac{m\pi}{6}=\sin\frac{m'\pi}{2}=\chi_{-4}(m')$, where $\chi_{-4}(m)=(-1)^{(m-1)/2}$ (check the six odd residues mod $12$). With $\sum_m\frac{\chi_{-4}(m)}{m^2}=G$ and multiplicativity ($\chi_{-4}(3)=-1$), all series being absolutely convergent:
+\[
+\sum_{m\ \mathrm{odd}}\frac{\sin(m\pi/6)}{m^2}
+=\frac12\Big(G-\frac{\chi_{-4}(3)}{9}G\Big)+\frac{1}{9}G=\frac12\cdot\frac{10G}{9}+\frac G9=\frac{2G}{3}.
+\]
+Hence
+\begin{equation*}
+\int_0^{\pi/12}\log\tan t\,dt=-\frac{2G}{3}. \tag{2.3}
+\end{equation*}
+
+\textbf{(c) From the integral to $\operatorname{Ti}_2$.} Integrating by parts ($t\log\tan t\to0$ as $t\to0^+$) and substituting $w=\tan t$ (so $\frac{2t\,dt}{\sin 2t}=\frac{\arctan w}{w}dw$):
+\[
+\int_0^{\theta}\log\tan t\,dt=\theta\log\tan\theta-\int_0^{\theta}\frac{2t}{\sin2t}\,dt=\theta\log\tan\theta-\operatorname{Ti}_2(\tan\theta).
+\]
+At $\theta=\frac{\pi}{12}$, $\tan\frac{\pi}{12}=2-\sqrt3$, so with $(2.3)$:
+\begin{equation*}
+\operatorname{Ti}_2\!\big(2-\sqrt3\big)=\frac{2G}{3}-\frac{\pi}{12}\lambda. \tag{2.4}
+\end{equation*}
+For $x>0$, $\frac{d}{dx}\big[\operatorname{Ti}_2(x)-\operatorname{Ti}_2(1/x)\big]=\frac{\arctan x+\arctan(1/x)}{x}=\frac{\pi}{2x}$ and the bracket vanishes at $x=1$, whence $\operatorname{Ti}_2(x)-\operatorname{Ti}_2(1/x)=\frac\pi2\log x$ and
+\begin{equation*}
+\operatorname{Ti}_2\!\big(2+\sqrt3\big)=\frac{2G}{3}+\frac{5\pi}{12}\lambda. \tag{2.5}
+\end{equation*}
+
+\subsubsection*{2.4 Inversion for $\operatorname{Ti}_3$}
+
+For the principal branch, $\operatorname{Li}_2(z)+\operatorname{Li}_2(1/z)=-\frac{\pi^2}{6}-\frac12\log^2(-z)$ on $\mathbb C\setminus[0,\infty)$: both sides are analytic there (the cuts of $\operatorname{Li}_k(z)$, $\operatorname{Li}_k(1/z)$, $\log(-z)$ all lie in $[0,\infty)$), their derivatives agree because $\log(1-1/z)-\log(1-z)=\log(-1/z)$ holds with principal branches on this domain (both sides are analytic, differ by a constant in $2\pi i\mathbb Z$, and agree at $z=-1$), and at $z=-1$ both sides equal $-\frac{\pi^2}{6}$. Consequently, for
+$F(z):=\operatorname{Li}_3(z)-\operatorname{Li}_3(1/z)$ one gets $F'(z)=\frac1z\big[\operatorname{Li}_2(z)+\operatorname{Li}_2(1/z)\big]$ and, integrating from $z=-1$ (where $F=0$, $\log(-z)=0$),
+\[
+\operatorname{Li}_3(z)-\operatorname{Li}_3(1/z)=-\frac{\pi^2}{6}\log(-z)-\frac16\log^3(-z),\qquad z\in\mathbb C\setminus[0,\infty).
+\]
+Put $z=ix$, $x>0$ (inside the domain): $\log(-ix)=\log x-\frac{i\pi}{2}$, $\Im\operatorname{Li}_3(ix)=\operatorname{Ti}_3(x)$, $\Im\operatorname{Li}_3(-i/x)=-\operatorname{Ti}_3(1/x)$ (conjugation symmetry). Taking imaginary parts, with $\Im\big(\log x-\frac{i\pi}2\big)^3=-\frac{3\pi}{2}\log^2x+\frac{\pi^3}{8}$:
+\begin{equation*}
+\operatorname{Ti}_3(x)+\operatorname{Ti}_3\!\Big(\frac1x\Big)=\frac{\pi}{4}\log^2x+\frac{\pi^3}{16},\qquad x>0 \tag{2.6}
+\end{equation*}
+(consistency check at $x=1$: $2\cdot\frac{\pi^3}{32}=\frac{\pi^3}{16}$ $\checkmark$). In particular
+\begin{equation*}
+\operatorname{Ti}_3\!\big(2+\sqrt3\big)=\frac{\pi}{4}\lambda^2+\frac{\pi^3}{16}-\operatorname{Ti}_3\!\big(2-\sqrt3\big). \tag{2.7}
+\end{equation*}
+
+\subsubsection*{2.5 Value of $B$}
+
+Substituting $(2.5)$ and $\operatorname{Ti}_3(1)=\frac{\pi^3}{32}$ into $(2.1)$:
+\begin{equation*}
+B=\frac{5\pi}{12}\lambda^2-2\lambda\Big(\frac{2G}{3}+\frac{5\pi}{12}\lambda\Big)+2\operatorname{Ti}_3(c)-\frac{\pi^3}{16}
+=-\frac{5\pi}{12}\lambda^2-\frac{4G}{3}\lambda+2\operatorname{Ti}_3\!\big(2+\sqrt3\big)-\frac{\pi^3}{16}. \tag{2.8}
+\end{equation*}
+
+\begin{center}\rule{0.6\textwidth}{0.4pt}\end{center}
+
+\subsection*{3. Assembly}
+
+By $(0.1)$, $(1.11)$, $(2.8)$:
+\[
+I=A-2B=\frac{\pi^3}{108}-\log2\,\operatorname{Cl}_2\!\Big(\frac\pi3\Big)+\frac{\pi}{3}\log^22
++\frac{5\pi}{6}\lambda^2+\frac{8G}{3}\lambda-4\operatorname{Ti}_3\!\big(2+\sqrt3\big)+\frac{\pi^3}{8},
+\]
+and since $\frac{1}{108}+\frac18=\frac{29}{216}$,
+\[
+I=\frac{29\pi^3}{216}+\frac{\pi}{3}\log^22-\log2\,\operatorname{Cl}_2\!\Big(\frac\pi3\Big)+\frac{5\pi}{6}\lambda^2+\frac{8G}{3}\lambda-4\operatorname{Ti}_3\!\big(2+\sqrt3\big).
+\]
+Using the inversion $(2.7)$, $\frac{29}{216}-\frac14=-\frac{25}{216}$ and $\frac{5\pi}6-\pi=-\frac\pi6$:
+\[
+I=-\frac{25\pi^3}{216}+\frac{\pi}{3}\log^22-\log2\,\operatorname{Cl}_2\!\Big(\frac\pi3\Big)
+-\frac{\pi}{6}\log^2\!\big(2+\sqrt3\big)+\frac{8G}{3}\log\!\big(2+\sqrt3\big)+4\operatorname{Ti}_3\!\big(2-\sqrt3\big).
+\]
+$\blacksquare$
+
+\begin{center}\rule{0.6\textwidth}{0.4pt}\end{center}
+
+\section*{Numerical verification}
+
+All computations with mpmath (scripts in \texttt{results/scratch/work/q1588996-.../}), $\operatorname{Ti}_3(x)$ computed as $\Im\operatorname{Li}_3(ix)$, $\operatorname{Cl}_2$ as \texttt{clsin(2,$\cdot$)}.
+
+\begin{itemize}
+\item Direct quadrature at \texttt{mp.dps = 110} of $\int_0^{\pi/3}\log(1+\sin x)\log(1-\sin x)\,dx$ (smooth integrand, split at $\pi/6$):
+\begin{multline*}
+I=-0.4114242552282410537103283722220855175392234960313920\\
+1139076283561929055384357879120607166\ldots
+\end{multline*}
+\item Closed form at the same precision:
+\begin{multline*}
+F=-0.4114242552282410537103283722220855175392234960313920\\
+1139076283561929055384357879120607166\ldots
+\end{multline*}
+\item $|I-F|\approx4.2\cdot10^{-111}$: \textbf{109 significant digits agree} (also matches the 20 digits quoted in the problem statement).
+\end{itemize}
+
+Every intermediate identity was verified independently to 35--60 digits: the split $I=A-2B$; $(1.1)$ $\int_0^{\pi/2}\log^2(2\cos)=\pi^3/24$; $(1.9)$ $\int_0^{\pi/3}\log^2(2\cos)=\pi^3/108$; $(1.10)$ $\int_0^{\pi/3}\log(2\cos)=\frac12\operatorname{Cl}_2(\pi/3)$; the contour identity $(1.5)$ (complex-valued, both sides); $H(e^{-i\pi/3})$; $(2.1)$; $(2.5)$; $(2.6)$; and the final formula in both equivalent forms.
+
+A PSLQ search (120--220 digits) for a rational linear relation between $\operatorname{Ti}_3(2-\sqrt3)$ and the natural weight-3 basis $\{\zeta(3),\pi^3,\pi G,\ G\log 2,G\log3,G\lambda,\ \operatorname{Cl}_2(\pi/3)\cdot\{\pi,\log2,\log3,\lambda\},\ \pi^2\cdot\{\log2,\log3,\lambda\},\ \pi\cdot\{\log^22,\log^23,\lambda^2,\lambda\log2,\lambda\log3,\log2\log3\}\}$ found none (candidate relations with coefficients $\sim10^{10}$ failed at 220-digit precision), so no further reduction of the answer is expected: $\operatorname{Ti}_3(2-\sqrt3)=\Im\operatorname{Li}_3\big(i(2-\sqrt3)\big)\approx0.2672979725$ appears to be an irreducible constant of this problem.
+
+\section*{Notes}
+
+\begin{itemize}
+\item The derivation is complete and self-contained: every branch choice is specified (principal branches throughout, with paths shown to avoid all cuts), every termwise integration is justified (Abel means + dominated convergence, or absolute/uniform convergence), and differentiation under the integral sign in \S1.1 is dominated explicitly.
+\item Special values used and proved here: $\operatorname{Li}_2(e^{i\pi/3})$, $\operatorname{Li}_3(e^{i\pi/3})$ (multiplication formula + Bernoulli--Fourier sums), $\operatorname{Ti}_2(2\pm\sqrt3)$ (classical Lewin values, re-derived via $(2.2)$--$(2.4)$), $\operatorname{Ti}_3(1)=\beta(3)=\pi^3/32$, and the inversion formulas for $\operatorname{Ti}_2$, $\operatorname{Ti}_3$. Standard inputs assumed without re-proof: $\operatorname{Li}_2(-1)=-\pi^2/12$, $\operatorname{Li}_3(-1)=-\frac34\zeta(3)$ (i.e. $\eta(2),\eta(3)$), $L(\chi_{-4},2)=G$ (definition of Catalan's constant), the Beta integral and Legendre duplication.
+\item The only non-elementary constants in the answer, $\operatorname{Cl}_2(\pi/3)$ (Gieseking's constant), $G$, and $\operatorname{Ti}_3(2-\sqrt3)$, are standard ``level 12'' constants; the PSLQ experiment above supports that $\operatorname{Ti}_3(2-\sqrt3)$ cannot be eliminated.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,232 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 21\\[1ex]\large Integral $\int_0^{\pi/2}\arctan^2\left(\frac{6\sin x}{3+\cos 2x}\right)\mathrm dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/564816}{question 564816}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in closed form
+\[
+I=\int_0^{\pi/2}\arctan^2\!\left(\frac{6\sin x}{3+\cos 2x}\right)\mathrm dx .
+\]
+
+\section*{Result}
+
+Let $\chi_2$ denote the Legendre chi function,
+\[
+\chi_2(z)=\sum_{k=0}^{\infty}\frac{z^{2k+1}}{(2k+1)^2}=\tfrac12\bigl[\operatorname{Li}_2(z)-\operatorname{Li}_2(-z)\bigr],
+\]
+and put
+\[
+r=\sqrt2-1,\qquad q=\sqrt5-2 .
+\]
+Then
+\[
+\boxed{\,I=\pi\Bigl[\chi_2\bigl(r^2\bigr)+2\,\chi_2\bigl(rq\bigr)+\chi_2\bigl(q^2\bigr)\Bigr]
+=\pi\Bigl[\chi_2\bigl(3-2\sqrt2\bigr)+2\,\chi_2\bigl((\sqrt2-1)(\sqrt5-2)\bigr)+\chi_2\bigl(9-4\sqrt5\bigr)\Bigr]\,}
+\]
+equivalently, as a single series,
+\[
+I=\pi\sum_{n\ \mathrm{odd}}\frac{\bigl[(\sqrt2-1)^n+(\sqrt5-2)^n\bigr]^2}{n^2}.
+\]
+Numerically
+\[
+I=1.33097039684256666612532707595683203299503281920120827543021\ldots
+\]
+
+The derivation below also yields the general two--parameter formula
+\[
+\int_0^{\pi/2}\arctan(a\sin x)\arctan(b\sin x)\,dx=\pi\,\chi_2\!\left(\frac{\sqrt{1+a^{2}}-1}{a}\cdot\frac{\sqrt{1+b^{2}}-1}{b}\right)\qquad(a,b>0).
+\]
+
+\section*{Derivation}
+
+\subsection*{Step 1. Algebraic simplification of the integrand}
+
+Since $\cos 2x=1-2\sin^2x$,
+\[
+3+\cos 2x=4-2\sin^2 x=2\,(2-\sin^2x),\qquad 2-\sin^2x\in[1,2],
+\]
+so the argument of the arctangent is
+\[
+\frac{6\sin x}{3+\cos 2x}=\frac{3\sin x}{2-\sin^2 x}
+=\frac{\sin x+\tfrac12\sin x}{1-\sin x\cdot\tfrac12\sin x}.
+\]
+For real $u,v$ with $uv<1$ one has the addition formula
+\[
+\arctan u+\arctan v=\arctan\frac{u+v}{1-uv}.
+\]
+(Indeed $A=\arctan u$, $B=\arctan v$ satisfy $A+B\in(-\pi,\pi)$ and $\cos(A+B)=\cos A\cos B\,(1-uv)>0$, hence $A+B\in(-\tfrac\pi2,\tfrac\pi2)$, and $\tan(A+B)=\frac{u+v}{1-uv}$.)
+Here $u=\sin x$, $v=\tfrac12\sin x$ give $uv\le\tfrac12<1$, so for all $x$
+\[
+\arctan\!\left(\frac{6\sin x}{3+\cos 2x}\right)=\arctan(\sin x)+\arctan\!\Bigl(\frac{\sin x}{2}\Bigr),
+\]
+and therefore
+\[
+I=\int_0^{\pi/2}\Bigl[\arctan(\sin x)+\arctan\bigl(\tfrac12\sin x\bigr)\Bigr]^2dx .
+\]
+
+\subsection*{Step 2. A Fourier expansion of $\arctan(a\sin x)$}
+
+\begin{lemma}
+Let $a>0$ and set
+\[
+t=t_a=\frac{\sqrt{1+a^{2}}-1}{a}\in(0,1),\qquad\text{so that}\qquad \frac{2t}{1-t^{2}}=a .
+\]
+Then for all real $x$
+\[
+\arctan(a\sin x)=2\sum_{n\ \mathrm{odd}}\frac{t^{\,n}}{n}\,\sin nx ,
+\]
+the series converging absolutely and uniformly on $\mathbb R$.
+\end{lemma}
+
+\begin{proof}[Proof of the parameter identity]
+$t^2=\dfrac{(\sqrt{1+a^2}-1)^2}{a^2}=\dfrac{2+a^2-2\sqrt{1+a^2}}{a^2}$, hence
+$1-t^2=\dfrac{2(\sqrt{1+a^2}-1)}{a^2}=\dfrac{2t}{a}$, i.e. $\dfrac{2t}{1-t^2}=a$.
+\end{proof}
+
+\begin{proof}[Proof of the expansion]
+With $0<t<1$ consider the product of the two complex numbers
+\[
+P=(1-te^{-ix})(1+te^{ix})=1+t\,(e^{ix}-e^{-ix})-t^{2}=(1-t^{2})+2it\sin x=(1-t^{2})\bigl(1+ia\sin x\bigr).
+\]
+Both factors have positive real part: $\Re(1-te^{-ix})=1-t\cos x\ge 1-t>0$ and $\Re(1+te^{ix})=1+t\cos x>0$; hence their principal arguments lie in $(-\tfrac\pi2,\tfrac\pi2)$ and their sum lies in $(-\pi,\pi)$. Also $\Re P=1-t^{2}>0$, so the principal argument of $P$ is $\arg P=\arctan(a\sin x)\in(-\tfrac\pi2,\tfrac\pi2)$. Since the sum of the two arguments equals $\arg P$ modulo $2\pi$, and both numbers lie in $(-\pi,\pi)$, they are equal:
+\[
+\arctan(a\sin x)=\Im\operatorname{Log}(1-te^{-ix})+\Im\operatorname{Log}(1+te^{ix}).
+\]
+For $|u|<1$ the principal logarithm has the absolutely convergent expansion $\operatorname{Log}(1-u)=-\sum_{n\ge1}u^{n}/n$; taking $u=te^{-ix}$ and $u=-te^{ix}$,
+\[
+\Im\operatorname{Log}(1-te^{-ix})=\sum_{n\ge1}\frac{t^{n}\sin nx}{n},\qquad
+\Im\operatorname{Log}(1+te^{ix})=\sum_{n\ge1}(-1)^{n-1}\frac{t^{n}\sin nx}{n}.
+\]
+Adding, the even harmonics cancel and the odd ones double:
+\[
+\arctan(a\sin x)=2\sum_{n\ \mathrm{odd}}\frac{t^{n}}{n}\sin nx .
+\]
+Uniform convergence follows from the Weierstrass $M$-test ($\sum_n t^n/n<\infty$).
+\end{proof}
+
+For our two parameters,
+\[
+a=1:\quad t_1=\sqrt2-1=r,\qquad\qquad a=\tfrac12:\quad t_{1/2}=\frac{\sqrt{5}/2-1}{1/2}=\sqrt5-2=q .
+\]
+Hence, adding the two expansions, the integrand of Step 1 is the square of
+\[
+f(x):=\arctan(\sin x)+\arctan\bigl(\tfrac12\sin x\bigr)=\sum_{n\ \mathrm{odd}}c_n\sin nx,\qquad c_n=\frac{2\,(r^{\,n}+q^{\,n})}{n}.
+\]
+
+\subsection*{Step 3. Orthogonality of odd sines on $[0,\pi/2]$ and Parseval}
+
+For odd integers $n,m$:
+\[
+\int_0^{\pi/2}\sin nx\,\sin mx\,dx=\frac12\int_0^{\pi/2}\bigl[\cos(n-m)x-\cos(n+m)x\bigr]dx .
+\]
+If $n\ne m$, then $n\mp m$ are even and nonzero, and $\int_0^{\pi/2}\cos(2jx)\,dx=\frac{\sin j\pi}{2j}=0$ for $j\in\mathbb Z\setminus\{0\}$; if $n=m$, $\int_0^{\pi/2}\sin^2 nx\,dx=\frac\pi4-\frac{\sin n\pi}{4n}=\frac\pi4$. Thus
+\[
+\int_0^{\pi/2}\sin nx\,\sin mx\,dx=\frac{\pi}{4}\,\delta_{nm}\qquad(n,m\ \text{odd}).
+\]
+Since $\sum_n|c_n|<\infty$, the double series $\sum_{n,m}c_nc_m\sin nx\sin mx=f(x)^2$ converges absolutely and uniformly, so it may be integrated term by term:
+\[
+I=\int_0^{\pi/2}f(x)^2dx=\sum_{n,m\ \mathrm{odd}}c_nc_m\cdot\frac\pi4\delta_{nm}
+=\frac{\pi}{4}\sum_{n\ \mathrm{odd}}c_n^{2}
+=\pi\sum_{n\ \mathrm{odd}}\frac{(r^{\,n}+q^{\,n})^{2}}{n^{2}} .
+\]
+
+\subsection*{Step 4. Summation in terms of the Legendre chi function}
+
+Expanding $(r^n+q^n)^2=r^{2n}+2(rq)^n+q^{2n}$ and using $\chi_2(z)=\sum_{n\ \mathrm{odd}}z^n/n^2$ (absolutely convergent for $|z|\le1$; here $r^2,\,rq,\,q^2\in(0,1)$):
+\[
+I=\pi\Bigl[\chi_2(r^{2})+2\chi_2(rq)+\chi_2(q^{2})\Bigr]
+ =\pi\Bigl[\chi_2\bigl(3-2\sqrt2\bigr)+2\chi_2\bigl((\sqrt2-1)(\sqrt5-2)\bigr)+\chi_2\bigl(9-4\sqrt5\bigr)\Bigr].
+\]
+This proves the boxed result. (The same computation with general $a,b$ proves the two-parameter formula stated in the Result: by the Lemma and orthogonality, $\int_0^{\pi/2}\arctan(a\sin x)\arctan(b\sin x)dx=\frac\pi4\sum_{n\ \mathrm{odd}}\frac{2t_a^n}{n}\cdot\frac{2t_b^n}{n}=\pi\chi_2(t_at_b)$.)
+
+\subsection*{Step 5. Equivalent forms}
+
+Using $\chi_2(z)=\tfrac12[\operatorname{Li}_2(z)-\operatorname{Li}_2(-z)]$:
+\[
+I=\frac{\pi}{2}\Bigl[\operatorname{Li}_2(3-2\sqrt2)-\operatorname{Li}_2(2\sqrt2-3)+\operatorname{Li}_2(9-4\sqrt5)-\operatorname{Li}_2(4\sqrt5-9)\Bigr]
++\pi\Bigl[\operatorname{Li}_2(rq)-\operatorname{Li}_2(-rq)\Bigr],
+\]
+with $rq=(\sqrt2-1)(\sqrt5-2)=2+\sqrt{10}-2\sqrt2-\sqrt5$.
+
+One may also transport the three $\chi_2$ values by \textbf{Landen's identity}: for $0<y<1$,
+\begin{equation*}
+\chi_2\!\left(\frac{1-y}{1+y}\right)+\chi_2(y)=\frac{\pi^2}{8}-\frac12\,\ln y\,\ln\frac{1-y}{1+y}. \tag{$\star$}
+\end{equation*}
+\emph{Proof of} $(\star)$: both sides vanish trivially in the derivative check --- differentiate the left side using $\chi_2'(z)=\operatorname{artanh}(z)/z$ and $\operatorname{artanh}\frac{1-y}{1+y}=-\frac12\ln y$:
+\[
+\frac{d}{dy}\chi_2\!\left(\frac{1-y}{1+y}\right)=\frac{-\frac12\ln y}{\frac{1-y}{1+y}}\cdot\frac{-2}{(1+y)^2}=\frac{\ln y}{1-y^2},\qquad
+\frac{d}{dy}\chi_2(y)=\frac{\operatorname{artanh} y}{y},
+\]
+while the right side differentiates to $-\frac12\bigl[\frac1y\ln\frac{1-y}{1+y}-\frac{2\ln y}{1-y^2}\bigr]=\frac{\operatorname{artanh}y}{y}+\frac{\ln y}{1-y^2}$; the two agree, and at $y\to1^-$ both sides tend to $\chi_2(1)=\pi^2/8$. $\square$
+
+Taking $y=\frac1{\sqrt2}$ (whose Landen partner is $\frac{1-y}{1+y}=(\sqrt2-1)^2$), $y=\frac{2}{\sqrt5}$ (partner $(\sqrt5-2)^2$), and $y=w:=\frac{1-rq}{1+rq}$ (partner $rq$), one gets the equivalent evaluation (verified to 90 digits)
+\begin{multline*}
+I=\pi\biggl[\frac{\pi^{2}}{2}-\frac{\ln 2\,\ln(1+\sqrt2)}{2}+3\ln 2\,\ln\varphi-\frac{3}{2}\ln 5\,\ln\varphi\\
++\bigl(\ln(1+\sqrt2)+3\ln\varphi\bigr)\ln w
+-\chi_2\!\Bigl(\frac{1}{\sqrt2}\Bigr)-\chi_2\!\Bigl(\frac{2}{\sqrt5}\Bigr)-2\chi_2(w)\biggr],
+\end{multline*}
+where $\varphi=\frac{1+\sqrt5}{2}$. This form is recorded only to exhibit the structure; the boxed form is the compact one.
+
+\begin{remark}[why these arguments are natural]
+$r=\tanh\bigl(\tfrac12\operatorname{arcsinh}1\bigr)$ and $q=\tanh\bigl(\tfrac12\operatorname{arcsinh}\tfrac12\bigr)$; moreover $r=e^{-\operatorname{arcsinh}1}=(1+\sqrt2)^{-1}$ and $q=\varphi^{-3}=e^{-3\operatorname{arcsinh}(1/2)}$. The \emph{first-power} values are the classical Landen ones,
+\[
+\chi_2(\sqrt2-1)=\frac{\pi^2}{16}-\frac{\ln^2(1+\sqrt2)}{4},\qquad
+\chi_2(\sqrt5-2)=\frac{\pi^2}{24}-\frac34\ln^2\varphi,
+\]
+(both follow from $(\star)$: $y=\sqrt2-1$ is a fixed point of $y\mapsto\frac{1-y}{1+y}$, and $y=\varphi^{-1}$ pairs with $\sqrt5-2=\varphi^{-3}$ combined with $\chi_2(\varphi^{-1})=\frac{\pi^2}{12}-\frac34\ln^2\varphi$). However, it is the \emph{squares} $r^2,q^2$ and the \emph{product} $rq$ that occur in $I$, and these do not reduce further (see Notes).
+\end{remark}
+
+\section*{Numerical verification}
+
+All computations with mpmath at \texttt{mp.dps = 90} (scripts in \texttt{results/scratch/work/q564816-.../}):
+
+\begin{itemize}
+\item Direct quadrature of $\displaystyle\int_0^{\pi/2}\arctan^2\Bigl(\frac{6\sin x}{3+\cos2x}\Bigr)dx$ (smooth integrand), Gauss--Legendre and tanh--sinh, with split point $\pi/4$:
+  \[
+  I_{\mathrm{GL}}=I_{\mathrm{TS}}=1.3309703968425666661253270759568320329950328192012082754302103616\ldots
+  \]
+  The two methods agree to all 90 digits.
+\item Closed form $\pi\bigl[\chi_2(r^2)+2\chi_2(rq)+\chi_2(q^2)\bigr]$ evaluated via \texttt{mp.polylog}:
+  \[
+  1.3309703968425666661253270759568320329950328192012082754302103616\ldots
+  \]
+\item Agreement: $|I_{\mathrm{quad}}-I_{\mathrm{closed}}|<5\cdot10^{-91}$, i.e. \textbf{90 significant digits} match (far beyond the required 25).
+\item The Parseval series $\pi\sum_{n\ \mathrm{odd}}(r^n+q^n)^2/n^2$ agrees with both to the same precision, and the Fourier expansion of Step 2 was checked pointwise at several $x$ to $80$ digits.
+\item Landen's identity $(\star)$, the two classical special values in the Remark, and the equivalent form in Step 5 were each verified numerically to $\ge89$ digits.
+\end{itemize}
+
+\section*{Notes}
+
+\begin{itemize}
+\item The derivation is complete and rigorous: the only analytic steps are the principal-branch argument addition (justified by positivity of real parts), term-by-term integration of an absolutely and uniformly convergent series, and elementary orthogonality; no interchange is left unjustified.
+\item \textbf{On further reduction.} I looked hard for an ``elementary'' form (rational combination of $\pi^2$ and products of logarithms). High-precision PSLQ (320-digit tolerance, coefficients up to $10^5$--$10^6$) found no relation between $I/\pi$ and $\{\pi^2\}\cup\{\text{all products of }\ln 2,\ln3,\ln5,\ln(1+\sqrt2),\ln\varphi,\ln(3+\sqrt{10}),\ln(1+\sqrt{10})\}$ --- this log set spans the logs of all $\{2,3,5\}$-smooth-norm numbers of $\mathbb Q(\sqrt2,\sqrt5)$ that could arise. Furthermore, enumerating the full integer-relation lattice of Rogers $L$-function values at $35$ candidate arguments (the five-term-relation orbit of $r,q,rq,\varphi^{-1},\dots$) shows the \emph{only} relation satisfied by the target combination is the trivial $(\star)$-rewriting displayed in Step 5. Known relations in the lattice (e.g. the ladders $L(r^4)=5L(r^2)-1$ and $4L(q)-L(q^2)=1$, and $L(\varphi^{-1})+L(\varphi^{-2})=1$) were recovered by the search, confirming its power. I therefore believe the boxed $\chi_2$ form is the minimal closed form; the non-existence of an elementary form is (as always for dilogarithm constants) heuristic, not proven.
+\item The identity $\int_0^{\pi/2}\arctan(a\sin x)\arctan(b\sin x)\,dx=\pi\chi_2(t_at_b)$ has the amusing sanity check $a,b\to\infty$: $t_a,t_b\to1$ and both sides tend to $\frac{\pi^3}{8}$.
+\end{itemize}
+
+\end{document}

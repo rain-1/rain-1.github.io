@@ -1,0 +1,447 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 5\\[1ex]\large Integral ${\large\int}_0^{\pi/2}\arctan^2\!\left(\frac{\sin x}{\sqrt3+\cos x}\right)dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/1595389}{question 1595389}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in closed form
+\[
+I=\int_0^{\pi/2}\arctan^2\!\left(\frac{\sin x}{\sqrt3+\cos x}\right)dx,
+\qquad I\approx 0.15637139137571170123083760\ldots
+\]
+
+\section*{Result}
+
+Throughout, $\operatorname{Li}_s$ is the principal polylogarithm, $q=\tfrac1{\sqrt3}$, and
+\[
+\mu=\frac{e^{i\pi/6}}{\sqrt3}=\frac{3+i\sqrt3}{6},\qquad iq=\frac{i}{\sqrt3}.
+\]
+
+\textbf{Main result (proved unconditionally below):}
+
+\[
+\boxed{\;I=\operatorname{Im}\operatorname{Li}_3\!\left(\frac{i}{\sqrt3}\right)
+-\operatorname{Im}\operatorname{Li}_3\!\left(\frac{3+i\sqrt3}{6}\right)
++\frac{\pi}{4}\operatorname{Li}_2\!\left(\frac13\right)
+-\frac{11\pi^3}{648}+\frac{\pi\ln^2 3}{24}\;}
+\]
+
+\textbf{Equivalent minimal form.} The two trilogarithm constants satisfy the ladder relation
+\[
+(\star)\qquad
+\operatorname{Im}\operatorname{Li}_3\!\left(\frac{3+i\sqrt3}{6}\right)
+=\frac45\operatorname{Im}\operatorname{Li}_3\!\left(\frac{i}{\sqrt3}\right)
++\frac{\pi\ln^2 3}{240}-\frac{29\pi^3}{6480},
+\]
+which I have verified to $300$ decimal digits (but do \textbf{not} prove here; see Notes).
+Substituting $(\star)$ gives the compact equivalent form
+\[
+I=\frac{\pi}{4}\operatorname{Li}_2\!\left(\frac13\right)
++\frac15\operatorname{Im}\operatorname{Li}_3\!\left(\frac{i}{\sqrt3}\right)
+-\frac{\pi^3}{80}+\frac{3\pi\ln^23}{80},
+\]
+where $\operatorname{Im}\operatorname{Li}_3(iy)=\operatorname{Ti}_3(y)=\sum_{n\ge0}\frac{(-1)^ny^{2n+1}}{(2n+1)^3}$ is the inverse tangent integral of order 3.
+
+Both displayed forms agree with the direct numerical value of $I$ to more than $300$ significant digits.
+
+\begin{center}\rule{0.5\linewidth}{0.4pt}\end{center}
+
+\section*{Derivation}
+
+\subsection*{0. Notation and plan}
+
+Let $q=1/\sqrt3$ and
+\[
+L(x)=\ln\!\left(1+qe^{ix}\right)\quad(\text{principal branch}),\qquad
+u(x)=\operatorname{Re}L,\quad v(x)=\operatorname{Im}L .
+\]
+For $x\in[0,\pi/2]$, $1+qe^{ix}$ lies in the right half-plane, so
+\[
+v(x)=\arg\!\left(1+qe^{ix}\right)=\arctan\frac{q\sin x}{1+q\cos x}
+=\arctan\frac{\sin x}{\sqrt3+\cos x},
+\]
+hence $I=\int_0^{\pi/2}v^2\,dx$. From $L=u+iv$ we get the pointwise identity
+\[
+v^2=\tfrac12\left(|L|^2-\operatorname{Re}L^2\right),
+\]
+so
+\begin{equation*}
+I=\frac12\int_0^{\pi/2}|L|^2dx-\frac12\,\operatorname{Re}\int_0^{\pi/2}L^2dx. \tag{0.1}
+\end{equation*}
+Both integrals will be computed in closed form by contour methods.
+
+Special points used throughout (all identities are trivial arithmetic in $\mathbb Q(i,\sqrt3)$, and each was also checked numerically):
+\[
+\begin{gathered}
+\nu=1+\tfrac{i}{\sqrt3}=\tfrac{2}{\sqrt3}e^{i\pi/6},\quad
+p_4=1+i\sqrt3=2e^{i\pi/3},\quad
+\mu=\tfrac{e^{i\pi/6}}{\sqrt3},\\
+w_0=\tfrac12 e^{i\pi/3},\quad
+w_1=\tfrac{\sqrt3}{2}e^{i\pi/6}=\tfrac{3+i\sqrt3}{4},
+\end{gathered}
+\]
+\[
+\begin{gathered}
+1-iq=\bar\nu,\qquad 1-\tfrac{1}{iq}=p_4,\qquad
+\tfrac1\nu=\bar w_1,\qquad \tfrac1{p_4}=\bar w_0,\\
+1-w_1=\bar w_0,\qquad -\tfrac{iq}{1-iq}=\bar w_0,\qquad
+-\tfrac{\mu}{1-\mu}=e^{-2\pi i/3},\qquad 1-\mu=\bar\mu .
+\end{gathered}
+\]
+Principal logarithms (each verified): with $\ell_2=\ln2$, $\ell_3=\ln3$,
+\[
+\ln(-qi)=-\tfrac{\ell_3}2-\tfrac{i\pi}2,\quad
+\ln\nu=\ell_2-\tfrac{\ell_3}2+\tfrac{i\pi}6,\quad
+\ln(-\sqrt3\,i)=\tfrac{\ell_3}2-\tfrac{i\pi}2,\quad
+\ln p_4=\ell_2+\tfrac{i\pi}3,
+\]
+\[
+\ln\mu=-\tfrac{\ell_3}2+\tfrac{i\pi}6,\quad
+\ln\bar\mu=-\tfrac{\ell_3}2-\tfrac{i\pi}6,\quad
+\ln(iq)=-\tfrac{\ell_3}2+\tfrac{i\pi}2,\quad
+\ln(1-iq)=\ell_2-\tfrac{\ell_3}2-\tfrac{i\pi}6 .
+\]
+
+\subsection*{1. Two auxiliary primitives}
+
+\textbf{Lemma 1 (the $\Phi$--integral).} For $w$ in the cut plane $\mathbb C\setminus[1,\infty)$ let
+\[
+\Phi(w)=\int_0^w\frac{\ln^2(1-s)}{s}\,ds \qquad(\text{integral along the segment; the integrand is }O(s)\text{ at }0).
+\]
+Then, whenever the segment $[1,1-w]$ (the image of the integration segment under $s\mapsto 1-s$) avoids $(-\infty,0]\cup[1,\infty)$ except for its endpoint $1$,
+\begin{equation*}
+\Phi(w)=2\zeta(3)+\ln w\,\ln^2(1-w)+2\ln(1-w)\operatorname{Li}_2(1-w)-2\operatorname{Li}_3(1-w). \tag{1.1}
+\end{equation*}
+
+\textit{Proof.} Let
+\[
+G(s)=-\ln(1-s)\ln^2 s-2\ln s\operatorname{Li}_2(s)+2\operatorname{Li}_3(s).
+\]
+$G$ is analytic on $\mathbb C\setminus\big((-\infty,0]\cup[1,\infty)\big)$ and, using $\operatorname{Li}_2'(s)=-\ln(1-s)/s$, $\operatorname{Li}_3'(s)=\operatorname{Li}_2(s)/s$,
+\[
+G'(s)=\frac{\ln^2s}{1-s}-\frac{2\ln s\ln(1-s)}{s}+\frac{2\ln s\ln(1-s)}{s}
+-\frac{2\operatorname{Li}_2(s)}{s}+\frac{2\operatorname{Li}_2(s)}{s}=\frac{\ln^2 s}{1-s}.
+\]
+Substituting $s=1-\sigma$ in $\Phi$,
+\[
+\Phi(w)=\int_{1-w}^{1}\frac{\ln^2\sigma}{1-\sigma}\,d\sigma=G(1)-G(1-w)=2\zeta(3)-G(1-w),
+\]
+which is (1.1); $G(1)=2\operatorname{Li}_3(1)=2\zeta(3)$ because $\ln(1-s)\ln^2s\to0$ and $\ln s\operatorname{Li}_2(s)\to 0$ as $s\to1$ inside the domain. The hypothesis on the segment guarantees Newton--Leibniz applies with principal branches. $\square$
+
+We will use (1.1) at $w=-qi$ (then $1-w=\nu$; the segment $[1,\nu]$ lies in the closed upper right region, off both cuts) and at $w=-\sqrt3 i$ (then $1-w=p_4$; segment $[1,p_4]$ likewise admissible). At $w=-q$ and $w=-\sqrt3$ we only need that $\Phi(w)\in\mathbb R$, which is clear from the real integrand.
+
+\textbf{Lemma 2 (log-weighted primitive).} On the closed first quadrant minus the origin,
+\[
+P_1(z)=\operatorname{Li}_3(-qz)-\ln z\,\operatorname{Li}_2(-qz)
+\quad\text{satisfies}\quad P_1'(z)=\frac{\ln z\,\ln(1+qz)}{z}.
+\]
+
+\textit{Proof.} $\frac{d}{dz}\operatorname{Li}_3(-qz)=\operatorname{Li}_2(-qz)/z$ and $\frac{d}{dz}\operatorname{Li}_2(-qz)=-\ln(1+qz)/z$; the product rule gives the claim. All functions are analytic near the quarter arc since $-qz\notin[1,\infty)$ there and $z\notin(-\infty,0]$. $\square$
+
+\subsection*{2. The square integral $\int L^2$}
+
+With $z=e^{ix}$, $dx=dz/(iz)$, and the integrand $h(t)=\ln^2(1+qt)/t$ analytic on the closed quarter disk minus $\{0\}$ (its branch points $-\sqrt3$ and $0$ are outside/removable: $h(t)=O(t)$ at $0$), Cauchy's theorem on the quarter-disk contour (segment $[0,1]$ + arc + segment $[i,0]$, with an indent at $0$ whose contribution is $O(\varepsilon)$) gives
+\[
+\int_0^{\pi/2}L^2\,dx=\frac1i\int_{\operatorname{arc} 1\to i}\frac{\ln^2(1+qz)}{z}\,dz
+=\frac1i\Big[\Phi(-qi)-\Phi(-q)\Big],
+\]
+because $\frac{d}{dz}\Phi(-qz)=\ln^2(1+qz)/z$ (same computation as in Lemma 2). Since $\Phi(-q)\in\mathbb R$,
+\begin{equation*}
+\operatorname{Re}\int_0^{\pi/2}L^2dx=\operatorname{Im}\Phi(-qi). \tag{2.1}
+\end{equation*}
+
+\subsection*{3. The modulus-square integral $\int|L|^2$}
+
+For $x\in[0,\pi/2]$,
+\begin{equation*}
+1+qe^{-ix}=e^{-ix}\left(e^{ix}+q\right)
+\ \Longrightarrow\ \overline{L(x)}=\ln\!\left(q+e^{ix}\right)-ix, \tag{3.1}
+\end{equation*}
+with principal branches: the two sides differ by a continuous integer multiple of $2\pi i$ which vanishes at $x=0$ (identity (3.1) was also verified numerically along the whole arc). Hence
+\[
+\int_0^{\pi/2}|L|^2dx=M_2-M_1,\qquad
+M_1:=i\int_0^{\pi/2}xL\,dx,\qquad
+M_2:=\int_0^{\pi/2}L(x)\ln\!\big(q+e^{ix}\big)\,dx .
+\]
+
+\textbf{$M_1$.} In contour form $M_1=\frac1i\int_{\rm arc}\ln(1+qz)\ln z\,\frac{dz}{z}$; by Lemma 2 and the same Cauchy argument (integrand $\sim q\ln t$ at $0$, indent contribution $O(\varepsilon\ln\varepsilon)\to0$),
+\[
+M_1=\frac1i\Big[P_1(i)-P_1(1)\Big]
+=\frac1i\Big[\operatorname{Li}_3(-qi)-\tfrac{i\pi}2\operatorname{Li}_2(-qi)-\operatorname{Li}_3(-q)\Big].
+\]
+Since $\operatorname{Li}_s(-qi)=\overline{\operatorname{Li}_s(qi)}$ and $\operatorname{Li}_3(-q)\in\mathbb R$,
+\begin{equation*}
+\operatorname{Re}M_1=-\operatorname{Im}\operatorname{Li}_3(iq)-\frac{\pi}{2}\,\operatorname{Re}\operatorname{Li}_2(iq). \tag{3.2}
+\end{equation*}
+
+\textbf{$M_2$.} Again by Cauchy, $M_2=\frac1i[K(i)-K(1)]$ where
+\[
+K(z)=\int_0^z\frac{\ln(1+qt)\ln(q+t)}{t}\,dt\qquad(\text{segments from }0).
+\]
+On the closed first quadrant $\ln(q+t)=\ln q+\ln(1+t/q)$ (both factors lie in the right half-plane; verified along all paths), so
+\[
+K(z)=-\ln q\,\operatorname{Li}_2(-qz)+N(z),\qquad
+N(z)=\int_0^z\frac{\ln(1+qt)\ln(1+t/q)}{t}\,dt .
+\]
+Because both logarithms have arguments in the right half-plane, with
+\[
+\varphi(t)=\frac{1+qt}{1+t/q}\qquad\text{we have}\qquad \ln\varphi(t)=\ln(1+qt)-\ln(1+t/q)
+\]
+(principal branches, verified), and the algebraic identity $XY=\tfrac12[X^2+Y^2-(X-Y)^2]$ gives
+\begin{equation*}
+N(z)=\tfrac12\Phi(-qz)+\tfrac12\Phi(-z/q)-\tfrac12 R(z),\qquad
+R(z)=\int_0^z\frac{\ln^2\varphi(t)}{t}\,dt. \tag{3.3}
+\end{equation*}
+
+\textbf{Evaluation of $R(i)$.} Substitute $s=\varphi(t)$. Solving, $t=\dfrac{q(1-s)}{s-q^2}$, so
+\[
+\frac{dt}{t}=\left[\frac{1}{s-1}-\frac{1}{s-c}\right]ds,\qquad c=q^2=\tfrac13 .
+\]
+As $t$ runs over the segment $[0,i]$, $s$ runs along a path from $1$ to
+\[
+S:=\varphi(i)=\frac{1+qi}{1+i/q}=\frac{(1+qi)(1-i\sqrt3)}{4}
+=\frac12\Big(1-\frac{i}{\sqrt3}\Big)=\bar\mu
+\]
+(direct computation), and a numerical trace of the path shows it stays in $\{\tfrac12\le\operatorname{Re}s\le1,\ -\tfrac13\le\operatorname{Im}s\le 0\}$, i.e. inside $\mathbb C\setminus\big((-\infty,0]\cup[1,\infty)\big)$ except for the initial endpoint $s=1$, where the integrand $\ln^2 s/(s-1)$ is bounded. Hence, with $G$ from Lemma 1,
+\[
+\int_{1}^{\bar\mu}\frac{\ln^2 s}{s-1}\,ds=2\zeta(3)-G(\bar\mu).
+\]
+For the second part substitute $\tau=c/s=1/(3s)$ (so $\ln s=\ln c-\ln\tau$, valid since $c>0$ and $\tau$ stays off $(-\infty,0]$): the $\tau$-path runs from $\tfrac13$ to $1/(3\bar\mu)=\mu$ inside $\{\tfrac13\le\operatorname{Re}\tau\le\tfrac12,\ 0\le\operatorname{Im}\tau\le0.29\}$, again inside the cut plane, and
+\[
+\begin{aligned}
+\int_1^{\bar\mu}\frac{\ln^2s}{s-c}\,ds
+=\ln^2\!c\,\Big[\ln(1-\tau)-\ln\tau\Big]_{1/3}^{\mu}
+&+2\ln c\left[\tfrac12\ln^2\tau+\operatorname{Li}_2(1-\tau)\right]_{1/3}^{\mu}\\
+&-\left[\tfrac13\ln^3\tau+G(\tau)\right]_{1/3}^{\mu},
+\end{aligned}
+\]
+using $\dfrac{ds}{s-c}=-\Big[\dfrac1\tau+\dfrac1{1-\tau}\Big]d\tau$ and the primitives
+$\int\frac{\ln\tau}{1-\tau}d\tau=\operatorname{Li}_2(1-\tau)$, $\int\frac{\ln^2\tau}{1-\tau}d\tau=G(\tau)$.
+Combining ($1-\mu=\bar\mu$, $\ln\tfrac13=-\ell_3$, $\ln\tfrac23=\ell_2-\ell_3$):
+\begin{equation*}
+R(i)=2\zeta(3)-G(\bar\mu)-\Big[\ell_3^2A_0-2\ell_3A_1+A_2\Big], \tag{3.4}
+\end{equation*}
+\[
+A_0=\big(\ln\bar\mu-\ln\mu\big)-\ell_2,\qquad
+A_1=\Big(\tfrac12\ln^2\mu+\operatorname{Li}_2(\bar\mu)\Big)-\Big(\tfrac12\ell_3^2+\operatorname{Li}_2(\tfrac23)\Big),
+\]
+\[
+A_2=-\Big(\tfrac13\ln^3\mu+G(\mu)\Big)+\Big(-\tfrac13\ell_3^3+G(\tfrac13)\Big).
+\]
+\textit{(Every displayed reduction in this section --- the closed forms for $R(z)$, $N(z)$, $K$, $M_1$, $M_2$, $\int L^2$, and the final assembly --- was verified numerically to $60$ digits at $z=1$, $z=i$ and at a generic complex point.)}
+
+\subsection*{4. Assembly}
+
+By (0.1), (2.1), (3.2):
+\[
+I=\frac12\Big[\operatorname{Im}K(i)\;+\;\operatorname{Im}\operatorname{Li}_3(iq)+\frac\pi2\operatorname{Re}\operatorname{Li}_2(iq)\;-\;\operatorname{Im}\Phi(-qi)\Big],
+\]
+\[
+\operatorname{Im}K(i)=\frac{\ell_3}{2}\,\operatorname{Im}\operatorname{Li}_2(-qi)
++\tfrac12\operatorname{Im}\Phi(-qi)+\tfrac12\operatorname{Im}\Phi(-\sqrt3 i)-\tfrac12\operatorname{Im}R(i),
+\]
+where $\operatorname{Im}\operatorname{Li}_2(-qi)=-\operatorname{Im}\operatorname{Li}_2(iq)$. All \textit{real} quantities ($\Phi(-q)$, $K(1)$, $G(\tfrac13)$, $\operatorname{Li}_2(\tfrac23)$, $\zeta(3)$, \ldots) drop out of the imaginary parts. Expanding $\operatorname{Im}\Phi(-qi)$, $\operatorname{Im}\Phi(-\sqrt3i)$ by (1.1) (arguments $\nu$, $p_4$), and $\operatorname{Im}R(i)$ by (3.4) with
+\[
+G(\bar\mu)=-\ln\mu\,\ln^2\bar\mu-2\ln\bar\mu\,\operatorname{Li}_2(\bar\mu)+2\operatorname{Li}_3(\bar\mu),\qquad
+G(\mu)=-\ln\bar\mu\,\ln^2\mu-2\ln\mu\,\operatorname{Li}_2(\mu)+2\operatorname{Li}_3(\mu),
+\]
+and inserting the principal logarithms listed in \S0, a routine (computer-verified) expansion yields the exact intermediate formula
+\begin{equation*}
+\begin{aligned}
+I=\;&\frac{17\pi^3}{1296}-\frac{\pi\ell_3^2}{48}
++\frac{\pi}{6}\operatorname{Re}\operatorname{Li}_2(\mu)
+-\frac{\pi}{12}\operatorname{Re}\operatorname{Li}_2(\nu)
++\frac{\pi}{4}\operatorname{Re}\operatorname{Li}_2(iq)
++\frac{\pi}{6}\operatorname{Re}\operatorname{Li}_2(p_4)\\[1mm]
+&-\frac{\ell_2}{2}\operatorname{Im}\operatorname{Li}_2(\nu)
++\frac{\ell_2}{2}\operatorname{Im}\operatorname{Li}_2(p_4)
++\frac{\ell_3}{4}\operatorname{Im}\operatorname{Li}_2(\nu)
+-\frac{\ell_3}{4}\operatorname{Im}\operatorname{Li}_2(iq)\\[1mm]
+&-\operatorname{Im}\operatorname{Li}_3(\mu)
++\frac12\operatorname{Im}\operatorname{Li}_3(\nu)
++\frac12\operatorname{Im}\operatorname{Li}_3(iq)
+-\frac12\operatorname{Im}\operatorname{Li}_3(p_4).
+\end{aligned} \tag{4.1}
+\end{equation*}
+(Formula (4.1) reproduces the numerical value of $I$ to $60$ digits.)
+
+It remains to evaluate the dilogarithms and to relate the three trilogarithms
+$\operatorname{Im}\operatorname{Li}_3(\nu)$, $\operatorname{Im}\operatorname{Li}_3(p_4)$, $\operatorname{Im}\operatorname{Li}_3(iq)$.
+
+\subsection*{5. Dilogarithm lemmas}
+
+All classical; each is proved by differentiating both sides (the derivatives match using only $\operatorname{Li}_2'(z)=-\ln(1-z)/z$) and fixing the constant at one point, and each is then extended to the needed complex point by the identity principle: in every instance below both sides are analytic on the upper half-plane $\mathbb H$ (the relevant compositions avoid the cuts $[1,\infty)$, $(-\infty,0]$ there --- e.g. $z\in\mathbb H\Rightarrow 1-z$ in the lower half-plane, $-z/(1-z)$ in the lower half-plane, $1/z$ in the lower half-plane), and they agree on a real interval adjacent to $\mathbb H$ or along a curve reaching it; every instance was verified numerically to $300$ digits at the exact point of use.
+
+\textbf{(L1) Reflection.} $\operatorname{Li}_2(z)+\operatorname{Li}_2(1-z)=\dfrac{\pi^2}6-\ln z\ln(1-z)$. (At $z=\tfrac12$: $\operatorname{Li}_2(\tfrac12)=\tfrac{\pi^2}{12}-\tfrac{\ln^22}2$.)
+
+\textbf{(L2) Landen.} $\operatorname{Li}_2(z)+\operatorname{Li}_2\!\big(\tfrac{-z}{1-z}\big)=-\tfrac12\ln^2(1-z)$.
+
+\textbf{(L3) Inversion.} $\operatorname{Li}_2(z)+\operatorname{Li}_2(1/z)=-\dfrac{\pi^2}6-\tfrac12\ln^2(-z)$ for $z\notin[0,\infty)$.
+
+\textbf{(L4) Duplication.} $\operatorname{Li}_2(z^2)=2\big[\operatorname{Li}_2(z)+\operatorname{Li}_2(-z)\big]$.
+
+\textbf{(L5) Unit circle.} For $0\le\theta\le2\pi$:
+$\operatorname{Re}\operatorname{Li}_2(e^{i\theta})=\dfrac{\pi^2}6-\dfrac{\pi\theta}2+\dfrac{\theta^2}4$ and $\operatorname{Im}\operatorname{Li}_2(e^{i\theta})=\operatorname{Cl}_2(\theta)$
+(Fourier series of the Bernoulli polynomial; $\operatorname{Cl}_2$ = Clausen function). Together with the Clausen duplication $\operatorname{Cl}_2(2\theta)=2\operatorname{Cl}_2(\theta)-2\operatorname{Cl}_2(\pi-\theta)$ (from $\sin2\theta=2\sin\theta\cos\theta$), which at $\theta=\pi/3$ gives $\operatorname{Cl}_2(2\pi/3)=\tfrac23\operatorname{Cl}_2(\pi/3)$, one gets
+\[
+\operatorname{Li}_2\!\big(e^{-2\pi i/3}\big)=-\frac{\pi^2}{18}-\frac{2i}{3}\operatorname{Cl}_2\!\Big(\frac\pi3\Big).
+\]
+
+\textbf{(L6) The point $\mu$.} Landen (L2) at $z=\mu$ (note $-\mu/(1-\mu)=-\mu/\bar\mu=e^{-2\pi i/3}$, $1-\mu=\bar\mu$) plus (L5):
+\[
+\operatorname{Li}_2(\mu)=-\tfrac12\ln^2\bar\mu-\operatorname{Li}_2\!\big(e^{-2\pi i/3}\big)
+\;\Longrightarrow\;
+\operatorname{Re}\operatorname{Li}_2(\mu)=\frac{5\pi^2}{72}-\frac{\ell_3^2}{8}.
+\]
+
+\textbf{(L7) The point $iq$.}
+\textit{Real part.} By (L4) at $z=iq$: $\operatorname{Re}\operatorname{Li}_2(iq)=\tfrac12\big[\operatorname{Li}_2(iq)+\operatorname{Li}_2(-iq)\big]=\tfrac14\operatorname{Li}_2(-\tfrac13)$; and the two-Landen/duplication chain
+\[
+\operatorname{Li}_2(\tfrac13)+\operatorname{Li}_2(-\tfrac12)=-\tfrac12\ln^2\tfrac23,\quad
+\operatorname{Li}_2(-\tfrac13)+\operatorname{Li}_2(\tfrac14)=-\tfrac12\ln^2\tfrac43,\quad
+\operatorname{Li}_2(\tfrac14)=2\operatorname{Li}_2(\tfrac12)+2\operatorname{Li}_2(-\tfrac12)
+\]
+with $\operatorname{Li}_2(\tfrac12)$ from (L1) gives the classical relation
+\[
+\operatorname{Li}_2\!\Big(-\frac13\Big)=2\operatorname{Li}_2\!\Big(\frac13\Big)+\frac{\ln^23}{2}-\frac{\pi^2}{6}
+\;\Longrightarrow\;
+\operatorname{Re}\operatorname{Li}_2(iq)=\frac12\operatorname{Li}_2\!\Big(\frac13\Big)+\frac{\ell_3^2}{8}-\frac{\pi^2}{24}.
+\]
+\textit{Imaginary part.} $\operatorname{Im}\operatorname{Li}_2(iq)=\operatorname{Ti}_2(q)$, and the classical formula
+\[
+\operatorname{Ti}_2(\tan\theta)=\theta\ln\tan\theta+\tfrac12\operatorname{Cl}_2(2\theta)+\tfrac12\operatorname{Cl}_2(\pi-2\theta)
+\qquad(0<\theta<\pi/2)
+\]
+(proved by differentiating in $\theta$: both sides have derivative $2\theta/\sin2\theta$, and both vanish as $\theta\to0^+$) at $\theta=\pi/6$, with $\operatorname{Cl}_2(2\pi/3)=\tfrac23\operatorname{Cl}_2(\pi/3)$, gives
+\[
+\operatorname{Im}\operatorname{Li}_2(iq)=\operatorname{Ti}_2\!\Big(\frac1{\sqrt3}\Big)=\frac56\operatorname{Cl}_2\!\Big(\frac\pi3\Big)-\frac{\pi\ell_3}{12}.
+\]
+
+\textbf{(L8) The points $\nu$ and $p_4$.} Landen (L2) at $z=iq$ (note $-iq/(1-iq)=\bar w_0$, $1-iq=\bar\nu$):
+\[
+\operatorname{Li}_2(\bar w_0)=-\tfrac12\ln^2\bar\nu-\operatorname{Li}_2(iq).
+\]
+Reflection (L1) at $z=w_1$ ($1-w_1=\bar w_0$):
+$\operatorname{Li}_2(w_1)=\tfrac{\pi^2}6-\ln w_1\ln\bar w_0-\operatorname{Li}_2(\bar w_0)$.
+Inversion (L3) at $z=\nu$ ($1/\nu=\bar w_1$, $\ln(-\nu)=\ell_2-\tfrac{\ell_3}{2}-\tfrac{5\pi i}{6}$) and at $z=p_4$ ($1/p_4=\bar w_0$, $\ln(-p_4)=\ell_2-\tfrac{2\pi i}{3}$) then yield, after inserting (L7):
+\[
+\operatorname{Li}_2(\nu)=-\tfrac14\operatorname{Li}_2(-\tfrac13)+\tfrac{\pi^2}{12}+\tfrac{\ell_2\ell_3}{2}-\tfrac{\ell_3^2}{4}
++i\Big(\tfrac56\operatorname{Cl}_2(\tfrac\pi3)+\tfrac{\pi\ell_2}{2}-\tfrac{\pi\ell_3}{4}\Big),
+\]
+\[
+\operatorname{Li}_2(p_4)=\tfrac14\operatorname{Li}_2(-\tfrac13)+\tfrac{\pi^2}{24}-\tfrac{\ell_2\ell_3}{2}+\tfrac{\ell_3^2}{8}
++i\Big(\tfrac56\operatorname{Cl}_2(\tfrac\pi3)+\tfrac{\pi\ell_2}{2}\Big).
+\]
+(Each was checked to $60$ digits.)
+
+\subsection*{6. The trilogarithm input: Kummer's three-term identity at $z=iq$}
+
+\textbf{Lemma 9.} For $z$ in the upper half-plane (and on $(0,1)$),
+\begin{equation*}
+\operatorname{Li}_3(z)+\operatorname{Li}_3(1-z)+\operatorname{Li}_3\!\Big(1-\frac1z\Big)
+=\zeta(3)+\frac{\ln^3 z}{6}+\frac{\pi^2}{6}\ln z-\frac12\ln^2z\,\ln(1-z). \tag{6.1}
+\end{equation*}
+
+\textit{Proof.} For $z\in(0,1)$ differentiate. Using $\operatorname{Li}_3'(w)=\operatorname{Li}_2(w)/w$ and the Landen identity (L2) in the form $\operatorname{Li}_2(1-\tfrac1z)=-\tfrac12\ln^2z-\operatorname{Li}_2(1-z)$,
+\[
+\frac{d}{dz}\mathrm{LHS}
+=\frac{\operatorname{Li}_2(z)}{z}-\frac{\operatorname{Li}_2(1-z)}{1-z}+\frac{\operatorname{Li}_2(1-\tfrac1z)}{z(z-1)}
+=\frac{\operatorname{Li}_2(z)+\operatorname{Li}_2(1-z)}{z}-\frac{\ln^2z}{2}\Big(\frac1{z-1}-\frac1z\Big),
+\]
+where we expanded $\frac1{z(z-1)}=\frac1{z-1}-\frac1z$. By reflection (L1) this equals
+\[
+\frac{\pi^2}{6z}-\frac{\ln z\ln(1-z)}{z}+\frac{\ln^2z}{2(1-z)}+\frac{\ln^2 z}{2z}
+=\frac{d}{dz}\mathrm{RHS}.
+\]
+As $z\to1^-$ both sides tend to $\zeta(3)$. Hence (6.1) holds on $(0,1)$. For $z\in\mathbb H$: $1-z$ and $1-1/z$ avoid the cut $[1,\infty)$ ($1-z$ is in the lower half-plane; $\operatorname{Im}(1-1/z)=\operatorname{Im}(-1/z)>0$), and $\ln z$, $\ln(1-z)$ are principal-analytic, so both sides are analytic on $\mathbb H\cup(0,1)$-neighbourhood and agree on $(0,1)$; by the identity principle they agree on $\mathbb H$. (Verified at $z=iq$ to $300$ digits.) $\square$
+
+At $z=iq$ we have $1-z=\bar\nu$ and $1-1/z=1+i\sqrt3=p_4$, so taking imaginary parts of (6.1) (recall $\operatorname{Li}_3(\bar\nu)=\overline{\operatorname{Li}_3(\nu)}$), with $\ln(iq)=-\tfrac{\ell_3}2+\tfrac{i\pi}2$, $\ln(1-iq)=\ell_2-\tfrac{\ell_3}{2}-\tfrac{i\pi}6$:
+\begin{equation*}
+\operatorname{Im}\operatorname{Li}_3(iq)-\operatorname{Im}\operatorname{Li}_3(\nu)+\operatorname{Im}\operatorname{Li}_3(p_4)
+=\frac{\pi\big(\pi^2+6\ell_2\ell_3-\ell_3^2\big)}{24}. \tag{6.2}
+\end{equation*}
+Consequently, in (4.1) the combination $\tfrac12\operatorname{Im}\operatorname{Li}_3(\nu)-\tfrac12\operatorname{Im}\operatorname{Li}_3(p_4)$ equals $\tfrac12\operatorname{Im}\operatorname{Li}_3(iq)-\tfrac{\pi(\pi^2+6\ell_2\ell_3-\ell_3^2)}{48}$: the constants $\operatorname{Im}\operatorname{Li}_3(\nu)$, $\operatorname{Im}\operatorname{Li}_3(p_4)$ disappear.
+
+\subsection*{7. Final collapse}
+
+Substituting into (4.1) the exact values from (L6), (L7), (L8) and eliminating
+$\operatorname{Im}\operatorname{Li}_3(\nu),\operatorname{Im}\operatorname{Li}_3(p_4)$ by (6.2), all terms containing
+$\operatorname{Cl}_2(\pi/3)$, $\ell_2^2$, $\ell_2\ell_3$ cancel identically, and with
+$\operatorname{Li}_2(-\tfrac13)=2\operatorname{Li}_2(\tfrac13)+\tfrac{\ell_3^2}2-\tfrac{\pi^2}6$ one obtains
+\begin{equation*}
+\boxed{\;I=\operatorname{Im}\operatorname{Li}_3(iq)-\operatorname{Im}\operatorname{Li}_3(\mu)
++\frac\pi4\operatorname{Li}_2\!\Big(\frac13\Big)-\frac{11\pi^3}{648}+\frac{\pi\ell_3^2}{24}\;}\tag{7.1}
+\end{equation*}
+The elementary bookkeeping from (4.1) to (7.1) was performed and verified in exact arithmetic with a computer algebra system (sympy), and (7.1) agrees with the direct numerical value of $I$ to $310$ significant digits.
+
+\subsection*{8. The ladder $(\star)$ and the minimal form}
+
+PSLQ applied to high-precision values reveals the (numerically certain, $300$-digit) relation
+\[
+(\star)\qquad
+\operatorname{Im}\operatorname{Li}_3(\mu)=\frac45\operatorname{Im}\operatorname{Li}_3(iq)+\frac{\pi\ell_3^2}{240}-\frac{29\pi^3}{6480}.
+\]
+Substituting $(\star)$ into (7.1) gives the minimal form quoted in the Result:
+\begin{equation*}
+I=\frac{\pi}{4}\operatorname{Li}_2\!\Big(\frac13\Big)
++\frac15\operatorname{Im}\operatorname{Li}_3\!\Big(\frac{i}{\sqrt3}\Big)
+-\frac{\pi^3}{80}+\frac{3\pi\ell_3^2}{80}. \tag{8.1}
+\end{equation*}
+I emphasize: (7.1) is proved unconditionally above; (8.1) is equivalent to it modulo $(\star)$, which I verify numerically to $300$ digits but do not prove. Relation $(\star)$ is a genuine ``trilogarithmic ladder'' at the base $\mu$ (which satisfies $3\mu^2-3\mu+1=0$, $|\mu|^2=\tfrac13$, $1-\mu=\bar\mu$): an exhaustive check of all Kummer/Landen/inversion/duplication/triplication instances whose arguments stay in the multiplicative lattice $\{2^a3^{b/2}e^{ik\pi/6}\}$ shows the single-variable functional equations do \textit{not} suffice to derive it (they yield only (6.2) and real-part relations), so a proof requires a two-variable trilogarithm equation (Kummer's equation) or equivalent machinery, which is not carried out here.
+
+\section*{Numerical verification}
+
+All computations with mpmath at working precision up to 310 digits.
+
+\begin{itemize}
+\item Direct evaluation (tanh-sinh quadrature of the smooth integrand, \texttt{mp.quad}, dps = 310):
+  \[
+  I=0.15637139137571170123083760326663152202040959779133939842807852631660402\ldots
+  \]
+  matching the value quoted in the problem statement.
+\item Main closed form (7.1): $|I_{\rm closed}-I_{\rm quad}|<10^{-311}$ --- agreement to $\approx310$ significant digits.
+\item Minimal form (8.1): same agreement ($<10^{-311}$).
+\item Every intermediate identity was verified numerically at its exact point of use:
+  contour reductions for $\int L^2$, $M_1$, $M_2$, $N$, $R$ (60 digits, three different endpoints);
+  the fourteen-term intermediate formula (4.1) (60 digits);
+  lemmas (L1)--(L8), Lemma 9, the principal-log values, and the point coincidences (all $\le10^{-300}$ residuals at 310 dps);
+  the path traces for the $s$- and $\tau$-substitutions (1000 sample points each, no cut crossings);
+  the branch identities (3.1), $\ln(q+t)=\ln q+\ln(1+t/q)$, $\ln\varphi=\ln(1+qt)-\ln(1+t/q)$ along the full paths.
+\item The ladder $(\star)$: residual $<10^{-300}$ (PSLQ at 260 digits, small coefficients; independently re-verified at 310 digits).
+\end{itemize}
+
+\section*{Notes}
+
+\begin{enumerate}
+\item \textbf{What is fully proved.} The closed form (7.1) --- equivalently the boxed Result --- is derived completely: Fourier/contour reduction, explicit polylogarithmic primitives with path/branch control, classical one-variable dilogarithm identities (each proved by differentiation + identity principle), and Kummer's three-term trilogarithm identity (proved in Lemma 9). The final coefficient collapse was done in exact rational arithmetic.
+\item \textbf{The one unproved step for the minimal form.} The reduction from the two-trilogarithm form (7.1) to the one-trilogarithm form (8.1) uses the ladder $(\star)$, verified to 300 digits but not proved here. Both forms are exact closed forms of $I$; (7.1) does not depend on $(\star)$.
+\item The constants $\operatorname{Im}\operatorname{Li}_3(i/\sqrt3)=\operatorname{Ti}_3(1/\sqrt3)$ and $\operatorname{Li}_2(1/3)$ appear to be irreducible: PSLQ finds no relation of either against $\{\pi^3,\ \allowbreak\pi\ln^22,\ \allowbreak\pi\ln^23,\ \allowbreak\pi\ln2\ln3,\ \allowbreak\operatorname{Cl}_2(\pi/3)\ln2,\ \allowbreak\operatorname{Cl}_2(\pi/3)\ln3,\ \allowbreak G\ln2,\ \allowbreak G\ln3,\ \allowbreak\pi\operatorname{Li}_2(1/3)\}$ with coefficients up to $10^{12}$.
+\item Useful byproducts of the derivation (all proved): $\int_0^\pi\arctan^2\frac{\sin x}{\sqrt3+\cos x}\,dx=\frac\pi2\operatorname{Li}_2(\frac13)$ (Parseval), $\operatorname{Im}\operatorname{Li}_2(1+\tfrac{i}{\sqrt3})=\tfrac56\operatorname{Cl}_2(\tfrac\pi3)+\tfrac{\pi\ln2}2-\tfrac{\pi\ln3}4$, and $\operatorname{Ti}_2(\tfrac1{\sqrt3})=\tfrac56\operatorname{Cl}_2(\tfrac\pi3)-\tfrac{\pi\ln3}{12}$.
+\end{enumerate}
+
+\end{document}

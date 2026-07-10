@@ -1,0 +1,481 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+% shuffle product symbol (Cyrillic "sha" approximated by a rotated amalg)
+\newcommand{\shuffle}{\mathbin{\rotatebox[origin=c]{180}{\ensuremath{\amalg}}}}
+\newsavebox{\numbox}
+
+\title{Cleo Bench Problem 15\\[1ex]\large Evaluate $\int_0^1\frac{\ln(1-x)}{x}\text{Li}_3\left(\frac{1+x}{2}\right)dx$ , $\int_0^1\frac{\ln^2(1-x)}{x}\text{Li}_2\left(\frac{1+x}{2} \right)dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/970125}{question 970125}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in closed form
+\[
+I_1=\int_0^1\frac{\ln(1-x)}{x}\,\mathrm{Li}_3\!\left(\frac{1+x}{2}\right)dx,
+\qquad
+I_2=\int_0^1\frac{\ln^2(1-x)}{x}\,\mathrm{Li}_2\!\left(\frac{1+x}{2}\right)dx .
+\]
+
+\section*{Result}
+
+With $L=\ln 2$, $\zeta_s=\zeta(s)$, and $\mathrm{Li}_s(\tfrac12)$ the polylogarithm at $\tfrac12$:
+
+\[
+\boxed{\;I_1=\frac{29}{16}\zeta_5-\frac{19}{16}\zeta_2\zeta_3+\frac{11}{16}\zeta_4 L
++\frac{5}{16}\zeta_3L^{2}-\frac{5}{12}\zeta_2L^{3}+\frac{L^{5}}{40}
+-3\,\mathrm{Li}_5\!\Big(\tfrac12\Big)\;}
+\]
+
+\[
+\boxed{\;I_2=\frac{81}{32}\zeta_5+\frac{15}{8}\zeta_2\zeta_3-6\zeta_4 L
+-\frac18\zeta_3L^{2}-\frac13\zeta_2L^{3}+\frac{L^{5}}{15}
++2L\,\mathrm{Li}_4\!\Big(\tfrac12\Big)+2\,\mathrm{Li}_5\!\Big(\tfrac12\Big)\;}
+\]
+
+Equivalently, in $\pi$-notation ($\zeta_2=\pi^2/6,\ \zeta_4=\pi^4/90$):
+\[
+\begin{aligned}
+I_1={}&\frac{29}{16}\zeta(5)-\frac{19\pi^2}{96}\zeta(3)+\frac{11\pi^4}{1440}\ln 2\\
+&+\frac{5}{16}\zeta(3)\ln^2 2-\frac{5\pi^2}{72}\ln^3 2+\frac{\ln^5 2}{40}-3\,\mathrm{Li}_5\!\Big(\tfrac12\Big),
+\end{aligned}
+\]
+\[
+\begin{aligned}
+I_2={}&\frac{81}{32}\zeta(5)+\frac{5\pi^2}{16}\zeta(3)-\frac{\pi^4}{15}\ln 2\\
+&-\frac{1}{8}\zeta(3)\ln^2 2-\frac{\pi^2}{18}\ln^3 2+\frac{\ln^5 2}{15}\\
+&+2\ln 2\,\mathrm{Li}_4\!\Big(\tfrac12\Big)+2\,\mathrm{Li}_5\!\Big(\tfrac12\Big).
+\end{aligned}
+\]
+
+Numerically
+\[
+I_1=-1.52182292885581001525839248485539311533028568041866\ldots
+\]
+\[
+I_2=\phantom{-}3.32096687866486768034598612120489450967715868430766\ldots
+\]
+
+Notice that $\mathrm{Li}_4(\tfrac12)$ drops out of $I_1$; both answers lie in the standard weight-5 ``level 2'' space spanned by
+$\{\zeta_5,\ \zeta_2\zeta_3,\ \zeta_4L,\ \zeta_3L^2,\ \zeta_2L^3,\ L^5,\ L\,\mathrm{Li}_4(\tfrac12),\ \mathrm{Li}_5(\tfrac12)\}$.
+
+\begin{center}\rule{0.5\linewidth}{0.4pt}\end{center}
+
+\section*{Derivation}
+
+Throughout, $u,t,a\in(0,1)$, $L=\ln 2$, $H_m^{(p)}=\sum_{k\le m}k^{-p}$, $H_m=H_m^{(1)}$.
+All series manipulations below involve either (i) power series with radius $>$ the domain used, or (ii) non-negative terms (after writing $\zeta_p-H_m^{(p)}=\sum_{j>m}j^{-p}$), so all interchanges of summation/integration are justified by absolute convergence / monotone convergence; the few Abel-limit arguments are flagged where they occur. Every displayed identity was in addition verified numerically to $\ge 40$ significant digits.
+
+\subsection*{0. Plan and toolbox}
+
+Substituting $u=1-x$,
+\begin{equation*}
+I_1=\int_0^1\frac{\ln u}{1-u}\,\mathrm{Li}_3\!\Big(1-\frac u2\Big)du,\qquad
+I_2=\int_0^1\frac{\ln^2 u}{1-u}\,\mathrm{Li}_2\!\Big(1-\frac u2\Big)du. \tag{0.1}
+\end{equation*}
+
+Both integrals will be reduced, by elementary and fully justified steps, to \textbf{multiple polylogarithms at $\tfrac12$},
+\[
+\mathrm{Li}_{s_1,\dots,s_k}\!\Big(\tfrac12\Big):=\sum_{n_1>n_2>\cdots>n_k\ge1}\frac{2^{-n_1}}{n_1^{s_1}\cdots n_k^{s_k}},
+\]
+together with ordinary polylogarithms at $\tfrac12$. Section 3 evaluates \textit{all} such constants of weight $\le5$ in closed form by a provable linear system of relations (this is the hard core: the weight-5 constants $X,Y,W,V$ defined below). Sections 1--2 perform the reductions; Section 4 assembles the answers; Section 5 records independent cross-checks.
+
+Standard moment formulas, obtained by expanding $\frac1{1-u}=\sum_{r\ge0}u^r$ and using $\int_0^1u^{q}\ln^ju\,du=(-1)^j j!/(q+1)^{j+1}$:
+\begin{equation*}
+\begin{gathered}
+\int_0^1\frac{u^m\ln u}{1-u}du=-(\zeta_2-H_m^{(2)}),\quad
+\int_0^1\frac{u^m\ln^2 u}{1-u}du=2(\zeta_3-H_m^{(3)}),\\
+\int_0^1\frac{u^m\ln^3 u}{1-u}du=-6(\zeta_4-H_m^{(4)}).
+\end{gathered} \tag{0.2}
+\end{equation*}
+Elementary antiderivatives used repeatedly (differentiate to check; constants fixed at the endpoints):
+\begin{equation*}
+\int_0^x\frac{\ln^2(1-t)}{t}dt=\ln^2(1-x)\ln x+2\ln(1-x)\,\mathrm{Li}_2(1-x)-2\,\mathrm{Li}_3(1-x)+2\zeta_3, \tag{0.3}
+\end{equation*}
+\begin{equation*}
+\int_0^x\frac{\ln(1-t)\,\mathrm{Li}_2(t)}{t}\,dt=-\tfrac12\,\mathrm{Li}_2(x)^2\qquad\Big(\text{since }d\,\mathrm{Li}_2(t)=-\tfrac{\ln(1-t)}{t}dt\Big), \tag{0.4}
+\end{equation*}
+\begin{equation*}
+\frac{d}{dt}\,\mathrm{Li}_2(1-t)=\frac{\ln t}{1-t},\qquad
+\frac{d}{dt}\,\mathrm{Li}_3(1-t)=-\frac{\mathrm{Li}_2(1-t)}{1-t}. \tag{0.5}
+\end{equation*}
+Euler's reflection (proved by differentiating both sides and checking at $x=1$):
+\begin{equation*}
+\mathrm{Li}_2(x)+\mathrm{Li}_2(1-x)=\zeta_2-\ln x\ln(1-x). \tag{0.6}
+\end{equation*}
+Special values (the first is (0.6) at $x=\frac12$; the second is Landen's classical trilogarithm evaluation, re-derived independently by the engine of Section 3, see (3.9)):
+\begin{equation*}
+\mathrm{Li}_2(\tfrac12)=\tfrac{\zeta_2}{2}-\tfrac{L^2}{2},\qquad
+\mathrm{Li}_3(\tfrac12)=\tfrac78\zeta_3-\tfrac{\zeta_2L}{2}+\tfrac{L^3}{6}. \tag{0.7}
+\end{equation*}
+Four weight-5 constants play the central role:
+\begin{equation*}
+X=\sum_{n\ge1}\frac{H_n}{2^nn^4},\quad
+Y=\sum_{n\ge1}\frac{H_n^{(2)}}{2^nn^3},\quad
+W=\int_0^{1/2}\frac{\mathrm{Li}_2(t)^2}{t}dt,\quad
+V=\int_0^{1/2}\frac{\ln^2(1-t)\,\mathrm{Li}_2(t)}{t}dt. \tag{0.8}
+\end{equation*}
+Expanding $\mathrm{Li}_2(t)^2=\sum_n t^n\big(\tfrac{2H^{(2)}_{n-1}}{n^2}+\tfrac{4H_{n-1}}{n^3}\big)$ (Cauchy product plus the partial fraction
+$\frac1{a^2b^2}=\frac1{(a+b)^2}\big(\frac1{a^2}+\frac1{b^2}\big)+\frac2{(a+b)^3}\big(\frac1a+\frac1b\big)$ summed over $a+b=n$) and integrating termwise,
+\begin{equation*}
+W=2Y+4X-6\,\mathrm{Li}_5(\tfrac12). \tag{0.9}
+\end{equation*}
+
+\subsection*{1. Reduction of $I_2$}
+
+Apply (0.6) with $x=u/2$ inside (0.1):
+\[
+\mathrm{Li}_2\Big(1-\frac u2\Big)=\zeta_2-\big(\ln u-L\big)\ln\Big(1-\frac u2\Big)-\mathrm{Li}_2\Big(\frac u2\Big).
+\]
+Using $\int_0^1\frac{\ln^2u}{1-u}du=2\zeta_3$, the series $\ln(1-\tfrac u2)=-\sum_m\frac{u^m}{2^mm}$, $\mathrm{Li}_2(\tfrac u2)=\sum_m\frac{u^m}{2^mm^2}$ and the moments (0.2):
+\begin{equation*}
+I_2=2\zeta_2\zeta_3-6\sum_{m\ge1}\frac{\zeta_4-H^{(4)}_m}{2^mm}
+-2L\sum_{m\ge1}\frac{\zeta_3-H^{(3)}_m}{2^mm}
+-2\sum_{m\ge1}\frac{\zeta_3-H^{(3)}_m}{2^mm^2}. \tag{1.1}
+\end{equation*}
+The $\zeta$-parts sum to $\zeta_4 L,\ \zeta_3L,\ \zeta_3\,\mathrm{Li}_2(\tfrac12)$. For the harmonic parts define
+\[
+\sigma_b=\sum_m\frac{H^{(3)}_m}{2^mm},\qquad
+\sigma_c=\sum_m\frac{H^{(3)}_m}{2^mm^2},\qquad
+\sigma_a=\sum_m\frac{H^{(4)}_m}{2^mm}.
+\]
+
+\textbf{Lemma 1.1.} For $0<x<1$:
+\[
+\sum_m\frac{H^{(3)}_m}{m}x^m=\mathrm{Li}_4(x)-\ln(1-x)\mathrm{Li}_3(x)-\tfrac12\mathrm{Li}_2(x)^2 .
+\]
+\textit{Proof.} $\sum_mH_m^{(3)}x^m=\frac{\mathrm{Li}_3(x)}{1-x}$; divide by $x$ and integrate:
+$\int_0^x\frac{\mathrm{Li}_3(t)}{t(1-t)}dt=\mathrm{Li}_4(x)+\int_0^x\frac{\mathrm{Li}_3(t)}{1-t}dt$, and by parts with (0.4),
+$\int_0^x\frac{\mathrm{Li}_3}{1-t}dt=-\ln(1-x)\mathrm{Li}_3(x)+\int_0^x\frac{\ln(1-t)\mathrm{Li}_2(t)}{t}dt=-\ln(1-x)\mathrm{Li}_3(x)-\tfrac12\mathrm{Li}_2(x)^2$. $\square$
+
+At $x=\tfrac12$: $\ \sigma_b=\mathrm{Li}_4(\tfrac12)+L\,\mathrm{Li}_3(\tfrac12)-\tfrac12\mathrm{Li}_2(\tfrac12)^2$.
+
+\textbf{Lemma 1.2.} $\displaystyle\int_0^x\frac{\ln(1-t)\,\mathrm{Li}_3(t)}{t}dt=-\mathrm{Li}_2(x)\mathrm{Li}_3(x)+\int_0^x\frac{\mathrm{Li}_2(t)^2}{t}dt$ (integrate by parts using (0.4)); hence, dividing Lemma 1.1 by $x$ and integrating to $\tfrac12$,
+\[
+\sigma_c=\mathrm{Li}_5(\tfrac12)+\mathrm{Li}_2(\tfrac12)\mathrm{Li}_3(\tfrac12)-\tfrac32\,W .
+\]
+
+\textbf{Lemma 1.3.} Analogously $\sum_m\frac{H^{(4)}_m}{m}x^m=\mathrm{Li}_5(x)-\ln(1-x)\mathrm{Li}_4(x)+\int_0^x\frac{\ln(1-t)\mathrm{Li}_3(t)}{t}dt$, so by Lemma 1.2,
+\[
+\sigma_a=\mathrm{Li}_5(\tfrac12)+L\,\mathrm{Li}_4(\tfrac12)-\mathrm{Li}_2(\tfrac12)\mathrm{Li}_3(\tfrac12)+W .
+\]
+
+Substituting the three lemmas into (1.1) and using (0.7):
+\begin{equation*}
+\boxed{\;
+\begin{aligned}
+I_2={}&2\zeta_2\zeta_3-6\zeta_4L-2\zeta_3L^2-2\zeta_3\,\mathrm{Li}_2(\tfrac12)
++8\,\mathrm{Li}_5(\tfrac12)+8L\,\mathrm{Li}_4(\tfrac12)\\
+&-4\,\mathrm{Li}_2(\tfrac12)\mathrm{Li}_3(\tfrac12)
++2L^2\mathrm{Li}_3(\tfrac12)-L\,\mathrm{Li}_2(\tfrac12)^2+3W\;
+\end{aligned}} \tag{1.2}
+\end{equation*}
+--- i.e. $I_2$ is \textit{explicit polylogarithms at $\tfrac12$ plus $3W$}. (Identity (1.2) checked numerically to $70$ digits.)
+
+\subsection*{2. Reduction of $I_1$}
+
+\textbf{2.1 The parameter representation.} By the fundamental theorem of calculus in the parameter $a$,
+\[
+\mathrm{Li}_3\Big(1-\frac u2\Big)=\zeta_3-\int_0^{1/2}\frac{u\,\mathrm{Li}_2(1-au)}{1-au}\,da ,
+\]
+so by (0.1), Fubini (the integrand is $\ln u\cdot(\text{bounded positive})$, absolutely integrable), and the partial fraction
+$\frac{u}{(1-u)(1-au)}=\frac1{1-a}\big[\frac1{1-u}-\frac1{1-au}\big]$:
+\begin{equation*}
+\begin{gathered}
+I_1=-\zeta_2\zeta_3-\int_0^{1/2}\frac{da}{1-a}\Big[\mathfrak A(a)-\mathfrak B(a)\Big],\\
+\mathfrak A(a)=\int_0^1\frac{\ln u\,\mathrm{Li}_2(1-au)}{1-u}du,\quad
+\mathfrak B(a)=\int_0^1\frac{\ln u\,\mathrm{Li}_2(1-au)}{1-au}du.
+\end{gathered} \tag{2.1}
+\end{equation*}
+
+\textbf{2.2 $\mathfrak B$ in closed form.} Substituting $s=au$ and using the antiderivatives $\int\frac{\mathrm{Li}_2(1-s)}{1-s}ds=-\mathrm{Li}_3(1-s)$ and, by (0.5) and (0.4) with $r=1-s$, $\int\frac{\ln s\,\mathrm{Li}_2(1-s)}{1-s}ds=\tfrac12\mathrm{Li}_2(1-s)^2$:
+\begin{equation*}
+\mathfrak B(a)=\frac1a\Big[\tfrac12\mathrm{Li}_2(1-a)^2-\tfrac12\zeta_2^2-\ln a\,\big(\zeta_3-\mathrm{Li}_3(1-a)\big)\Big]. \tag{2.2}
+\end{equation*}
+
+\textbf{2.3 $\mathfrak A$ as a series.} Apply (0.6) to $\mathrm{Li}_2(1-au)$, expand $\ln(1-au)$, $\mathrm{Li}_2(au)$, and use (0.2):
+\begin{equation*}
+\mathfrak A(a)=-\zeta_2^2-\ln a\sum_{m\ge1}\frac{a^m}{m}(\zeta_2-H^{(2)}_m)
++2\sum_{m\ge1}\frac{a^m}{m}(\zeta_3-H^{(3)}_m)+\sum_{m\ge1}\frac{a^m}{m^2}(\zeta_2-H^{(2)}_m). \tag{2.3}
+\end{equation*}
+
+\textbf{2.4 Integrating $\mathfrak A$.} With the tails
+$\lambda_m=\sum_{i>m}\frac{2^{-i}}{i}$, $\mu_m=\sum_{i>m}\frac{2^{-i}}{i^2}$ one has the elementary moments
+\[
+\int_0^{1/2}\frac{a^m}{1-a}da=\lambda_m,\qquad \int_0^{1/2}\frac{a^m\ln a}{1-a}da=-\big(L\lambda_m+\mu_m\big),
+\]
+(expand $\frac1{1-a}$ geometrically; $\int_0^{1/2}a^{i-1}\ln a\,da=-2^{-i}(L/i+1/i^2)$). Hence
+\begin{equation*}
+-\int_0^{1/2}\frac{\mathfrak A(a)}{1-a}da=\zeta_2^2L-L\,\mathfrak T_1-\mathfrak T_2-2\,\mathfrak T_3-\mathfrak T_4, \tag{2.4}
+\end{equation*}
+\[
+\begin{gathered}
+\mathfrak T_1=\sum_m\frac{(\zeta_2-H^{(2)}_m)\lambda_m}{m},\quad
+\mathfrak T_2=\sum_m\frac{(\zeta_2-H^{(2)}_m)\mu_m}{m},\\
+\mathfrak T_3=\sum_m\frac{(\zeta_3-H^{(3)}_m)\lambda_m}{m},\quad
+\mathfrak T_4=\sum_m\frac{(\zeta_2-H^{(2)}_m)\lambda_m}{m^2}.
+\end{gathered}
+\]
+
+\textbf{2.5 The $\mathfrak T$'s are multiple polylogarithms at $\tfrac12$.} Write $\zeta_p-H^{(p)}_m=\sum_{j>m}j^{-p}$ and $\lambda_m=\sum_{i>m}2^{-i}/i$; the resulting triple sums have all terms $\ge0$, so they may be rearranged freely. Splitting the region $\{i>m,\ j>m\}$ into $\{i>j>m\}\cup\{j=i>m\}\cup\{j>i>m\}$ and, in the last region, resumming $\sum_{j>i}j^{-p}=\zeta_p-H_i^{(p)}$ and iterating the same split once more, every piece becomes a \textit{descending chain} with the $2$-power on the outermost index --- that is, a multiple polylogarithm at $\tfrac12$. The result (each line verified to $45$ digits):
+\begin{gather*}
+\mathfrak T_1=\zeta_2\,\mathrm{Li}_{1,1}-\mathrm{Li}_{1,1,2}-\mathrm{Li}_{1,3},\qquad
+\mathfrak T_2=\zeta_2\,\mathrm{Li}_{2,1}-\mathrm{Li}_{2,1,2}-\mathrm{Li}_{2,3},\\
+\mathfrak T_3=\zeta_3\,\mathrm{Li}_{1,1}-\mathrm{Li}_{1,1,3}-\mathrm{Li}_{1,4},\qquad
+\mathfrak T_4=\zeta_2\,\mathrm{Li}_{1,2}-\mathrm{Li}_{1,2,2}-\mathrm{Li}_{1,4}, \tag{2.5}
+\end{gather*}
+all $\mathrm{Li}$'s at argument $\tfrac12$. (E.g. $\mathfrak T_1=\sum_i\frac{2^{-i}}{i}\sum_{m<i}\frac{\zeta_2-H^{(2)}_m}{m}$ and
+$\sum_{m<i}\frac{\zeta_2-H^{(2)}_m}{m}=\zeta_2H_{i-1}-\sum_{k<m<i}\frac1{mk^2}-\sum_{m<i}\frac1{m^3}$.)
+
+\textbf{2.6 The $\mathfrak B$-part.} With $1/(a(1-a))=1/a+1/(1-a)$,
+\begin{equation*}
+\Xi:=\int_0^{1/2}\frac{\mathfrak B(a)}{1-a}da
+=\tfrac12 W_3'+\tfrac12\big(S-W\big)-\tfrac12\zeta_2^2L-\alpha-\beta, \tag{2.6}
+\end{equation*}
+where $S=\int_0^1\frac{\mathrm{Li}_2(t)^2}{t}dt$ and:
+
+\textit{(i)} $\int_0^{1/2}\frac{\mathrm{Li}_2(1-a)^2}{1-a}da=\int_{1/2}^1\frac{\mathrm{Li}_2(r)^2}{r}dr=S-W$.
+
+\textit{(ii)} $W_3':=\int_0^{1/2}\frac{\mathrm{Li}_2(1-a)^2-\zeta_2^2}{a}da
+=\int_{1/2}^1\frac{\mathrm{Li}_2(r)^2-\zeta_2^2}{1-r}dr$; integrating by parts ($v=-\ln(1-r)$; the boundary term at $1$ vanishes since $\mathrm{Li}_2(r)^2-\zeta_2^2=O((1-r)\ln(1-r))$):
+\[
+W_3'=-L\big(\mathrm{Li}_2(\tfrac12)^2-\zeta_2^2\big)-2\Big[\int_0^1\frac{\ln^2(1-r)\mathrm{Li}_2(r)}{r}dr-V\Big]
+=-L\big(\mathrm{Li}_2(\tfrac12)^2-\zeta_2^2\big)-2\big(2\zeta_2\zeta_3-\zeta_5\big)+2V,
+\]
+using $\int_0^1\frac{\ln^2(1-r)\mathrm{Li}_2(r)}{r}dr=\sum_k\frac{H_k^2+H_k^{(2)}}{k^3}=2\zeta_2\zeta_3-\zeta_5$
+(the moment $\int_0^1r^{k-1}\ln^2(1-r)\,dr=\frac{H_k^2+H_k^{(2)}}{k}$, plus the classical Euler sums
+$\sum\frac{H_k^2}{k^3}=\frac72\zeta_5-\zeta_2\zeta_3$ and $\sum\frac{H^{(2)}_k}{k^3}=3\zeta_2\zeta_3-\frac92\zeta_5$, both re-derived in Section 5.1).
+
+\textit{(iii)} $\alpha:=\int_0^{1/2}\frac{\ln a\,(\zeta_3-\mathrm{Li}_3(1-a))}{a}da
+=\frac{L^2}{2}\big(\zeta_3-\mathrm{Li}_3(\tfrac12)\big)-\frac12\big(2\zeta_2\zeta_3-\zeta_5\big)+\frac{V}2$
+(by parts with $\ln^2a/2$, then $a\mapsto1-a$ and the same full integral as in (ii)).
+
+\textit{(iv)} $\beta:=\int_0^{1/2}\frac{\ln a\,(\zeta_3-\mathrm{Li}_3(1-a))}{1-a}da
+=\zeta_3\big(\mathrm{Li}_2(\tfrac12)-\zeta_2\big)-\zeta_2\zeta_3+3\zeta_5-\mathrm{Li}_2(\tfrac12)\mathrm{Li}_3(\tfrac12)+W$,
+using $r=1-a$, $\int_0^1\frac{\ln(1-r)\mathrm{Li}_3(r)}{r}dr=-\sum\frac{H_n}{n^4}=\zeta_2\zeta_3-3\zeta_5$ (Euler, \S5.1), and Lemma 1.2 at $x=\tfrac12$.
+
+\textit{(v)} $S=2\zeta_2\zeta_3-3\zeta_5$: by parts, $S=\zeta_2\zeta_3+\int_0^1\frac{\ln(1-t)\mathrm{Li}_3(t)}{t}dt=\zeta_2\zeta_3+(\zeta_2\zeta_3-3\zeta_5)$.
+
+\textbf{2.7 Summary.} Combining (2.1), (2.4), (2.6):
+\begin{equation*}
+\boxed{\;I_1=-\zeta_2\zeta_3+\zeta_2^2L-L\,\mathfrak T_1-\mathfrak T_2-2\,\mathfrak T_3-\mathfrak T_4+\Xi\;} \tag{2.7}
+\end{equation*}
+with (2.5)--(2.6). Every quantity on the right is an explicit constant, a $\mathrm{Li}_{s_1,\dots,s_k}(\tfrac12)$ of weight $\le5$, or one of $W,V$. Identity (2.7) was verified numerically to $40$ digits (each sub-identity separately as well).
+
+\subsection*{3. The engine: all multiple polylogarithms at $\tfrac12$ of weight $\le5$}
+
+\textbf{3.1 Words and values.} For a word $w=a_1a_2\cdots a_n$ over $\{0,1\}$ ($a_1$ outermost) define
+\[
+I(w):=\idotsint\limits_{0<t_n<\cdots<t_1<1/2}\prod_{i=1}^n f_{a_i}(t_i)\,dt_i,\qquad f_0(t)=\frac1t,\ f_1(t)=\frac1{1-t}.
+\]
+$I(w)$ converges iff $a_n=1$. Splitting $w$ into blocks $0^{s_1-1}1\,0^{s_2-1}1\cdots$ gives
+$I(w)=\mathrm{Li}_{s_1,\dots,s_k}(\tfrac12)$ (expand each $f_1$ geometrically and integrate; all terms positive). There are $1,2,4,8,16$ convergent words of weights $1,\dots,5$; $I(1)=L$.
+
+Similarly, for words over $\{0,-1\}$ on $[0,1]$ with $f_{-1}(t)=\frac1{1+t}$, and more generally for signed compositions $\mathbf c=((s_1,\sigma_1),\dots,(s_k,\sigma_k))$, $\sigma_i\in\{\pm1\}$, define the \textbf{alternating Euler sums}
+\[
+Z(\mathbf c)=\sum_{n_1>\cdots>n_k\ge1}\prod_i\frac{\sigma_i^{\,n_i}}{n_i^{s_i}},
+\]
+convergent iff $(s_1,\sigma_1)\ne(1,+)$. The iterated-integral representation of $Z(\mathbf c)$ uses the letters $y_i=\sigma_1\cdots\sigma_i$: with $w(\mathbf c)=0^{s_1-1}y_1\cdots0^{s_k-1}y_k$ one has $I_{[0,1]}(w(\mathbf c))=(-1)^kZ(\mathbf c)$ (standard; verified numerically for all cases used).
+
+\textbf{3.2 Provable relation classes.} The following families of linear relations hold, with elementary proofs:
+
+\textbf{(a) Shuffle.} For convergent words $u,v$ (on either interval),
+$I(u)I(v)=\sum_{w\in u\,\shuffle\,v}I(w)$: decompose the product of simplices into interleavings (Fubini on sets of full measure).
+
+\textbf{(b) Stuffle.} For convergent signed compositions $\mathbf u,\mathbf v$:
+$Z(\mathbf u)Z(\mathbf v)=\sum Z(\mathbf t)$ over quasi-shuffles (interleavings with merges $(s,\sigma),(s',\sigma')\to(s+s',\sigma\sigma')$). \textit{Proof:} the identity holds \textbf{exactly for partial sums cut at $N$} (finite rearrangement); let $N\to\infty$ (all terms convergent; conditionally convergent factors handled by Abel summation of the cutoff identity).
+
+\textbf{(c) Duplication.} For an unsigned composition $\mathbf s$ with $s_1\ge2$, summing the even-index projection $\prod_i\frac{1+(-1)^{n_i}}2$:
+$\sum_{\boldsymbol\sigma\in\{\pm\}^k}Z(\mathbf s,\boldsymbol\sigma)=2^{k-|\mathbf s|}\,\zeta(\mathbf s)$.
+
+\textbf{(d) Regularized double shuffle (Hoffman relations).} For every convergent $\mathbf c$,
+\[
+\sum_{\substack{\mathbf t\in(1,+)\ast\mathbf c\\ \mathbf t\ne (1,+)\mathbf c}}Z(\mathbf t)
+=\sum_{\substack{w\in 1\,\shuffle\,w(\mathbf c)\\ w\ne 1\,w(\mathbf c)}}Z(w),
+\]
+i.e. the stuffle and shuffle products with the divergent object ``$\sum1/m$'' agree after removing the (identical) divergent leading term. \textit{Proof.} Cut-off stuffle gives
+$H_N\,Z_{\le N}(\mathbf c)=Z_{\le N}\big((1,+)\mathbf c\big)+\sum_{\text{non-leading}}Z_{\le N}(\mathbf t)$ exactly. As $N\to\infty$, the left side is $\zeta$-free of constant term: $H_N Z_{\le N}(\mathbf c)=Z(\mathbf c)H_N+o(1)$ (the tail of $Z(\mathbf c)$ times $H_N\to0$), while
+$Z_{\le N}((1,+)\mathbf c)=Z(\mathbf c)H_N-K_{\mathbf c}+o(1)$ with $K_{\mathbf c}=\sum_m\frac{Z(\mathbf c)-Z_{\le m-1}(\mathbf c)}m=\sum_n c_nH_n$ where $c_n$ is the coefficient sequence of the outer index. Hence $\sum_{\text{nl}}Z(\mathbf t)=K_{\mathbf c}$. On the integral side, $-\ln(1-x)\,L_{\mathbf c}(x)=\sum_w L_w(x)$ exactly for $x<1$ (shuffle with upper limit $x$), and as $x\to1^-$ the same argument gives $\sum_{\text{nl}}Z(w)=K'_{\mathbf c}$ with
+$K'_{\mathbf c}=\int_0^1\frac{Z(\mathbf c)-L_{\mathbf c}(t)}{1-t}dt=\sum_nc_n\sum_m\Big(\frac1m-\frac1{m+n}\Big)=\sum_nc_nH_n=K_{\mathbf c}$. $\square$
+
+\textbf{(e) Path composition (Chen) and reversal.} For any weight-$n$ word $x=0\cdots1$ over $\{0,1\}$ on $[0,1]$ (an MZV word),
+\[
+\zeta(x)=\sum_{k=0}^{n}I_{[\frac12,1]}(x_1\cdots x_k)\;I(x_{k+1}\cdots x_n),\qquad
+I_{[\frac12,1]}(u)=I(\overline{u^R})
+\]
+where $\overline{u^R}$ is $u$ reversed with $0\leftrightarrow1$ (substitute $t\mapsto1-t$). All terms converge.
+
+\textbf{(f) Landen dictionary.} The substitution $t=\frac{u}{1+u}$ maps $[0,\tfrac12]$ to $[0,1]$ with
+$\frac{dt}{t}=\frac{du}{u}-\frac{du}{1+u}$, $\frac{dt}{1-t}=\frac{du}{1+u}$. Hence every $I(w)$ (word at $\tfrac12$) equals a signed sum of iterated integrals over $\{0,-1\}$ on $[0,1]$, i.e. of alternating Euler sums:
+\[
+I(w)=\sum_{\pm}\pm\,I_{[0,1]}\big(\text{words over }\{0,-1\}\big).
+\]
+
+\textbf{(g) Inputs.} $Z((s,-))=-\eta(s)$ with $\eta(s)=(1-2^{1-s})\zeta(s)$, $\eta(1)=L$ (elementary), and the unsigned MZVs of weight $\le5$. The latter are \textit{themselves consequences} of (a),(b),(d) plus \textbf{duality} ($t\mapsto1-t$ on $[0,1]$: $\zeta(x)=\zeta(\overline{x^R})$): e.g. Hoffman(d) for $\mathbf c=(2)$ gives Euler's $\zeta(2,1)=\zeta(3)$; at weight 4 one gets the sum theorem $\zeta(3,1)+\zeta(2,2)=\zeta_4$, and with the stuffle/shuffle squares of $\zeta_2$ also $\zeta_4=\tfrac25\zeta_2^2$, $\zeta(2,2)=\tfrac34\zeta_4$, $\zeta(3,1)=\tfrac14\zeta_4$, $\zeta(2,1,1)=\zeta_4$; at weight 5, Hoffman$(4)$ + stuffle/shuffle of $\zeta_2\zeta_3$ give
+\[
+\zeta(4,1)=2\zeta_5-\zeta_2\zeta_3,\quad \zeta(3,2)=3\zeta_2\zeta_3-\tfrac{11}2\zeta_5,\quad \zeta(2,3)=\tfrac92\zeta_5-2\zeta_2\zeta_3,
+\]
+and duality yields $\zeta(3,1,1)=\zeta(4,1)$, $\zeta(2,2,1)=\zeta(3,2)$, $\zeta(2,1,2)=\zeta(2,3)$, $\zeta(2,1,1,1)=\zeta_5$.
+
+\textbf{3.3 The linear system and its solution.} Fix a weight $w\in\{2,3,4,5\}$ and treat as unknowns \textit{all} convergent alternating sums $Z(\mathbf c)$ of weight $w$ (there are $4,12,36,108$) together with all $I(\text{word})$ at $\tfrac12$ of weight $w$ ($2,4,8,16$). Generate all relations (a)--(f) whose other ingredients have lower weight (hence are already known), plus the inputs (g). This yields an inhomogeneous linear system over $\mathbb Q$ with right-hand sides in the graded monomial space spanned at weight 5 by $\{\zeta_5,\zeta_2\zeta_3,\zeta_2^2L,\zeta_3L^2,\zeta_2L^3,L^5,L\,\mathrm{Li}_4(\tfrac12),\mathrm{Li}_5(\tfrac12)\}$.
+
+Exact Gauss--Jordan elimination (performed by computer in rational arithmetic; the relation lists are machine-generated from the proved templates (a)--(g)) gives:
+
+\begin{itemize}
+\item weights $2$ and $3$: \textbf{every} unknown is determined. In particular the system \textit{proves}
+\begin{equation*}
+\mathrm{Li}_2(\tfrac12)=\tfrac{\zeta_2}2-\tfrac{L^2}2,\qquad \mathrm{Li}_3(\tfrac12)=\tfrac78\zeta_3-\tfrac{\zeta_2L}2+\tfrac{L^3}6; \tag{3.9}
+\end{equation*}
+\item weight $4$: corank exactly $1$; the single free direction is $\mathrm{Li}_4(\tfrac12)$ itself (as it must be --- no closed form exists). All other values are determined in terms of it;
+\item weight $5$: corank exactly $1$, the free direction being $\mathrm{Li}_5(\tfrac12)$.
+\end{itemize}
+
+Every solved value was verified against direct numerical evaluation of the defining nested sums to $\ge40$ significant digits (all $30$ half-words and spot checks across the $160$ alternating sums).
+
+\textbf{Weight-4 table} (all at argument $\tfrac12$, $\mathrm{Li}_4=\mathrm{Li}_4(\tfrac12)$):
+\begin{gather*}
+\mathrm{Li}_{3,1}=\tfrac{L^4}{24}-\tfrac{L\zeta_3}8+\tfrac{\zeta_2^2}{20},\quad
+\mathrm{Li}_{2,2}=\tfrac{L^4}{24}-\tfrac{L^2\zeta_2}4+\tfrac{L\zeta_3}4+\tfrac{\zeta_2^2}{40},\\
+\mathrm{Li}_{2,1,1}=-\tfrac{L^4}{12}+\tfrac{L^2\zeta_2}4-\tfrac{7L\zeta_3}8-\mathrm{Li}_4+\tfrac{2\zeta_2^2}5,\quad
+\mathrm{Li}_{1,3}=\tfrac{L^4}{24}-\tfrac{L^2\zeta_2}4+\tfrac{7L\zeta_3}8-\tfrac{\zeta_2^2}8,\\
+\mathrm{Li}_{1,2,1}=\tfrac{L^4}{12}-\tfrac{3L^2\zeta_2}4+\tfrac{11L\zeta_3}4+3\,\mathrm{Li}_4-\tfrac{6\zeta_2^2}5,\\
+\mathrm{Li}_{1,1,2}=-\tfrac{L^4}6+L^2\zeta_2-\tfrac{23L\zeta_3}8-3\,\mathrm{Li}_4+\tfrac{6\zeta_2^2}5,\quad
+\mathrm{Li}_{1,1,1,1}=\tfrac{L^4}{24}.
+\end{gather*}
+(Equivalently $\sum\frac{H_n}{2^nn^3}=\mathrm{Li}_4+\tfrac{\zeta_4}8-\tfrac{\zeta_3L}8+\tfrac{L^4}{24}$ and
+$\sum\frac{H_n^{(2)}}{2^nn^2}=\mathrm{Li}_4+\tfrac{\zeta_4}{16}+\tfrac{\zeta_3L}4-\tfrac{\zeta_2L^2}4+\tfrac{L^4}{24}$, the classical values.)
+
+\textbf{Weight-5 table} (all at argument $\tfrac12$; $\mathrm{Li}_4=\mathrm{Li}_4(\tfrac12)$, $\mathrm{Li}_5=\mathrm{Li}_5(\tfrac12)$, and $\zeta_4=\tfrac25\zeta_2^2$):
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|l|}
+\hline
+value & closed form\\
+\hline
+$\mathrm{Li}_{4,1}$ & $\mathrm{Li}_5+L\,\mathrm{Li}_4+\tfrac{\zeta_5}{32}-\tfrac{\zeta_2\zeta_3}2+\tfrac{L^2\zeta_3}2-\tfrac{L\zeta_2^2}{20}-\tfrac{L^3\zeta_2}6+\tfrac{L^5}{40}$\\
+$\mathrm{Li}_{3,2}$ & $-3\,\mathrm{Li}_5-3L\,\mathrm{Li}_4+\tfrac{23\zeta_5}{64}+\tfrac{23\zeta_2\zeta_3}{16}-\tfrac{23L^2\zeta_3}{16}-\tfrac{L\zeta_2^2}{40}+\tfrac{7L^3\zeta_2}{12}-\tfrac{13L^5}{120}$\\
+$\mathrm{Li}_{3,1,1}$ & $-\mathrm{Li}_5+\tfrac{63\zeta_5}{32}-\tfrac{\zeta_2\zeta_3}2+\tfrac{7L^2\zeta_3}{16}-\tfrac{2L\zeta_2^2}5-\tfrac{L^3\zeta_2}{12}+\tfrac{L^5}{60}$\\
+$\mathrm{Li}_{2,3}$ & $3\,\mathrm{Li}_5+3L\,\mathrm{Li}_4-\tfrac{81\zeta_5}{64}-\tfrac{7\zeta_2\zeta_3}8+\tfrac{7L^2\zeta_3}8+\tfrac{L\zeta_2^2}8-\tfrac{5L^3\zeta_2}{12}+\tfrac{11L^5}{120}$\\
+$\mathrm{Li}_{2,2,1}$ & $3\,\mathrm{Li}_5-\tfrac{375\zeta_5}{64}+\tfrac{3\zeta_2\zeta_3}2-\tfrac{11L^2\zeta_3}8+\tfrac{6L\zeta_2^2}5+\tfrac{L^3\zeta_2}4-\tfrac{L^5}{60}$\\
+$\mathrm{Li}_{2,1,2}$ & $-3\,\mathrm{Li}_5+\tfrac{369\zeta_5}{64}-\tfrac{23\zeta_2\zeta_3}{16}+\tfrac{23L^2\zeta_3}{16}-\tfrac{6L\zeta_2^2}5-\tfrac{L^3\zeta_2}3+\tfrac{L^5}{30}$\\
+$\mathrm{Li}_{2,1,1,1}$ & $-\mathrm{Li}_5-L\,\mathrm{Li}_4+\zeta_5-\tfrac{7L^2\zeta_3}{16}+\tfrac{L^3\zeta_2}6-\tfrac{L^5}{24}$\\
+$\mathrm{Li}_{1,4}$ & $-2\,\mathrm{Li}_5-L\,\mathrm{Li}_4+\tfrac{27\zeta_5}{32}+\tfrac{7\zeta_2\zeta_3}{16}-\tfrac{7L^2\zeta_3}{16}+\tfrac{L^3\zeta_2}6-\tfrac{L^5}{30}$\\
+$\mathrm{Li}_{1,3,1}$ & $-\tfrac{3\zeta_5}{64}+\tfrac{L\zeta_2^2}{20}-\tfrac{L^2\zeta_3}{16}+\tfrac{L^5}{120}$\\
+$\mathrm{Li}_{1,2,2}$ & $\tfrac{3\zeta_5}{16}-\tfrac{\zeta_2\zeta_3}8+\tfrac{L^2\zeta_3}8+\tfrac{L\zeta_2^2}{40}-\tfrac{L^3\zeta_2}{12}+\tfrac{L^5}{120}$\\
+$\mathrm{Li}_{1,2,1,1}$ & $4\,\mathrm{Li}_5+3L\,\mathrm{Li}_4-4\zeta_5+\tfrac{7L^2\zeta_3}8+\tfrac{2L\zeta_2^2}5-\tfrac{5L^3\zeta_2}{12}+\tfrac{L^5}{12}$\\
+$\mathrm{Li}_{1,1,3}$ & $-\tfrac{3\zeta_5}{64}+\tfrac{\zeta_2\zeta_3}{16}+\tfrac{7L^2\zeta_3}{16}-\tfrac{L\zeta_2^2}8-\tfrac{L^3\zeta_2}{12}+\tfrac{L^5}{120}$\\
+$\mathrm{Li}_{1,1,2,1}$ & $-6\,\mathrm{Li}_5-3L\,\mathrm{Li}_4+6\zeta_5+\tfrac{L^2\zeta_3}{16}-\tfrac{6L\zeta_2^2}5+\tfrac{L^3\zeta_2}4-\tfrac{L^5}{12}$\\
+$\mathrm{Li}_{1,1,1,2}$ & $4\,\mathrm{Li}_5+L\,\mathrm{Li}_4-4\zeta_5-L^2\zeta_3+\tfrac{6L\zeta_2^2}5+\tfrac{L^3\zeta_2}6$\\
+$\mathrm{Li}_{1,1,1,1,1}$ & $\tfrac{L^5}{120}$\\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{3.4 The four core constants.} From the table, using $X=\mathrm{Li}_{4,1}+\mathrm{Li}_5$, $Y=\mathrm{Li}_{3,2}+\mathrm{Li}_5$, $W=2\,\mathrm{Li}_{3,2}+4\,\mathrm{Li}_{4,1}$ (shuffle $\mathrm{Li}_2(t)^2=2\,\mathrm{Li}_{2,2}(t)+4\,\mathrm{Li}_{3,1}(t)$ integrated against $dt/t$), and
+$V=2\sum_{w\in 11\,\shuffle\,01}I(0w)$:
+\begin{equation*}
+X=\sum\frac{H_n}{2^nn^4}
+=2\,\mathrm{Li}_5+L\,\mathrm{Li}_4+\frac{\zeta_5}{32}-\frac{\zeta_2\zeta_3}2+\frac{L^2\zeta_3}2-\frac{L\zeta_2^2}{20}-\frac{L^3\zeta_2}6+\frac{L^5}{40}, \tag{3.10}
+\end{equation*}
+\begin{equation*}
+Y=\sum\frac{H^{(2)}_n}{2^nn^3}
+=-2\,\mathrm{Li}_5-3L\,\mathrm{Li}_4+\frac{23\zeta_5}{64}+\frac{23\zeta_2\zeta_3}{16}-\frac{23L^2\zeta_3}{16}-\frac{L\zeta_2^2}{40}+\frac{7L^3\zeta_2}{12}-\frac{13L^5}{120}, \tag{3.11}
+\end{equation*}
+\begin{equation*}
+W=-2\,\mathrm{Li}_5-2L\,\mathrm{Li}_4+\frac{27\zeta_5}{32}+\frac{7\zeta_2\zeta_3}8-\frac{7L^2\zeta_3}8-\frac{L\zeta_2^2}4+\frac{L^3\zeta_2}2-\frac{7L^5}{60}, \tag{3.12}
+\end{equation*}
+\begin{equation*}
+V=-\frac{3\zeta_5}{32}+\frac{\zeta_2\zeta_3}8-\frac{L^3\zeta_2}6+\frac{L^5}{10}. \tag{3.13}
+\end{equation*}
+((3.12), (3.13) verified against direct quadrature of the defining integrals to $40$ digits; (0.9) holds identically.)
+
+\subsection*{4. Assembly}
+
+\textbf{$I_2$:} insert (0.7) and (3.12) into (1.2). All $\mathrm{Li}_4,\mathrm{Li}_5$ contributions combine to $2L\,\mathrm{Li}_4(\tfrac12)+2\,\mathrm{Li}_5(\tfrac12)$, giving the boxed result (with $\zeta_2^2=\tfrac52\zeta_4$).
+
+\textbf{$I_1$:} insert the weight-5 table into (2.5), then (2.5)--(2.6) and (3.12), (3.13) into (2.7). Exact rational arithmetic gives
+\[
+I_1=\frac{29}{16}\zeta_5-\frac{19}{16}\zeta_2\zeta_3+\frac{11}{40}\zeta_2^2L+\frac5{16}\zeta_3L^2-\frac5{12}\zeta_2L^3+\frac{L^5}{40}-3\,\mathrm{Li}_5(\tfrac12),
+\]
+i.e. the boxed result ($\tfrac{11}{40}\zeta_2^2=\tfrac{11}{16}\zeta_4$). The $\mathrm{Li}_4(\tfrac12)$-terms cancel identically.
+
+\subsection*{5. Independent cross-checks}
+
+\textbf{5.1 Classical Euler sums used in \S2.6} (also outputs of the engine): the symmetric (``partial fraction'') method. From
+$\frac1{m^p(m+k)^q}=\sum_{i=1}^{p}\binom{p+q-i-1}{q-1}\frac{(-1)^{p-i}}{k^{p+q-i}m^i}+\sum_{j=1}^{q}\binom{p+q-j-1}{p-1}\frac{(-1)^p}{k^{p+q-j}(m+k)^j}$
+(a polynomial identity, checked symbolically) one derives in the standard way
+$\sum\frac{H_n}{n^4}=3\zeta_5-\zeta_2\zeta_3$, $\sum\frac{H^{(2)}_n}{n^3}=3\zeta_2\zeta_3-\frac92\zeta_5$; and
+$\sum\frac{H_n^2}{n^3}=\frac72\zeta_5-\zeta_2\zeta_3$ follows from $H_n^2=H_n^{(2)}+2\sum_{i<j\le n}\frac1{ij}$, the duality $\zeta(3,1,1)=\zeta(4,1)$ and $\zeta(4,1)=2\zeta_5-\zeta_2\zeta_3$.
+
+\textbf{5.2 Alternating linear sums.} Applying the same partial-fraction identity to the doubly-signed double sums
+$A(p,q)=\sum(-1)^{n+1}H^{(p)}_n/n^q$, $D'(p,q)=\sum_{m<n}(-1)^{n+m}/(n^qm^p)$, $E'(p,q)=\sum_{m<n}(-1)^{m+1}/(m^pn^q)$ (with the $H_k$-telescope grouping of the divergent pieces) together with the $\eta\cdot\eta$ and $\zeta\cdot\eta$ stuffles yields a $12\times16$ linear system whose unique solution includes
+\[
+A(1,4)=\tfrac{59}{32}\zeta_5-\tfrac12\zeta_2\zeta_3,\qquad A(2,3)=\tfrac58\zeta_2\zeta_3-\tfrac{11}{32}\zeta_5,
+\]
+in agreement with the engine's output --- an independent re-derivation by a different mechanism.
+
+\textbf{5.3 An independent integral-equation system for $X$.} The four relations
+(i) $W=2Y+4X-6\mathrm{Li}_5(\tfrac12)$ (0.9);
+(ii) the Landen substitution $t=y/(1+y)$ applied to $W$, which after expanding
+$\mathrm{Li}_2(t)=-\mathrm{Li}_2(-y)-\tfrac12\ln^2(1+y)$ reduces $W$ to $\int_0^1\frac{\mathrm{Li}_2(-y)^2}{y}dy=-2A(2,3)-4A(1,4)+6\eta(5)$, $\int_0^1\frac{\ln^4(1+y)}ydy$ (elementary) and $V$;
+(iii) the reflection split of $S$; and
+(iv) the reflection split of $\int_0^1\frac{\ln^2(1-u)\mathrm{Li}_2(u)}{u}du=2\zeta_2\zeta_3-\zeta_5$,
+form a rank-3 system in $(X,Y,W,V)$ which determines $X$ --- and the value agrees with (3.10). Likewise a weight-4 version determines $\sum\frac{H_n}{2^nn^3}$, $\sum\frac{H^{(2)}_n}{2^nn^2}$ and $\sum\frac{(-1)^{n-1}H_n}{n^3}=\tfrac{11}4\zeta_4-2\mathrm{Li}_4(\tfrac12)-\tfrac74\zeta_3L+\tfrac12\zeta_2L^2-\tfrac1{12}L^4$, agreeing with \S3.3.
+
+\textbf{5.4 PSLQ.} Independently of all of the above, PSLQ at 100 decimal digits applied to $(I_1,I_2)$ against the 8-element weight-5 basis recovers exactly the boxed coefficient vectors.
+
+\begin{center}\rule{0.5\linewidth}{0.4pt}\end{center}
+
+\section*{Numerical verification}
+
+Direct high-precision quadrature (mpmath, tanh--sinh, $\mathrm{dps}=120$, after the substitution $u=1-x$ which removes the endpoint singularity):
+
+\begin{lrbox}{\numbox}
+\begin{minipage}{30cm}
+\begin{verbatim}
+I1 (quadrature) = -1.52182292885581001525839248485539311533028568041866530576195346496728998166708957154751890942661667659069
+I1 (closed form) = identical to all 105 displayed digits
+I2 (quadrature) =  3.32096687866486768034598612120489450967715868430766556485285797301857262754460209508907350506879612686912
+I2 (closed form) = identical to all 105 displayed digits
+\end{verbatim}
+\end{minipage}
+\end{lrbox}
+\begin{center}\resizebox{\linewidth}{!}{\usebox{\numbox}}\end{center}
+
+Agreement: \textbf{$\ge100$ significant digits} for both integrals ($|I_1-C_1|<10^{-120}$, $|I_2-C_2|<10^{-120}$).
+In addition: every lemma and reduction step in \S\S1--2 was verified numerically to $26$--$70$ digits; all 30 multiple-polylog values at $\tfrac12$ of \S3.3 were verified to $\ge40$ digits against their defining sums; the alternating-sum cross-checks of \S5.2 were verified to $50$ digits.
+
+\section*{Notes}
+
+\begin{enumerate}
+\item \textbf{Completeness of the derivation.} Every reduction step (Sections 1, 2, 4) is proved in full. The evaluation engine (Section 3) rests on the six relation classes (a)--(f) plus the inputs (g); each class is proved elementarily in the text (shuffle = Fubini on simplices; stuffle = finite cutoff identity + Abel; duplication = parity projection; Hoffman = the $K_{\mathbf c}=\sum_nc_nH_n$ computation given in (d); path composition = domain decomposition; reversal and Landen = substitutions $t\mapsto1-t$, $t\mapsto u/(1+u)$). The \textit{generation} of the several hundred instances of these relations and the exact rational Gauss--Jordan elimination were carried out by computer; this is bookkeeping, not new mathematics, and the resulting solved values were verified numerically to $\ge40$ digits each, with the coranks coming out exactly $\{0,0,1,1\}$ at weights $2,3,4,5$ (free directions $=\mathrm{Li}_4(\tfrac12),\mathrm{Li}_5(\tfrac12)$), as the known dimension of the level-2 weight-graded space predicts.
+\item The two integrals are ``level 2, weight 5'' and cannot be expressed in $\zeta$-values and $\ln 2$ alone; $\mathrm{Li}_4(\tfrac12)$ and $\mathrm{Li}_5(\tfrac12)$ are the standard irreducibles. The disappearance of $\mathrm{Li}_4(\tfrac12)$ from $I_1$ is a genuine cancellation.
+\item The same machinery yields, as by-products, closed forms for all $\sum H^{(p)}_n/(2^nn^q)$ of weight $\le5$ (values (3.10)--(3.13) and the tables), reproducing the classical results of the literature on Euler sums at $\tfrac12$.
+\end{enumerate}
+
+\end{document}

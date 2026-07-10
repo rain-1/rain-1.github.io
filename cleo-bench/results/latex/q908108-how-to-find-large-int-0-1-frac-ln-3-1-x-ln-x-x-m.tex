@@ -1,0 +1,671 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 3\\[1ex]\large How to find ${\large\int}_0^1\frac{\ln^3(1+x)\ln x}x\mathrm dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/908108}{question 908108}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Solution: $\displaystyle\int_0^1\frac{\ln^3(1+x)\,\ln x}{x}\,dx$}
+
+\section*{Problem}
+
+Evaluate in closed form
+\[
+I=\int_0^1\frac{\ln^3(1+x)\,\ln x}{x}\,dx .
+\]
+
+\section*{Result}
+
+\[
+\boxed{\;I=\frac{99}{16}\,\zeta(5)+\frac{\pi^{2}}{2}\,\zeta(3)
+-\frac{21}{4}\,\zeta(3)\ln^{2}2+\frac{\pi^{2}}{3}\,\ln^{3}2
+-\frac{2}{5}\,\ln^{5}2-12\,\ln 2\,\operatorname{Li}_4\!\Big(\frac12\Big)
+-12\,\operatorname{Li}_5\!\Big(\frac12\Big)\;}
+\]
+
+Equivalently, with $\zeta(2)=\pi^2/6$,
+\[
+I=\frac{99}{16}\zeta(5)+3\,\zeta(2)\zeta(3)-\frac{21}{4}\zeta(3)\ln^2 2
++2\,\zeta(2)\ln^3 2-\frac25\ln^5 2-12\ln 2\operatorname{Li}_4(\tfrac12)-12\operatorname{Li}_5(\tfrac12).
+\]
+
+Numerically $I=-0.05760941065877899523479148890918537945886000222364\ldots$
+
+\section*{Derivation}
+
+Throughout, $\eta(s)=\sum_{n\ge1}\frac{(-1)^{n-1}}{n^s}=(1-2^{1-s})\zeta(s)$, so
+\[
+\eta(2)=\tfrac12\zeta(2),\qquad \eta(3)=\tfrac34\zeta(3),\qquad
+\eta(4)=\tfrac78\zeta(4),\qquad \eta(5)=\tfrac{15}{16}\zeta(5).
+\]
+
+For double series we write, for $s\ge1,t\ge1$,
+\[
+\begin{aligned}
+&\zeta(s,t)=\sum_{n>m\ge1}\frac{1}{n^s m^t},\qquad
+\zeta(\bar s,t)=\sum_{n>m\ge1}\frac{(-1)^n}{n^s m^t},\\
+&\zeta(s,\bar t)=\sum_{n>m\ge1}\frac{(-1)^m}{n^s m^t},\qquad
+\zeta(\bar s,\bar t)=\sum_{n>m\ge1}\frac{(-1)^{n+m}}{n^s m^t},
+\end{aligned}
+\]
+and $\zeta(\bar s)=\sum_n(-1)^n/n^s=-\eta(s)$. Every double series above converges for the index
+combinations used below: the inner sums are bounded (or $O(\log n)$), and the outer factor is
+either $O(n^{-2})$ (absolute convergence after this bound) or alternating with terms of decreasing
+modulus (Dirichlet's test). Rearrangements of double series are justified individually where they
+occur (they are either between absolutely convergent arrangements or handled by Lemma 3.1).
+
+We also use $H_n=\sum_{k\le n}\frac1k$, $H_n^{(r)}=\sum_{k\le n}\frac1{k^r}$.
+
+\subsection*{0. Elementary lemmas}
+
+\textbf{Lemma 0.1 (log moments).} For $n\ge1$, $a\ge0$, integrating the elementary antiderivative
+$\int x^{n-1}\ln^a x\,dx=x^{n}\sum_{i=0}^{a}(-1)^{a-i}\frac{a!}{i!}\frac{\ln^i x}{n^{a+1-i}}$ (check by
+differentiation) between the given limits:
+\[
+\int_0^1 x^{n-1}\ln^a x\,dx=\frac{(-1)^a a!}{n^{a+1}},\qquad
+\int_0^{1/2}x^{n-1}\ln^a x\,dx=(-1)^a\,2^{-n}\sum_{i=0}^{a}\frac{a!}{i!}\frac{\ln^i 2}{n^{a+1-i}},
+\]
+\[
+\int_{1/2}^{1}x^{n-1}\ln^a x\,dx=\frac{(-1)^a a!}{n^{a+1}}
+-(-1)^a\,2^{-n}\sum_{i=0}^{a}\frac{a!}{i!}\frac{\ln^i 2}{n^{a+1-i}} .
+\]
+(All boundary terms at $x=0$ vanish since $x^n\ln^ix\to0$.)
+
+\textbf{Lemma 0.2 (power series).} For $|x|<1$,
+\[
+-\ln(1-x)=\sum_{n\ge1}\frac{x^n}{n},\qquad
+\ln^2(1-x)=2\sum_{n\ge2}\frac{H_{n-1}}{n}\,x^{n},\qquad
+\ln^2(1+x)=2\sum_{n\ge2}(-1)^n\frac{H_{n-1}}{n}\,x^{n}.
+\]
+\textit{Proof.} Square the first series (Cauchy product, absolutely convergent for $|x|<1$):
+the coefficient of $x^n$ is $\sum_{j+k=n}\frac{1}{jk}=\frac1n\sum_{j=1}^{n-1}\Big(\frac1j+\frac1{n-j}\Big)
+=\frac{2H_{n-1}}{n}$, using $\frac{1}{j(n-j)}=\frac1n\big(\frac1j+\frac1{n-j}\big)$. Replace $x\to-x$
+for the third identity. $\square$
+
+\textbf{Lemma 0.3 (termwise integration).}
+(a) \textit{Positive case.} If $f(x)=\sum c_nx^n$ on $[0,\tfrac12]$ with $c_n\ge0$ and $w\ge0$ is measurable,
+then $\int_0^{1/2}wf=\sum c_n\int_0^{1/2}wx^n$ (monotone convergence).
+(b) \textit{Alternating case.} Let $f(x)=\sum_{n\ge n_0}(-1)^n c_n x^n$ on $[0,1]$ with $c_n\downarrow 0$.
+Then for every weight $w$ with $\int_0^1|w(x)|x^{n}dx<\infty$,
+\[
+\int_0^1 w f=\sum_{n}(-1)^nc_n\int_0^1 w(x)x^n dx,
+\]
+because the alternating-series remainder bound gives $|f(x)-S_N(x)|\le c_{N+1}x^{N+1}$ pointwise, so
+$\big|\int w(f-S_N)\big|\le c_{N+1}\int_0^1 |w(x)|\,x^{N+1}dx\to0$ (for the weights used below,
+$w=\ln^2x/x$ or $w=1/x$, Lemma 0.1 gives $\int_0^1|w|x^{N+1}dx = \tfrac{2}{(N+1)^3}$ or
+$\tfrac{1}{N+1}$).
+The coefficients $c_n=2H_{n-1}/n$ of $\ln^2(1+x)$ are decreasing for $n\ge2$ since
+$H_{n-1}(n+1)-nH_n=H_{n-1}-1\ge0$. $\square$
+
+\subsection*{1. Reduction of $I$ to half-interval integrals}
+
+\textbf{Step 1.1 (integration by parts).} With $dv=\frac{\ln x}{x}dx$, $v=\frac{\ln^2x}{2}$, $u=\ln^3(1+x)$:
+\begin{equation}
+I=\Big[\tfrac12\ln^2x\,\ln^3(1+x)\Big]_0^1-\frac32\int_0^1\frac{\ln^2x\,\ln^2(1+x)}{1+x}\,dx
+=-\frac32\,K,\qquad K:=\int_0^1\frac{\ln^2x\,\ln^2(1+x)}{1+x}\,dx, \tag{1}
+\end{equation}
+since $\ln^2 x\,\ln^3(1+x)\sim x^3\ln^2x\to0$ at $0$ and $\ln^21=0$ at $1$.
+\textit{(Equation (1) will only be used as a consistency check; the evaluation below determines $I$
+without it.)}
+
+\textbf{Step 1.2 (transforming $K$).} Substitute $u=1+x$, then $u=1/v$ (so $v$ runs from $1$ to $\tfrac12$,
+$\ln(u-1)=\ln\frac{1-v}{v}=\ln(1-v)-\ln v$, $\ln u=-\ln v$, $\frac{du}{u}=-\frac{dv}{v}$):
+\[
+K=\int_1^2\frac{\ln^2(u-1)\,\ln^2u}{u}\,du
+=\int_{1/2}^{1}\frac{\big[\ln(1-v)-\ln v\big]^2\ln^2 v}{v}\,dv
+=T_1-2T_2+\int_{1/2}^1\frac{\ln^4v}{v}dv,
+\]
+with
+\[
+T_1:=\int_{1/2}^{1}\frac{\ln^2(1-v)\,\ln^2v}{v}\,dv,\qquad
+T_2:=\int_{1/2}^{1}\frac{\ln(1-v)\,\ln^3v}{v}\,dv,\qquad
+\int_{1/2}^1\frac{\ln^4v}{v}dv=\frac{\ln^52}{5}.
+\]
+Hence
+\begin{equation}
+K=T_1-2T_2+\frac{\ln^52}{5}. \tag{2}
+\end{equation}
+
+\textbf{Step 1.3 ($T_2$ in closed form).} Expand $-\ln(1-v)=\sum_k v^k/k$ (positive terms); multiplying
+by the nonnegative weight $-\ln^3v/v$ on $[\tfrac12,1]$, termwise integration is justified by
+monotone convergence, and Lemma 0.1 gives
+\[
+T_2=-\sum_{k\ge1}\frac1k\int_{1/2}^1v^{k-1}\ln^3v\,dv
+=\sum_{k\ge1}\frac{6}{k^5}-\sum_{k\ge1}\frac{2^{-k}}{k}\Big(\frac{\ln^32}{k}+\frac{3\ln^22}{k^2}
++\frac{6\ln2}{k^3}+\frac{6}{k^4}\Big),
+\]
+i.e.
+\begin{equation}
+T_2=6\zeta(5)-\ln^32\operatorname{Li}_2(\tfrac12)-3\ln^22\operatorname{Li}_3(\tfrac12)
+-6\ln2\operatorname{Li}_4(\tfrac12)-6\operatorname{Li}_5(\tfrac12). \tag{3}
+\end{equation}
+
+\textbf{Step 1.4 ($T_1$ via the full interval).} By Lemma 0.2/0.3(a) and Lemma 0.1,
+\[
+\int_0^1\frac{\ln^2x\ln^2(1-x)}{x}\,dx
+=2\sum_{n}\frac{H_{n-1}}{n}\cdot\frac{2}{n^3}=4\big(\textstyle\sum_n\frac{H_n}{n^4}-\zeta(5)\big),
+\]
+and Euler's evaluation $\sum_n H_n/n^4=3\zeta(5)-\zeta(2)\zeta(3)$ --- proved in Section 2 --- yields
+\begin{equation}
+\int_0^1\frac{\ln^2x\,\ln^2(1-x)}{x}\,dx=8\zeta(5)-4\zeta(2)\zeta(3). \tag{4}
+\end{equation}
+Therefore, writing $M:=\displaystyle\int_0^{1/2}\frac{\ln^2x\,\ln^2(1-x)}{x}\,dx$,
+\[
+T_1=\big(8\zeta(5)-4\zeta(2)\zeta(3)\big)-M .
+\]
+Combining with (2):
+\begin{equation}
+\boxed{\;K+M=8\zeta(5)-4\zeta(2)\zeta(3)-2T_2+\frac{\ln^52}{5}.\;}\tag{E1}
+\end{equation}
+
+\subsection*{2. Euler's non-alternating double zetas of weight $\le5$}
+
+We need $\zeta(4,1)$ (for (4)) and, in Section 3, $\zeta(3,2),\zeta(2,3),\zeta(2,1)$ and
+$\zeta(4)=\tfrac25\zeta(2)^2$. All proofs are by elementary rearrangements of \textbf{positive} double
+series, so all rearrangements are legitimate.
+
+\textbf{Lemma 2.1 (partial-fraction / Nielsen decomposition).} For integers $a,b\ge1$ and $j,k\ge1$,
+\[
+\frac{1}{j^ak^b}=\sum_{i=0}^{a-1}\binom{b-1+i}{i}\frac{1}{j^{a-i}\,(j+k)^{b+i}}
++\sum_{i=0}^{b-1}\binom{a-1+i}{i}\frac{1}{k^{b-i}\,(j+k)^{a+i}} .
+\]
+\textit{Proof.} Fix $n=j+k$ and decompose the rational function $r(j)=j^{-a}(n-j)^{-b}$ of $j$ into partial
+fractions: it has poles of order $a$ at $j=0$ and order $b$ at $j=n$. The principal part at $j=0$ is
+obtained from the Taylor expansion $(n-j)^{-b}=\sum_{i\ge0}\binom{b-1+i}{i}\frac{j^i}{n^{b+i}}$,
+giving the coefficients of $j^{-(a-i)}$ as stated; symmetrically at $j=n$ with $k=n-j$. Since $r$
+vanishes at $\infty$ faster than $1/j$, it equals the sum of its two principal parts. $\square$
+
+Summing Lemma 2.1 over $j,k\ge1$ (positive terms), and using
+$\sum_{j,k}\frac{1}{j^{c}(j+k)^{d}}=\sum_{n>j}\frac{1}{j^cn^d}=\zeta(d,c)$:
+\begin{equation}
+\zeta(a)\zeta(b)=\sum_{i=0}^{a-1}\binom{b-1+i}{i}\zeta(b+i,a-i)
++\sum_{i=0}^{b-1}\binom{a-1+i}{i}\zeta(a+i,b-i)\qquad(a,b\ge2). \tag{N}
+\end{equation}
+
+\textbf{Stuffle.} Splitting $\sum_{j,k}=\sum_{j>k}+\sum_{k>j}+\sum_{j=k}$ (positive terms),
+\begin{equation}
+\zeta(a)\zeta(b)=\zeta(a,b)+\zeta(b,a)+\zeta(a+b)\qquad(a,b\ge2). \tag{S}
+\end{equation}
+
+\textbf{Weight 4.} Consider $T:=\sum_{j,k\ge1}\frac{1}{j^2k(j+k)}$. Using
+$\frac{1}{k(j+k)}=\frac1j\big(\frac1k-\frac1{j+k}\big)$ and $\sum_k\big(\frac1k-\frac1{j+k}\big)=H_j$:
+\[
+T=\sum_j\frac{H_j}{j^3}=\zeta(3,1)+\zeta(4).
+\]
+On the other hand $\frac{1}{jk}=\frac{1}{j+k}\big(\frac1j+\frac1k\big)$ applied inside $T$ gives
+$T=\sum_{j,k}\frac{1}{j^2(j+k)^2}+\sum_{j,k}\frac{1}{jk(j+k)^2}$
+and again $\frac{1}{jk}=\frac1{j+k}(\frac1j+\frac1k)$ in the second term:
+$T=\zeta(2,2)+2\sum_{j,k}\frac{1}{j(j+k)^3}=\zeta(2,2)+2\zeta(3,1)$. Hence
+\[
+\zeta(2,2)=\zeta(4)-\zeta(3,1).
+\]
+Now (S) with $(2,2)$: $\zeta(2)^2=2\zeta(2,2)+\zeta(4)=3\zeta(4)-2\zeta(3,1)$, and (N) with $(2,2)$:
+$\zeta(2)^2=2\big[\zeta(2,2)+2\zeta(3,1)\big]=2\zeta(4)+2\zeta(3,1)$. Subtracting,
+\begin{equation}
+\zeta(3,1)=\tfrac14\zeta(4),\qquad \zeta(2,2)=\tfrac34\zeta(4),\qquad
+\zeta(2)^2=\tfrac52\zeta(4)\ \Longleftrightarrow\ \zeta(4)=\tfrac25\zeta(2)^2. \tag{5}
+\end{equation}
+
+\textbf{$\zeta(2,1)=\zeta(3)$.} Expanding $\ln^2(1-x)$ by Lemma 0.2 and integrating termwise
+(positive terms, Lemma 0.1): $\int_0^1\frac{\ln^2(1-x)}{x}dx=2\sum_n\frac{H_{n-1}}{n^2}=2\zeta(2,1)$;
+substituting $x\to1-x$, the same integral is $\int_0^1\frac{\ln^2x}{1-x}dx=\sum_n\frac{2}{n^3}=2\zeta(3)$.
+Hence
+\begin{equation}
+\zeta(2,1)=\zeta(3). \tag{6}
+\end{equation}
+
+\textbf{Weight 5.} Consider $U:=\sum_{j,k\ge1}\frac{1}{j^2k^2(j+k)}$ (positive, convergent).
+\textit{First evaluation.} Dividing the identity
+$\frac{1}{j^2(j+k)}=\frac{1}{kj^2}-\frac{1}{k^2j}+\frac{1}{k^2(j+k)}$ (verify by clearing
+denominators) by $k^2$:
+\[
+\frac{1}{j^2k^2(j+k)}=\frac{1}{j^2k^3}-\frac{1}{jk^4}+\frac{1}{k^4(j+k)} .
+\]
+Summing over $j,k$, the last two terms combine as
+$\sum_k\frac1{k^4}\sum_j\big(\frac{1}{j+k}-\frac1j\big)=-\sum_k\frac{H_k}{k^4}
+=-\zeta(4,1)-\zeta(5)$, so
+\[
+U=\zeta(2)\zeta(3)-\zeta(4,1)-\zeta(5).
+\]
+\textit{Second evaluation.} $\frac{1}{jk}=\frac1{j+k}(\frac1j+\frac1k)$ twice:
+$U=2\sum_{j,k}\frac{1}{jk^2(j+k)^2}=2\Big[\sum_{j,k}\frac{1}{k^2(j+k)^3}
++\sum_{j,k}\frac{1}{jk(j+k)^3}\Big]
+=2\zeta(3,2)+4\sum_{j,k}\frac{1}{j(j+k)^4}=2\zeta(3,2)+4\zeta(4,1)$.
+Equating:
+\begin{equation}
+2\zeta(3,2)+5\zeta(4,1)=\zeta(2)\zeta(3)-\zeta(5). \tag{R1}
+\end{equation}
+The stuffle (S) and Nielsen (N) instances for $(a,b)=(2,3)$ read
+\begin{equation}
+\zeta(2,3)+\zeta(3,2)+\zeta(5)=\zeta(2)\zeta(3), \tag{R2}
+\end{equation}
+\begin{equation}
+\zeta(2,3)+3\zeta(3,2)+6\zeta(4,1)=\zeta(2)\zeta(3). \tag{R3}
+\end{equation}
+Subtracting (R2) from (R3): $2\zeta(3,2)+6\zeta(4,1)=\zeta(5)$; subtracting (R1) from this:
+\begin{equation}
+\zeta(4,1)=2\zeta(5)-\zeta(2)\zeta(3),\qquad
+\zeta(3,2)=3\zeta(2)\zeta(3)-\tfrac{11}{2}\zeta(5),\qquad
+\zeta(2,3)=\tfrac92\zeta(5)-2\zeta(2)\zeta(3). \tag{7}
+\end{equation}
+In particular $\sum_n\frac{H_n}{n^4}=\zeta(4,1)+\zeta(5)=3\zeta(5)-\zeta(2)\zeta(3)$, which proves (4).
+
+\subsection*{3. Alternating double zetas: $\zeta(\bar2,1)$ and $\zeta(\bar4,1)$}
+
+Here the three sign patterns $(\bar s,t),(s,\bar t),(\bar s,\bar t)$ are pinned by three families of
+identities.
+
+\textbf{(a) Signed stuffles.} Exactly as (S), splitting the product of two convergent single series into
+$\{j>k\},\{k>j\},\{j=k\}$: if $\alpha,\beta\in\{1,-1\}$ and $(\text{outer exponent},\text{sign})$
+makes each series converge, then with $\zeta^{\alpha}(a):=\sum_j\alpha^j/j^a$
+($\zeta^{-1}(a)=-\eta(a)$, $\zeta^{+1}(a)=\zeta(a)$),
+\[
+\zeta^{\alpha}(a)\,\zeta^{\beta}(b)
+=\sum_{j>k}\frac{\alpha^j\beta^k}{j^ak^b}+\sum_{k>j}\frac{\beta^k\alpha^j}{k^bj^a}
++\sum_{j}\frac{(\alpha\beta)^j}{j^{a+b}}.
+\]
+\textit{Justification:} multiply the partial sums up to $N$ (an exact identity), and let $N\to\infty$; each
+of the three partial double sums converges to the corresponding double zeta (outer index bounded by
+$N$; the inner sums are bounded, and the outer series converge absolutely or by Dirichlet's test).
+
+\textbf{(b) Signed Nielsen relations.} Multiply Lemma 2.1 by $\sigma^j\tau^k$ ($\sigma,\tau\in\{\pm1\}$)
+and sum over $j,k\ge1$ as an iterated sum ($k$ outer, $j$ inner). On the left, the inner sum over
+$j$ is the fixed convergent series $\sum_j\sigma^j j^{-a}$ (alternating when $\sigma=-1$, $a=1$),
+so the iterated sum equals the product $\zeta^{\sigma}(a)\zeta^{\tau}(b)$ of the two single series.
+On the right, each term is regrouped via $n=j+k$ by the following lemma.
+
+\textbf{Lemma 3.1 (regrouping).} Let $\sigma,\tau\in\{\pm1\}$, $c\ge1$, $d\ge1$, $c+d\ge3$, and exclude
+$(d,\sigma)=(1,+1)$. Then
+\[
+\sum_{k\ge1}\frac{\tau^k}{k^{c}}\sum_{j\ge1}\frac{\sigma^j}{(j+k)^{d}}
+=\sum_{n>k\ge1}\frac{\sigma^{n}(\sigma\tau)^{k}}{n^{d}\,k^{c}},
+\]
+both sides converging.
+\textit{Proof.} For fixed $k$, reindex $n=j+k$ (a bijective, order-preserving reindexing of a single
+series, always valid): $\sum_j\sigma^j(j+k)^{-d}=\sigma^{-k}\sum_{n>k}\sigma^n n^{-d}$. So the left
+side is $\sum_k(\sigma\tau)^k k^{-c}\sum_{n>k}\sigma^n n^{-d}$. If $d\ge2$ everything is absolutely
+convergent ($\sum_{n>k}n^{-d}\le Ck^{1-d}$, and $\sum_k k^{-c}\,k^{1-d}<\infty$ since $c+d\ge3$), and
+swapping to $\sum_n\sum_{k<n}$ is Fubini. If $d=1$, $\sigma=-1$: let
+$P_K:=\sum_{k\le K}(\sigma\tau)^kk^{-c}\sum_{n>k}\sigma^nn^{-1}$. Splitting the inner tail at $n=K$,
+\[
+P_K=\sum_{n\le K}\frac{\sigma^n}{n}\sum_{k<n}\frac{(\sigma\tau)^k}{k^c}
++\Big(\sum_{k\le K}\frac{(\sigma\tau)^k}{k^c}\Big)\sum_{n>K}\frac{\sigma^n}{n},
+\]
+(the first term is a finite triangular swap). The last factor is an alternating tail,
+$\big|\sum_{n>K}\sigma^n/n\big|\le\frac1{K+1}$, while $\big|\sum_{k\le K}(\sigma\tau)^kk^{-c}\big|\le
+1+\log K$; the product tends to $0$. In the first term note that $d=1$ together with $c+d\ge3$
+forces $c\ge2$, so the inner sums $\sum_{k<n}(\sigma\tau)^kk^{-c}$ are bounded and converge; by
+Dirichlet's test (alternating factor $\sigma^n/n$ with $\sigma=-1$, bounded inner sums) the first
+term converges as $K\to\infty$ to the right side. $\square$
+
+The right side of Lemma 3.1 is the double zeta with outer sign $\sigma$ and inner sign
+$\sigma\tau$ attached to exponents $(d,c)$. Applying it to each Nielsen term
+$1/(j^{a-i}(j+k)^{b+i})$ (with the roles of $j,k$ as written) yields, for $\sigma,\tau$ not both
+$+1$,
+\[
+\zeta^{\sigma}(a)\,\zeta^{\tau}(b)=\sum_{i=0}^{a-1}\binom{b-1+i}{i}\,
+\zeta^{\tau,\sigma\tau}(b+i,\,a-i)+\sum_{i=0}^{b-1}\binom{a-1+i}{i}\,
+\zeta^{\sigma,\sigma\tau}(a+i,\,b-i),
+\]
+where $\zeta^{\alpha,\beta}(s,t):=\sum_{n>m}\alpha^n\beta^m n^{-s}m^{-t}$, valid whenever every
+term is covered by Lemma 3.1 --- true in all instances used below (each term has weight $3$ or $5$
+and outer exponent $\ge2$, or outer exponent $1$ with outer sign $-1$).
+
+\textbf{(c) Doubling (distribution).} For $s\ge2$, $t\ge1$, summing the four sign patterns termwise
+(a finite linear combination of convergent series) gives
+\begin{equation}
+\zeta(s,t)+\zeta(\bar s,t)+\zeta(s,\bar t)+\zeta(\bar s,\bar t)
+=\sum_{n>m}\frac{(1+(-1)^n)(1+(-1)^m)}{n^sm^t}
+=4\!\!\sum_{\substack{n>m\\ n,m\ \mathrm{even}}}\!\!\frac{1}{n^sm^t}
+=2^{2-s-t}\,\zeta(s,t). \tag{D}
+\end{equation}
+
+\textbf{Weight 3.} The five unknowns $\zeta(\bar2,1),\zeta(2,\bar1),\zeta(\bar2,\bar1),\zeta(\bar1,2),
+\zeta(\bar1,\bar2)$ satisfy:
+
+\begin{center}
+\begin{tabular}{|c|l|l|}
+\hline
+\# & identity & source \\
+\hline
+1 & $\zeta(\bar1,2)+\zeta(2,\bar1)-\eta(3)=-\ln2\,\zeta(2)$ & stuffle $\zeta^{-}(1)\zeta^{+}(2)$ \\
+2 & $\zeta(\bar1,\bar2)+\zeta(\bar2,\bar1)+\zeta(3)=\ln2\,\eta(2)$ & stuffle $\zeta^{-}(1)\zeta^{-}(2)$ \\
+3 & $\zeta(2,\bar1)+\zeta(\bar1,\bar2)+\zeta(\bar2,\bar1)=-\ln2\,\zeta(2)$ & Nielsen $(a,b)=(1,2)$, $(\sigma,\tau)=(-,+)$ \\
+4 & $2\zeta(\bar2,1)+\zeta(\bar1,2)=\ln2\,\eta(2)$ & Nielsen $(1,2)$, $(\sigma,\tau)=(-,-)$ \\
+5 & $\zeta(\bar2,1)+\zeta(2,\bar1)+\zeta(\bar2,\bar1)=-\tfrac12\zeta(2,1)=-\tfrac12\zeta(3)$ & doubling (D) + (6) \\
+\hline
+\end{tabular}
+\end{center}
+
+(For row 3: $(a,b;\sigma,\tau)=(1,2;-,+)$ in (b) gives left side $\big(\sum_j\tfrac{(-1)^j}{j}\big)\zeta(2)$
+and right side $\zeta^{\tau,\sigma\tau}(2,1)+\zeta^{\sigma,\sigma\tau}(1,2)+\zeta^{\sigma,\sigma\tau}(2,1)
+=\zeta(2,\bar1)+\zeta(\bar1,\bar2)+\zeta(\bar2,\bar1)$; row 4 similarly with $(\sigma,\tau)=(-,-)$.)
+
+This linear system has full rank $5$ (a direct check of the $5\times5$ coefficient matrix), and its
+unique solution is
+\[
+\zeta(\bar2,1)=\tfrac18\zeta(3),\qquad
+\zeta(2,\bar1)=\zeta(3)-\tfrac32\ln2\,\zeta(2),\qquad
+\zeta(\bar2,\bar1)=-\tfrac{13}{8}\zeta(3)+\tfrac32\ln2\,\zeta(2),
+\]
+\begin{equation}
+\zeta(\bar1,2)=-\tfrac14\zeta(3)+\tfrac12\ln2\,\zeta(2),\qquad
+\zeta(\bar1,\bar2)=\tfrac58\zeta(3)-\ln2\,\zeta(2). \tag{8}
+\end{equation}
+(Substituting these values back into rows 1--5 verifies the solution; e.g. row 5:
+$\tfrac18+1-\tfrac{13}8=-\tfrac12$ for the $\zeta(3)$ coefficients and $-\tfrac32+\tfrac32=0$ for
+$\ln2\,\zeta(2)$.) In particular
+\begin{equation}
+J:=\int_0^1\frac{\ln^2(1+u)}{u}\,du
+=2\sum_{n}\frac{(-1)^nH_{n-1}}{n^2}=2\,\zeta(\bar2,1)=\frac{\zeta(3)}{4}, \tag{9}
+\end{equation}
+where the termwise integration uses Lemma 0.3(b) with weight $1/u$, and
+$\sum_n(-1)^nH_{n-1}/n^2=\sum_{n>m}(-1)^n/(n^2m)=\zeta(\bar2,1)$.
+
+\textbf{Weight 5.} The eleven unknowns are the signed versions of $(4,1),(3,2),(2,3)$ (three sign
+patterns each) and $(\bar1,4),(\bar1,\bar4)$. The same three mechanisms give thirteen identities
+(here $\zeta(\bar5)=-\eta(5)$; right-hand sides use $\eta$-values and (7)):
+
+\begin{center}
+\begin{tabular}{|c|l|l|}
+\hline
+\# & identity & source \\
+\hline
+1 & $\zeta(\bar1,4)+\zeta(4,\bar1)-\eta(5)=-\ln2\,\zeta(4)$ & st. $\zeta^{-}(1)\zeta^{+}(4)$ \\
+2 & $\zeta(\bar1,\bar4)+\zeta(\bar4,\bar1)+\zeta(5)=\ln2\,\eta(4)$ & st. $\zeta^{-}(1)\zeta^{-}(4)$ \\
+3 & $\zeta(\bar2,3)+\zeta(3,\bar2)-\eta(5)=-\eta(2)\zeta(3)$ & st. $\zeta^{-}(2)\zeta^{+}(3)$ \\
+4 & $\zeta(2,\bar3)+\zeta(\bar3,2)-\eta(5)=-\zeta(2)\eta(3)$ & st. $\zeta^{+}(2)\zeta^{-}(3)$ \\
+5 & $\zeta(\bar2,\bar3)+\zeta(\bar3,\bar2)+\zeta(5)=\eta(2)\eta(3)$ & st. $\zeta^{-}(2)\zeta^{-}(3)$ \\
+6 & $\zeta(4,\bar1)+\zeta(\bar1,\bar4)+\zeta(\bar2,\bar3)+\zeta(\bar3,\bar2)+\zeta(\bar4,\bar1)=-\ln2\,\zeta(4)$ & Ni. $(1,4;-,+)$ \\
+7 & $2\zeta(\bar4,1)+\zeta(\bar1,4)+\zeta(\bar2,3)+\zeta(\bar3,2)=\ln2\,\eta(4)$ & Ni. $(1,4;-,-)$ \\
+8 & $\zeta(3,\bar2)+3\zeta(4,\bar1)+\zeta(\bar2,\bar3)+2\zeta(\bar3,\bar2)+3\zeta(\bar4,\bar1)=-\eta(2)\zeta(3)$ & Ni. $(2,3;-,+)$ \\
+9 & $\zeta(\bar3,\bar2)+3\zeta(\bar4,\bar1)+\zeta(2,\bar3)+2\zeta(3,\bar2)+3\zeta(4,\bar1)=-\zeta(2)\eta(3)$ & Ni. $(2,3;+,-)$ \\
+10 & $\zeta(\bar2,3)+3\zeta(\bar3,2)+6\zeta(\bar4,1)=\eta(2)\eta(3)$ & Ni. $(2,3;-,-)$ \\
+11 & $\zeta(\bar4,1)+\zeta(4,\bar1)+\zeta(\bar4,\bar1)=-\tfrac78\zeta(4,1)$ & (D) \\
+12 & $\zeta(\bar3,2)+\zeta(3,\bar2)+\zeta(\bar3,\bar2)=-\tfrac78\zeta(3,2)$ & (D) \\
+13 & $\zeta(\bar2,3)+\zeta(2,\bar3)+\zeta(\bar2,\bar3)=-\tfrac78\zeta(2,3)$ & (D) \\
+\hline
+\end{tabular}
+\end{center}
+
+(In rows 6--10, the general recipe of (b) is used: for $(a,b;\sigma,\tau)$ the right side of Lemma 2.1
+contributes $\sum_{i=0}^{a-1}\binom{b-1+i}{i}\,\zeta^{\tau,\sigma\tau}(b+i,a-i)
++\sum_{i=0}^{b-1}\binom{a-1+i}{i}\,\zeta^{\sigma,\sigma\tau}(a+i,b-i)$, where
+$\zeta^{\alpha,\beta}(s,t)=\sum_{n>m}\alpha^n\beta^m n^{-s}m^{-t}$.)
+
+This $13\times11$ system has rank $11$ (checked by Gaussian elimination over $\mathbb{Q}$), hence a
+unique solution, which one verifies by substitution:
+\begin{equation}
+\begin{aligned}
+&\zeta(\bar4,1)=-\tfrac{29}{32}\zeta(5)+\tfrac12\zeta(2)\zeta(3), &
+&\zeta(4,\bar1)=2\zeta(5)-\tfrac38\zeta(2)\zeta(3)-\tfrac{15}{8}\zeta(4)\ln2,\\
+&\zeta(\bar4,\bar1)=-\tfrac{91}{32}\zeta(5)+\tfrac34\zeta(2)\zeta(3)+\tfrac{15}{8}\zeta(4)\ln2, &
+&\zeta(\bar3,2)=\tfrac{41}{32}\zeta(5)-\tfrac58\zeta(2)\zeta(3),\\
+&\zeta(3,\bar2)=-\tfrac{21}{32}\zeta(5)+\tfrac14\zeta(2)\zeta(3), &
+&\zeta(\bar3,\bar2)=\tfrac{67}{16}\zeta(5)-\tfrac94\zeta(2)\zeta(3),\\
+&\zeta(\bar2,3)=\tfrac{51}{32}\zeta(5)-\tfrac34\zeta(2)\zeta(3), &
+&\zeta(2,\bar3)=-\tfrac{11}{32}\zeta(5)-\tfrac18\zeta(2)\zeta(3),\\
+&\zeta(\bar2,\bar3)=-\tfrac{83}{16}\zeta(5)+\tfrac{21}{8}\zeta(2)\zeta(3), &
+&\zeta(\bar1,4)=-\tfrac{17}{16}\zeta(5)+\tfrac38\zeta(2)\zeta(3)+\tfrac78\zeta(4)\ln2,\\
+&\zeta(\bar1,\bar4)=\tfrac{59}{32}\zeta(5)-\tfrac34\zeta(2)\zeta(3)-\zeta(4)\ln2,&&
+\end{aligned}\tag{10}
+\end{equation}
+using $\zeta(2)^2=\tfrac52\zeta(4)$ from (5) to express the $\ln2\,\zeta(2)^2$ terms via $\zeta(4)\ln2$.
+The value we need is the first one. Since
+\[
+A:=\sum_{n\ge1}\frac{(-1)^{n-1}H_n}{n^4}
+=\eta(5)+\sum_{n>m}\frac{(-1)^{n-1}}{n^4m}=\eta(5)-\zeta(\bar4,1),
+\]
+we obtain the classical
+\begin{equation}
+A=\frac{15}{16}\zeta(5)+\frac{29}{32}\zeta(5)-\frac12\zeta(2)\zeta(3)
+=\frac{59}{32}\,\zeta(5)-\frac{1}{2}\,\zeta(2)\zeta(3). \tag{11}
+\end{equation}
+\textit{(Remark: the same table gives
+$\sum(-1)^{n-1}H^{(2)}_n/n^3=\eta(5)-\zeta(\bar3,2)=\tfrac58\zeta(2)\zeta(3)-\tfrac{11}{32}\zeta(5)$,
+a known cross-check.)}
+
+\subsection*{4. $\operatorname{Li}_2(\tfrac12)$ and $\operatorname{Li}_3(\tfrac12)$}
+
+\textbf{Lemma 4.1.} $\operatorname{Li}_2(x)+\operatorname{Li}_2(1-x)=\zeta(2)-\ln x\ln(1-x)$ on $(0,1)$:
+both sides have derivative $-\frac{\ln(1-x)}{x}+\frac{\ln x}{1-x}$ and limit $\zeta(2)$ as
+$x\to0^+$. At $x=\tfrac12$:
+\begin{equation}
+\operatorname{Li}_2(\tfrac12)=\tfrac12\zeta(2)-\tfrac12\ln^22. \tag{12}
+\end{equation}
+
+\textbf{Lemma 4.2.} Let $\tau:=\sum_{n\ge2}\frac{H_{n-1}}{2^n n^2}$. Then
+\[
+\tau=\frac{\zeta(3)}{8}-\frac{\ln^32}{6}
+\qquad\text{and}\qquad
+\tau=\zeta(3)-\frac{\ln^32}{2}-\ln2\operatorname{Li}_2(\tfrac12)-\operatorname{Li}_3(\tfrac12),
+\]
+and consequently
+\begin{equation}
+\operatorname{Li}_3(\tfrac12)=\tfrac78\zeta(3)-\tfrac12\zeta(2)\ln2+\tfrac16\ln^32. \tag{13}
+\end{equation}
+\textit{Proof.} By Lemma 0.2/0.3(a), $\tau=\int_0^{1/2}\frac{\ln^2(1-t)}{2t}\,dt$.
+(i) Substitute $t=\frac{u}{1+u}$ (increasing bijection $[0,1]\to[0,\tfrac12]$), so $1-t=\frac1{1+u}$,
+$\frac{dt}{t}=\frac{du}{u(1+u)}=\frac{du}{u}-\frac{du}{1+u}$:
+\[
+\tau=\frac12\int_0^1\ln^2(1+u)\Big(\frac1u-\frac1{1+u}\Big)du
+=\frac12 J-\frac12\cdot\frac{\ln^32}{3}=\frac{\zeta(3)}{8}-\frac{\ln^32}{6},
+\]
+by (9). (ii) Alternatively split $\int_0^{1/2}=\int_0^1-\int_{1/2}^1$: the full integral is
+$\int_0^1\frac{\ln^2(1-t)}{2t}dt=\zeta(2,1)=\zeta(3)$ by (6), while in
+$\int_{1/2}^1$ substitute $t\to1-t$ and integrate termwise (Lemma 0.1, positive terms):
+\[
+\int_{1/2}^{1}\frac{\ln^2(1-t)}{2t}\,dt=\int_0^{1/2}\frac{\ln^2t}{2(1-t)}\,dt
+=\frac12\sum_{n\ge1}2^{-n}\Big(\frac{\ln^22}{n}+\frac{2\ln2}{n^2}+\frac{2}{n^3}\Big)
+=\frac{\ln^32}2+\ln2\operatorname{Li}_2(\tfrac12)+\operatorname{Li}_3(\tfrac12).
+\]
+Equating (i) and (ii) and inserting (12) gives (13). $\square$
+
+\subsection*{5. The Landen equation for $M$}
+
+Recall $M=\displaystyle\int_0^{1/2}\frac{\ln^2t\,\ln^2(1-t)}{t}\,dt$ from Step 1.4. Apply the same
+substitution $t=\frac{u}{1+u}$ as in Lemma 4.2: $\ln(1-t)=-\ln(1+u)$, $\ln t=\ln u-\ln(1+u)$,
+$\frac{dt}{t}=\frac{du}{u}-\frac{du}{1+u}$. Hence
+\[
+M=\int_0^1\Big[\ln^2u\,\ln^2(1+u)-2\ln u\,\ln^3(1+u)+\ln^4(1+u)\Big]
+\Big(\frac1u-\frac1{1+u}\Big)du .
+\]
+All six resulting integrals converge separately; name them:
+\begin{equation}
+M=\big(\mathcal I-2X_1+X_2\big)-\big(Y_0-2Y_1+Y_2\big), \tag{14}
+\end{equation}
+\[
+\mathcal I=\int_0^1\frac{\ln^2u\ln^2(1+u)}{u}du,\quad
+X_1=\int_0^1\frac{\ln u\ln^3(1+u)}{u}du,\quad
+X_2=\int_0^1\frac{\ln^4(1+u)}{u}du,
+\]
+\[
+Y_0=\int_0^1\frac{\ln^2u\ln^2(1+u)}{1+u}du,\quad
+Y_1=\int_0^1\frac{\ln u\ln^3(1+u)}{1+u}du,\quad
+Y_2=\int_0^1\frac{\ln^4(1+u)}{1+u}du .
+\]
+
+Now evaluate or identify each piece.
+
+\begin{itemize}
+\item \textbf{$X_1=I$} --- it \textit{is} the integral we are computing (same integrand, $u\leftrightarrow x$).
+\item \textbf{$Y_0=K$} --- the integral from Step 1.1, by definition.
+\item \textbf{$Y_2=\dfrac{\ln^52}{5}$} --- immediate.
+\item \textbf{$Y_1=-\dfrac{X_2}{4}$}: integrate by parts with $d\big[\tfrac14\ln^4(1+u)\big]
+  =\frac{\ln^3(1+u)}{1+u}du$:
+  \[
+  Y_1=\Big[\frac{\ln^4(1+u)}{4}\ln u\Big]_0^1-\frac14\int_0^1\frac{\ln^4(1+u)}{u}\,du=-\frac{X_2}4 ,
+  \]
+  the boundary vanishing at both ends ($\ln 1=0$; $\ln^4(1+u)\ln u\sim u^4\ln u\to0$).
+\item \textbf{$\mathcal I=4\big(\eta(5)-A\big)$}: by Lemma 0.2 and Lemma 0.3(b) (weight $\ln^2u/u$),
+  \[
+  \mathcal I=2\sum_{n\ge2}\frac{(-1)^nH_{n-1}}{n}\int_0^1u^{n-1}\ln^2u\,du
+  =4\sum_{n}\frac{(-1)^nH_{n-1}}{n^4}
+  =4\Big(\eta(5)-A\Big),
+  \]
+  since $\sum(-1)^nH_{n-1}/n^4=\sum(-1)^nH_n/n^4-\sum(-1)^n/n^5=-A+\eta(5)$. With (11),
+  \begin{equation}
+  \mathcal I=4\eta(5)-4A=\frac{15}{4}\zeta(5)-\frac{59}{8}\zeta(5)+2\zeta(2)\zeta(3)
+  =2\zeta(2)\zeta(3)-\frac{29}{8}\zeta(5). \tag{15}
+  \end{equation}
+\item \textbf{$X_2$ explicitly}: substitute $v=1+u$, then $v=1/w$ (as in Step 1.2):
+  \[
+  X_2=\int_1^2\frac{\ln^4v}{v-1}\,dv=\int_{1/2}^1\frac{\ln^4w}{w(1-w)}\,dw
+  =\int_{1/2}^1\frac{\ln^4w}{w}dw+\int_{1/2}^1\frac{\ln^4w}{1-w}\,dw .
+  \]
+  The first integral is $\tfrac15\ln^52$. For the second, $\int_0^1\frac{\ln^4w}{1-w}dw
+  =\sum_n\frac{24}{n^5}=24\zeta(5)$ and, termwise by Lemma 0.1 (positive terms),
+  \[
+  \int_0^{1/2}\frac{\ln^4w}{1-w}\,dw
+  =\sum_{n\ge1}2^{-n}\Big(\frac{\ln^42}{n}+\frac{4\ln^32}{n^2}+\frac{12\ln^22}{n^3}
+  +\frac{24\ln2}{n^4}+\frac{24}{n^5}\Big)
+  \]
+  \[
+  =\ln^52+4\ln^32\operatorname{Li}_2(\tfrac12)+12\ln^22\operatorname{Li}_3(\tfrac12)
+  +24\ln2\operatorname{Li}_4(\tfrac12)+24\operatorname{Li}_5(\tfrac12).
+  \]
+  Hence
+  \begin{equation}
+  X_2=24\zeta(5)-\tfrac45\ln^52-4\ln^32\operatorname{Li}_2(\tfrac12)
+  -12\ln^22\operatorname{Li}_3(\tfrac12)-24\ln2\operatorname{Li}_4(\tfrac12)
+  -24\operatorname{Li}_5(\tfrac12). \tag{16}
+  \end{equation}
+  (Comparing with (3), $X_2=4T_2-\tfrac45\ln^52$, a useful cross-check.)
+\end{itemize}
+
+Substituting all pieces into (14):
+\begin{equation}
+\boxed{\;M+K+2I=4\big(\eta(5)-A\big)+\frac{X_2}{2}-\frac{\ln^52}{5}.\;}\tag{E2}
+\end{equation}
+
+\subsection*{6. Solving for $I$}
+
+Subtract (E1) from (E2); $M$ and $K$ cancel:
+\[
+2I=4\big(\eta(5)-A\big)+\frac{X_2}{2}-\frac{\ln^52}{5}
+-8\zeta(5)+4\zeta(2)\zeta(3)+2T_2-\frac{\ln^52}{5},
+\]
+\begin{equation}
+I=2\big(\eta(5)-A\big)+\frac{X_2}{4}+T_2-4\zeta(5)+2\zeta(2)\zeta(3)-\frac{\ln^52}{5}. \tag{17}
+\end{equation}
+Insert (11), (3), (16):
+\[
+2\big(\eta(5)-A\big)=\tfrac{15}{8}\zeta(5)-\tfrac{59}{16}\zeta(5)+\zeta(2)\zeta(3)
+=-\tfrac{29}{16}\zeta(5)+\zeta(2)\zeta(3),
+\]
+\[
+\frac{X_2}{4}+T_2=12\zeta(5)-\tfrac15\ln^52-2\ln^32\operatorname{Li}_2(\tfrac12)
+-6\ln^22\operatorname{Li}_3(\tfrac12)-12\ln2\operatorname{Li}_4(\tfrac12)
+-12\operatorname{Li}_5(\tfrac12).
+\]
+Therefore
+\[
+I=\Big(-\tfrac{29}{16}-4+12\Big)\zeta(5)+3\zeta(2)\zeta(3)-\tfrac25\ln^52
+-2\ln^32\operatorname{Li}_2(\tfrac12)-6\ln^22\operatorname{Li}_3(\tfrac12)
+-12\ln2\operatorname{Li}_4(\tfrac12)-12\operatorname{Li}_5(\tfrac12),
+\]
+and $-\tfrac{29}{16}+8=\tfrac{99}{16}$. Finally, expanding with (12) and (13),
+\[
+-2\ln^32\operatorname{Li}_2(\tfrac12)=-\zeta(2)\ln^32+\ln^52,\qquad
+-6\ln^22\operatorname{Li}_3(\tfrac12)=-\tfrac{21}{4}\zeta(3)\ln^22+3\zeta(2)\ln^32-\ln^52,
+\]
+so the $\ln^52$ corrections cancel and the $\zeta(2)\ln^32$ terms add to $+2\zeta(2)\ln^32$:
+\[
+I=\frac{99}{16}\zeta(5)+3\zeta(2)\zeta(3)-\frac{21}{4}\zeta(3)\ln^22
++2\zeta(2)\ln^32-\frac25\ln^52
+-12\ln2\operatorname{Li}_4(\tfrac12)-12\operatorname{Li}_5(\tfrac12),
+\]
+which is the boxed Result (using $\zeta(2)=\pi^2/6$).
+
+\textbf{Consistency checks.} (a) Equation (1), $I=-\tfrac32K$, was never used above; direct quadrature
+of both integrals confirms it to 110 digits,
+$K=0.0384062737725193301565276592727902529725733\ldots=-\tfrac23 I$, so the overdetermined system
+(1), (E1), (E2) is consistent. (b) The value
+$M=2\ln^22\,\tau+4\ln2\sum_n\frac{H_{n-1}}{2^nn^3}+4\sum_n\frac{H_{n-1}}{2^nn^4}$ obtained from its
+defining series (Lemma 0.1) matches direct quadrature of $M$ to more than 100 digits.
+
+\section*{Numerical verification}
+
+All computations with mpmath at 110 significant digits.
+
+Direct numerical integration (\texttt{mp.quad} with splits at $\tfrac14,\tfrac12,\tfrac34$):
+\begin{verbatim}
+I_quad = -0.05760941065877899523479148890918537945886000222364830713296
+          23962670128085772005803934336413232954600867954...
+\end{verbatim}
+Closed form $\frac{99}{16}\zeta(5)+3\zeta(2)\zeta(3)-\frac{21}{4}\zeta(3)\ln^22+2\zeta(2)\ln^32
+-\frac25\ln^52-12\ln2\operatorname{Li}_4(\frac12)-12\operatorname{Li}_5(\frac12)$:
+\begin{verbatim}
+I_cf   = -0.05760941065877899523479148890918537945886000222364830713296
+          23962670128085772005803934336413232954600867954...
+\end{verbatim}
+Absolute difference $1.11\cdot10^{-110}$ (relative $1.9\cdot10^{-109}$), i.e. \textbf{agreement to
+$\approx108$ significant digits} (far beyond the required 25).
+
+Independent second check: the nested-sum representation
+$I=3\sum_{n\ge1}\frac{(-1)^n\big(H_{n-1}^2-H_{n-1}^{(2)}\big)}{n^3}$
+(obtained by expanding $\ln^3(1+x)$; equivalent to $I=6\,\zeta(\bar3,1,1)$), summed with mpmath's
+alternating-series acceleration (\texttt{mp.nsum(..., method='a')}), agrees with \texttt{I\_quad} to
+$1.3\cdot10^{-63}$ at 60-digit working precision.
+
+Every displayed intermediate identity --- (3), (4), (5)--(13), (15), (16), (E1), (E2) --- was verified
+numerically to at least 55 significant digits, and the linear systems of Sections 2--3 were solved
+exactly (rational arithmetic; ranks $3$, $5$ and $11$ as claimed, solutions verified by
+substitution).
+
+As an additional independent confirmation, the full algebra of alternating multiple zeta values of
+weight $\le5$ was solved by computer over $\mathbb{Q}$ (relations: series stuffles, iterated-integral
+shuffles, the doubling/distribution relations, and the duality/Landen substitutions --- each family
+numerically validated to $10^{-55}$ before use), and it reproduces exactly the same closed form for
+$I=6\zeta(\bar3,1,1)$, as well as the table (10) and the auxiliary constants
+$\sum_n H_n/(2^nn^3)=\operatorname{Li}_4(\tfrac12)+\tfrac{\pi^4}{720}-\tfrac18\zeta(3)\ln2+\tfrac1{24}\ln^42$,
+$\sum_n H_n/(2^nn^4)=2\operatorname{Li}_5(\tfrac12)+\ln2\operatorname{Li}_4(\tfrac12)
++\tfrac1{32}\zeta(5)-\tfrac{\pi^2}{12}\zeta(3)+\tfrac12\zeta(3)\ln^22-\tfrac{\pi^4}{720}\ln2
+-\tfrac{\pi^2}{36}\ln^32+\tfrac1{40}\ln^52$ (not needed above, but classical).
+
+\section*{Notes}
+
+\begin{itemize}
+\item The derivation is self-contained: the only external inputs are Euler's values
+  $\zeta(2)=\pi^2/6$ (used only for cosmetic rewriting) and the elementary convergence facts
+  quoted; $\zeta(4)=\tfrac25\zeta(2)^2$ is derived in (5).
+\item Rearrangement/termwise-integration steps are justified where they occur: positive-term series use
+  monotone convergence; the two alternating expansions use the remainder bound of Lemma 0.3(b);
+  the signed stuffle/Nielsen identities are proved through partial sums with absolutely convergent
+  regrouped pieces (weights are high enough that every regrouped double series converges
+  absolutely, except the explicitly-handled outer alternating sums).
+\item The linear systems in Sections 2 and 3 are small and over $\mathbb{Q}$; their unique solvability
+  is a finite rational-arithmetic fact (ranks verified), and the displayed solutions can be checked
+  by direct substitution into each listed identity.
+\item The key structural trick is Step 5: the Landen map $t\mapsto t/(1-t)$ (equivalently
+  $t=u/(1+u)$) sends the half-interval integral $M$ to a combination of $[0,1]$-integrals in which
+  the unknown $I$ itself reappears ($X_1=I$), while the companion equation (E1) contains the same
+  pair $M+K$; subtracting eliminates both auxiliary integrals. The polylogarithms
+  $\operatorname{Li}_4(\tfrac12),\operatorname{Li}_5(\tfrac12)$ enter only through the completely
+  elementary expansions (3) and (16), and are not further reducible (they are standard basis
+  constants at weight 4 and 5, level 2).
+\end{itemize}
+
+\end{document}

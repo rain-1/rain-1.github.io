@@ -1,0 +1,270 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 18\\[1ex]\large Integral $\int_0^1\frac{\ln\left(x+\sqrt2\right)}{\sqrt{2-x}\,\sqrt{1-x}\,\sqrt{\vphantom{1}x}}\mathrm dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/570997}{question 570997}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in closed form
+\[I \;=\; \int_0^1\frac{\ln\left(x+\sqrt2\right)}{\sqrt{(2-x)(1-x)\,x}}\;dx .\]
+
+\section*{Result}
+
+\[\boxed{\;I \;=\; \frac{\Gamma\!\left(\tfrac14\right)^2}{16\sqrt{2\pi}}\;\Bigl(\,7\ln 2 \;+\; 4\ln\bigl(1+\sqrt2\bigr)\;-\;\pi\,\Bigr)\;}\]
+
+Equivalently, with $K:=K\!\left(\tfrac1{\sqrt2}\right)=\dfrac{\Gamma(1/4)^2}{4\sqrt\pi}$ (lemniscatic complete elliptic integral, modulus convention $K(k)$),
+\[I=\sqrt2\,K\,\ln C,\qquad C=2^{7/8}\,(1+\sqrt2)^{1/2}\,e^{-\pi/8}\;=\;1.9241638212545819987\ldots\]
+
+Numerically $I = 1.716114368162902406441849005033005386647\ldots$
+
+\section*{Derivation}
+
+Throughout, $k=\tfrac1{\sqrt2}$ (so $k'=\sqrt{1-k^2}=\tfrac1{\sqrt2}=k$), and $\theta_1,\theta_2,\theta_3,\theta_4$ are the Jacobi theta functions with nome $q$, $0<q<1$:
+\[\theta_1(z)=2\sum_{n\ge0}(-1)^nq^{(n+\frac12)^2}\sin(2n{+}1)z,\quad
+\theta_2(z)=2\sum_{n\ge0}q^{(n+\frac12)^2}\cos(2n{+}1)z,\]
+\[\theta_3(z)=1+2\sum_{n\ge1}q^{n^2}\cos 2nz,\quad
+\theta_4(z)=1+2\sum_{n\ge1}(-1)^nq^{n^2}\cos 2nz .\]
+Write $t_j:=\theta_j(0)$. It is convenient to use the two-sided forms
+\[\theta_1(z)=-i\sum_{n\in\mathbb Z}(-1)^nq^{(n+\frac12)^2}e^{(2n+1)iz},\qquad
+\theta_2(z)=\sum_{n\in\mathbb Z}q^{(n+\frac12)^2}e^{(2n+1)iz},\]
+\[\theta_3(z)=\sum_{n\in\mathbb Z}q^{n^2}e^{2inz},\qquad
+\theta_4(z)=\sum_{n\in\mathbb Z}(-1)^nq^{n^2}e^{2inz}.\]
+All are entire; for real $q\in(0,1)$ all Fourier coefficients are real, so $\overline{\theta_j(z)}=\theta_j(\bar z)$.
+
+We will also use the \textbf{Jacobi triple product} (classical; Jacobi 1829, see Whittaker--Watson \S21.3):
+\[\theta_1(z)=2q^{1/4}\sin z\prod_{n\ge1}(1-q^{2n})(1-q^{2n}e^{2iz})(1-q^{2n}e^{-2iz}),\]
+\[\theta_2(z)=2q^{1/4}\cos z\prod_{n\ge1}(1-q^{2n})(1+q^{2n}e^{2iz})(1+q^{2n}e^{-2iz}),\]
+\[\begin{gathered}\theta_3(z)=\prod_{n\ge1}(1-q^{2n})(1+q^{2n-1}e^{2iz})(1+q^{2n-1}e^{-2iz}),\\
+\theta_4(z)=\prod_{n\ge1}(1-q^{2n})(1-q^{2n-1}e^{2iz})(1-q^{2n-1}e^{-2iz}).\end{gathered}\]
+Set $P:=\prod_{n\ge1}(1-q^{2n})$. From the products: for real $z$, $\theta_3(z)>0$, $\theta_4(z)>0$, and $\theta_1(z),\theta_2(z)>0$ for $z\in(0,\tfrac\pi2)$. The zero sets are: $\theta_1$ vanishes exactly on $\pi\mathbb Z+\pi\tau\mathbb Z$, $\theta_2$ on $\tfrac\pi2+\pi\mathbb Z+\pi\tau\mathbb Z$, $\theta_3$ on $\tfrac\pi2+\tfrac{\pi\tau}2+\pi\mathbb Z+\pi\tau\mathbb Z$, $\theta_4$ on $\tfrac{\pi\tau}2+\pi\mathbb Z+\pi\tau\mathbb Z$, where $q=e^{i\pi\tau}$ (all zeros simple; immediate from the products).
+
+\subsection*{Step 0: quasi-periodicity and shift identities (elementary, from the series)}
+
+Directly from the two-sided series (reindexing $n\mapsto n\pm1$ where needed), with $q=e^{i\pi\tau}$:
+
+\begin{itemize}
+\item \textbf{Periods.} $\theta_1(z+\pi)=-\theta_1(z)$, $\theta_2(z+\pi)=-\theta_2(z)$, $\theta_3(z+\pi)=\theta_3(z)$, $\theta_4(z+\pi)=\theta_4(z)$; and with $\mu(z):=q^{-1}e^{-2iz}$,
+\[\begin{gathered}\theta_1(z+\pi\tau)=-\mu\,\theta_1(z),\quad \theta_2(z+\pi\tau)=\mu\,\theta_2(z),\\ \theta_3(z+\pi\tau)=\mu\,\theta_3(z),\quad \theta_4(z+\pi\tau)=-\mu\,\theta_4(z).\end{gathered}\]
+\item \textbf{Quarter shifts in $z$:} $\theta_1(z+\tfrac\pi2)=\theta_2(z)$, $\theta_2(z+\tfrac\pi2)=-\theta_1(z)$, $\theta_3(z+\tfrac\pi2)=\theta_4(z)$, $\theta_4(z+\tfrac\pi2)=\theta_3(z)$.
+\item \textbf{Half-$\tau$ shifts:} with $\lambda(z):=q^{-1/4}e^{-iz}$,
+\[\theta_1(z+\tfrac{\pi\tau}2)=i\lambda\,\theta_4(z),\quad \theta_4(z+\tfrac{\pi\tau}2)=i\lambda\,\theta_1(z),\quad
+\theta_2(z+\tfrac{\pi\tau}2)=\lambda\,\theta_3(z),\quad \theta_3(z+\tfrac{\pi\tau}2)=\lambda\,\theta_2(z).\]
+\end{itemize}
+
+(Each is a one-line reindexing; e.g. $\theta_4(z+\tfrac{\pi\tau}2)=\sum(-1)^nq^{n^2+n}e^{2inz}=q^{-1/4}\sum(-1)^nq^{(n+\frac12)^2}e^{2inz}=iq^{-1/4}e^{-iz}\theta_1(z)$.)
+
+Also $\theta_1(\pi-z)=\theta_1(z)$ for \textbf{all complex} $z$ (from $\sin((2n{+}1)(\pi-z))=\sin((2n{+}1)z)$), and $\theta_4$ is even with period $\pi$.
+
+\textbf{Key corollary (the special point).} Let $w_0:=\dfrac{\pi\tau}{4}$. Applying the half-$\tau$ shifts at $z=-w_0$ (and evenness/oddness):
+\[\theta_4(w_0)=i\,q^{-1/4}e^{iw_0}\,\theta_1(-w_0)=-i\,\theta_1(w_0),\qquad
+\theta_3(w_0)=q^{-1/4}e^{iw_0}\,\theta_2(-w_0)=\theta_2(w_0),\]
+using $e^{iw_0}=q^{1/4}$. Hence
+\begin{equation*}
+\theta_1(w_0)^2=-\,\theta_4(w_0)^2,\qquad \theta_2(w_0)=\theta_3(w_0). \tag{0}
+\end{equation*}
+Also, at $z=0$ the half-$\tau$ shifts give
+\begin{equation*}
+\theta_1(2w_0)=\theta_1(\tfrac{\pi\tau}2)=i\,q^{-1/4}\,t_4. \tag{0$'$}
+\end{equation*}
+
+\subsection*{Step 1: reduction to an elliptic average}
+
+Substitute $x=\sin^2\theta$, $dx = 2\sin\theta\cos\theta\,d\theta$, $\theta\in[0,\pi/2]$. Then $x=\sin^2\theta$, $1-x=\cos^2\theta$, $2-x=2\bigl(1-\tfrac12\sin^2\theta\bigr)$, so
+\begin{equation*}
+I=\sqrt2\int_0^{\pi/2}\frac{\ln\!\left(\sqrt2+\sin^2\theta\right)}{\sqrt{1-\frac12\sin^2\theta}}\,d\theta. \tag{1}
+\end{equation*}
+
+Now let $k=\tfrac1{\sqrt2}$ and define, for $\theta\in[0,\pi/2]$, $u(\theta)=\int_0^\theta\frac{dt}{\sqrt{1-k^2\sin^2t}}$, a smooth increasing bijection $[0,\tfrac\pi2]\to[0,K]$ with $K=K(k)$. Its inverse is the Jacobi amplitude, $\theta=\operatorname{am}(u,k)$, and $\operatorname{sn}(u,k):=\sin\theta$ (this is simply the definition of $\operatorname{sn}$ on the real interval $[0,K]$ by inversion of the elliptic integral). Then $du=\dfrac{d\theta}{\sqrt{1-k^2\sin^2\theta}}$ and (1) becomes
+\begin{equation*}
+I=\sqrt2\,J,\qquad J:=\int_0^K \ln\!\left(\sqrt2+\operatorname{sn}^2(u,k)\right)du. \tag{2}
+\end{equation*}
+
+\subsection*{Step 2: the theta parametrization at nome $q=e^{-\pi}$}
+
+From here on fix
+\[q:=e^{-\pi}\qquad(\text{so }\tau=i,\; w_0=\tfrac{i\pi}{4},\; \mathbb{lattice}=\pi\mathbb Z+i\pi\mathbb Z).\]
+
+\textbf{(2a) $k(q)=k'(q)=\tfrac1{\sqrt2}$ at $q=e^{-\pi}$.} Define $k(q):=t_2^2/t_3^2$, $k'(q):=t_4^2/t_3^2$. Poisson summation applied to the Gaussian $f(t)=e^{-\pi(t+1/2)^2}$ (Fourier transform $\hat f(\xi)=e^{i\pi\xi}e^{-\pi\xi^2}$) gives
+\[t_2(e^{-\pi})=\sum_{n\in\mathbb Z}e^{-\pi(n+\frac12)^2}=\sum_{m\in\mathbb Z}(-1)^m e^{-\pi m^2}=t_4(e^{-\pi}),\]
+so $k=k'$ at $q=e^{-\pi}$. Next, the \textbf{Jacobi quartic identity} $t_3^4=t_2^4+t_4^4$ holds for every $q$; proof by Liouville's theorem: the function
+$G(z):=\dfrac{t_2^2\,\theta_2^2(z)+t_4^2\,\theta_4^2(z)}{\theta_3^2(z)}$
+is elliptic with periods $\pi,\pi\tau$ (all $\theta_j^2$ pick up the same factor $\mu^2$ under $z\mapsto z+\pi\tau$ and are $\pi$-periodic up to sign squared), and its only possible poles are double poles at the simple zeros $z_0=\tfrac\pi2+\tfrac{\pi\tau}2$ of $\theta_3$. By the shift identities, $\theta_2(z_0)=-\theta_1(\tfrac{\pi\tau}2)=-iq^{-1/4}t_4$ and $\theta_4(z_0)=\theta_3(\tfrac{\pi\tau}2)=q^{-1/4}t_2$, so the numerator at $z_0$ equals $t_2^2(-q^{-1/2}t_4^2)+t_4^2(q^{-1/2}t_2^2)=0$: the pole order drops to at most $1$. A nonconstant elliptic function has order $\ge 2$, so $G$ is constant. Evaluating at $z=\tfrac\pi2$: $G=\dfrac{0+t_4^2t_3^2}{t_4^2}=t_3^2$; evaluating at $z=0$: $G=\dfrac{t_2^4+t_4^4}{t_3^2}$. Hence $t_3^4=t_2^4+t_4^4$, i.e. $k^2+k'^2=1$. Combined with $k=k'>0$ at $q=e^{-\pi}$:
+\[k(e^{-\pi})=k'(e^{-\pi})=\tfrac1{\sqrt2}. \]
+
+\textbf{(2b) $\operatorname{sn}$ as a theta quotient.} Define, at our $q$,
+\[\phi(u):=\frac{t_3}{t_2}\,\frac{\theta_1(z)}{\theta_4(z)},\qquad z=\frac{\pi u}{2K_\theta},\qquad K_\theta:=\frac\pi2\,t_3^2 .\]
+We prove $\phi(u)=\operatorname{sn}(u,k)$ for $u\in[0,K]$ and $K_\theta=K(k)$. We need three identities, each proved by the same Liouville scheme; let $X(z):=\theta_1^2(z)/\theta_4^2(z)$, an elliptic function (periods $\pi,\pi\tau$) whose only pole mod the lattice is the double pole at $\tfrac{\pi\tau}2$, with nonzero leading coefficient since $\theta_1(\tfrac{\pi\tau}2)=iq^{-1/4}t_4\ne0$. Any elliptic function $F$ (periods $\pi,\pi\tau$) whose only singularity mod the lattice is a pole of order $\le2$ at $\tfrac{\pi\tau}2$ can be written $F=A+BX$: choose $B$ to cancel the double part; the remainder has at most one simple pole per period, hence (residue theorem: residues sum to $0$) no pole at all, hence is constant.
+
+\textit{Three-term identities.} $F_2:=\theta_2^2/\theta_4^2$ and $F_3:=\theta_3^2/\theta_4^2$ are of this type. Using values at $z=0$, $z=\tfrac\pi2$ (where $\theta_1=t_2,\theta_2=0,\theta_3=t_4,\theta_4=t_3$) and $z=\tfrac\pi2+\tfrac{\pi\tau}2$ (where $\theta_3=0$, $\theta_1=\theta_2(\tfrac{\pi\tau}2)=q^{-1/4}t_3$, $\theta_4=\theta_3(\tfrac{\pi\tau}2)=q^{-1/4}t_2$):
+\begin{equation*}
+t_4^2\,\theta_2^2(z)=t_2^2\,\theta_4^2(z)-t_3^2\,\theta_1^2(z),\qquad
+t_4^2\,\theta_3^2(z)=t_3^2\,\theta_4^2(z)-t_2^2\,\theta_1^2(z). \tag{3}
+\end{equation*}
+
+\textit{Wronskian identity.} $W(z):=\theta_1'(z)\theta_4(z)-\theta_1(z)\theta_4'(z)$ satisfies (differentiate the quasi-periodicity relations) $W(z+\pi)=-W(z)$ and $W(z+\pi\tau)=\mu^2W(z)$ --- the same multipliers as $\theta_2(z)\theta_3(z)$. Hence $W/(\theta_2\theta_3)$ is elliptic, with possible simple poles only at the simple zeros $\tfrac\pi2$, $\tfrac\pi2+\tfrac{\pi\tau}2$ of $\theta_2\theta_3$. But $W(\tfrac\pi2)=\theta_2'(0)\theta_3(0)-\theta_2(0)\theta_3'(0)=0$ (both $\theta_2,\theta_3$ even), and $W(z+\tfrac{\pi\tau}2)=q^{-1/2}e^{-2iz}\,W(z)$ (direct computation from the half-$\tau$ shifts, the extra $-i$ terms cancel), so $W(\tfrac\pi2+\tfrac{\pi\tau}2)=0$ as well. Thus $W/(\theta_2\theta_3)$ is entire elliptic, i.e. constant $=W(0)/(t_2t_3)=\theta_1'(0)\,t_4/(t_2t_3)$. The \textbf{Jacobi derivative formula} $\theta_1'(0)=t_2t_3t_4$ follows from the triple products together with Euler's telescoping
+$\prod_{n\ge1}(1+q^{2n})(1+q^{2n-1})(1-q^{2n-1})=\prod_{n\ge1}(1+q^{2n})(1-q^{4n-2})=\prod_{n\ge1}\frac{(1-q^{4n})(1-q^{4n-2})}{1-q^{2n}}=1$,
+since $\theta_1'(0)=2q^{1/4}P^3$ and $t_2t_3t_4=2q^{1/4}P^3\left[\prod(1+q^{2n})(1+q^{2n-1})(1-q^{2n-1})\right]^2$. Hence
+\begin{equation*}
+\theta_1'(z)\theta_4(z)-\theta_1(z)\theta_4'(z)=t_4^2\,\theta_2(z)\,\theta_3(z). \tag{4}
+\end{equation*}
+
+Now compute, with $'=d/du$ and using (4), (3):
+\[\phi'(u)=\frac{t_3}{t_2}\cdot\frac{\pi}{2K_\theta}\cdot\frac{t_4^2\theta_2\theta_3}{\theta_4^2}
+=\frac{t_4^2}{t_2t_3}\cdot\frac{\theta_2(z)\theta_3(z)}{\theta_4^2(z)},\qquad
+1-\phi^2=\frac{t_4^2\theta_2^2}{t_2^2\theta_4^2},\qquad 1-k^2\phi^2=\frac{t_4^2\theta_3^2}{t_3^2\theta_4^2},\]
+whence $\phi'^2=(1-\phi^2)(1-k^2\phi^2)$, $\phi(0)=0$, $\phi'(0)=\theta_1'(0)/(t_2t_3t_4)=1$. For $z\in(0,\tfrac\pi2)$ all four thetas are positive, so $\phi'>0$ and $\phi$ increases from $0$ to $\phi(K_\theta)=\frac{t_3}{t_2}\cdot\frac{\theta_1(\pi/2)}{\theta_4(\pi/2)}=\frac{t_3}{t_2}\cdot\frac{t_2}{t_3}=1$. Therefore, for $u\in[0,K_\theta]$, $u=\int_0^{\phi(u)}\frac{dt}{\sqrt{(1-t^2)(1-k^2t^2)}}$, i.e. $\phi=\operatorname{sn}(\cdot,k)$ and $K_\theta=K(k)$. In particular, with $z=\pi u/(2K)$, $q=e^{-\pi}$:
+\begin{equation*}
+k\,\operatorname{sn}^2(u,k)=\frac{\theta_1^2(z)}{\theta_4^2(z)},\qquad u\in[0,K],\qquad K=K(\tfrac{1}{\sqrt2})=\frac\pi2 t_3^2(e^{-\pi}). \tag{5}
+\end{equation*}
+
+\subsection*{Step 3: factorization of $\sqrt2+\operatorname{sn}^2$}
+
+\textbf{Addition lemma.} For all $z,w\in\mathbb C$:
+\begin{equation*}
+t_4^2\,\theta_1(z+w)\,\theta_1(z-w)\;=\;\theta_1^2(z)\,\theta_4^2(w)\;-\;\theta_1^2(w)\,\theta_4^2(z). \tag{6}
+\end{equation*}
+\textit{Proof.} Fix $w$ generic and set $F(z)=\dfrac{\theta_1(z+w)\theta_1(z-w)}{\theta_4^2(z)}$. Under $z\mapsto z+\pi$ the numerator picks $(-1)^2$, the denominator $1$; under $z\mapsto z+\pi\tau$ the numerator picks $(-q^{-1}e^{-2i(z+w)})(-q^{-1}e^{-2i(z-w)})=\mu^2$, the denominator $(-\mu)^2=\mu^2$. So $F$ is elliptic with only possible singularity a double pole at $\tfrac{\pi\tau}2$ mod lattice; hence $F=A+BX$ as in Step 2b. At $z=0$: $A=\theta_1(w)\theta_1(-w)/t_4^2=-\theta_1^2(w)/t_4^2$. At $z=w$: $F(w)=0$, so $B=-A/X(w)=\theta_4^2(w)/t_4^2$ (for $w$ with $\theta_1(w)\theta_4(w)\neq0$; the resulting polynomial identity extends to all $w$ by continuity). Rearranging gives (6). $\square$
+
+Divide (6) by $\theta_4^2(z)\theta_4^2(w)$ and specialize $w=w_0=\tfrac{i\pi}4$, using $(0)$: $\theta_1^2(w_0)/\theta_4^2(w_0)=-1$:
+\[\frac{t_4^2\,\theta_1(z+w_0)\,\theta_1(z-w_0)}{\theta_4^2(w_0)\,\theta_4^2(z)}
+=\frac{\theta_1^2(z)}{\theta_4^2(z)}+1
+\;\overset{(5)}{=}\;k\left(\operatorname{sn}^2 u+\tfrac1k\right)=k\left(\operatorname{sn}^2u+\sqrt2\right),\]
+since $1/k=\sqrt2$. Therefore, for all $u\in[0,K]$, $z=\pi u/(2K)$:
+\begin{equation*}
+\sqrt2+\operatorname{sn}^2(u,k)\;=\;C\;\frac{\theta_1\!\left(z+\tfrac{i\pi}4\right)\theta_1\!\left(z-\tfrac{i\pi}4\right)}{\theta_4^2(z)},
+\qquad C:=\frac{t_4^2}{k\,\theta_4^2(w_0)} . \tag{7}
+\end{equation*}
+For real $z$, $\theta_1(z-\tfrac{i\pi}4)=\overline{\theta_1(z+\tfrac{i\pi}4)}$, so the quotient in (7) equals $\bigl|\theta_1(z+\tfrac{i\pi}4)\bigr|^2/\theta_4^2(z)>0$; moreover $\theta_1(z+\tfrac{i\pi}4)\neq0$ for real $z$ (zeros of $\theta_1$ lie on $\pi\mathbb Z+i\pi\mathbb Z$, imaginary parts $\in\pi\mathbb Z\not\ni\tfrac\pi4$). Also $\theta_4(w_0)=\theta_4(\tfrac{i\pi}{4})=1+2\sum_{n\ge1}(-1)^ne^{-\pi n^2}\cosh\tfrac{\pi n}{2}>0$ (alternating with rapidly decreasing terms: $2e^{-\pi}\cosh\tfrac\pi2\approx0.217$), so $C>0$ and taking $\ln$ of (7) is legitimate termwise:
+\begin{equation*}
+\ln\left(\sqrt2+\operatorname{sn}^2 u\right)=\ln C+\ln\bigl|\theta_1(z+\tfrac{i\pi}4)\bigr|^2-2\ln\theta_4(z). \tag{7$'$}
+\end{equation*}
+
+\subsection*{Step 4: the logarithmic mean values}
+
+Integrate (7$'$) over $u\in[0,K]$, i.e. $z\in[0,\tfrac\pi2]$ ($du=\tfrac{2K}\pi dz$):
+\begin{equation*}
+J=\frac{2K}{\pi}\left[\frac\pi2\ln C+\int_0^{\pi/2}\ln\bigl|\theta_1(z+\tfrac{i\pi}4)\bigr|^2dz-2\int_0^{\pi/2}\ln\theta_4(z)\,dz\right]. \tag{8}
+\end{equation*}
+
+\textbf{Lemma (mean values).} Let $0<q<1$, $P=\prod_{n\ge1}(1-q^{2n})$, and $0<c<-\tfrac12\ln q$. Then
+\begin{equation*}
+\frac1\pi\int_0^{\pi}\ln\bigl|\theta_1(z+ic)\bigr|\,dz=\frac{\ln q}{4}+c+\ln P,\qquad
+\frac1\pi\int_0^{\pi}\ln\theta_4(z)\,dz=\ln P. \tag{9}
+\end{equation*}
+\textit{Proof.} The basic fact: for $|\lambda|<1$,
+$\int_0^{\pi}\ln\bigl|1-\lambda e^{2iz}\bigr|\,dz=-\Re\sum_{m\ge1}\frac{\lambda^m}{m}\int_0^\pi e^{2imz}dz=0$
+(the series $\ln(1-\zeta)=-\sum_{m\ge1}\zeta^m/m$ converges uniformly on $|\zeta|\le|\lambda|$, so termwise integration is justified). Now use the triple products. For $\theta_4(z)$ ($z$ real): each factor $|1-q^{2n-1}e^{\pm2iz}|$ has $|\lambda|=q^{2n-1}<1$, so only $\ln P$ survives. For $\theta_1(z+ic)$: $|\sin(z+ic)|=\tfrac{e^{c}}2\bigl|1-e^{-2c}e^{2iz}\bigr|$, contributing mean $c-\ln2$; the factors $|1-q^{2n}e^{-2c}e^{2iz}|$ have $|\lambda|=q^{2n}e^{-2c}<1$, and $|1-q^{2n}e^{2c}e^{-2iz}|$ have $|\lambda|=q^{2n}e^{2c}<1$ precisely because $c<-\ln q$ suffices for $n\ge1$ (indeed $q^2e^{2c}<1$); all contribute $0$. Adding $\ln(2q^{1/4})+\ln P$ from the prefactor gives the first formula. $\square$
+
+Here $q=e^{-\pi}$ and $c=\tfrac\pi4<\tfrac\pi2=-\tfrac12\ln q$, so the Lemma applies. Two symmetry reductions convert (8) to full-period means: $\theta_4$ is even and $\pi$-periodic, so $\int_0^{\pi/2}\ln\theta_4=\tfrac12\int_0^{\pi}\ln\theta_4$; and $\theta_1(\pi-\zeta)=\theta_1(\zeta)$ for all complex $\zeta$ gives, for real $z$, $\bigl|\theta_1((\pi-z)+ic)\bigr|=\bigl|\theta_1(\pi-(z-ic))\bigr|=\bigl|\theta_1(z-ic)\bigr|=\bigl|\theta_1(z+ic)\bigr|$, so
+\[\int_0^{\pi/2}\ln\bigl|\theta_1(z+ic)\bigr|^2dz=\int_0^{\pi}\ln\bigl|\theta_1(z+ic)\bigr|\,dz .\]
+Hence (8) becomes
+\[J=\frac{2K}\pi\left[\frac{\pi}{2}\ln C+\pi\Bigl(\frac{\ln q}{4}+\frac{\pi}{4}+\ln P\Bigr)-\pi\ln P\right]
+=K\ln C+2K\Bigl(\frac{\ln q}{4}+\frac\pi4\Bigr).\]
+At $q=e^{-\pi}$ the last bracket \textbf{vanishes}: $\tfrac{\ln q}4+\tfrac\pi4=0$. Therefore
+\begin{equation*}
+J=K\,\ln C,\qquad C=\frac{t_4^2}{k\,\theta_4^2\!\left(\tfrac{i\pi}{4}\right)} . \tag{10}
+\end{equation*}
+
+\subsection*{Step 5: closed form for $\theta_4\!\left(\tfrac{i\pi}4\right)$, i.e. for $C$}
+
+\textbf{Duplication lemma.} For all $z$:
+\begin{equation*}
+t_2t_3t_4\,\theta_1(2z)=2\,\theta_1(z)\theta_2(z)\theta_3(z)\theta_4(z). \tag{11}
+\end{equation*}
+\textit{Proof.} Let $H(z)=\dfrac{2\theta_1\theta_2\theta_3\theta_4(z)}{\theta_1(2z)}$. Multiplier check: under $z\mapsto z+\pi$, numerator picks $(-1)(-1)(1)(1)=1$ and $\theta_1(2z+2\pi)=\theta_1(2z)$; under $z\mapsto z+\pi\tau$, the numerator picks $(-\mu)(\mu)(\mu)(-\mu)=\mu^4=q^{-4}e^{-8iz}$ and the denominator $\theta_1(2z+2\pi\tau)=q^{-4}e^{-4i(2z)}\theta_1(2z)$ (iterate quasi-periodicity twice): same factor. So $H$ is elliptic. The zeros of $\theta_1(2z)$ are exactly $z\in\tfrac\pi2\mathbb Z+\tfrac{\pi\tau}2\mathbb Z$, i.e. the four half-period classes $0,\tfrac\pi2,\tfrac{\pi\tau}2,\tfrac\pi2+\tfrac{\pi\tau}2$ mod the lattice --- which are precisely the (simple) zeros of $\theta_1,\theta_2,\theta_4,\theta_3$ respectively in the numerator. Hence $H$ is entire elliptic, therefore constant; letting $z\to0$, $H\to\dfrac{2\theta_1'(0)z\,t_2t_3t_4}{\theta_1'(0)\,2z}=t_2t_3t_4$. $\square$
+
+Evaluate (11) at $z=w_0=\tfrac{i\pi}{4}$ (recall $2w_0=\tfrac{\pi\tau}2$ and $(0)$, $(0')$): write $\alpha:=\theta_4(w_0)>0$, $\beta:=\theta_3(w_0)=\theta_2(w_0)$, $\theta_1(w_0)=i\alpha$. Then
+\begin{equation*}
+t_2t_3t_4\cdot i\,q^{-1/4}t_4\;=\;2\,(i\alpha)\,\beta\,\beta\,\alpha
+\qquad\Longrightarrow\qquad \alpha^2\beta^2=\frac{q^{-1/4}}2\,t_2t_3t_4^2. \tag{12}
+\end{equation*}
+Next, the second identity of (3) at $z=w_0$, with $\theta_1^2(w_0)=-\alpha^2$:
+\begin{equation*}
+t_4^2\,\beta^2=t_3^2\,\alpha^2+t_2^2\,\alpha^2\qquad\Longrightarrow\qquad
+\frac{\beta^2}{\alpha^2}=\frac{t_2^2+t_3^2}{t_4^2}. \tag{13}
+\end{equation*}
+(Consistently, the first identity of (3) gives the same for $\theta_2(w_0)^2$, confirming $\theta_2(w_0)^2=\theta_3(w_0)^2$.) Combining (12), (13):
+\[\alpha^4=\frac{q^{-1/4}\,t_2\,t_3\,t_4^4}{2\,(t_2^2+t_3^2)} .\]
+Hence, by (10),
+\[C^2=\frac{t_4^4}{k^2\alpha^4}=\frac{2\,(t_2^2+t_3^2)\,q^{1/4}}{k^2\,t_2t_3}
+=\frac{2(1+k)\,q^{1/4}}{k^{5/2}},\]
+where we used $t_2^2=k\,t_3^2$ (definition of $k(q)$, Step 2a), so $t_2^2+t_3^2=(1+k)t_3^2$ and $t_2t_3=\sqrt k\,t_3^2$. With $k=2^{-1/2}$, $q^{1/4}=e^{-\pi/4}$:
+\[C^2=\frac{2\left(1+2^{-1/2}\right)}{2^{-5/4}}\,e^{-\pi/4}
+=2^{9/4}\cdot 2^{-1/2}\left(1+\sqrt2\right)e^{-\pi/4}=2^{7/4}\,(1+\sqrt2)\,e^{-\pi/4},\]
+and since $C>0$,
+\begin{equation*}
+C=2^{7/8}\,(1+\sqrt2)^{1/2}\,e^{-\pi/8}. \tag{14}
+\end{equation*}
+
+\subsection*{Step 6: the lemniscatic value of $K$ and the final assembly}
+
+\[K\!\left(\tfrac1{\sqrt2}\right)=\int_0^1\frac{dt}{\sqrt{(1-t^2)(1-\frac12 t^2)}}
+=\sqrt2\int_0^1\frac{dt}{\sqrt{(1-t^2)(2-t^2)}}
+\;\overset{t=\sqrt{1-u^2}}{=}\;\sqrt2\int_0^1\frac{du}{\sqrt{1-u^4}} .\]
+With $u^2=\sin\varphi$: $\int_0^1\frac{du}{\sqrt{1-u^4}}=\tfrac12\int_0^{\pi/2}\sin^{-1/2}\varphi\,d\varphi=\tfrac14B\!\left(\tfrac14,\tfrac12\right)=\frac{\Gamma(\frac14)\Gamma(\frac12)}{4\Gamma(\frac34)}$, and $\Gamma(\tfrac34)=\dfrac{\pi}{\Gamma(\frac14)\sin\frac\pi4}=\dfrac{\pi\sqrt2}{\Gamma(\frac14)}$, so
+\begin{equation*}
+K\!\left(\tfrac1{\sqrt2}\right)=\sqrt2\cdot\frac{\Gamma(\frac14)^2\sqrt\pi}{4\pi\sqrt2}=\frac{\Gamma\!\left(\frac14\right)^2}{4\sqrt\pi}. \tag{15}
+\end{equation*}
+
+Combining (2), (10), (14), (15):
+\[I=\sqrt2\,K\ln C=\sqrt2\,K\left[\frac78\ln2+\frac12\ln(1+\sqrt2)-\frac\pi8\right]
+=\frac{\Gamma\!\left(\frac14\right)^2}{2\sqrt{2\pi}}\cdot\frac{7\ln2+4\ln(1+\sqrt2)-\pi}{8},\]
+
+\[\boxed{\;\int_0^1\frac{\ln\left(x+\sqrt2\right)}{\sqrt{(2-x)(1-x)x}}\,dx
+=\frac{\Gamma\!\left(\frac14\right)^2}{16\sqrt{2\pi}}\Bigl(7\ln2+4\ln\bigl(1+\sqrt2\bigr)-\pi\Bigr).\;}\]
+
+\begin{remark}
+The mechanism: the measure $\dfrac{dx}{\sqrt{x(1-x)(2-x)}}$ lives on the CM elliptic curve $y^2=x(1-x)(2-x)$ with equally-spaced branch points, whose lambda-invariant is $\tfrac12$, i.e. $\tau=i$, nome $e^{-\pi}$. The argument $x+\sqrt2$ vanishes at $x=-\sqrt2$, which corresponds to the $8$-division point $u=\tfrac{iK'}2$ (indeed $(0)$ and $(5)$ show $\operatorname{sn}^2\bigl(\tfrac{iK'}2\bigr)=-\tfrac1k=-\sqrt2$); this is why $\ln(x+\sqrt2)$ --- and not a generic $\ln(x+a)$ --- integrates in closed form. The $-\pi$ inside the bracket is the residual $q^{1/8}=e^{-\pi/8}$ of theta quasi-periodicity at the $8$-division point.
+\end{remark}
+
+\section*{Numerical verification}
+
+All computations with mpmath at \texttt{mp.dps = 60} (script \texttt{verify.py} in the scratch directory).
+
+\begin{itemize}
+\item Direct quadrature of the original singular integral (tanh--sinh on $[0,\tfrac12,1]$):
+\texttt{I\_raw = 1.71611436816290240644184900503299619...} (correct to $\approx33$ digits).
+\item Quadrature of the smooth form (1):
+\texttt{I = 1.71611436816290240644184900503\allowbreak3005386647\allowbreak187089076105711550...}
+\item Closed form $\dfrac{\Gamma(1/4)^2}{16\sqrt{2\pi}}\bigl(7\ln2+4\ln(1+\sqrt2)-\pi\bigr)$:
+\texttt{CF = 1.71611436816290240644184900503\allowbreak3005386647\allowbreak187089076105711550...}
+\item Agreement: \textbf{all 60 working digits} (difference $0.0$ at 60 dps; $\ge$ 59 significant digits).
+\end{itemize}
+
+Every intermediate step was verified independently to $\sim60$ digits:
+$I=\sqrt2 J$ (diff $\sim10^{-61}$); the theta parametrization (5) at a random point ($10^{-62}$); Lemma (6), identities (3), duplication (11) at random complex points ($10^{-61}$); $\theta_2(w_0)=\theta_3(w_0)$ and $\theta_4(w_0)=-i\theta_1(w_0)$ (exact to precision); the $\alpha^4$ formula ($0.0$); the factorization (7) at a real point ($10^{-61}$); both mean values (9) ($10^{-61}$); $J=K\ln C$ ($0.0$); $C=2^{7/8}(1+\sqrt2)^{1/2}e^{-\pi/8}=1.92416382125458199877\ldots$ ($10^{-61}$); $K(1/\sqrt2)=\Gamma(1/4)^2/(4\sqrt\pi)$ and $q=e^{-\pi}$ ($10^{-61}$).
+
+\section*{Notes}
+
+\begin{itemize}
+\item The derivation is self-contained modulo two genuinely classical inputs, both stated explicitly: the \textbf{Jacobi triple product} (used for positivity of thetas on the real axis, for the Fourier mean-value Lemma (9), and --- via Euler's telescoping product, included above --- for the derivative formula $\theta_1'(0)=t_2t_3t_4$), and \textbf{Poisson summation for Gaussians} (one line, used only to see $t_2=t_4$ at $q=e^{-\pi}$). Everything else (quasi-periodicity, shift identities, the quartic identity, the three-term and addition and duplication identities, the sn parametrization, the two mean values, the special values at the eighth-period point $w_0=\pi\tau/4$) is proved above from scratch by series manipulation and Liouville-type arguments, and each was numerically confirmed to $\sim$60 digits.
+\item Interchange of summation and integration in the mean-value Lemma is justified by uniform convergence of $\ln(1-\zeta)$ on closed subdisks of $|\zeta|<1$; the hypothesis $c<-\tfrac12\ln q$ (here $\tfrac\pi4<\tfrac\pi2$) keeps every product factor in that regime.
+\item Branch/sign choices are pinned by explicit positivity: $\theta_4(\tfrac{i\pi}4)>0$, $C>0$, and the factored integrand in (7) is a positive real function on the integration segment, so all logarithms are real principal values.
+\item No step relies on recalled final answers; the closed form emerged from (10) and (14) and was then confirmed numerically to $\ge$ 59 significant digits.
+\end{itemize}
+
+\end{document}

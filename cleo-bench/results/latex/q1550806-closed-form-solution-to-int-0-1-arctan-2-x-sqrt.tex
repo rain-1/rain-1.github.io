@@ -1,0 +1,293 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 20\\[1ex]\large Closed form solution to $\int_0^1\arctan^2(x)\,\sqrt{x}\,dx$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/1550806}{question 1550806}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in closed form
+\[I=\int_0^1\arctan^2(x)\,\sqrt{x}\;dx .\]
+
+\section*{Result}
+
+\[\boxed{\;I=\frac{\pi^2}{24}+\frac{\sqrt2\,\pi^2}{12}+\frac{2(\sqrt2-1)\pi}{3}
++\frac{\sqrt2\,\pi}{6}\ln\!\frac{1+\sqrt2}{2}
+-\frac{4\sqrt2}{3}\ln\!\left(1+\sqrt2\right)
+-\frac{2\sqrt2}{3}\,\chi_2\!\left(\frac{1}{\sqrt2}\right)\;}\]
+
+where $\chi_2$ is the Legendre chi function,
+\[\chi_2(z)=\sum_{n\ge0}\frac{z^{2n+1}}{(2n+1)^2}
+=\tfrac12\bigl[\operatorname{Li}_2(z)-\operatorname{Li}_2(-z)\bigr],
+\qquad
+\chi_2\!\left(\tfrac1{\sqrt2}\right)=\frac{1}{\sqrt2}\sum_{n\ge 0}\frac{1}{2^n(2n+1)^2}=0.75606449\ldots\]
+
+Numerically $I=0.2064908308551802691934225040635469\ldots$
+
+An equivalent form (via a Landen identity, proved in the Notes) is
+\[I=\frac{\pi^2}{24}+\frac{2(\sqrt2-1)\pi}{3}
++\frac{\sqrt2\,\pi}{6}\ln\!\frac{1+\sqrt2}{2}
++\frac{\sqrt2}{3}\ln 2\,\ln(1+\sqrt2)
+-\frac{4\sqrt2}{3}\ln(1+\sqrt2)
++\frac{2\sqrt2}{3}\,\chi_2\!\bigl(3-2\sqrt2\bigr).\]
+
+\section*{Derivation}
+
+Throughout, $L:=\ln(1+\sqrt2)$, and all arctangents take principal values.
+
+\subsection*{Step 0. Two elementary antiderivatives}
+
+For all real $t$ one has $t^4+1=(t^2-\sqrt2\,t+1)(t^2+\sqrt2\,t+1)$, and both quadratic factors are positive ($t^2\pm\sqrt2 t+1=(t\pm\tfrac{\sqrt2}{2})^2+\tfrac12$). Direct differentiation verifies, on $t>0$:
+
+\[\frac{d}{dt}\left[\frac{1}{\sqrt2}\arctan\frac{t^2-1}{\sqrt2\,t}\right]
+=\frac{1}{\sqrt2}\cdot\frac{\frac{1}{\sqrt2}\bigl(1+\frac1{t^2}\bigr)}{1+\frac{(t^2-1)^2}{2t^2}}
+=\frac{t^2+1}{t^4+1},\]
+
+\[\frac{d}{dt}\left[\frac{1}{2\sqrt2}\ln\frac{t^2-\sqrt2\,t+1}{t^2+\sqrt2\,t+1}\right]
+=\frac{1}{2\sqrt2}\cdot\frac{(2t-\sqrt2)(t^2+\sqrt2 t+1)-(2t+\sqrt2)(t^2-\sqrt2 t+1)}{t^4+1}
+=\frac{t^2-1}{t^4+1},\]
+
+the last equality because the numerator equals $(2t^3+\sqrt2t^2-\sqrt2)-(2t^3-\sqrt2t^2+\sqrt2)=2\sqrt2\,(t^2-1)$.
+
+Consequently, using $\arctan\frac{t^2-1}{\sqrt2 t}\to-\frac\pi2$ as $t\to0^+$ and $\to+\frac\pi2$ as $t\to\infty$, and $\frac{2-\sqrt2}{2+\sqrt2}=\frac{\sqrt2-1}{\sqrt2+1}=(\sqrt2-1)^2$:
+
+\[\int_0^1\frac{t^2+1}{t^4+1}\,dt=\frac{\pi}{2\sqrt2},\qquad
+\int_0^1\frac{t^2-1}{t^4+1}\,dt=\frac{1}{2\sqrt2}\ln(\sqrt2-1)^2=-\frac{L}{\sqrt2},\]
+\[\int_0^\infty\frac{t^2+1}{t^4+1}\,dt=\frac{\pi}{\sqrt2},\qquad
+\int_0^\infty\frac{t^2-1}{t^4+1}\,dt=0 .\]
+
+Adding/subtracting and halving:
+\begin{equation*}
+F_2(1):=\int_0^1\frac{t^2}{t^4+1}\,dt=\frac{\pi}{4\sqrt2}-\frac{L}{2\sqrt2},
+\qquad
+\int_0^\infty\frac{t^2}{t^4+1}\,dt=\int_0^\infty\frac{dt}{t^4+1}=\frac{\pi}{2\sqrt2}. \tag{0}
+\end{equation*}
+
+Also $\displaystyle\int_0^1\frac{2t\,dt}{1+t^4}=\arctan(t^2)\Big|_0^1=\frac\pi4$.
+
+\subsection*{Step 1. Integration by parts}
+
+With $u=\arctan^2x$, $dv=x^{1/2}dx$, $v=\tfrac23x^{3/2}$ (all terms continuous on $[0,1]$):
+\begin{equation*}
+I=\frac23\arctan^2(1)-\frac43\int_0^1\frac{x^{3/2}\arctan x}{1+x^2}\,dx
+=\frac{\pi^2}{24}-\frac43\,J,\qquad
+J:=\int_0^1\frac{x^{3/2}\arctan x}{1+x^2}\,dx. \tag{1}
+\end{equation*}
+
+\subsection*{Step 2. Splitting $J$}
+
+Since $\dfrac{x^{3/2}}{1+x^2}=x^{-1/2}-\dfrac{x^{-1/2}}{1+x^2}$, and both resulting integrals converge absolutely ($\arctan x/\sqrt x\sim\sqrt x$ at $0$),
+\[J=J_1-J_2,\qquad
+J_1=\int_0^1\frac{\arctan x}{\sqrt x}\,dx,\qquad
+J_2=\int_0^1\frac{\arctan x}{\sqrt x\,(1+x^2)}\,dx .\]
+The substitution $x=t^2$ ($dx=2t\,dt$) gives
+\begin{equation*}
+J_1=2\int_0^1\arctan(t^2)\,dt,\qquad
+J_2=2\int_0^1\frac{\arctan(t^2)}{1+t^4}\,dt=:2A. \tag{2}
+\end{equation*}
+
+\subsection*{Step 3. Evaluation of $J_1$}
+
+Integrating by parts and using $(0)$:
+\[\int_0^1\arctan(t^2)\,dt=\Bigl[t\arctan(t^2)\Bigr]_0^1-\int_0^1\frac{2t^2}{1+t^4}\,dt
+=\frac\pi4-2\left(\frac{\pi}{4\sqrt2}-\frac{L}{2\sqrt2}\right),\]
+hence
+\begin{equation*}
+J_1=\frac\pi2-\frac{\pi}{\sqrt2}+\sqrt2\,L. \tag{3}
+\end{equation*}
+
+\subsection*{Step 4. The combination $A-C$ via inversion}
+
+Set
+\[A=\int_0^1\frac{\arctan(x^2)}{1+x^4}\,dx,\qquad
+C=\int_0^1\frac{x^2\arctan(x^2)}{1+x^4}\,dx,\qquad
+K_\infty=\int_0^\infty\frac{\arctan(x^2)}{1+x^4}\,dx .\]
+
+\textbf{(4a) $K_\infty$ in closed form.} For every $x>0$,
+$\arctan(x^2)=\int_0^1\frac{x^2}{1+s^2x^4}\,ds$ (the $s$-antiderivative of the integrand is $\arctan(sx^2)$). Therefore
+\[K_\infty=\int_0^\infty\!\!\int_0^1\frac{x^2}{(1+x^4)(1+s^2x^4)}\,ds\,dx .\]
+The integrand is nonnegative and measurable, so Tonelli's theorem allows swapping the order. For fixed $s\in(0,1)$, the algebraic identity
+\[\frac{1}{(1+x^4)(1+s^2x^4)}=\frac{1}{1-s^2}\left[\frac{1}{1+x^4}-\frac{s^2}{1+s^2x^4}\right]\]
+(check by putting the right side over a common denominator: the numerator is $(1+s^2x^4)-s^2(1+x^4)=1-s^2$) together with $(0)$ and the scaling $u=\sqrt s\,x$, which gives $\int_0^\infty\frac{s^2x^2}{1+s^2x^4}dx=\sqrt s\,\frac{\pi}{2\sqrt2}$, yields
+\[\int_0^\infty\frac{x^2\,dx}{(1+x^4)(1+s^2x^4)}
+=\frac{\pi}{2\sqrt2}\cdot\frac{1-\sqrt s}{1-s^2}
+=\frac{\pi}{2\sqrt2}\cdot\frac{1}{(1+\sqrt s)(1+s)} ,\]
+using $1-s^2=(1-\sqrt s)(1+\sqrt s)(1+s)$. With $s=w^2$ and the partial fraction
+$\frac{w}{(1+w)(1+w^2)}=\frac12\bigl[\frac{w+1}{1+w^2}-\frac{1}{1+w}\bigr]$,
+\[\int_0^1\frac{ds}{(1+\sqrt s)(1+s)}
+=2\int_0^1\frac{w\,dw}{(1+w)(1+w^2)}
+=\left[\tfrac12\ln(1+w^2)+\arctan w-\ln(1+w)\right]_0^1
+=\frac12\ln2+\frac\pi4-\ln2
+=\frac\pi4-\frac{\ln2}{2}.\]
+Hence
+\begin{equation*}
+K_\infty=\frac{\pi^2}{8\sqrt2}-\frac{\pi\ln2}{4\sqrt2}. \tag{4a}
+\end{equation*}
+
+\textbf{(4b) Inversion.} In $\int_1^\infty\frac{\arctan(x^2)}{1+x^4}dx$ substitute $x=1/u$ and use $\arctan(u^{-2})=\frac\pi2-\arctan(u^2)$ for $u>0$:
+\[\int_1^\infty\frac{\arctan(x^2)}{1+x^4}\,dx
+=\int_0^1\frac{u^2\bigl[\frac\pi2-\arctan(u^2)\bigr]}{1+u^4}\,du
+=\frac\pi2 F_2(1)-C .\]
+Thus $K_\infty=A+\frac{\pi}{2}F_2(1)-C$, and with $(0)$ and $(4a)$,
+\begin{equation*}
+A-C=K_\infty-\frac\pi2\Bigl(\frac{\pi}{4\sqrt2}-\frac{L}{2\sqrt2}\Bigr)
+=\frac{\pi}{4\sqrt2}\,\bigl(L-\ln 2\bigr)
+=\frac{\pi}{4\sqrt2}\ln\frac{1+\sqrt2}{2}. \tag{4}
+\end{equation*}
+
+\subsection*{Step 5. The combination $A+C$ via parts}
+
+\[A+C=\int_0^1\frac{(1+x^2)\arctan(x^2)}{1+x^4}\,dx .\]
+Define, for $x\in[0,1)$,
+\[v(x)=\frac{1}{\sqrt2}\left[\arctan\frac{\sqrt2\,x}{1-x^2}-\frac\pi2\right],\qquad v(1):=0 .\]
+With $g(x)=\frac{\sqrt2 x}{1-x^2}$ one computes $g'=\frac{\sqrt2(1+x^2)}{(1-x^2)^2}$ and $1+g^2=\frac{(1-x^2)^2+2x^2}{(1-x^2)^2}=\frac{1+x^4}{(1-x^2)^2}$, so on $[0,1)$
+\[v'(x)=\frac{1+x^2}{1+x^4},\]
+and $v$ is continuous on $[0,1]$ because $g(x)\to+\infty$, hence $\arctan g\to\frac\pi2$, as $x\to1^-$. Integration by parts (the boundary terms vanish: $\arctan(0^2)=0$ at $x=0$ and $v(1)=0$ at $x=1$) gives
+\begin{equation*}
+A+C=-\int_0^1 v(x)\,\frac{2x}{1+x^4}\,dx
+=\frac{\pi}{2\sqrt2}\int_0^1\frac{2x\,dx}{1+x^4}-\sqrt2\,D
+=\frac{\pi^2}{8\sqrt2}-\sqrt2\,D, \tag{5}
+\end{equation*}
+where (using $\int_0^1\frac{2x}{1+x^4}dx=\frac\pi4$ from Step 0)
+\[D:=\int_0^1\frac{x}{1+x^4}\,\arctan\frac{\sqrt2\,x}{1-x^2}\,dx .\]
+
+\subsection*{Step 6. Evaluation of $D$: reduction to $\chi_2\!\left(\frac{1}{\sqrt2}\right)$}
+
+\textbf{(6a) An exact trigonometric identity.} Let $\theta=\arctan(x^2)\in[0,\frac\pi4]$ and
+$\phi(x)=\arctan\frac{\sqrt2 x}{1-x^2}\in[0,\frac\pi2]$ (with $\phi(1)=\frac\pi2$ by continuity), for $x\in[0,1]$. Then
+\[\sin^2\phi=\frac{\tan^2\phi}{1+\tan^2\phi}
+=\frac{2x^2}{(1-x^2)^2+2x^2}=\frac{2x^2}{1+x^4},
+\qquad
+\sin 2\theta=\frac{2\tan\theta}{1+\tan^2\theta}=\frac{2x^2}{1+x^4}.\]
+Hence $\sin^2\phi=\sin2\theta$, and since $\phi\in[0,\frac\pi2]$,
+\[\phi=\arcsin\sqrt{\sin 2\theta}\,. \]
+
+\textbf{(6b) Change of variables.} The map $x\mapsto\theta=\arctan(x^2)$ is a $C^1$ increasing bijection $[0,1]\to[0,\frac\pi4]$ with $d\theta=\frac{2x}{1+x^4}dx$. Therefore
+\[D=\frac12\int_0^{\pi/4}\arcsin\sqrt{\sin2\theta}\;d\theta
+=\frac14\int_0^{\pi/2}\arcsin\sqrt{\sin u}\;du \qquad(u=2\theta).\]
+Next substitute $u=\arcsin(t^2)$, $t\in[0,1]$, an increasing bijection with $du=\frac{2t}{\sqrt{1-t^4}}dt$ (the endpoint singularity at $t=1$ is of type $(1-t)^{-1/2}$, absolutely integrable):
+\[D=\frac12\int_0^1\frac{t\,\arcsin t}{\sqrt{1-t^4}}\;dt .\]
+Now put $t=\sin w$, $w\in[0,\frac\pi2]$; since $\sqrt{1-t^4}=\cos w\,\sqrt{1+\sin^2w}$ and $1+\sin^2w=2-\cos^2w$,
+\[D=\frac12\int_0^{\pi/2}\frac{w\,\sin w}{\sqrt{2-\cos^2w}}\;dw ,\]
+a proper integral of a continuous function.
+
+\textbf{(6c) Integration by parts.} Because
+\[\frac{d}{dw}\left[-\arcsin\frac{\cos w}{\sqrt2}\right]
+=\frac{\sin w/\sqrt2}{\sqrt{1-\cos^2w/2}}
+=\frac{\sin w}{\sqrt{2-\cos^2 w}},\]
+we get, with vanishing boundary terms ($w=0$ kills the first factor; $\arcsin 0=0$ at $w=\frac\pi2$),
+\[D=\frac12\left\{\Bigl[-w\arcsin\tfrac{\cos w}{\sqrt2}\Bigr]_0^{\pi/2}
++\int_0^{\pi/2}\arcsin\frac{\cos w}{\sqrt2}\,dw\right\}
+=\frac12\int_0^{\pi/2}\arcsin\!\left(\frac{\sin w}{\sqrt2}\right)dw,\]
+the last step by $w\mapsto\frac\pi2-w$.
+
+\textbf{(6d) A classical parameter integral.} For $k\in[0,\tfrac1{\sqrt2}]$ define
+$g(k)=\int_0^{\pi/2}\arcsin(k\sin w)\,dw$. The partial derivative
+$\frac{\sin w}{\sqrt{1-k^2\sin^2w}}$ is continuous on $[0,\tfrac{1}{\sqrt2}]\times[0,\tfrac\pi2]$ and bounded by $\sqrt2$, so differentiation under the integral sign is justified (dominated convergence applied to difference quotients). With $c=\cos w$:
+\[g'(k)=\int_0^{\pi/2}\frac{\sin w\,dw}{\sqrt{1-k^2\sin^2 w}}
+=\int_0^1\frac{dc}{\sqrt{(1-k^2)+k^2c^2}}
+=\frac1k\,\operatorname{arcsinh}\frac{k}{\sqrt{1-k^2}}
+=\frac1k\cdot\frac12\ln\frac{1+k}{1-k}
+=\frac{\operatorname{artanh}k}{k},\]
+where $\operatorname{arcsinh}\frac{k}{\sqrt{1-k^2}}=\ln\frac{k+1}{\sqrt{1-k^2}}=\frac12\ln\frac{1+k}{1-k}$. Since $g(0)=0$ and $\frac{\operatorname{artanh}k}{k}=\sum_{n\ge0}\frac{k^{2n}}{2n+1}$ converges uniformly on $[0,\tfrac1{\sqrt2}]$, termwise integration gives
+\[g(k)=\int_0^{k}\frac{\operatorname{artanh}t}{t}\,dt=\sum_{n\ge0}\frac{k^{2n+1}}{(2n+1)^2}=\chi_2(k).\]
+Hence
+\begin{equation*}
+D=\frac12\,\chi_2\!\left(\frac{1}{\sqrt2}\right). \tag{6}
+\end{equation*}
+
+\subsection*{Step 7. Assembling everything}
+
+From $(4)$, $(5)$, $(6)$:
+\begin{equation*}
+A=\frac{(A+C)+(A-C)}2
+=\frac{\pi^2}{16\sqrt2}
++\frac{\pi}{8\sqrt2}\ln\frac{1+\sqrt2}{2}
+-\frac{\sqrt2}{4}\,\chi_2\!\left(\frac1{\sqrt2}\right). \tag{7}
+\end{equation*}
+
+From $(1)$--$(3)$ and $(7)$, $I=\frac{\pi^2}{24}-\frac43J_1+\frac83A$, i.e.
+\[I=\frac{\pi^2}{24}
+-\frac43\left(\frac\pi2-\frac{\pi}{\sqrt2}+\sqrt2 L\right)
++\frac83\left(\frac{\pi^2}{16\sqrt2}+\frac{\pi}{8\sqrt2}\ln\frac{1+\sqrt2}{2}-\frac{\sqrt2}{4}\chi_2\!\left(\tfrac1{\sqrt2}\right)\right).\]
+
+Rationalizing ($\tfrac{1}{\sqrt2}=\tfrac{\sqrt2}{2}$):
+
+\[\boxed{\;I=\frac{\pi^2}{24}+\frac{\sqrt2\,\pi^2}{12}+\frac{2(\sqrt2-1)\pi}{3}
++\frac{\sqrt2\,\pi}{6}\ln\frac{1+\sqrt2}{2}
+-\frac{4\sqrt2}{3}\,\ln(1+\sqrt2)
+-\frac{2\sqrt2}{3}\,\chi_2\!\left(\frac{1}{\sqrt2}\right)\;}\]
+
+with $\chi_2\!\left(\frac1{\sqrt2}\right)=\frac12\left[\operatorname{Li}_2\!\left(\frac{\sqrt2}{2}\right)-\operatorname{Li}_2\!\left(-\frac{\sqrt2}{2}\right)\right]$.
+
+\section*{Numerical verification}
+
+All computations with mpmath at \texttt{mp.dps = 60} and re-run at \texttt{mp.dps = 120}
+(script: \texttt{results/scratch/work/q1550806-closed-form-solution-to-int-0-1-arctan-2-x-sqrt/verify.py}).
+
+Every intermediate identity was checked independently:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+check & quantity & residual \\
+\hline
+1 & $I=\frac{\pi^2}{24}-\frac43J$ & $6\cdot10^{-62}$ \\
+2 & $J=J_1-2A$ & $0$ \\
+3 & $J_1$ closed form $(3)$ & $0$ \\
+4 & $A-C$ formula $(4)$ & $2\cdot10^{-62}$ \\
+4b & $K_\infty$ formula $(4a)$ & $1\cdot10^{-61}$ \\
+5 & $A+C=\frac{\pi^2}{8\sqrt2}-\sqrt2 D$ & $2\cdot10^{-61}$ \\
+6a--6d & each link of the $D$-chain, and $D=\frac12\chi_2(\tfrac1{\sqrt2})$ & $\le5\cdot10^{-33}$ (one midpoint-singular quad), others $\le4\cdot10^{-62}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+Final comparison at 120 digits:
+
+\begin{itemize}
+\item direct quadrature: $I=0.20649083085518026919342250406354690511801651427443\ldots$
+\item closed form: $I_{\rm cf}=0.20649083085518026919342250406354690511801651427443\ldots$
+\item $|I_{\rm cf}-I|\approx4.8\cdot10^{-122}$, i.e.\ \textbf{more than 120 significant digits agree}.
+\end{itemize}
+
+A PSLQ test of $\chi_2(1/\sqrt2)$ against $\{\pi^2,\ln^2 2,L^2,L\ln2,G,\pi L,\pi\ln2,1\}$ returned only a spurious relation (coefficients $\sim10^5$, residual $\sim10^{-45}$ at 120 digits), consistent with $\chi_2(1/\sqrt2)$ being an independent constant: the dilogarithmic term cannot be removed in favor of these elementary constants.
+
+\section*{Notes}
+
+\begin{enumerate}
+\item \textbf{Equivalent forms.} The Landen-type identity
+\[\chi_2\!\left(\frac{1-x}{1+x}\right)+\chi_2(x)=\frac{\pi^2}{8}-\frac12\ln x\,\ln\frac{1-x}{1+x}\qquad(0<x<1)\]
+is proved by differentiating: using $\chi_2'(z)=\frac{\operatorname{artanh}z}{z}$ and $\operatorname{artanh}\frac{1-x}{1+x}=-\frac12\ln x$, the derivative of the left side is $\frac{\ln x}{1-x^2}+\frac{1}{2x}\ln\frac{1+x}{1-x}$, which matches the derivative of the right side; both sides agree in the limit $x\to1^-$ (each tends to $\chi_2(0)+\chi_2(1)=\frac{\pi^2}{8}$, since $\ln x\,\ln\frac{1-x}{1+x}\to0$). Taking $x=\frac1{\sqrt2}$, where $\frac{1-x}{1+x}=(\sqrt2-1)^2=3-2\sqrt2$, gives
+\[\chi_2\!\left(\tfrac{1}{\sqrt2}\right)=\frac{\pi^2}{8}-\frac{\ln2\,\ln(1+\sqrt2)}{2}-\chi_2\!\left(3-2\sqrt2\right),\]
+which yields the alternative expression for $I$ quoted under \textbf{Result} (the $\sqrt2\,\pi^2$ terms cancel there). One may of course also write $\chi_2(z)=\frac12[\operatorname{Li}_2(z)-\operatorname{Li}_2(-z)]$ everywhere.
+
+\item \textbf{Rigor.} The only analytic interchanges used are: (i) Tonelli for the nonnegative double integral in Step 4a; (ii) differentiation under the integral sign in Step 6d, justified by the uniform bound $\sqrt2$ on the derivative kernel; (iii) termwise integration of a power series inside its disc of convergence. All substitutions are monotone $C^1$ bijections, all improper endpoints are absolutely integrable, and every arctan/arcsin branch choice is fixed explicitly ($\phi\in[0,\frac\pi2]$ in Step 6a; the antiderivative $v$ in Step 5 is continuous on $[0,1]$).
+
+\item \textbf{Irreducibility caveat.} The constant $\chi_2(1/\sqrt2)$ (equivalently $\operatorname{Li}_2(\tfrac{\sqrt2}{2})-\operatorname{Li}_2(-\tfrac{\sqrt2}{2})$, or $\chi_2(3-2\sqrt2)$) is not known to reduce to $\pi^2,\ \ln^22,\ \ln^2(1+\sqrt2),\ \ln2\ln(1+\sqrt2)$, Catalan's constant, etc.; the PSLQ experiment above supports treating it as a genuinely new constant in the answer. This is expected: $1/\sqrt2$ lies on no known dilogarithm ladder over $\mathbb Q$.
+\end{enumerate}
+
+\end{document}

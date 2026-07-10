@@ -1,0 +1,209 @@
+% Cleo bench — shared template for derivation documents.
+% Replace <<TITLE>>, <<QID>>, <<N>> and the body. Keep the preamble as-is unless
+% a document genuinely needs another package.
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.7cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\allowdisplaybreaks
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Cleo Bench Problem 19\\[1ex]\large Infinite Series $\sum_{n=1}^\infty\frac{H_n}{n^32^n}$}
+\author{Derivation by Claude (Fable 5), closed-book\thanks{Problem originally
+posed on Mathematics Stack Exchange
+(\href{https://math.stackexchange.com/q/909228}{question 909228}, CC BY-SA),
+famously answered by user Cleo. This derivation was produced independently,
+offline, without access to the published answer, as part of the Cleo benchmark.}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problem}
+
+Evaluate in closed form
+$$\Sigma_3:=\sum_{n=1}^\infty\frac{H_n}{n^3\,2^n},\qquad H_n=\sum_{k=1}^n\frac1k .$$
+
+\section*{Result}
+
+$$\boxed{\;\sum_{n=1}^\infty\frac{H_n}{n^3\,2^n}
+=\operatorname{Li}_4\!\left(\tfrac12\right)+\frac{\pi^4}{720}-\frac{\ln 2}{8}\,\zeta(3)+\frac{\ln^4 2}{24}\;}
+$$
+
+Numerically $\Sigma_3 = 0.55823730083320863825151737933247278596\ldots$ Equivalently, since $\zeta(4)=\pi^4/90$, the constant $\pi^4/720$ may be written $\zeta(4)/8$.
+
+\section*{Derivation}
+
+Throughout, $\operatorname{Li}_s(x)=\sum_{n\ge1}x^n/n^s$ for $|x|\le 1$ (with $s\ge2$ at $|x|=1$), extended to real $x\le 0$ by the integral definitions
+$$\operatorname{Li}_2(z)=-\int_0^z\frac{\ln(1-t)}{t}\,dt,\qquad \operatorname{Li}_3(z)=\int_0^z\frac{\operatorname{Li}_2(t)}{t}\,dt ,$$
+which agree with the series on $(-1,1)$ and are continuous on $[-1,1)$; by Abel's theorem they agree with the (absolutely convergent) series also at $z=-1$. We write
+$$\Sigma_k:=\sum_{n\ge1}\frac{H_n}{n^k2^n}.$$
+We use the classical Euler values $\zeta(2)=\pi^2/6$ and $\zeta(4)=\pi^4/90$.
+
+\subsection*{Step 0: special polylogarithm values}
+
+\textbf{(a) $\operatorname{Li}_3(-1)=-\tfrac34\zeta(3)$.} Splitting $\zeta(3)$ into even and odd $n$ gives $\sum_{n\ge1}\frac{(-1)^{n-1}}{n^3}=(1-2^{1-3})\zeta(3)=\tfrac34\zeta(3)$, so $\operatorname{Li}_3(-1)=-\tfrac34\zeta(3)$.
+
+\textbf{(b) Dilogarithm reflection.} For $0<x<1$ let $f(x)=\operatorname{Li}_2(x)+\operatorname{Li}_2(1-x)+\ln x\ln(1-x)$. Then
+$$f'(x)=-\frac{\ln(1-x)}{x}+\frac{\ln x}{1-x}+\frac{\ln(1-x)}{x}-\frac{\ln x}{1-x}=0 ,$$
+and as $x\to0^+$, $f(x)\to \zeta(2)$ (the product term is $O(x\ln x)$). Hence
+\begin{equation}\operatorname{Li}_2(x)+\operatorname{Li}_2(1-x)=\frac{\pi^2}{6}-\ln x\ln(1-x)\qquad(0<x<1). \tag{0.1}\end{equation}
+At $x=\tfrac12$:
+\begin{equation}\operatorname{Li}_2\!\left(\tfrac12\right)=\frac{\pi^2}{12}-\frac{\ln^2 2}{2}. \tag{0.2}\end{equation}
+
+\textbf{(c) Landen's dilogarithm transformation.} For $0<x<1$ both sides of
+\begin{equation}\operatorname{Li}_2\!\left(\frac{x}{x-1}\right)=-\operatorname{Li}_2(x)-\frac12\ln^2(1-x) \tag{0.3}\end{equation}
+vanish at $x=0$ and have equal derivatives: with $u=\frac{x}{x-1}$ one has $\frac{u'}{u}=\frac1x+\frac1{1-x}$ and $1-u=\frac1{1-x}$, so the left derivative is $-\ln(1-u)\frac{u'}{u}=\ln(1-x)\big(\frac1x+\frac1{1-x}\big)$, which equals the right derivative $\frac{\ln(1-x)}{x}+\frac{\ln(1-x)}{1-x}$.
+
+\textbf{(d) Landen's trilogarithm identity and $\operatorname{Li}_3(1/2)$.} For $0<x<1$ define
+$$\begin{aligned}
+G(x)&=\operatorname{Li}_3\!\left(\frac{x}{x-1}\right)+\operatorname{Li}_3(1-x)+\operatorname{Li}_3(x),\\
+R(x)&=\zeta(3)+\frac{\pi^2}{6}\ln(1-x)-\frac12\ln x\ln^2(1-x)+\frac16\ln^3(1-x).
+\end{aligned}$$
+Using $\frac{d}{dx}\operatorname{Li}_3(u)=\frac{\operatorname{Li}_2(u)}{u}u'$ and $(0.3)$,
+$$\begin{aligned}
+G'(x)&=\frac{\operatorname{Li}_2(x)}{x}-\frac{\operatorname{Li}_2(1-x)}{1-x}
++\Big[-\operatorname{Li}_2(x)-\tfrac12\ln^2(1-x)\Big]\Big(\frac1x+\frac1{1-x}\Big)\\
+&=-\frac{\operatorname{Li}_2(x)+\operatorname{Li}_2(1-x)}{1-x}-\frac{\ln^2(1-x)}{2}\Big(\frac1x+\frac1{1-x}\Big),
+\end{aligned}$$
+and by the reflection $(0.1)$,
+$$G'(x)=-\frac{\zeta(2)}{1-x}+\frac{\ln x\ln(1-x)}{1-x}-\frac{\ln^2(1-x)}{2x}-\frac{\ln^2(1-x)}{2(1-x)} .$$
+Differentiating $R$ term by term gives exactly the same expression. Moreover $G(x)\to\zeta(3)$ and $R(x)\to\zeta(3)$ as $x\to0^+$. Hence $G\equiv R$ on $(0,1)$. Putting $x=\tfrac12$ (so $\tfrac{x}{x-1}=-1$, $\ln x=\ln(1-x)=-\ln2$) and using (a):
+$$2\operatorname{Li}_3\!\left(\tfrac12\right)-\tfrac34\zeta(3)=\zeta(3)-\frac{\pi^2\ln2}{6}+\frac{\ln^32}{2}-\frac{\ln^32}{6},$$
+\begin{equation}\operatorname{Li}_3\!\left(\tfrac12\right)=\frac{7}{8}\zeta(3)-\frac{\pi^2\ln 2}{12}+\frac{\ln^3 2}{6}. \tag{0.4}\end{equation}
+
+\subsection*{Step 1: the generating-function ladder}
+
+For $|x|<1$, the Cauchy product of the absolutely convergent series $\frac1{1-x}=\sum_{k\ge0}x^k$ and $-\ln(1-x)=\sum_{m\ge1}\frac{x^m}{m}$ gives
+\begin{equation}\sum_{n\ge1}H_nx^n=\frac{-\ln(1-x)}{1-x}. \tag{1.1}\end{equation}
+Power series may be integrated term by term inside the radius of convergence, so for $0\le x<1$, dividing by $t$ and integrating, with $\frac1{t(1-t)}=\frac1t+\frac1{1-t}$:
+\begin{equation}\sum_{n\ge1}\frac{H_n}{n}x^n=\int_0^x\frac{-\ln(1-t)}{t}\,dt+\int_0^x\frac{-\ln(1-t)}{1-t}\,dt
+=\operatorname{Li}_2(x)+\frac{\ln^2(1-x)}{2}. \tag{1.2}\end{equation}
+At $x=\tfrac12$, by $(0.2)$:
+\begin{equation}\Sigma_1=\operatorname{Li}_2\!\left(\tfrac12\right)+\frac{\ln^22}{2}=\frac{\pi^2}{12}. \tag{1.3}\end{equation}
+Repeating (all integrands are $O(t)$ at $0$, so the integrals converge):
+\begin{equation}\sum_{n\ge1}\frac{H_n}{n^2}x^n=\operatorname{Li}_3(x)+\frac12F(x),\qquad F(x):=\int_0^x\frac{\ln^2(1-t)}{t}\,dt, \tag{1.4}\end{equation}
+\begin{equation}\sum_{n\ge1}\frac{H_n}{n^3}x^n=\operatorname{Li}_4(x)+\frac12\int_0^xF(t)\,\frac{dt}{t}. \tag{1.5}\end{equation}
+Since $F(t)=\tfrac12t^2+O(t^3)$ as $t\to0^+$, we have $F(t)\ln t\to0$, and integration by parts gives
+$$\int_0^xF(t)\,\frac{dt}{t}=F(x)\ln x-\int_0^x\frac{\ln t\,\ln^2(1-t)}{t}\,dt .$$
+Evaluating $(1.5)$ at $x=\tfrac12$:
+\begin{equation}\Sigma_3=\operatorname{Li}_4\!\left(\tfrac12\right)-\frac{\ln2}{2}\,A-\frac12\,B,
+\qquad A:=F\!\left(\tfrac12\right),\qquad B:=\int_0^{1/2}\frac{\ln t\,\ln^2(1-t)}{t}\,dt. \tag{1.6}\end{equation}
+
+\subsection*{Step 2: the weight-3 integral $A$}
+
+Substituting $u=1-t$ and expanding $\frac{1}{1-u}=\sum_{n\ge0}u^n$ on $[\tfrac12,1)$ (all terms nonnegative, so Tonelli's theorem justifies interchanging sum and integral):
+$$A=\int_{1/2}^{1}\frac{\ln^2u}{1-u}\,du=\sum_{m\ge1}\int_{1/2}^{1}u^{m-1}\ln^2u\,du .$$
+From the antiderivative $\int u^{m-1}\ln^2u\,du=u^m\Big(\frac{\ln^2u}{m}-\frac{2\ln u}{m^2}+\frac{2}{m^3}\Big)$:
+\begin{equation}\int_0^1u^{m-1}\ln^2u\,du=\frac{2}{m^3},\qquad
+\int_0^{1/2}u^{m-1}\ln^2u\,du=\frac{\ln^22}{m\,2^m}+\frac{2\ln2}{m^2\,2^m}+\frac{2}{m^3\,2^m}. \tag{2.1}\end{equation}
+Hence
+\begin{equation}A=2\zeta(3)-\ln^32-2\ln2\,\operatorname{Li}_2\!\left(\tfrac12\right)-2\operatorname{Li}_3\!\left(\tfrac12\right)
+\overset{(0.2),(0.4)}{=}\frac{\zeta(3)}{4}-\frac{\ln^3 2}{3}. \tag{2.2}\end{equation}
+As a byproduct, $(1.4)$ at $x=\tfrac12$ gives
+\begin{equation}\Sigma_2=\operatorname{Li}_3\!\left(\tfrac12\right)+\frac{A}{2}=\zeta(3)-\frac{\pi^2\ln 2}{12}. \tag{2.3}\end{equation}
+
+\subsection*{Step 3: Euler's theorem $\sum_{n\ge1}\frac{H_n}{n^3}=\frac54\zeta(4)$}
+
+Applying $\frac{1}{mn}=\frac{1}{m+n}\big(\frac1m+\frac1n\big)$ twice yields the algebraic identity, valid for all $m,n\ge1$:
+$$\frac{1}{m^2n^2}=\frac{1}{(m+n)^2}\left(\frac{1}{m^2}+\frac{1}{n^2}\right)+\frac{2}{(m+n)^3}\left(\frac1m+\frac1n\right).$$
+Summing over all $m,n\ge1$ (all terms positive, so Tonelli permits any order of summation):
+
+\begin{itemize}
+\item the left side is $\zeta(2)^2$;
+\item the first right-hand piece equals, by symmetry and $N:=m+n$, $\;2\sum_{m\ge1}\sum_{N>m}\frac{1}{m^2N^2}=2\sum_{m<N}\frac{1}{m^2N^2}=\zeta(2)^2-\zeta(4)$, since $\zeta(2)^2=2\sum_{m<N}\frac{1}{m^2N^2}+\zeta(4)$;
+\item the second piece equals $4\sum_{m\ge1}\sum_{N>m}\frac{1}{m\,N^3}=4\sum_{N\ge2}\frac{H_{N-1}}{N^3}=4\Big(\sum_{N\ge1}\frac{H_N}{N^3}-\zeta(4)\Big)$.
+\end{itemize}
+
+Therefore $\zeta(2)^2=\zeta(2)^2-\zeta(4)+4\sum_{N}\frac{H_N}{N^3}-4\zeta(4)$, i.e.
+\begin{equation}\sum_{n\ge1}\frac{H_n}{n^3}=\frac54\,\zeta(4)=\frac{\pi^4}{72}. \tag{3.1}\end{equation}
+
+\subsection*{Step 4: the full-range weight-4 integral}
+
+Let $I_1:=\displaystyle\int_0^1\frac{\ln t\,\ln^2(1-t)}{t}\,dt$ (convergent: the integrand is $O(t\ln t)$ at $0$ and $O(\ln^2(1-t))$ at $1$). Substituting $t\mapsto 1-t$ and expanding $-\frac{\ln(1-t)}{1-t}=\sum_{n\ge1}H_nt^n$ by $(1.1)$ (integrand of one fixed sign on $(0,1)$: Tonelli):
+$$I_1=\int_0^1\frac{\ln^2t\,\ln(1-t)}{1-t}\,dt=-\sum_{n\ge1}H_n\int_0^1t^{n}\ln^2t\,dt
+=-2\sum_{n\ge1}\frac{H_n}{(n+1)^3}.$$
+Reindexing with $H_n=H_{n+1}-\frac1{n+1}$, $\;\sum_{n\ge1}\frac{H_n}{(n+1)^3}=\sum_{m\ge1}\frac{H_m}{m^3}-\zeta(4)$, so by $(3.1)$
+\begin{equation}I_1=-2\left(\frac54\zeta(4)-\zeta(4)\right)=-\frac{\zeta(4)}{2}=-\frac{\pi^4}{180}. \tag{4.1}\end{equation}
+
+\subsection*{Step 5: reflecting $B$ back to the sums $\Sigma_k$}
+
+Split $I_1=B+\int_{1/2}^1\frac{\ln t\ln^2(1-t)}{t}dt$ and substitute $t=1-u$ in the second piece:
+\begin{equation}B=I_1-C,\qquad C:=\int_0^{1/2}\frac{\ln^2u\,\ln(1-u)}{1-u}\,du. \tag{5.1}\end{equation}
+Expanding $-\frac{\ln(1-u)}{1-u}=\sum_{n\ge1}H_nu^n$ on $(0,\tfrac12)$ (again one fixed sign: Tonelli) and using $(2.1)$ with $m=n+1$:
+$$-C=\sum_{n\ge1}H_n\left[\frac{\ln^22}{(n+1)2^{n+1}}+\frac{2\ln2}{(n+1)^22^{n+1}}+\frac{2}{(n+1)^32^{n+1}}\right].$$
+For $k=1,2,3$ the reindex $m=n+1$, $H_n=H_m-\tfrac1m$ gives
+$$\sum_{n\ge1}\frac{H_n}{(n+1)^k2^{n+1}}=\sum_{m\ge1}\frac{H_m}{m^k2^m}-\sum_{m\ge1}\frac{1}{m^{k+1}2^m}
+=\Sigma_k-\operatorname{Li}_{k+1}\!\left(\tfrac12\right),$$
+(the $m=1$ terms of the two shifted series cancel because $H_0=0$). Hence
+\begin{equation}C=-\ln^22\left[\Sigma_1-\operatorname{Li}_2\!\left(\tfrac12\right)\right]
+-2\ln2\left[\Sigma_2-\operatorname{Li}_3\!\left(\tfrac12\right)\right]
+-2\left[\Sigma_3-\operatorname{Li}_4\!\left(\tfrac12\right)\right]. \tag{5.2}\end{equation}
+
+\subsection*{Step 6: assembly}
+
+Insert $(5.1)$–$(5.2)$ into $(1.6)$:
+$$\begin{aligned}
+\Sigma_3&=\operatorname{Li}_4\!\left(\tfrac12\right)-\frac{\ln2}{2}A-\frac{I_1}{2}+\frac{C}{2}\\
+&=\operatorname{Li}_4\!\left(\tfrac12\right)-\frac{\ln2}{2}A-\frac{I_1}{2}
+-\frac{\ln^22}{2}\Big[\Sigma_1-\operatorname{Li}_2\!\Big(\tfrac12\Big)\Big]\\
+&\quad-\ln2\Big[\Sigma_2-\operatorname{Li}_3\!\Big(\tfrac12\Big)\Big]-\Sigma_3+\operatorname{Li}_4\!\left(\tfrac12\right).
+\end{aligned}$$
+The unknown $\Sigma_3$ occurs on the right with coefficient $-1$ (this is where the reflection $t\mapsto1-t$, anchored by the independently evaluated $I_1$, breaks the circularity), so
+$$2\Sigma_3=2\operatorname{Li}_4\!\left(\tfrac12\right)-\frac{\ln2}{2}A-\frac{I_1}{2}
+-\frac{\ln^22}{2}\Sigma_1+\frac{\ln^22}{2}\operatorname{Li}_2\!\left(\tfrac12\right)
+-\ln2\,\Sigma_2+\ln2\,\operatorname{Li}_3\!\left(\tfrac12\right).$$
+Now substitute the values $(2.2)$, $(4.1)$, $(1.3)$, $(0.2)$, $(2.3)$, $(0.4)$:
+$$
+\begin{aligned}
+-\frac{\ln2}{2}A&=-\frac{\zeta(3)\ln2}{8}+\frac{\ln^42}{6}, &
+-\frac{I_1}{2}&=\frac{\pi^4}{360},\\[2pt]
+-\frac{\ln^22}{2}\Sigma_1&=-\frac{\pi^2\ln^22}{24}, &
+\frac{\ln^22}{2}\operatorname{Li}_2\!\left(\tfrac12\right)&=\frac{\pi^2\ln^22}{24}-\frac{\ln^42}{4},\\[2pt]
+-\ln2\,\Sigma_2&=-\zeta(3)\ln2+\frac{\pi^2\ln^22}{12}, &
+\ln2\,\operatorname{Li}_3\!\left(\tfrac12\right)&=\frac{7\zeta(3)\ln2}{8}-\frac{\pi^2\ln^22}{12}+\frac{\ln^42}{6}.
+\end{aligned}
+$$
+The $\pi^2\ln^22$ terms cancel; the $\zeta(3)\ln2$ coefficients sum to $-\tfrac18-1+\tfrac78=-\tfrac14$; the $\ln^42$ coefficients to $\tfrac16-\tfrac14+\tfrac16=\tfrac1{12}$. Hence
+$$2\Sigma_3=2\operatorname{Li}_4\!\left(\tfrac12\right)+\frac{\pi^4}{360}-\frac{\zeta(3)\ln2}{4}+\frac{\ln^42}{12},$$
+$$\sum_{n=1}^\infty\frac{H_n}{n^3\,2^n}
+=\operatorname{Li}_4\!\left(\tfrac12\right)+\frac{\pi^4}{720}-\frac{\ln 2}{8}\,\zeta(3)+\frac{\ln^4 2}{24}. \qquad\blacksquare$$
+
+\textit{(The final algebraic assembly was independently re-done symbolically in sympy and agrees.)}
+
+\section*{Numerical verification}
+
+All computations with mpmath.
+
+\begin{itemize}
+\item \textbf{Direct value} (brute-force partial sum of $300$ terms at 80-digit working precision; the tail is $<\sum_{n>300}2^{-n}<10^{-90}$):
+  $$\Sigma_3=0.55823730083320863825151737933247278596235920552729612849032191624\ldots$$
+\item \textbf{Closed form} $\operatorname{Li}_4(\tfrac12)+\frac{\pi^4}{720}-\frac{\ln2}{8}\zeta(3)+\frac{\ln^42}{24}$:
+  $$0.55823730083320863825151737933247278596235920552729612849032191624\ldots$$
+\item \textbf{Agreement:} absolute difference $4.2\times10^{-81}$, i.e. \textbf{80 significant digits} agree.
+\end{itemize}
+
+Every intermediate identity was verified independently at 60-digit precision (each residual $<10^{-60}$ unless noted):
+$\Sigma_1=\pi^2/12$; $\Sigma_2=\zeta(3)-\frac{\pi^2\ln2}{12}$; $\operatorname{Li}_2(\tfrac12)$ and $\operatorname{Li}_3(\tfrac12)$ closed forms $(0.2)$, $(0.4)$; $A=\frac{\zeta(3)}4-\frac{\ln^32}3$ (via \texttt{mp.quad}); $I_1=-\pi^4/180$ (via \texttt{mp.quad}); the splitting $B+C=I_1$; the series representation $(5.2)$ of $C$; the integration-by-parts identity $(1.6)$; and Euler's sum $(3.1)$ (partial sum to $N=2\cdot10^5$ plus Euler--Maclaurin tail, residual $8\times10^{-16}$, consistent with the tail order used --- and $(3.1)$ is proved rigorously in Step 3 in any case).
+
+Scripts: \texttt{verify.py}, \texttt{verify2.py} in the working directory
+\texttt{/\allowbreak tmp/\allowbreak claude-\allowbreak 1000/\allowbreak -home-\allowbreak riv-\allowbreak Code-\allowbreak cleo-\allowbreak bench/\allowbreak 817bd907-\allowbreak 85a0-\allowbreak 4bc2-\allowbreak a728-\allowbreak b3544\allowbreak bb304\allowbreak b6/\allowbreak scratchpad/\allowbreak cleo/\allowbreak work/\allowbreak q909228-\allowbreak infinite-\allowbreak series-\allowbreak sum-\allowbreak n-\allowbreak 1-\allowbreak infty-\allowbreak frac-\allowbreak h-\allowbreak n-\allowbreak n-\allowbreak 32-\allowbreak n/}.
+
+\section*{Notes}
+
+\begin{itemize}
+\item The derivation is self-contained modulo two classical facts used without proof: $\zeta(2)=\pi^2/6$ and $\zeta(4)=\pi^4/90$ (Euler). Everything else --- the reflection and Landen identities for $\operatorname{Li}_2$ and $\operatorname{Li}_3$, the values $\operatorname{Li}_2(\tfrac12)$, $\operatorname{Li}_3(\tfrac12)$, $\operatorname{Li}_3(-1)$, Euler's linear sum $\sum H_n/n^3=\frac54\zeta(4)$, and all integral evaluations --- is proved above.
+\item All interchanges of summation and integration are justified by Tonelli's theorem (fixed-sign integrands) or by uniform convergence of power series on compact subsets of the disc of convergence; each such point is flagged where it occurs.
+\item $\operatorname{Li}_4(\tfrac12)$ is not expressible in terms of $\pi$, $\ln2$, $\zeta(3)$ alone (it is standardly taken as an independent constant at weight 4), so the answer above is the expected minimal closed form.
+\item No caveats: the derivation is complete and the numerics agree to 80 digits.
+\end{itemize}
+
+\end{document}
