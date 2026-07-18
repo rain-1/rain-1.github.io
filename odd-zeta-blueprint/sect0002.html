@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zeta values and the target statement</title>
+<link rel="next" href="sect0003.html" title="The well-poised sums and Lemma 4 (asymptotics)" />
+<link rel="prev" href="sect0001.html" title="Overview" />
+<link rel="up" href="index.html" title="One of ζ(5),…,ζ(33) is irrational — Lean blueprint" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">One of \(\zeta (5),\dots ,\zeta (33)\) is irrational — Lean blueprint</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Overview</span></a>
+ </li>
+<li class=" active current">
+  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Zeta values and the target statement</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">3</span> <span class="toc_entry">The well-poised sums and Lemma 4 (asymptotics)</span></a>
+ </li>
+<li class="">
+  <a href="sect0004.html"><span class="toc_ref">4</span> <span class="toc_entry">Lemmas 1–3 (integrality) and the integer linear form</span></a>
+ </li>
+<li class="">
+  <a href="sect0005.html"><span class="toc_ref">5</span> <span class="toc_entry">Hanson’s bound and the numeric margin</span></a>
+ </li>
+<li class="">
+  <a href="sect0006.html"><span class="toc_ref">6</span> <span class="toc_entry">The endgame</span></a>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="a0000000003">2 Zeta values and the target statement</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="def:zetaVal">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">1</span>
+    <span class="definition_thmtitle">Zeta value</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#def:zetaVal">#</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.zetaVal" class="lean_decl">Zeta5Odd.zetaVal</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>   For \(j\in \mathbb {N}\), \(\zeta (j)=\texttt{zetaVal}\, j:=\sum _{n=0}^{\infty }\dfrac {1}{(n+1)^{j}} =\sum _{m\ge 1}m^{-j}\in \mathbb {R}\). </p>
+
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-definition" id="def:oddIdx">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">2</span>
+    <span class="definition_thmtitle">Target index set</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#def:oddIdx">#</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.oddIdx" class="lean_decl">Zeta5Odd.oddIdx</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>   \(\texttt{oddIdx}:=\{ \, j\in \mathbb {N}: 5\le j\le 33,\  j\  \text{odd}\, \} =\{ 5,7,9,\dots ,33\} \). </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:main">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">3</span>
+    <span class="theorem_thmtitle">Main theorem</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#thm:main">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000008"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#def:zetaVal">Definition 1</a></li>
+          
+          <li><a href="sect0002.html#def:oddIdx">Definition 2</a></li>
+          
+          <li><a href="sect0004.html#thm:elim">Theorem 16</a></li>
+          
+          <li><a href="sect0005.html#thm:hanson">Theorem 17</a></li>
+          
+          <li><a href="sect0005.html#lem:gsmall">Lemma 18</a></li>
+          
+          <li><a href="sect0006.html#lem:common_denom">Lemma 19</a></li>
+          
+          <li><a href="sect0003.html#lem:pos">Lemma 11</a></li>
+          
+          <li><a href="sect0003.html#lem:seven_root">Lemma 12</a></li>
+          
+          <li><a href="sect0003.html#lem:existsUnique_x0">Lemma 6</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.zeta_odd_irrational" class="lean_decl">Zeta5Odd.zeta_odd_irrational</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    There exists \(j\in \texttt{oddIdx}\) with \(\zeta (j)\) irrational; that is, at least one of \(\zeta (5),\zeta (7),\dots ,\zeta (33)\) is irrational. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000008">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p> Assume every \(\zeta (j)\), \(j\in \texttt{oddIdx}\), is rational and let \(a{\gt}0\) be a common denominator (Lemma&#160;<a href="sect0006.html#lem:common_denom">19</a>). Put \(b_n:=d_n^{33}(7r_n-\hat r_n)\). By Theorem&#160;<a href="sect0004.html#thm:elim">16</a> and Lemma&#160;<a href="sect0003.html#lem:pos">11</a>, \(a\, b_n\) is a <em>positive</em> integer, so \(a\, b_n\ge 1\). On the other hand the root test — Lemma&#160;<a href="sect0003.html#lem:seven_root">12</a> for the decay rate \(g(x_0)\), Hanson’s bound \(d_n\le 3^n\) (Theorem&#160;<a href="sect0005.html#thm:hanson">17</a>) and the numeric margin \(3^{33}g(x_0){\lt}1\) (Lemma&#160;<a href="sect0005.html#lem:gsmall">18</a>) — gives \(b_n\to 0\), hence \(a\, b_n{\lt}1\) eventually. Contradiction. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <a href="sect0001.html" title="Overview"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="One of \(\zeta (5),\dots ,\zeta (33)\) is irrational — Lean blueprint"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="sect0003.html" title="The well-poised sums and Lemma 4 (asymptotics)"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+</body>
+</html>

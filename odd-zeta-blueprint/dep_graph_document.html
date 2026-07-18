@@ -1,0 +1,734 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dependency graph</title>
+  <meta name="generator" content="plasTeX" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles/theme-white.css" />
+  <link rel="stylesheet" href="styles/dep_graph.css" />
+  
+  <script type="text/x-mathjax-config">
+  
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  
+  </script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">  </script>
+
+
+<link rel="stylesheet" href="styles/extra_styles.css" />
+
+</head>
+
+<body>
+<header>
+  <a class="toc" href="index.html">Home</a>
+  <h1 id="doc_title">Dependencies</h1>
+</header>
+<div class="wrapper">
+<div class="content">
+  <div id="Legend">
+    <span id="legend_title" class="title">Legend
+    <div class="btn">
+       <div class="bar"></div>
+       <div class="bar"></div>
+       <div class="bar"></div>
+    </div></span> 
+    <dl class="legend">
+      
+      <dt>Boxes</dt><dd>definitions</dd>
+      
+      <dt>Ellipses</dt><dd>theorems and lemmas</dd>
+      
+      <dt>Blue border</dt><dd>the <em>statement</em> of this result is ready to be formalized; all prerequisites are done</dd>
+      
+      <dt>Orange border</dt><dd>the <em>statement</em> of this result is not ready to be formalized; the blueprint needs more work</dd>
+      
+      <dt>Blue background</dt><dd>the <em>proof</em> of this result is ready to be formalized; all prerequisites are done</dd>
+      
+      <dt>Green border</dt><dd>the <em>statement</em> of this result is formalized</dd>
+      
+      <dt>Green background</dt><dd>the <em>proof</em> of this result is formalized</dd>
+      
+      <dt>Dark green background</dt><dd>the <em>proof</em> of this result and all its ancestors are formalized</dd>
+      
+      <dt>Dark green border</dt><dd>this is in Mathlib</dd>
+      
+    </dl>
+  </div>
+    <div id="graph"></div>
+<div id="statements">
+
+    
+    <div class="dep-modal-container" id="def:cr_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:cr" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">4</span><span class="definition_thmtitle">Well-poised summands and their sums</span></div>
+    <div class="thm_thmcontent"><p>   With \(s=2q-1\), Zudilin’s rational function \(R_n\) gives the summands \(c_{n,k}=R_n(n+1+k)\) and \(\hat c_{n,k}=R_n(n+\tfrac 12+k)\), and the sums \(r_n=\sum _{k}c_{n,k}\), \(\hat r_n=\sum _{k}\hat c_{n,k}\). </p>
+</div>
+
+    <a class="latex_link" href="sect0003.html#def:cr">LaTeX</a>
+    
+    
+  <div class="tooltip">
+      <span class="lean_link">Lean</span>
+      <ul class="tooltip_list">
+        
+           <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.c" class="lean_decl">Zeta5Odd.c</a></li>
+        
+           <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.chat" class="lean_decl">Zeta5Odd.chat</a></li>
+        
+           <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.r" class="lean_decl">Zeta5Odd.r</a></li>
+        
+           <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.rhat" class="lean_decl">Zeta5Odd.rhat</a></li>
+        
+      </ul>
+  </div>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:fg_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:fg" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">5</span><span class="definition_thmtitle">Rate functions \(f\), \(g\)</span></div>
+    <div class="thm_thmcontent"><p>   The functions \(f_q,g_q\) controlling the exponential rate: \(g_q(x_0)\) is the per-step decay of \(r_n\) at the critical point \(x_0\) where \(f_q(x_0)=1\). </p>
+</div>
+
+    <a class="latex_link" href="sect0003.html#def:fg">LaTeX</a>
+    
+    
+  <div class="tooltip">
+      <span class="lean_link">Lean</span>
+      <ul class="tooltip_list">
+        
+           <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.f" class="lean_decl">Zeta5Odd.f</a></li>
+        
+           <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.g" class="lean_decl">Zeta5Odd.g</a></li>
+        
+      </ul>
+  </div>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:oddIdx_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:oddIdx" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">2</span><span class="definition_thmtitle">Target index set</span></div>
+    <div class="thm_thmcontent"><p>   \(\texttt{oddIdx}:=\{ \, j\in \mathbb {N}: 5\le j\le 33,\  j\  \text{odd}\, \} =\{ 5,7,9,\dots ,33\} \). </p>
+</div>
+
+    <a class="latex_link" href="sect0002.html#def:oddIdx">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.oddIdx">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:zetaVal_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:zetaVal" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">1</span><span class="definition_thmtitle">Zeta value</span></div>
+    <div class="thm_thmcontent"><p>   For \(j\in \mathbb {N}\), \(\zeta (j)=\texttt{zetaVal}\, j:=\sum _{n=0}^{\infty }\dfrac {1}{(n+1)^{j}} =\sum _{m\ge 1}m^{-j}\in \mathbb {R}\). </p>
+</div>
+
+    <a class="latex_link" href="sect0002.html#def:zetaVal">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.zetaVal">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:common_denom_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:common_denom" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">19</span><span class="lemma_thmtitle">Common denominator</span></div>
+    <div class="thm_thmcontent"><p>    If every \(\zeta (j)\), \(j\in \texttt{oddIdx}\), is rational, there is a positive integer \(a\) with \(a\, \zeta (j)\in \mathbb {Z}\) for all such \(j\). </p>
+</div>
+
+    <a class="latex_link" href="sect0006.html#lem:common_denom">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.exists_common_denom">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:existsUnique_x0_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:existsUnique_x0" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">6</span><span class="lemma_thmtitle">Critical point</span></div>
+    <div class="thm_thmcontent"><p>    For \(q\ge 4\) there is a unique \(x_0{\gt}0\) with \(f_q(x_0)=1\). </p>
+</div>
+
+    <a class="latex_link" href="sect0003.html#lem:existsUnique_x0">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.existsUnique_x0">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:gsmall_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:gsmall" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">18</span><span class="lemma_thmtitle">Numeric margin</span></div>
+    <div class="thm_thmcontent"><p>    At the critical point of \(q=17\) (\(s=33\)): \(3^{33}\, g_{17}(x_0){\lt}1\) (numerically \(e^{-0.129}\)). </p>
+</div>
+
+    <a class="latex_link" href="sect0005.html#lem:gsmall">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.g_small">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:harmonic_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:harmonic" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">14</span><span class="lemma_thmtitle">Harmonic integrality</span></div>
+    <div class="thm_thmcontent"><p>   The relevant harmonic-type sums clear their denominators against \(d_n\). </p>
+</div>
+
+    <a class="latex_link" href="sect0004.html#lem:harmonic">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.harmonic_integrality">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:lemma1_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:lemma1" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">13</span><span class="lemma_thmtitle">Integrality; Lemma 1</span></div>
+    <div class="thm_thmcontent"><p>    The partial-fraction coefficients \(a_{i,k}\) of \(R_n\) satisfy \(d_n^{\, 33-i}\, a_{i,k}\in \mathbb {Z}\). </p>
+</div>
+
+    <a class="latex_link" href="sect0004.html#lem:lemma1">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.partialFraction_exists">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:lemma3_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:lemma3" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">15</span><span class="lemma_thmtitle">Series representation; Lemma 3</span></div>
+    <div class="thm_thmcontent"><p>    \(r_n\) and \(\hat r_n\) expand as \(\mathbb {Z}\)-linear (with \(d_n\)-power denominators) combinations of \(1\) and the \(\zeta (j)\), via the half-integer summation shift for \(\hat r_n\). </p>
+</div>
+
+    <a class="latex_link" href="sect0004.html#lem:lemma3">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.repr_combined">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:localize_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:localize" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">7</span><span class="lemma_thmtitle">Localization; Lemma 4 window</span></div>
+    <div class="thm_thmcontent"><p>    All but an exponentially small mass of \(r_n\) (resp. \(\hat r_n\)) concentrates on an \(\varepsilon n\)-window around the critical index, so \(n\)-th roots see only that window. </p>
+</div>
+
+    <a class="latex_link" href="sect0003.html#lem:localize">LaTeX</a>
+    
+    
+  <div class="tooltip">
+      <span class="lean_link">Lean</span>
+      <ul class="tooltip_list">
+        
+           <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.sum_localizes" class="lean_decl">Zeta5Odd.sum_localizes</a></li>
+        
+           <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.sum_localizes_chat" class="lean_decl">Zeta5Odd.sum_localizes_chat</a></li>
+        
+      </ul>
+  </div>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:pos_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:pos" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">11</span><span class="lemma_thmtitle">Positivity of \(7r-\hat r\)</span></div>
+    <div class="thm_thmcontent"><p>    Eventually \(7r_n-\hat r_n{\gt}0\). </p>
+</div>
+
+    <a class="latex_link" href="sect0003.html#lem:pos">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.seven_r_sub_rhat_pos_eventually">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:ratio_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:ratio" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">10</span><span class="lemma_thmtitle">Ratio \(\to 1\)</span></div>
+    <div class="thm_thmcontent"><p>    \(r_n/\hat r_n\to 1\). </p>
+</div>
+
+    <a class="latex_link" href="sect0003.html#lem:ratio">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.tendsto_ratio">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:root_r_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:root_r" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">9</span><span class="lemma_thmtitle">Root limits</span></div>
+    <div class="thm_thmcontent"><p>    \(r_n^{1/n}\to g_q(x_0)\) and \(\hat r_n^{1/n}\to g_q(x_0)\). </p>
+</div>
+
+    <a class="latex_link" href="sect0003.html#lem:root_r">LaTeX</a>
+    
+    
+  <div class="tooltip">
+      <span class="lean_link">Lean</span>
+      <ul class="tooltip_list">
+        
+           <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.tendsto_root_r" class="lean_decl">Zeta5Odd.tendsto_root_r</a></li>
+        
+           <li><a href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.tendsto_root_rhat" class="lean_decl">Zeta5Odd.tendsto_root_rhat</a></li>
+        
+      </ul>
+  </div>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:seven_root_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:seven_root" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">12</span><span class="lemma_thmtitle">Root of \(7r-\hat r\)</span></div>
+    <div class="thm_thmcontent"><p>    \((7r_n-\hat r_n)^{1/n}\to g_q(x_0)\). </p>
+</div>
+
+    <a class="latex_link" href="sect0003.html#lem:seven_root">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.tendsto_seven_root">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:window_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:window" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">8</span><span class="lemma_thmtitle">Term ratio on the window</span></div>
+    <div class="thm_thmcontent"><p>    On the window the exact rational term ratio of \(c_{n,k}\) is pinched by two-sided Wallis/Stirling bounds for the central-binomial form. </p>
+</div>
+
+    <a class="latex_link" href="sect0003.html#lem:window">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.term_ratio_on_window">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:elim_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:elim" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">16</span><span class="theorem_thmtitle">Integer linear form</span></div>
+    <div class="thm_thmcontent"><p>    There are integers \(A_j\) (\(j\in \texttt{oddIdx}\)) and \(A_0\) with </p>
+<div class="displaymath" id="a0000000020">
+  \[  d_n^{33}\, (7r_n-\hat r_n)=\sum _{j\in \texttt{oddIdx}}A_j\, \zeta (j)+A_0 .  \]
+</div>
+<p> In particular the \(\zeta (3)\)-coefficient \(a_3(8-2^3)\) vanishes: \(\zeta (3)\) is eliminated by the “\(7=2^3-1\)” choice. </p>
+</div>
+
+    <a class="latex_link" href="sect0004.html#thm:elim">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.elim_integer">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:hanson_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:hanson" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">17</span><span class="theorem_thmtitle">Hanson’s bound</span></div>
+    <div class="thm_thmcontent"><p>   \(d_n=\operatorname {lcm}(1,\dots ,n)\le 3^n\) for all \(n\). </p>
+</div>
+
+    <a class="latex_link" href="sect0005.html#thm:hanson">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.lcmUpto_le_three_pow">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:main_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:main" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">3</span><span class="theorem_thmtitle">Main theorem</span></div>
+    <div class="thm_thmcontent"><p>    There exists \(j\in \texttt{oddIdx}\) with \(\zeta (j)\) irrational; that is, at least one of \(\zeta (5),\zeta (7),\dots ,\zeta (33)\) is irrational. </p>
+</div>
+
+    <a class="latex_link" href="sect0002.html#thm:main">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://rain-1.github.io/odd-zeta-values-autoformalization/docs/find/#doc/Zeta5Odd.zeta_odd_irrational">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+</div>
+</div> <!-- content -->
+</div> <!-- wrapper -->
+<script src="js/jquery.min.js" type="text/javascript"></script>
+
+<script src="js/d3.min.js"></script>
+<script src="js/hpcc.min.js"></script>
+<script src="js/d3-graphviz.js"></script>
+
+<script type="text/javascript">
+const graphContainer = d3.select("#graph");
+const width = graphContainer.node().clientWidth;
+const height = graphContainer.node().clientHeight;
+
+
+graphContainer.graphviz({useWorker: true})
+    .width(width)
+    .height(height)
+    .fit(true)
+    .renderDot(`strict digraph "" {	graph [bgcolor=transparent];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	"lem:existsUnique_x0"	[color=green,		fillcolor="#1CAC78",		label=existsUnique_x0,		shape=ellipse,		style=filled];	"lem:localize"	[color=green,		fillcolor="#1CAC78",		label=localize,		shape=ellipse,		style=filled];	"lem:existsUnique_x0" -> "lem:localize";	"lem:gsmall"	[color=green,		fillcolor="#1CAC78",		label=gsmall,		shape=ellipse,		style=filled];	"lem:existsUnique_x0" -> "lem:gsmall";	"lem:root_r"	[color=green,		fillcolor="#1CAC78",		label=root_r,		shape=ellipse,		style=filled];	"lem:localize" -> "lem:root_r";	"thm:main"	[color=green,		fillcolor="#1CAC78",		label=main,		shape=ellipse,		style=filled];	"lem:gsmall" -> "thm:main";	"lem:ratio"	[color=green,		fillcolor="#1CAC78",		label=ratio,		shape=ellipse,		style=filled];	"lem:root_r" -> "lem:ratio";	"lem:pos"	[color=green,		fillcolor="#1CAC78",		label=pos,		shape=ellipse,		style=filled];	"lem:ratio" -> "lem:pos";	"lem:seven_root"	[color=green,		fillcolor="#1CAC78",		label=seven_root,		shape=ellipse,		style=filled];	"lem:ratio" -> "lem:seven_root";	"thm:elim"	[color=green,		fillcolor="#1CAC78",		label=elim,		shape=ellipse,		style=filled];	"thm:elim" -> "thm:main";	"lem:pos" -> "thm:main";	"lem:seven_root" -> "thm:main";	"lem:window"	[color=green,		fillcolor="#1CAC78",		label=window,		shape=ellipse,		style=filled];	"lem:window" -> "lem:root_r";	"thm:hanson"	[color=green,		fillcolor="#1CAC78",		label=hanson,		shape=ellipse,		style=filled];	"thm:hanson" -> "thm:main";	"def:zetaVal"	[color=green,		fillcolor="#B0ECA3",		label=zetaVal,		shape=box,		style=filled];	"lem:lemma3"	[color=green,		fillcolor="#1CAC78",		label=lemma3,		shape=ellipse,		style=filled];	"def:zetaVal" -> "lem:lemma3"	[style=dashed];	"lem:common_denom"	[color=green,		fillcolor="#1CAC78",		label=common_denom,		shape=ellipse,		style=filled];	"def:zetaVal" -> "lem:common_denom"	[style=dashed];	"lem:lemma3" -> "thm:elim";	"lem:common_denom" -> "thm:main";	"def:oddIdx"	[color=green,		fillcolor="#B0ECA3",		label=oddIdx,		shape=box,		style=filled];	"def:oddIdx" -> "thm:elim"	[style=dashed];	"def:oddIdx" -> "lem:common_denom"	[style=dashed];	"def:cr"	[color=green,		fillcolor="#B0ECA3",		label=cr,		shape=box,		style=filled];	"def:cr" -> "lem:localize"	[style=dashed];	"def:cr" -> "lem:window"	[style=dashed];	"lem:lemma1"	[color=green,		fillcolor="#1CAC78",		label=lemma1,		shape=ellipse,		style=filled];	"def:cr" -> "lem:lemma1"	[style=dashed];	"lem:lemma1" -> "lem:lemma3";	"def:fg"	[color=green,		fillcolor="#B0ECA3",		label=fg,		shape=box,		style=filled];	"def:fg" -> "lem:existsUnique_x0"	[style=dashed];	"lem:harmonic"	[color=green,		fillcolor="#1CAC78",		label=harmonic,		shape=ellipse,		style=filled];	"lem:harmonic" -> "lem:lemma3";}`)
+    .on("end", interactive);
+
+latexLabelEscaper = function(label) {
+  return label.replace(/\./g, '\\.').replace(/:/g, '\\:')
+}
+
+clickNode = function() {
+  $("#statements div").hide()
+  var node_id = $('text', this).text();
+  $('.thm').hide();
+  $('#'+latexLabelEscaper(node_id)).show().children().show();
+}
+function interactive() {
+    $("span#legend_title").on("click", function () {
+           $(this).siblings('dl').toggle();
+        })
+
+    d3.selectAll('.node')
+        .attr('pointer-events', 'fill')
+        .on('click', function () {
+           var title = d3.select(this).selectAll('title').text().trim();
+           $('#statements > div').hide()
+           $('.thm').hide();
+           $('#'+latexLabelEscaper(title)+'_modal').show().children().show().children().show();
+           $('#statements').show()
+        });
+
+    d3.selectAll('.dep-closebtn').on('click', function() {
+        var modal =
+            d3.select(this).node().parentNode.parentNode.parentNode ;
+        d3.select(modal).style('display', 'none');
+    });
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Overview</title>
+<link rel="next" href="sect0002.html" title="Zeta values and the target statement" />
+<link rel="prev" href="index.html" title="One of ζ(5),…,ζ(33) is irrational — Lean blueprint" />
+<link rel="up" href="index.html" title="One of ζ(5),…,ζ(33) is irrational — Lean blueprint" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">One of \(\zeta (5),\dots ,\zeta (33)\) is irrational — Lean blueprint</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class=" active current">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Overview</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Zeta values and the target statement</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">3</span> <span class="toc_entry">The well-poised sums and Lemma 4 (asymptotics)</span></a>
+ </li>
+<li class="">
+  <a href="sect0004.html"><span class="toc_ref">4</span> <span class="toc_entry">Lemmas 1–3 (integrality) and the integer linear form</span></a>
+ </li>
+<li class="">
+  <a href="sect0005.html"><span class="toc_ref">5</span> <span class="toc_entry">Hanson’s bound and the numeric margin</span></a>
+ </li>
+<li class="">
+  <a href="sect0006.html"><span class="toc_ref">6</span> <span class="toc_entry">The endgame</span></a>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="a0000000002">1 Overview</h1>
+<p>This blueprint charts the Lean&#160;4 / Mathlib formalization of W.&#160;Zudilin’s elementary theorem (arXiv:1801.09895), in the \(s=33\) variant: <em>at least one of \(\zeta (5),\zeta (7),\dots ,\zeta (33)\) is irrational</em>. The whole development is <b class="bfseries">sorry-free</b> and uses only the standard axioms <span class="ttfamily">propext</span>, <span class="ttfamily">Classical.choice</span>, <span class="ttfamily">Quot.sound</span>; every box in the dependency graph is green. </p>
+<p>The proof has three arithmetic–analytic strands that meet in the final contradiction: </p>
+<ul class="itemize">
+  <li><p>an <em>asymptotic</em> strand (Zudilin’s Lemma&#160;4): the well-poised sums \(r_n,\hat r_n\) have a controlled exponential decay rate \(g(x_0)\); </p>
+</li>
+  <li><p>an <em>integrality</em> strand (Zudilin’s Lemmas&#160;1–3): a \(\mathbb {Z}\)-linear combination \(d_n^{33}(7r_n-\hat r_n)=\sum _j A_j\zeta (j)+A_0\); </p>
+</li>
+  <li><p>Hanson’s elementary bound \(d_n\le 3^n\) on \(d_n=\operatorname {lcm}(1,\dots ,n)\). </p>
+</li>
+</ul>
+<p> A root test then forces a nonzero integer into \((0,1)\). </p>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <a href="index.html" title="One of \(\zeta (5),\dots ,\zeta (33)\) is irrational — Lean blueprint"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="One of \(\zeta (5),\dots ,\zeta (33)\) is irrational — Lean blueprint"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="sect0002.html" title="Zeta values and the target statement"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+</body>
+</html>
