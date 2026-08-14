@@ -1,0 +1,564 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=28mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,longtable,array,tabularx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Gzero}{\Gamma_0}
+\newcommand{\Gone}{\Gamma_1}
+\newcommand{\tht}{\theta_t}
+\newcommand{\thq}{\theta_q}
+\newcommand{\etaD}[1]{\eta_{#1}}
+\newcommand{\chim}{\chi_{-3}}
+\newcommand{\chifour}{\chi_{-4}}
+\newcommand{\chifive}{\chi_{5}}
+\newcommand{\sigin}[2]{\sigma_{#1}^{(#2)}}
+\newcommand{\sigout}[2]{\widetilde\sigma_{#1}^{(#2)}}
+
+\title{Eisenstein Sources for the Twelve Modular Sporadic Ap\'ery Companions}
+\author{[Author]}
+\date{August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For the twelve sporadic Ap\'ery-like recurrences admitting modular
+parametrizations, we prove that the canonical source of the normalized second
+solution is a pure Eisenstein series.  The key simplification is the identity
+\[
+   \Phi(\tau)=F(\tau)\,\theta_q t(\tau),
+\]
+where $t$ is the canonical nome coordinate and $F$ is the analytic solution
+pulled back to the modular parameter.  Eleven cases are proved uniformly.
+Their candidate $t$ and $F$ are eta quotients; Ligozat's criterion proves
+modularity, and two small holomorphic modular identities --- a normalized
+Wronskian identity and a Rankin--Cohen form of the differential equation ---
+prove that these eta quotients are the \emph{canonical} recurrence
+parametrizations.  Sturm's theorem then identifies $F\theta_qt$ with the
+stated Eisenstein series.  The remaining Ap\'ery $\zeta(2)$ family is treated
+on $\Gamma_1(5)$ using Zagier's Rogers--Ramanujan parametrization and a
+weight-six square identity.  Thus the previously finite coefficient
+identifications become identities for all Fourier coefficients, and no
+cuspidal component occurs in any of the twelve sources.
+\end{abstract}
+
+\section{The recurrences and the source}
+
+Put $\tht=t\,d/dt$ and $\thq=q\,d/dq$.  We use the two operator families
+\begin{align}
+L_2&=\tht^2-t(a\tht^2+a\tht+b)+ct^2(\tht+1)^2,
+\label{eq:L2}\\
+L_3&=\tht^3-t(2\tht+1)(a\tht^2+a\tht+b)+ct^2(\tht+1)^3.
+\label{eq:L3}
+\end{align}
+Their leading polynomials are
+\[
+P_2(t)=1-at+ct^2,\qquad P_3(t)=1-2at+ct^2.
+\]
+Let $y_0(t)=1+O(t)$ be the analytic solution, let $q$ be the canonical
+Frobenius nome, and write
+\[
+  t=t(q),\qquad F(q)=y_0(t(q)),\qquad
+  K(q):=\thq\log t=\frac{\thq t}{t}.
+\]
+Thus $t=q+O(q^2)$ and $K=1+O(q)$.
+
+The normalized companion is the unique log-free series $y_B(t)$ with
+$y_B(0)=0$ and $L_r y_B=t$.  Exact rectification by the canonical nome gives
+\[
+ L_r=C(t)F\thq^rF^{-1}.
+\]
+Since $\thq=K\tht$, comparison of the coefficient of $\tht^r$ gives
+\begin{equation}
+ C(t)=\frac{P_r(t)}{K^r}.
+ \label{eq:C}
+\end{equation}
+Consequently
+\begin{equation}
+ y_B=F\thq^{-r}\Phi,
+ \qquad
+ \Phi=\frac{tK^r}{P_rF}.
+ \label{eq:source-general}
+\end{equation}
+For $r=2$ rectification is automatic from the Frobenius basis.  For $r=3$
+we use the symmetric-square identity of Almkvist--Zudilin \cite[Prop.~9]{AZ}:
+\begin{equation}
+ \widetilde L
+ =\tht^2-t\left(2a\tht^2+a\tht+\frac b2\right)
+       +ct^2\left(\tht+\frac12\right)^2,
+ \label{eq:root}
+\end{equation}
+whose symmetric square is $L_3$.  If $u_0,u_1$ are its Frobenius solutions,
+then $F=u_0^2$ and $u_1/u_0=\log q$.
+
+\begin{proposition}[collapse of the source]\label{prop:collapse}
+For both operator families, in the canonical coordinate,
+\begin{equation}
+ \boxed{\ \Phi=F\,\thq t.\ }
+ \label{eq:collapse}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+For $L_2$, the Wronskian of $F$ and $F\log q$ is
+\[
+ F^2\frac{d\log q}{dt}=\frac1{tP_2(t)},
+\]
+with normalization fixed at $t=0$.  Hence $K=P_2F^2$.  Substitution into
+\eqref{eq:source-general} gives
+\[
+ \Phi=\frac{t(P_2F^2)^2}{P_2F}=tP_2F^3
+      =F\,\thq t.
+\]
+For $L_3$, the Wronskian of the two solutions of \eqref{eq:root} is
+$1/(t\sqrt{P_3})$.  Since $F=u_0^2$, this gives
+$K=F\sqrt{P_3}$, equivalently $K^2=P_3F^2$.  Therefore
+\[
+ \Phi=\frac{tK^3}{P_3F}=tKF=F\,\thq t.
+\]
+\end{proof}
+
+The point of \eqref{eq:collapse} is that the source is no longer an opaque
+quotient: $\thq t$ is a meromorphic modular form of weight $2$, so a modular
+$F$ of weight $r-1$ makes $\Phi$ a form of weight $r+1$.
+
+\section{A uniform finite certificate for eleven eta families}
+
+Write $\eta_d=\eta(d\tau)$, with $q=e^{2\pi i\tau}$.  For an eta quotient
+$G=\prod_{d\mid N}\eta_d^{e_d}$ we use the standard Ligozat cusp-order
+formula
+\begin{equation}
+ \operatorname{ord}_{1/c}G=
+ \frac{N}{24c\gcd(c,N/c)}
+ \sum_{d\mid N}\frac{\gcd(c,d)^2}{d}e_d,
+ \qquad c\mid N.
+ \label{eq:ligozatorder}
+\end{equation}
+The usual two congruences
+$\sum d e_d\equiv\sum (N/d)e_d\equiv0\pmod{24}$ and
+\eqref{eq:ligozatorder} certify the forms below.  Every displayed $t$ has
+weight zero, trivial character, and Fourier expansion $q+O(q^2)$; every $F$
+is holomorphic, has constant term $1$, and has the character stated below.
+
+\begin{table}[ht]
+\centering
+\small
+\renewcommand{\arraystretch}{1.22}
+\begin{tabular}{@{}c c c p{5.1cm} p{5.1cm}@{}}
+\toprule
+family & $N$ & $\chi_F$ & $t$ & $F$\\
+\midrule
+$\mathbf A$&6&$\chim$&
+$\eta_1^3\eta_6^9/(\eta_2^3\eta_3^9)$&
+$\eta_2\eta_3^6/(\eta_1^2\eta_6^3)$\\
+$\mathbf B$&36&$\chim$&
+$\eta_1^3\eta_4^3\eta_{18}^9/(\eta_2^9\eta_9^3\eta_{36}^3)$&
+$\eta_2^9\eta_3\eta_{12}/(\eta_1^3\eta_4^3\eta_6^3)$\\
+$\mathbf C$&6&$\chim$&
+$\eta_1^4\eta_6^8/(\eta_2^8\eta_3^4)$&
+$\eta_2^6\eta_3/(\eta_1^3\eta_6^2)$\\
+$\mathbf E$&8&$\chifour$&
+$\eta_1^4\eta_4^2\eta_8^4/\eta_2^{10}$&
+$\eta_2^{10}/(\eta_1^4\eta_4^4)$\\
+$\mathbf F$&12&$\chim$&
+$\eta_1^5\eta_3\eta_4^5\eta_6^2\eta_{12}/\eta_2^{14}$&
+$\eta_2^{15}\eta_3^2\eta_{12}^2/(\eta_1^6\eta_4^6\eta_6^5)$\\[2pt]
+$\alpha$&12&$1$&
+$\eta_1^6\eta_3^6\eta_4^6\eta_{12}^6/(\eta_2^{12}\eta_6^{12})$&
+$\eta_2^{10}\eta_6^{10}/(\eta_1^4\eta_3^4\eta_4^4\eta_{12}^4)$\\
+$\gamma$&6&$1$&
+$\eta_1^{12}\eta_6^{12}/(\eta_2^{12}\eta_3^{12})$&
+$\eta_2^7\eta_3^7/(\eta_1^5\eta_6^5)$\\
+$\delta$&12&$1$&
+$\eta_1^4\eta_4^4\eta_6^{16}/(\eta_2^{16}\eta_3^4\eta_{12}^4)$&
+$\eta_2^{12}\eta_3\eta_{12}/(\eta_1^3\eta_4^3\eta_6^4)$\\
+$\varepsilon$&8&$1$&
+$\eta_1^8\eta_8^8/(\eta_2^8\eta_4^8)$&
+$\eta_2^6\eta_4^6/(\eta_1^4\eta_8^4)$\\
+$\zeta$&9&$1$&
+$\eta_1^6\eta_9^6/\eta_3^{12}$&
+$\eta_3^{10}/(\eta_1^3\eta_9^3)$\\
+$\eta$&20&$\chifive$&
+$\eta_1^6\eta_4^6\eta_{10}^{18}/(\eta_2^{18}\eta_5^6\eta_{20}^6)$&
+$\eta_2^{15}\eta_5\eta_{20}/(\eta_1^5\eta_4^5\eta_{10}^3)$\\
+\bottomrule
+\end{tabular}
+\caption{The eleven ordinary eta parametrizations.  The first five rows have
+$\operatorname{wt}F=1$; the last six have $\operatorname{wt}F=2$.}
+\label{tab:eta}
+\end{table}
+
+It remains important to prove that Table~\ref{tab:eta} gives the
+\emph{canonical} parametrizations of the recurrences, rather than modular
+forms whose first few coefficients happen to agree.  This is done by two
+small modular identities.
+
+Let $D=\thq$ and $K=D\log t$.  For an eta quotient,
+\begin{equation}
+ K=\frac1{24}\sum_{d\mid N} e_d d\,E_2(d\tau),
+ \label{eq:Keta}
+\end{equation}
+and, because $t$ is a weight-zero modular function, $K$ is a genuine
+holomorphic weight-two modular form.  Define
+\begin{align}
+H_2&=F D^2F-2(DF)^2+t(-b+ct)P_2(t)F^6,
+\label{eq:H2}\\
+H_3&=2F D^2F-3(DF)^2+t(-2b+ct)F^4.
+\label{eq:H3}
+\end{align}
+The derivative combinations are Rankin--Cohen brackets, hence modular and
+holomorphic.  Formula \eqref{eq:ligozatorder} shows that at every pole of $t$
+we have
+\begin{equation}
+ \operatorname{ord}F=-\operatorname{ord}t.
+ \label{eq:polecancel}
+\end{equation}
+Thus all terms in the identities below are holomorphic at every cusp.
+
+\begin{lemma}[Wronskian--ODE certificate]\label{lem:WH}
+For a row of type $R2$, if
+\begin{equation}
+ K=P_2F^2,\qquad H_2=0,
+ \label{eq:WH2}
+\end{equation}
+then $F(t(q))$ is the normalized analytic solution of $L_2$, and $q$ is its
+canonical nome.  For a row of type $R3$, if
+\begin{equation}
+ K^2=P_3F^2,\qquad H_3=0,
+ \label{eq:WH3}
+\end{equation}
+then $F=u_0^2$, where $u_0$ is the normalized analytic solution of
+\eqref{eq:root}, and again $q$ is the canonical nome of $L_3$.
+\end{lemma}
+
+\begin{proof}
+For $R2$, write $A=tP_2'$ and $R=t(-b+ct)$.  Substituting
+$\tht=K^{-1}D$ into $L_2F$ and using $K=P_2F^2$ gives the exact identity
+\[
+ K^3L_2F=P_2^2F\,H_2.
+\]
+Thus $L_2F=0$.  Moreover $K=P_2F^2$ is equivalent to
+\[
+ \tht\log q=\frac1{P_2F^2},
+\]
+which is precisely the normalized reduction-of-order formula for the ratio of
+the logarithmic Frobenius solution to $F$.  Since $t=q+O(q^2)$, the additive
+constant is fixed and $q$ is the canonical nome.
+
+For $R3$, put $u=F^{1/2}=1+O(q)$ and use $K^2=P_3F^2$, taking the branch
+$K=F\sqrt{P_3}$ at $q=0$.  A direct substitution in \eqref{eq:root} yields
+\[
+ \frac{\widetilde L u}{u}=\frac{H_3}{4F^4}.
+\]
+Hence $u$ solves the root equation.  The identity
+$\tht\log q=(F\sqrt{P_3})^{-1}$ is its normalized reduction-of-order formula,
+so $q$ is canonical.  The symmetric-square relation gives $F=u^2$ as the
+analytic solution of $L_3$.
+\end{proof}
+
+The identities in Lemma~\ref{lem:WH}, and then the source identity, are now
+finite Sturm checks.  The parameters are
+\begin{center}
+\small
+\begin{tabular}{@{}c c c c c@{}}
+\toprule
+family & type & $(a,b,c)$ & level & $\operatorname{wt}F$\\
+\midrule
+$\mathbf A$&R2&$(7,2,-8)$&6&1\\
+$\mathbf B$&R2&$(9,3,27)$&36&1\\
+$\mathbf C$&R2&$(10,3,9)$&6&1\\
+$\mathbf E$&R2&$(12,4,32)$&8&1\\
+$\mathbf F$&R2&$(17,6,72)$&12&1\\
+$\alpha$&R3&$(10,4,64)$&12&2\\
+$\gamma$&R3&$(17,5,1)$&6&2\\
+$\delta$&R3&$(7,3,81)$&12&2\\
+$\varepsilon$&R3&$(12,4,16)$&8&2\\
+$\zeta$&R3&$(9,3,-27)$&9&2\\
+$\eta$&R3&$(11,5,125)$&20&2\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{@{}c r r r l@{}}
+\toprule
+family & Wronskian bound & ODE bound & source bound & poles of $t$\\
+\midrule
+$\mathbf A$&2&6&3&$1/3:-1$\\
+$\mathbf B$&12&36&18&$1:-1,\ 1/2:-4,\ 1/4:-1$\\
+$\mathbf C$&2&6&3&$1/2:-1$\\
+$\mathbf E$&2&6&3&$1/2:-1$\\
+$\mathbf F$&4&12&6&$1/2:-2$\\
+$\alpha$&8&16&8&$1/2:-2,\ 1/6:-2$\\
+$\gamma$&4&8&4&$1/2:-1,\ 1/3:-1$\\
+$\delta$&8&16&8&$1:-1,\ 1/2:-2,\ 1/4:-1$\\
+$\varepsilon$&4&8&4&$1/2:-1,\ 1/4:-1$\\
+$\zeta$&4&8&4&$1/3:-1$\\
+$\eta$&12&24&12&$1:-1,\ 1/2:-4,\ 1/4:-1$\\
+\bottomrule
+\end{tabular}
+\caption{Sturm bounds for the three exact identities.  A pole entry
+$1/c:-m$ means $\operatorname{ord}_{1/c}t=-m$; in every entry
+$\operatorname{ord}_{1/c}F=m$, establishing \eqref{eq:polecancel}.}
+\label{tab:bounds}
+\end{table}
+
+\begin{proposition}\label{prop:eta-canonical}
+For every row of Table~\ref{tab:eta}, the displayed $t,F$ are the canonical
+parametrization of the corresponding recurrence.
+\end{proposition}
+
+\begin{proof}
+Ligozat's criterion gives the stated weights, characters and cusp orders.
+The two sides of the Wronskian identity in \eqref{eq:WH2} or
+\eqref{eq:WH3} are holomorphic modular forms of weight $2$ or $4$,
+respectively.  The forms $H_2,H_3$ are holomorphic of weight $6$ and $8$.
+Exact rational Fourier arithmetic verifies the identities through the bounds
+in the first two numerical columns of Table~\ref{tab:bounds}.  Sturm's theorem
+therefore proves them identically.  Lemma~\ref{lem:WH} finishes the proof.
+\end{proof}
+
+\section{The Eisenstein identities}
+
+For a Dirichlet character $\chi$ put
+\[
+ \sigin{\chi}{k}(m)=\sum_{d\mid m}\chi(m/d)d^k,
+ \qquad
+ \sigout{\chi}{k}(m)=\sum_{d\mid m}\chi(d)d^k,
+\]
+and let $\sigma_3(m)=\sum_{d\mid m}d^3$.  A value at a non-integer argument,
+such as $\sigma_3(m/2)$, is understood as zero unless the denominator divides
+$m$.
+
+\begin{table}[ht]
+\centering
+\small
+\renewcommand{\arraystretch}{1.24}
+\begin{tabular}{@{}c p{11.8cm}@{}}
+\toprule
+family & coefficient $c(m)$ of $E=\sum_{m\ge1}c(m)q^m$\\
+\midrule
+$\mathbf A$ & $\sigout{\chim}{2}(m)-\sigout{\chim}{2}(m/2)$\\
+$\mathbf B$ & $\sigin{\chim}{2}(m)-6\sigin{\chim}{2}(m/2)-8\sigin{\chim}{2}(m/4)$\\
+$\mathbf C$ & $\sigin{\chim}{2}(m)-8\sigin{\chim}{2}(m/2)$\\
+$\mathbf E$ & $\sigin{\chifour}{2}(m)-8\sigin{\chifour}{2}(m/2)$\\
+$\mathbf F$ & $\sigin{\chim}{2}(m)-7\sigin{\chim}{2}(m/2)-8\sigin{\chim}{2}(m/4)$\\[2pt]
+$\alpha$ & $\sigma_3(m)-17\sigma_3(m/2)-9\sigma_3(m/3)+16\sigma_3(m/4)+153\sigma_3(m/6)-144\sigma_3(m/12)$\\
+$\gamma$ & $\sigma_3(m)-28\sigma_3(m/2)+63\sigma_3(m/3)-36\sigma_3(m/6)$\\
+$\delta$ & $\sigma_3(m)-14\sigma_3(m/2)-\sigma_3(m/3)+16\sigma_3(m/4)+14\sigma_3(m/6)-16\sigma_3(m/12)$\\
+$\varepsilon$ & $\sigma_3(m)-21\sigma_3(m/2)+84\sigma_3(m/4)-64\sigma_3(m/8)$\\
+$\zeta$ & $\displaystyle\sum_{d\mid m}\chim(d)\chim(m/d)d^3$\\
+$\eta$ & $\sigin{\chifive}{3}(m)-14\sigin{\chifive}{3}(m/2)-16\sigin{\chifive}{3}(m/4)$\\
+\bottomrule
+\end{tabular}
+\caption{The eleven eta-family Eisenstein sources.}
+\label{tab:sources}
+\end{table}
+
+Each row is a standard Eisenstein series or a linear combination of its oldform
+embeddings.  In the ordinary $E_4$ rows the coefficients of the oldforms sum
+to zero, so the constant term cancels.  In the character rows the constant
+term is either zero by primitivity or cancels between the displayed oldforms.
+Thus Table~\ref{tab:sources} defines a holomorphic form in the same
+$M_{r+1}(\Gzero(N),\chi_F)$ as $F\thq t$.
+
+\begin{proposition}\label{prop:eta-source}
+For all eleven rows of Table~\ref{tab:eta},
+\[
+ \boxed{\ F\thq t=E\ },
+\]
+where $E$ is the Eisenstein series of Table~\ref{tab:sources}.
+\end{proposition}
+
+\begin{proof}
+At a pole of $t$, equation \eqref{eq:polecancel} shows that $tF$ has order
+zero, while $K=D\log t$ is holomorphic.  Hence $F\thq t=tFK$ is holomorphic at
+every cusp; it is also holomorphic in the upper half-plane because eta has no
+zeros there.  Its weight is $r+1$ and its character is $\chi_F$.
+Exact Fourier arithmetic gives $F\thq t-E=0$ through the source Sturm bound in
+Table~\ref{tab:bounds}; Sturm's theorem proves the identity.
+\end{proof}
+
+\section{The $\mathbf D$ family on $\Gamma_1(5)$}
+
+The remaining order-two sporadic family has $(a,b,c)=(11,3,-1)$ and
+$P(t)=1-11t-t^2$.  It is the classical Ap\'ery $\zeta(2)$ family.  Zagier's
+exact modular parametrization \cite{Zagier} gives
+\begin{equation}
+ t=q\prod_{n\ge1}(1-q^n)^{5(\frac n5)},\qquad
+ P(t)=t\frac{\eta_1^6}{\eta_5^6},\qquad
+ F^2=t^{-1}\frac{\eta_5^5}{\eta_1}.
+ \label{eq:D-zagier}
+\end{equation}
+The corresponding Beauville family is the one with group $\Gamma_1(5)$.
+By Proposition~\ref{prop:collapse}, $\Phi=F\thq t=tPF^3$, and
+\eqref{eq:D-zagier} therefore gives
+\begin{equation}
+ \boxed{\ \Phi^2=t\,\eta_1^9\eta_5^3.\ }
+ \label{eq:D-square}
+\end{equation}
+
+Let $\chi$ be the primitive quartic character modulo $5$, normalized by
+$\chi(2)=i$.  Put $\psi_1=\Re\chi$, $\psi_2=\Im\chi$ and
+\begin{equation}
+ E_D=\sum_{m\ge1}\left(\sum_{d\mid m}(\psi_1(d)-2\psi_2(d))d^2\right)q^m.
+ \label{eq:ED}
+\end{equation}
+For clarity, let $\mathcal E_\chi$ denote the standard weight-three
+Eisenstein series whose positive Fourier coefficients are
+$\sum_{d\mid m}\chi(d)d^2$.  Then
+\[
+ E_D=\left(\frac12+i\right)\mathcal E_\chi
+     +\left(\frac12-i\right)\mathcal E_{\bar\chi}.
+\]
+Both summands are holomorphic modular forms on $\Gamma_1(5)$.  With the
+standard normalization $B_{3,\chi}=(12+6i)/5$, their constant terms cancel
+exactly, so \eqref{eq:ED} is a holomorphic weight-three Eisenstein form with
+zero constant term.
+
+\begin{lemma}\label{lem:D-holo}
+The right-hand side of \eqref{eq:D-square} is a holomorphic weight-six form
+on $\Gamma_1(5)$.
+\end{lemma}
+
+\begin{proof}
+The eta product $G=\eta_1^9\eta_5^3$ is a weight-six form on
+$\Gamma_0(5)$ with quadratic character $\chi_5$, which becomes trivial on
+$\Gamma_1(5)$.  Its cusp orders on $X_0(5)$ are $2$ and $1$.
+The modular function $h=\eta_1^6/\eta_5^6$ has corresponding orders $1$ and
+$-1$.  If a cusp of $X_1(5)$ above the pole cusp of $h$ has ramification
+index $e$, then \eqref{eq:D-zagier} and $P(t)\sim-t^2$ force
+$\operatorname{ord}t=-e$, whereas $\operatorname{ord}G=e$; the pole cancels.
+Above the other cusp, where $h$ has a zero, the same order comparison shows
+that $t$ cannot have a pole.  There are no poles in the upper half-plane,
+since $h$ is nonzero there and $P(t)=th$ would otherwise have incompatible
+pole orders.  Thus $tG$ is holomorphic.
+\end{proof}
+
+\begin{proposition}\label{prop:D-source}
+For the $\mathbf D$ family, $\Phi=E_D$.
+\end{proposition}
+
+\begin{proof}
+Both $\Phi^2=t\eta_1^9\eta_5^3$ and $E_D^2$ lie in
+$M_6(\Gamma_1(5))$.  A safe Sturm bound is
+\[
+ \frac6{12}[\mathrm{SL}_2(\Z):\Gamma_1(5)]
+ =\frac6{12}\cdot24=12.
+\]
+The exact expansion
+\[
+E_D=q-7q^2+19q^3-23q^4+q^5+47q^6-97q^7+105q^8
+     -62q^9-7q^{10}+122q^{11}-257q^{12}+O(q^{13})
+\]
+gives
+\begin{align*}
+E_D^2={}&q^2-14q^3+87q^4-312q^5+685q^6-794q^7-285q^8\\
+&+3308q^9-7441q^{10}+9400q^{11}-4829q^{12}+O(q^{13}).
+\end{align*}
+Direct expansion of the product on the right of \eqref{eq:D-square} gives
+exactly the same coefficients.  Sturm's theorem yields
+$\Phi^2=E_D^2$.  Since both $\Phi$ and $E_D$ begin with $q$, the sign is
+positive: $\Phi=E_D$.
+\end{proof}
+
+\section{Main theorem and scope}
+
+\begin{theorem}[Eisenstein-source theorem]\label{thm:main}
+For each of the twelve modularly identifiable sporadic Ap\'ery-like families
+\[
+ \mathbf A,\mathbf B,\mathbf C,\mathbf D,\mathbf E,\mathbf F,
+ \alpha,\gamma,\delta,\varepsilon,\zeta,\eta,
+\]
+the normalized companion source is
+\[
+ \Phi=F\thq t,
+\]
+and is exactly the pure Eisenstein series specified in
+Table~\ref{tab:sources}, with the $\mathbf D$ row given by
+\eqref{eq:ED}.  In particular, the cuspidal projection of every one of these
+twelve sources is zero.
+\end{theorem}
+
+\begin{proof}
+Proposition~\ref{prop:collapse} identifies the canonical source.
+Propositions~\ref{prop:eta-canonical} and \ref{prop:eta-source} prove the
+eleven eta cases.  Proposition~\ref{prop:D-source} proves $\mathbf D$.
+\end{proof}
+
+\begin{remark}[Literature and novelty scope]\label{rem:novelty}
+The second-order side overlaps substantially with Zagier's period analysis:
+for the six sporadic $R2$ recurrences, weight-three Eisenstein series and their
+Eichler integrals already occur explicitly in his modular treatment
+\cite{Zagier}.  We therefore do not claim the discovery of Eisenstein
+behaviour for those individual families.  The contribution here is the
+uniform identification of the \emph{canonical companion source}
+$\Phi=F\theta_qt$, the exact twelve-family source table in one normalization,
+and a single finite certification that also proves canonicality of the eta
+parametrizations.  Case-by-case priority beyond the cited classical examples
+should be assessed separately.
+\end{remark}
+
+The theorem does not assert anything about the three additional Cooper rows
+$s_7,s_{10},s_{18}$ in their canonical coordinates.  Their canonical nomes
+are integral, but the eta parametrizations used above are not available in
+that normalization.  Nor does the theorem by itself evaluate every fold
+connection value: it identifies the modular source exactly.  The subsequent
+passage from an Eisenstein source to a zeta or Dirichlet $L$-value is an
+Eichler-integral/connection problem and should be kept logically separate.
+
+\section{Exact certificate}
+
+All finite checks in Tables~\ref{tab:bounds} and \ref{tab:sources} were made
+with exact rational arithmetic.  The supplementary script
+\texttt{eisenstein\_source\_certificate\_v2.py} constructs the eta products
+from finite Euler products, computes $K$ from \eqref{eq:Keta}, checks the
+Ligozat congruences and cusp orders, and verifies the Wronskian, ODE and source
+identities through their stated Sturm bounds.  It also performs the
+$\Gamma_1(5)$ square check through $q^{12}$.  As an implementation guard, the
+source identities are additionally checked through $q^{60}$; those extra
+coefficients are not used in the proofs.
+
+\begin{thebibliography}{9}
+\bibitem{AZ}
+G.~Almkvist and W.~Zudilin,
+\emph{Differential equations, mirror maps and zeta values},
+in Mirror Symmetry V, AMS/IP Stud. Adv. Math. 38 (2006), 481--515;
+arXiv:math/0402386.
+
+\bibitem{Beukers}
+F.~Beukers,
+\emph{Irrationality proofs using modular forms},
+Ast\'erisque 147--148 (1987), 271--283.
+
+\bibitem{Ligozat}
+G.~Ligozat,
+\emph{Courbes modulaires de genre 1},
+Bull. Soc. Math. France, M\'emoire 43 (1975).
+
+\bibitem{Sturm}
+J.~Sturm,
+\emph{On the congruence of modular forms},
+Lecture Notes in Math. 1240, Springer (1987), 275--280.
+
+\bibitem{Zagier}
+D.~Zagier,
+\emph{Integral solutions of Ap\'ery-like recurrence equations},
+in Groups and Symmetries, CRM Proc. Lecture Notes 47 (2009), 349--366.
+\end{thebibliography}
+
+\end{document}

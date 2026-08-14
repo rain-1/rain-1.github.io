@@ -1,0 +1,588 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,enumitem,microtype}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\R}{\mathbb R}
+\newcommand{\lcmop}{\operatorname{lcm}}
+\newcommand{\dn}[1]{D_{#1}}
+
+\title{Combining two Ap\'ery-like constructions for Catalan's constant:\\a full LCM-square gain}
+\author{[Author name]}
+\date{13 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let
+\[
+G=\beta(2)=\sum_{k\ge0}\frac{(-1)^k}{(2k+1)^2}
+\]
+be Catalan's constant.  We combine two inequivalent classical approximation schemes: Zudilin's second-order Ap\'ery-like row, sampled at index $3n$, and the $(a,b)=(4,7)$ member of Nesterenko's hypergeometric family.  After unconditional integer normalization, the first coordinates of both rows are divisible by the full square
+$D_{6n}^2$, where $D_m=\lcmop(1,\dots,m)$.  We choose an integer combination whose second coordinate is divisible by the same modulus and then divide the whole row by $D_{6n}^2$.
+
+The main issue is height: a congruence lattice may have an exponentially short first minimum, so a one-vector Minkowski argument does not prevent accidental cancellation in the first coordinate.  We prove a two-successive-minima selection theorem which handles this case by reducing the second vector modulo the first in the linear-form coordinate.  Applied to the two Catalan rows, it produces integer pairs $(q_n,p_n)$ with $q_n\ne0$, $q_nG-p_n\ne0$, $|q_n|\to\infty$, and
+\[
+\liminf_{n\to\infty}
+\frac{-\log|G-p_n/q_n|}{\log|q_n|}
+\ge
+0.6588705072298054107388708602\ldots .
+\]
+This is a quality statement for the displayed construction, not an irrationality result; the corresponding irrationality threshold is $1$.
+\end{abstract}
+
+\section{Statement and context}
+Catalan's constant is not known to be irrational.  We therefore avoid the term ``irrationality measure'' for the exponent considered here.
+
+\begin{definition}
+An \emph{admissible approximation sequence} to a real number $\alpha$ is a sequence $(q_n,p_n)\in\Z^2$, defined for all sufficiently large $n$, such that
+\[
+q_n\ne0,\qquad q_n\alpha-p_n\ne0,\qquad |q_n|\to\infty.
+\]
+Its \emph{construction quality} is
+\[
+\delta(q,p)=\liminf_{n\to\infty}
+\frac{-\log|\alpha-p_n/q_n|}{\log|q_n|}.
+\]
+\end{definition}
+
+If
+\[
+\log|q_n|=An+o(n),\qquad
+\log|q_n\alpha-p_n|=En+o(n),\qquad A>0,
+\]
+then $\delta=1-E/A$.  In the present problem the linear form need not decay after integer clearing, so an upper bound for $|q_n|$ is not enough: a matching exponential lower bound for the selected height is essential.
+
+Our theorem is as follows.
+
+\begin{theorem}\label{thm:main}
+There exists an admissible sequence of integer pairs $(q_n,p_n)$ for Catalan's constant, obtained by integer combinations of the Zudilin row at index $3n$ and Nesterenko's $(4,7)$ row followed by division by $D_{6n}^2$, such that
+\[
+\boxed{
+\delta(q,p)\ge \delta_0
+:=0.6588705072298054107388708602\ldots .}
+\]
+More exactly,
+\[
+\delta_0=\frac{A_2-E_2}{A_*},\qquad
+A_*=A_2-\frac{12+E_2-E_1}{2},
+\]
+where $E_1,A_2,E_2$ are the explicit logarithmic rates in \eqref{eq:rates-def} below.
+\end{theorem}
+
+No irrationality conclusion is asserted.  The point is that the two classical realizations can be combined so that a full LCM-square common to their first coordinates is removed, while a two-dimensional lattice argument prevents the resulting denominator from becoming exponentially too small.
+
+\section{The Zudilin row}
+Let $\varphi(t)=20t^2-8t+1$.  Define $Q_m,P_m\in\Q$ as the two solutions of
+\begin{align}
+&(2m+1)^2(2m+2)^2\varphi(m)z_{m+1}\notag\\
+&\quad=(3520m^6+5632m^5+2064m^4-384m^3-156m^2+16m+7)z_m\notag\\
+&\qquad +(2m-1)^2(2m)^2\varphi(m+1)z_{m-1},\label{eq:zrec}
+\end{align}
+with
+\[
+(Q_0,Q_1)=(1,7/4),\qquad (P_0,P_1)=(0,13/8).
+\]
+Zudilin proved \cite{Zudilin2003,Zudilin2002}
+\begin{align}
+2^{4m+3}D_mQ_m&\in\Z,&
+2^{4m+3}D_{2m-1}^3P_m&\in\Z,\label{eq:zud1}\\
+2^{6m}Q_m&\in\Z,&
+2^{6m}D_{2m-1}^2P_m&\in\Z.\label{eq:zud2}
+\end{align}
+He also proved
+\begin{equation}\label{eq:zrawrates}
+\frac{P_m}{Q_m}\to G,\qquad
+\frac1m\log Q_m\to5\log\phi,\qquad
+\frac1m\log|Q_mG-P_m|\to-5\log\phi,
+\end{equation}
+where $\phi=(1+\sqrt5)/2$.
+
+Set
+\[
+e_m=\min\{6m,\ 4m+3+\lfloor\log_2(2m-1)\rfloor\}.
+\]
+
+\begin{lemma}\label{lem:zint}
+For every $m\ge1$,
+\[
+2^{e_m}Q_m\in\Z,\qquad
+2^{e_m}D_{2m-1}^2P_m\in\Z,
+\]
+and $e_m=4m+O(\log m)$.
+\end{lemma}
+\begin{proof}
+By \eqref{eq:zud2}, the reduced denominator of $Q_m$ is a power of $2$.  The first inclusion of \eqref{eq:zud1} bounds its exponent by
+$4m+3+v_2(D_m)\le4m+3+\lfloor\log_2(2m-1)\rfloor$, while \eqref{eq:zud2} bounds it by $6m$.  This proves the first assertion.  Apply the same argument to $D_{2m-1}^2P_m$: equations \eqref{eq:zud1}--\eqref{eq:zud2} give the two bounds
+$4m+3+v_2(D_{2m-1})$ and $6m$.  The asymptotic formula for $e_m$ is immediate.
+\end{proof}
+
+We use the row at index $3n$:
+\begin{equation}\label{eq:zrow}
+X_n=2^{e_{3n}}D_{6n-1}^2Q_{3n},\qquad
+Y_n=2^{e_{3n}}D_{6n-1}^2P_{3n},
+\end{equation}
+with linear form
+\[
+\Lambda_n^Z=X_nG-Y_n.
+\]
+By Lemma~\ref{lem:zint}, $X_n,Y_n\in\Z$.
+
+\section{The Nesterenko \texorpdfstring{$(4,7)$}{(4,7)} row}
+For $n\ge1$ define
+\begin{equation}\label{eq:Rn}
+\mathcal R_n(t)=
+\frac{(3n)!(3/2)_{3n-1}}{(4n)!}
+\frac{t(t-1)\cdots(t-4n+1)}
+{\prod_{r=0}^{3n}(t+r+1/2)^2}.
+\end{equation}
+Write its partial fraction expansion in Nesterenko's basis as
+\begin{equation}\label{eq:PF}
+\mathcal R_n(t)=\sum_{j=0}^{3n}
+\frac{(t+1)\cdots(t+j)}{(t+1/2)_{j+1}}
+\left(A_{1,n,j}+\frac{A_{2,n,j}}{t+j+1/2}\right).
+\end{equation}
+Direct extraction of the double-pole coefficient gives
+\begin{equation}\label{eq:A2}
+A_{2,n,j}=2^{-14n+2j+1}
+\frac{(8n+2j)!\,j!\,(6n)!}
+{(4n)!\,(4n+j)!\,(3n-j)!^2\,(2j)!^2}>0.
+\end{equation}
+The sign follows directly from \eqref{eq:Rn}--\eqref{eq:PF}: at $t=-j-1/2$ the $4n$ numerator factors have positive total sign, the remaining squared denominator is positive, and the coefficient multiplying $A_{2,n,j}$ in the double-pole term is positive.
+
+Put
+\begin{align}
+B_n&=\sum_{j=0}^{3n}A_{2,n,j},\label{eq:Bdef}\\
+C_n&=\sum_{j=1}^{3n}\sum_{\nu=0}^{j-1}
+\frac{\nu!}{(3/2)_\nu}
+\left(A_{1,n,j}+\frac{A_{2,n,j}}{\nu+1/2}\right),\label{eq:Cdef}\\
+J_n&=\int_0^1\!\int_0^1
+\frac{x^{4n-1/2}(1-x)^{3n}y^{4n}(1-y)^{3n-1/2}}
+{(1-xy)^{4n+1}}\,dx\,dy.\label{eq:Jdef}
+\end{align}
+Nesterenko's partial-fraction theorem gives \cite{Nesterenko2016}
+\begin{equation}\label{eq:Nidentity}
+J_n=4B_nG-C_n.
+\end{equation}
+His Theorem~3, specialized to $a=4,b=7$, gives
+\begin{equation}\label{eq:Ncoeffint}
+4^{7n-j}A_{2,n,j}\in\Z,
+\qquad
+4^{7n-j}D_{6n}A_{1,n,j}\in\Z.
+\end{equation}
+In particular $4^{7n}B_n\in\Z$.
+
+\begin{lemma}\label{lem:hclear}
+For $0\le\nu\le3n-1$,
+\[
+D_{6n}\frac{\nu!}{(3/2)_\nu}\in\Z,
+\qquad
+\frac{2D_{6n}}{2\nu+1}\in\Z.
+\]
+\end{lemma}
+\begin{proof}
+The second assertion is immediate from $2\nu+1\le6n-1$.  For the first use
+\[
+\frac{\nu!}{(3/2)_\nu}=\frac{4^\nu(\nu!)^2}{(2\nu+1)!}.
+\]
+For an odd prime $p$, the negative $p$-adic valuation of the right side is at most
+\[
+\sum_{k\ge1}
+\left(\Big\lfloor\frac{2\nu+1}{p^k}\Big\rfloor
+-2\Big\lfloor\frac{\nu}{p^k}\Big\rfloor\right)
+\le \lfloor\log_p(2\nu+1)\rfloor
+\le v_p(D_{6n}).
+\]
+For $p=2$ the factor $4^\nu$ removes the denominator.
+\end{proof}
+
+Equations \eqref{eq:Ncoeffint}, \eqref{eq:Cdef}, and Lemma~\ref{lem:hclear} imply
+\[
+4^{7n}D_{6n}^2C_n\in\Z.
+\]
+We therefore define the integer row
+\begin{equation}\label{eq:Nrow}
+V_n=4^{7n+1}D_{6n}^2B_n,\qquad
+U_n=4^{7n}D_{6n}^2C_n,
+\end{equation}
+so that, exactly,
+\begin{equation}\label{eq:Nlin}
+\Lambda_n^N:=V_nG-U_n=4^{7n}D_{6n}^2J_n.
+\end{equation}
+
+\begin{remark}[normalization]
+The factor $4$ in $V_n$ is forced by the exact identity \eqref{eq:Nidentity}.  We therefore take \eqref{eq:Nidentity}, together with the defining partial-fraction expansion \eqref{eq:PF}, as the normalization throughout.  Formula \eqref{eq:A2} is derived directly from those definitions, so no separate sign convention is required.
+\end{remark}
+
+For the specialization $(a,b)=(4,7)$, Nesterenko's asymptotic analysis gives
+\begin{equation}\label{eq:Nrawrates}
+\frac1n\log B_n\to2\log T,\qquad
+\frac1n\log J_n\to2\log T^-,
+\end{equation}
+where
+\[
+T=\frac{3303+437\sqrt{57}}{144},\qquad
+T^-=\frac{3303-437\sqrt{57}}{144}>0.
+\]
+
+\section{Integer rates and the full common divisor}
+The prime number theorem gives
+\[
+\log D_m=m+o(m).
+\]
+Combining \eqref{eq:zrawrates}, \eqref{eq:zrow}, \eqref{eq:Nrawrates}, and \eqref{eq:Nrow} yields
+\begin{equation}\label{eq:rates}
+\begin{array}{ll}
+\log|X_n|=A_1n+o(n),&\log|Y_n|=A_1n+o(n),\\
+\log|V_n|=A_2n+o(n),&\log|U_n|=A_2n+o(n),\\
+\log|\Lambda_n^Z|=E_1n+o(n),&
+\log|\Lambda_n^N|=E_2n+o(n),
+\end{array}
+\end{equation}
+where
+\begin{equation}\label{eq:rates-def}
+\begin{aligned}
+A_1&=12\log2+12+15\log\phi,&
+E_1&=12\log2+12-15\log\phi,\\
+A_2&=14\log2+12+2\log T,&
+E_2&=14\log2+12+2\log T^-.
+\end{aligned}
+\end{equation}
+The second-coordinate rates are two-sided: $P_{3n}/Q_{3n}\to G>0$, while \eqref{eq:Nidentity} and $T^-<1<T$ give $C_n/(4B_nG)\to1$.
+
+\begin{lemma}\label{lem:lcmstep}
+For every $n\ge1$, $D_{6n}=D_{6n-1}$.
+\end{lemma}
+\begin{proof}
+$D_m/D_{m-1}>1$ exactly when $m$ is a prime power.  The integer $6n$ is divisible by the distinct primes $2$ and $3$.
+\end{proof}
+
+\begin{proposition}[full common LCM-square]\label{prop:full-lcm}
+For every $n\ge1$,
+\[
+\boxed{D_{6n}^2\mid X_n,\qquad D_{6n}^2\mid V_n.}
+\]
+\end{proposition}
+\begin{proof}
+Lemma~\ref{lem:zint} and Lemma~\ref{lem:lcmstep} give
+\[
+X_n=D_{6n}^2\bigl(2^{e_{3n}}Q_{3n}\bigr).
+\]
+By \eqref{eq:Ncoeffint}, $4^{7n}B_n\in\Z$, so
+\[
+V_n=D_{6n}^2\bigl(4^{7n+1}B_n\bigr).
+\]
+\end{proof}
+
+Thus the common modulus
+\begin{equation}\label{eq:S}
+S_n=D_{6n}^2
+\end{equation}
+has logarithmic mass
+\begin{equation}\label{eq:Srate}
+s_n:=\frac{\log S_n}{n}=12+o(1).
+\end{equation}
+
+The determinant of the two source rows is
+\begin{equation}\label{eq:Dcal}
+\mathcal D_n=X_nU_n-V_nY_n
+=V_n\Lambda_n^Z-X_n\Lambda_n^N.
+\end{equation}
+The two terms on the right have rates $A_2+E_1$ and $A_1+E_2$.  Their difference is
+\begin{equation}\label{eq:gap}
+\gamma=(A_2+E_1)-(A_1+E_2)
+=2\log\frac{T/T^-}{\phi^{15}}>0.
+\end{equation}
+For a completely elementary check of the sign, note that
+$\sqrt{57}>15/2$ implies $T/T^->1700$, while
+$\sqrt5<56/25$ implies $\phi<81/50$ and hence $\phi^{15}<1400$.
+Therefore the reverse triangle inequality in \eqref{eq:Dcal} and \eqref{eq:rates} give
+\begin{equation}\label{eq:Drate}
+\log|\mathcal D_n|=(A_2+E_1)n+o(n).
+\end{equation}
+In particular the rows are independent for all sufficiently large $n$.
+
+\section{A two-successive-minima selection theorem}
+We isolate the geometry-of-numbers step because it does not depend on Catalan's constant.
+
+Let $\alpha\in\R$, and suppose integer rows $(X_n,Y_n)$ and $(V_n,U_n)$ satisfy six two-sided rates as in \eqref{eq:rates}, with corresponding constants $A_1,E_1,A_2,E_2$, and suppose
+\[
+A_2+E_1>A_1+E_2.
+\]
+Let $S_n$ be a positive integer dividing $X_n$ and $V_n$.  Define
+\begin{equation}\label{eq:lattice}
+L_n=\{(c_1,c_2)\in\Z^2:c_1Y_n+c_2U_n\equiv0\pmod{S_n}\}.
+\end{equation}
+If
+\[
+g_n=\gcd(S_n,Y_n,U_n),\qquad d_n=S_n/g_n,
+\]
+then
+\begin{equation}\label{eq:index}
+[\Z^2:L_n]=d_n.
+\end{equation}
+Indeed, the image of $(c_1,c_2)\mapsto c_1Y_n+c_2U_n$ in $\Z/S_n\Z$ is the subgroup generated by $g_n\bmod S_n$, and therefore has order $S_n/g_n$.
+For $c=(c_1,c_2)\in L_n$ set
+\begin{equation}\label{eq:outputs}
+q_n(c)=\frac{c_1X_n+c_2V_n}{S_n},\qquad
+p_n(c)=\frac{c_1Y_n+c_2U_n}{S_n}.
+\end{equation}
+These are integers and
+\begin{equation}\label{eq:ellout}
+q_n(c)\alpha-p_n(c)
+=\frac{c_1\lambda_{1,n}+c_2\lambda_{2,n}}{S_n},
+\end{equation}
+where $\lambda_{1,n}=X_n\alpha-Y_n$ and $\lambda_{2,n}=V_n\alpha-U_n$.
+The source-row determinant satisfies
+\[
+\mathcal D_n=X_nU_n-V_nY_n
+=V_n\lambda_{1,n}-X_n\lambda_{2,n}.
+\]
+The two terms on the right have rates $A_2+E_1$ and $A_1+E_2$; hence the strict crossed gap implies
+\begin{equation}\label{eq:abstract-Drate}
+\log|\mathcal D_n|=(A_2+E_1)n+o(n).
+\end{equation}
+
+Write
+\[
+s_n=\frac{\log S_n}{n},\qquad
+\kappa_n=\frac{\log d_n}{n},\qquad
+x_n=\frac{\kappa_n+E_2-E_1}{2},
+\]
+and
+\begin{equation}\label{eq:HF}
+H_n=\kappa_n-x_n+A_2-s_n,\qquad
+F_n=x_n+E_1-s_n.
+\end{equation}
+Then
+\begin{equation}\label{eq:HFdiff}
+H_n-F_n=A_2-E_2.
+\end{equation}
+
+\begin{theorem}[two-minimum selection]\label{thm:selection}
+Assume $s_n$ and $\kappa_n$ are bounded, $0\le\kappa_n\le s_n$, and $H_n,F_n$ are eventually bounded below by a positive constant.  Then for every sufficiently large $n$ there is $c_n\in L_n$ such that, writing
+$q_n=q_n(c_n)$ and $\ell_n=q_n\alpha-p_n(c_n)$,
+\[
+q_n\ne0,\qquad \ell_n\ne0,
+\qquad \log|q_n|\ge H_nn-o(n),
+\]
+and
+\begin{equation}\label{eq:ratio-selection}
+\frac{\log|\ell_n|}{\log|q_n|}
+\le\frac{F_n}{H_n}+o(1).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Consider the centrally symmetric rectangle
+\[
+\mathcal C_n=\{(u,v)\in\R^2:|u|\le e^{x_nn},\ |v|\le e^{(\kappa_n-x_n)n}\}.
+\]
+Its area is $4d_n$.  Let $\mu_{1,n}\le\mu_{2,n}$ be the successive minima of $L_n$ relative to $\mathcal C_n$.  Minkowski's second theorem in dimension two gives
+\[
+\mu_{1,n}\mu_{2,n}\le1.
+\]
+Since $\mu_{1,n}\le\mu_{2,n}$, this also gives $\mu_{1,n}\le1$.
+Choose independent $b_1,b_2\in L_n$ attaining the two minima.  Their determinant is a nonzero multiple of the covolume $d_n$, while
+\[
+|\det(b_1,b_2)|\le2\mu_{1,n}\mu_{2,n}d_n\le2d_n.
+\]
+Hence
+\begin{equation}\label{eq:bdet}
+\log|\det(b_1,b_2)|=\log d_n+O(1).
+\end{equation}
+
+Choose $\varepsilon_n\downarrow0$ dominating all normalized $o(n)$ remainders and such that $n\sqrt{\varepsilon_n}\to\infty$.  Put
+\[
+r_n=-\frac1n\log\mu_{1,n}\ge0.
+\]
+Since $\mu_{2,n}\le\mu_{1,n}^{-1}$, the definitions of $x_n,H_n,F_n$ and the strict crossed gap give, for $i=1,2$,
+\begin{equation}\label{eq:fourbounds}
+\begin{array}{ll}
+|q_1|\le e^{(H_n-r_n+O(\varepsilon_n))n},&
+|\ell_1|\le e^{(F_n-r_n+O(\varepsilon_n))n},\\
+|q_2|\le e^{(H_n+r_n+O(\varepsilon_n))n},&
+|\ell_2|\le e^{(F_n+r_n+O(\varepsilon_n))n}.
+\end{array}
+\end{equation}
+Here $q_i=q_n(b_i)$ and $\ell_i=q_i\alpha-p_n(b_i)$.
+
+The determinant of the divided output rows is exactly
+\begin{equation}\label{eq:outdet}
+\Delta_n'=q_1p_2-q_2p_1=q_2\ell_1-q_1\ell_2
+=\frac{\det(b_1,b_2)\mathcal D_n}{S_n^2}.
+\end{equation}
+By \eqref{eq:bdet}, \eqref{eq:abstract-Drate}, and \eqref{eq:HF},
+\begin{equation}\label{eq:outdetrate}
+\log|\Delta_n'|=(H_n+F_n)n+O(\varepsilon_nn).
+\end{equation}
+
+If $r_n\le\sqrt{\varepsilon_n}$, equations \eqref{eq:fourbounds} and \eqref{eq:outdetrate} force
+\[
+\max(|q_1|,|q_2|)\ge e^{(H_n-O(\sqrt{\varepsilon_n}))n}.
+\]
+Choose the vector with the larger first coordinate.  If its linear form is zero, add or subtract the other vector with the sign for which the first coordinates do not cancel.  Since the two coefficient vectors are independent and the source-form vector $(\lambda_{1,n},\lambda_{2,n})$ is nonzero, the two linear forms cannot both vanish.  This gives the theorem in this case.
+
+Suppose next that $r_n>\sqrt{\varepsilon_n}$ and $\ell_1\ne0$.  Choose $m_n\in\Z$ such that
+\[
+0<|\ell_2-m_n\ell_1|\le\frac32|\ell_1|.
+\]
+Set
+\[
+q'=q_2-m_nq_1,\qquad \ell'=\ell_2-m_n\ell_1.
+\]
+From \eqref{eq:outdet},
+\begin{equation}\label{eq:reductionidentity}
+q'=\frac{\Delta_n'}{\ell_1}+q_1\frac{\ell'}{\ell_1}.
+\end{equation}
+If $a_n=n^{-1}\log|\ell_1|$, the first term in \eqref{eq:reductionidentity} has logarithm
+$(H_n+F_n-a_n+O(\varepsilon_n))n$, while the second has logarithm at most
+$(H_n-r_n+O(\varepsilon_n))n$.  Since
+$a_n\le F_n-r_n+O(\varepsilon_n)$, the first term dominates by an exponential factor tending to infinity.  Consequently
+\[
+\frac1n\log|q'|=H_n+F_n-a_n+O(\varepsilon_n),
+\qquad \log|\ell'|\le a_nn+O(1).
+\]
+Because $a\mapsto a/(H_n+F_n-a)$ is increasing wherever the denominator is positive,
+\[
+\frac{\log|\ell'|}{\log|q'|}
+\le
+\frac{F_n-r_n+O(\varepsilon_n)}{H_n+r_n-O(\varepsilon_n)}
+\le\frac{F_n}{H_n}+o(1),
+\]
+and $\log|q'|\ge(H_n+r_n-O(\varepsilon_n))n$.
+
+Finally suppose $\ell_1=0$.  Equation \eqref{eq:outdet} gives $q_1\ne0$ and $\ell_2\ne0$.  Since the sides of $\mathcal C_n$ have bounded exponential rates and $b_1$ has a nonzero integral coordinate, $r_n=O(1)$.  Hence there are fixed positive constants $B_q,B_\ell$ with
+\[
+\log|q_2|\le B_qn,
+\qquad \log|\ell_2|\le B_\ell n
+\]
+eventually.  The boundedness assumptions and the positive lower bounds on $H_n,F_n$ imply that $\sup H_n<\infty$ and $\inf(F_n/H_n)>0$.  Choose a fixed $C$ so large that
+\[
+C>B_q,\qquad C>\sup_{n\gg1}H_n,
+\qquad \frac{B_\ell}{C}<\inf_{n\gg1}\frac{F_n}{H_n}.
+\]
+Let $M_n=\lceil e^{Cn}\rceil$ and take $c_n=b_2+M_nb_1$.  Its linear form is still $\ell_2\ne0$.  Since $q_1$ is a nonzero integer, $|q_1|\ge1$, while $|q_2|\le e^{B_qn}$; therefore
+\[
+|q_n(c_n)|=|q_2+M_nq_1|\ge e^{Cn-o(n)}.
+\]
+This gives the required height bound because $C>\sup H_n$.  If $|\ell_2|\le1$ then the ratio in \eqref{eq:ratio-selection} is nonpositive and there is nothing to prove; otherwise
+\[
+\frac{\log|\ell_2|}{\log|q_n(c_n)|}
+\le \frac{B_\ell}{C}+o(1)
+<\frac{F_n}{H_n}+o(1).
+\]
+This proves both required estimates and completes the proof.
+\end{proof}
+
+\section{Proof of the main theorem}
+Take $\alpha=G$ and the two rows \eqref{eq:zrow}, \eqref{eq:Nrow}, with the modulus $S_n=D_{6n}^2$ from Proposition~\ref{prop:full-lcm}.  The lattice \eqref{eq:lattice} has
+\[
+d_n=\frac{S_n}{\gcd(S_n,Y_n,U_n)},
+\qquad 0\le\kappa_n:=\frac{\log d_n}{n}\le s_n.
+\]
+By \eqref{eq:Srate}, $s_n\to12$.
+
+The positivity required by Theorem~\ref{thm:selection} is uniform.  Indeed,
+\begin{align}
+F_n&=\frac{\kappa_n}{2}+\frac{E_1+E_2}{2}-s_n,
+\label{eq:Fexplicit}\\
+H_n&=F_n+(A_2-E_2).
+\label{eq:Hexplicit}
+\end{align}
+The positivity can be checked without numerical approximation.  Since $TT^-=32/27$, while $\sqrt{57}<8$ gives $T<48$, we have $T^->2/81$.  Also $\phi<2$.  Therefore
+\[
+\exp(E_1+E_2-24)
+=\frac{2^{26}(T^-)^2}{\phi^{15}}
+>\frac{2^{26}(2/81)^2}{2^{15}}
+=\frac{2^{13}}{81^2}>1.
+\]
+Hence $(E_1+E_2)/2-12>0$.  Moreover $A_2-E_2=2\log(T/T^-)>0$.  Thus $F_n$ and $H_n$ are eventually bounded below by a positive constant.
+
+Theorem~\ref{thm:selection} supplies integer pairs with $|q_n|\to\infty$ and
+\[
+\delta(q,p)
+\ge \liminf\left(1-\frac{F_n}{H_n}\right)
+=\liminf\frac{A_2-E_2}{H_n}.
+\]
+Since $\kappa_n\le s_n$,
+\begin{align*}
+H_n
+&=\frac{\kappa_n}{2}+A_2-s_n-\frac{E_2-E_1}{2}\\
+&\le A_2-\frac{s_n+E_2-E_1}{2}.
+\end{align*}
+Therefore
+\[
+\limsup H_n\le
+A_2-\frac{12+E_2-E_1}{2}=:A_*.
+\]
+Since $A_2-E_2>0$,
+\begin{equation}\label{eq:deltaexact}
+\delta(q,p)\ge\frac{A_2-E_2}{A_*}.
+\end{equation}
+For orientation, the exact expression in \eqref{eq:deltaexact} has decimal expansion
+\[
+A_*=22.7079956238967536370866028307\ldots,
+\]
+\[
+A_2-E_2=14.9616285948890556459274195389\ldots,
+\]
+and hence
+\[
+\frac{A_2-E_2}{A_*}
+=0.6588705072298054107388708602\ldots.
+\]
+This proves Theorem~\ref{thm:main}.
+
+\section{Scope}
+The theorem is an exact statement about the explicit two-row construction above.  We make no claim that $\delta_0$ is optimal among all known or possible constructions of rational approximations to $G$; later hypergeometric constructions and other arithmetic reductions use different normalizations and should be compared separately \cite{KrattenthalerZudilin2019,Zudilin2019}.
+
+The threshold for proving irrationality by an admissible integer approximation sequence is $\delta>1$: if $\alpha=a/b\in\Q$ in lowest terms, then every nonzero integer linear form $q\alpha-p$ has absolute value at least $1/|b|$, and consequently the construction quality is at most $1$.  Since $\delta_0<1$, no irrationality conclusion follows here.
+
+\section{Concluding remark}
+The arithmetic gain here is elementary once it is noticed: both normalized first coordinates already carry the same full LCM-square.  The nontrivial point is geometric rather than hypergeometric.  Dividing by a large common modulus creates a coefficient lattice whose first successive minimum can be exponentially short; the second-minimum argument shows that this does not destroy the height of a suitably chosen divided approximation.  This suggests looking for other periods admitting two inequivalent approximation schemes with a large common divisor in one coordinate.
+
+\begin{thebibliography}{99}
+\bibitem{Cassels}
+J.~W.~S.~Cassels,
+\emph{An Introduction to the Geometry of Numbers}, Springer, 1959.
+
+\bibitem{KrattenthalerZudilin2019}
+C.~Krattenthaler and W.~Zudilin,
+\emph{Hypergeometry inspired by irrationality questions},
+Kyushu J. Math. \textbf{73} (2019), 189--203.
+
+\bibitem{Nesterenko2016}
+Yu.~V.~Nesterenko,
+\emph{On Catalan's constant},
+Proc. Steklov Inst. Math. \textbf{292} (2016), 153--170.
+
+\bibitem{Zudilin2002}
+W.~Zudilin,
+\emph{A few remarks on linear forms involving Catalan's constant},
+Chebyshevskii Sbornik \textbf{3}:2(4) (2002), 60--70;
+arXiv:math/0210423.
+
+\bibitem{Zudilin2003}
+W.~Zudilin,
+\emph{An Ap\'ery-like difference equation for Catalan's constant},
+Electron. J. Combin. \textbf{10} (2003), R14.
+
+\bibitem{Zudilin2019}
+W.~Zudilin,
+\emph{Arithmetic of Catalan's constant and its relatives},
+Abh. Math. Semin. Univ. Hambg. \textbf{89} (2019), 45--53.
+\end{thebibliography}
+
+\end{document}
