@@ -11,6 +11,10 @@
 
 [PDF](catalan-58/CATALAN_0902526_SHORT_PROOF.pdf) [Lean](https://github.com/rain-1/lean-catalan-worthiness)
 
+**Sporadic Atlas** mostly subsumes 'eisenstein sources' [PDF](ZAGIER_SPORADIC_APERY_ATLAS_V1.pdf)
+
+---
+
 **Eisenstein sources.** For each of twelve modularly identifiable sporadic Apéry-like families, the normalized companion source is exactly the specified pure Eisenstein series; consequently, every source has zero cuspidal projection.
 
 [PDF](eisenstein/EISENSTEIN_SOURCE_THEOREM.pdf) · [TeX source](eisenstein/EISENSTEIN_SOURCE_THEOREM.tex) · [Lean formalization (NOTE: takes Sturm bound and Ligozat's criterion as an axiom)](eisenstein/eisensten%20d68bee1c-2e4f-4586-b702-1191f1d3c7b1-aristotle.tar.gz)
